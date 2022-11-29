@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:punchin/auth_module/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // userController.initialNavigate();
     super.initState();
+    Future.delayed(
+        const Duration(seconds: 3), () => Get.offAll(() => LoginScreen()));
   }
 
   @override
