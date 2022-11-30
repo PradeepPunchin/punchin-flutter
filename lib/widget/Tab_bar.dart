@@ -1,10 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/views/details.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+
+import '../views/profile_view.dart';
 
 // class BottomNavigation extends StatefulWidget {
 //   const BottomNavigation({super.key});
@@ -119,9 +119,6 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 //   }
 // }
 
-
-
-
 class CustomNavigation extends StatefulWidget {
   static final title = 'salomon_bottom_bar';
 
@@ -138,8 +135,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
   final List<Widget> screens = [
     const Details(),
     const Details(),
-    const Details(),
-
+    ProfileView(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -151,23 +147,23 @@ class _CustomNavigationState extends State<CustomNavigation> {
       home: Scaffold(
         body: screens[_currentIndex],
         bottomNavigationBar: SalomonBottomBar(
-          itemShape:  const StadiumBorder(),
+          itemShape: const StadiumBorder(),
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           items: [
             /// Home
             SalomonBottomBarItem(
-                activeIcon: SvgPicture.asset(
-                    "assets/bottom_bar/home.svg",
-                    height: 20,
-                    width: 20,
-                  ),
-                  icon: SvgPicture.asset(
-                    "assets/bottom_bar/home.svg",
-                    height: 20,
-                    width: 20,
-                    color: kMediumBlack,
-                  ),
+              activeIcon: SvgPicture.asset(
+                "assets/bottom_bar/home.svg",
+                height: 20,
+                width: 20,
+              ),
+              icon: SvgPicture.asset(
+                "assets/bottom_bar/home.svg",
+                height: 20,
+                width: 20,
+                color: kMediumBlack,
+              ),
               title: Text("Home"),
               selectedColor: Colors.purple,
             ),
@@ -178,6 +174,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
               title: Text("Tracking"),
               selectedColor: Colors.pink,
             ),
+
             /// Profile
             SalomonBottomBarItem(
               icon: Icon(Icons.person),
