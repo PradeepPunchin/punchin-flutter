@@ -1,3 +1,7 @@
+alt_sms_autofill
+2.12
+file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/alt_sms_autofill-1.0.0/
+file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/alt_sms_autofill-1.0.0/lib/
 async
 2.14
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/async-2.9.0/
@@ -66,6 +70,10 @@ flutter_svg
 2.17
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.6/
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.6/lib/
+google_fonts
+2.12
+file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/google_fonts-3.0.1/
+file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/google_fonts-3.0.1/lib/
 http
 2.14
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/http-0.13.5/
@@ -142,6 +150,10 @@ petitparser
 2.18
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/petitparser-5.1.0/
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/petitparser-5.1.0/lib/
+pin_code_fields
+2.12
+file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/pin_code_fields-7.4.0/
+file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/pin_code_fields-7.4.0/lib/
 platform
 2.12
 file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/platform-3.1.0/

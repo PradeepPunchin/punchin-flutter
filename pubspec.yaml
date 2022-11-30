@@ -39,6 +39,9 @@ dependencies:
   flutter_svg: ^1.0.3
   cached_network_image: ^3.2.0
   salomon_bottom_bar: ^3.3.1
+  alt_sms_autofill: ^1.0.0
+  pin_code_fields: ^7.4.0
+  google_fonts: ^3.0.1
 
 dev_dependencies:
   flutter_test:

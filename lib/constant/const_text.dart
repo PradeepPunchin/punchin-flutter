@@ -21,3 +21,9 @@ const kBody14kWhite600 = TextStyle(
   overflow: TextOverflow.fade,
   fontWeight: FontWeight.w600,
 );
+
+const KBody13white700=TextStyle(
+    fontSize:13,
+    color: kWhite,
+    fontWeight: FontWeight.w700
+);

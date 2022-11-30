@@ -86,7 +86,7 @@ class _DetailsState extends State<Details> {
                           padding: const EdgeInsets.only(left: 20,top: 12,bottom: 12),
                           child: Row(
                             children: [
-                              Text("Case/Claim ID : 27193",git style: kBody14kWhite600)
+                              Text("Case/Claim ID : 27193", style: kBody14kWhite600)
 
                             ],
                           ),
