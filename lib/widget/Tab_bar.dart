@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/views/details.dart';
+import 'package:punchin/views/home/home_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 // class BottomNavigation extends StatefulWidget {
@@ -136,7 +137,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
 
   /// list of screens
   final List<Widget> screens = [
-    const Details(),
+    const HomeView(),
     const Details(),
     const Details(),
 
