@@ -10,6 +10,7 @@
         <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.22/android" />
             <option value="$USER_HOME$/StudioProjects/punchin/android" />
             <option value="$USER_HOME$/StudioProjects/punchin/android/app" />
           </set>
