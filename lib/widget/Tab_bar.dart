@@ -122,14 +122,14 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 
 
-class BottomNavigation extends StatefulWidget {
+class CustomNavigation extends StatefulWidget {
   static final title = 'salomon_bottom_bar';
 
   @override
-  _BottomNavigationState createState() => _BottomNavigationState();
+  _CustomNavigationState createState() => _CustomNavigationState();
 }
 
-class _BottomNavigationState extends State<BottomNavigation> {
+class _CustomNavigationState extends State<CustomNavigation> {
   var _currentIndex = 0;
 
   int currentIndex = 0;

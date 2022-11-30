@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:punchin/constant/const_color.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const kBody13black400 = TextStyle(
   fontSize: 13,
@@ -27,3 +28,17 @@ const KBody13white700=TextStyle(
     color: kWhite,
     fontWeight: FontWeight.w700
 );
+
+
+
+class CustomFonts {
+  static TextStyle getMultipleStyle(
+      double size, Color color, FontWeight fontWeight) {
+    return GoogleFonts.nunito(
+        fontWeight: fontWeight,
+        fontSize: size,
+        color: color,
+        fontStyle: FontStyle.normal);
+  }
+}
+
