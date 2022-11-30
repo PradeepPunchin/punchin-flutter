@@ -1,8 +1,6 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:punchin/constant/const_color.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:punchin/constant/const_color.dart';
 
 const kBody12kWhite500 = TextStyle(
   fontSize: 12,
@@ -36,10 +34,18 @@ const kBody14kWhite600 = TextStyle(
   fontWeight: FontWeight.w600,
 );
 
+
 const kBody14kdarkBlue700=TextStyle(
     fontSize:14,
     color: kdarkBlue,
     fontWeight: FontWeight.w700
+);
+
+const kBody16black600 = TextStyle(
+  fontSize: 16,
+  color: kBlack,
+  overflow: TextOverflow.fade,
+  fontWeight: FontWeight.w600,
 );
 
 const kBody20white700=TextStyle(
@@ -48,6 +54,10 @@ const kBody20white700=TextStyle(
     fontWeight: FontWeight.w700
 );
 
+
+
+const KBody13white700 =
+    TextStyle(fontSize: 13, color: kWhite, fontWeight: FontWeight.w700);
 
 
 class CustomFonts {
@@ -59,5 +69,7 @@ class CustomFonts {
         color: color,
         fontStyle: FontStyle.normal);
   }
-}
 
+  static TextStyle kBlack15Black = GoogleFonts.nunito(
+      color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w600);
+}

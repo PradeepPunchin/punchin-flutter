@@ -125,10 +125,13 @@ class _HomeViewState extends State<HomeView> {
                       borderRadius: BorderRadius.circular(7)
                     ),
                     child: ListTile(
+                      onTap: (){
+                        Get.to(()=>Details(title: "Claims Allocated"));
+                      },
 
                       leading: SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
                       title: Text("12",style: kBody20white700,),
-                      subtitle: Text("Id:983821",style: kBody12kWhite500),
+                      subtitle: Text("Claims Allocated",style: kBody12kWhite500),
                     ),
                   ),
                 ),

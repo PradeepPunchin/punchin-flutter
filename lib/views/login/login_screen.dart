@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
+import 'package:punchin/widget/custom_bottom_bar.dart';
 
 import '../../controller/authentication_controller/login_controller.dart';
 
@@ -10,6 +11,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   final loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +58,9 @@ class LoginScreen extends StatelessWidget {
                   color: kdarkBlue,
                   onPressed: () {
                     if (loginController.formKey.currentState!.validate()) {
-                      // Get.off(()=>VerifcationScreen());
+                      // Get.off(()=>OtpV());
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      Get.offAll(() => CustomNavigation());
                     }
                   },
                   child: Text(
@@ -83,7 +87,7 @@ class LoginScreen extends StatelessWidget {
         child: Row(
           children: [
             const Icon(
-              Icons.person,
+              Icons.email,
               color: kdarkBlue,
             ),
             SizedBox(
@@ -96,19 +100,19 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Full Name",
+                    "User Id",
                     style: CustomFonts.getMultipleStyle(
                         15.0, kBlack, FontWeight.w400),
                   ),
                   TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "Name cannot be empty";
+                        return "userid cannot be empty";
                       }
                       return null;
                     },
                     decoration: InputDecoration(
-                        hintText: "Enter your Full Name",
+                        hintText: "Enter your user id",
                         contentPadding: const EdgeInsets.symmetric(vertical: 5),
                         hintStyle: CustomFonts.getMultipleStyle(
                             14.0, kTextFieldGrey, FontWeight.w400),
@@ -133,7 +137,7 @@ class LoginScreen extends StatelessWidget {
         child: Row(
           children: [
             const Icon(
-              Icons.phone_android,
+              Icons.visibility,
               color: kdarkBlue,
             ),
             SizedBox(
@@ -146,29 +150,46 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "Enter Mobile Number",
+                    "Password",
                     style: CustomFonts.getMultipleStyle(
                         15.0, kBlack, FontWeight.w400),
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.phone,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Phone cannot be empty";
-                      } else if (value.length < 10) {
-                        return "Phone  number length short";
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                        hintText: "Enter your Mobile Number",
-                        contentPadding: const EdgeInsets.symmetric(vertical: 5),
-                        hintStyle: CustomFonts.getMultipleStyle(
-                            14.0, kTextFieldGrey, FontWeight.w400),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none),
-                  )
+                  Obx(() => TextFormField(
+                        obscureText: loginController.showPassword.value,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Password cannot be empty";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                loginController.showPassword.value =
+                                    !loginController.showPassword.value;
+                              },
+                              child: loginController.showPassword.value
+                                  ? const Icon(
+                                      Icons.visibility,
+                                      size: 20.0,
+                                      color: kdarkBlue,
+                                    )
+                                  : const Icon(
+                                      Icons.visibility_off,
+                                      size: 20.0,
+                                      color: kdarkBlue,
+                                    ),
+                            ),
+                            hintText: "Enter your Password",
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 5),
+                            hintStyle: CustomFonts.getMultipleStyle(
+                                14.0, kTextFieldGrey, FontWeight.w400),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none),
+                      ))
                 ],
               ),
             )

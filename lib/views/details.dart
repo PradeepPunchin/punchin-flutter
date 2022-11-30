@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/views/home/home_view.dart';
+import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class Details extends StatefulWidget {
@@ -22,7 +23,7 @@ class _DetailsState extends State<Details> {
           backgroundColor: Colors.white,
           leading: GestureDetector(
               onTap: (){
-                Get.off(()=>HomeView());
+                Get.off(()=>CustomNavigation());
               },
               child: Icon(Icons.arrow_back_ios_new ,color: Colors.black)),
           title: Text(widget.title.toString(),style: TextStyle(
