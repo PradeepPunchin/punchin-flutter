@@ -77,7 +77,7 @@ class NotificationView extends StatelessWidget {
                 color: index < 5 ? kBack : Colors.white,
                 margin: EdgeInsets.only(top: 1.0),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,8 +89,8 @@ class NotificationView extends StatelessWidget {
                                 "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
                             imageBuilder: (context, imageProvider) {
                               return Container(
-                                height: 20.0.h,
-                                width: 20.0.w,
+                                height: 22.0.h,
+                                width: 22.0.w,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     image:
@@ -125,7 +125,7 @@ class NotificationView extends StatelessWidget {
                             "${index + 3} Claims submitted to Insurer. You can track claims settlement process.",
                             style: CustomFonts.kBlack15Black.copyWith(
                                 color: Colors.black,
-                                fontSize: 14.0,
+                                fontSize: 15.0,
                                 fontWeight: FontWeight.w600),
                           ),
                           SizedBox(
