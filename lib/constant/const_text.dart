@@ -36,6 +36,12 @@ const kBody14kWhite600 = TextStyle(
   fontWeight: FontWeight.w600,
 );
 
+const kBody14kdarkBlue700=TextStyle(
+    fontSize:14,
+    color: kdarkBlue,
+    fontWeight: FontWeight.w700
+);
+
 const kBody20white700=TextStyle(
     fontSize:20,
     color: kWhite,

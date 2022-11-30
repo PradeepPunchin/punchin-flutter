@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
+import 'package:punchin/views/details.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class HomeView extends StatefulWidget {
@@ -31,20 +33,65 @@ class _HomeViewState extends State<HomeView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                ListTile(
-                  leading: CircleAvatar(
-                    child: SvgPicture.asset("assets/icons/search.svg"),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
 
-                  ),
-                  title: Text("Anil Kumar"),
-                  subtitle: Text("Id:983821"),
-                  trailing: Padding(
-                    padding:  EdgeInsets.all(8),
-                    child:   CircleAvatar(
+                          child:ClipRRect(
+                            borderRadius:
+                             BorderRadius.circular(100),
+                            child: CachedNetworkImage(
+                              // height: 150,
+                              // width: Get.width,
+                              imageUrl:
+                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                              imageBuilder:
+                                  (context, imageProvider) =>
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                              placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                              errorWidget:
+                                  (context, url, error) =>
+                              const Icon(
+                                Icons.error,
+                                color: kBlack,
+                              ),
+                            ),
+                          ),
+
+                          //SvgPicture.asset("assets/icons/search.svg"),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 13,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Anil Kumar"),
+                        Text("Id:983821"),
+
+
+                      ],
+                    ),
+                    Spacer(),
+                    CircleAvatar(
                       backgroundColor: Colors.white10,
 
-                      radius: 48.0,
+                      radius: 17.0,
                       child: Container(
+
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             border: Border.all(width: 2,color: Colors.black12),
@@ -54,10 +101,12 @@ class _HomeViewState extends State<HomeView> {
                             child: Icon(Icons.notifications_outlined,color:Colors.black,),
                           )),
                     ),
-                  ),
+
+
+
+                  ],
                 ),
 
-                // search bar
                 const Padding(
                   padding:  EdgeInsets.only(top: 12,bottom: 2),
                   child: CustomSearch(
@@ -76,9 +125,10 @@ class _HomeViewState extends State<HomeView> {
                       borderRadius: BorderRadius.circular(7)
                     ),
                     child: ListTile(
+
                       leading: SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
                       title: Text("12",style: kBody20white700,),
-                      subtitle: Text("Id:983821",style: kBody20white700,),
+                      subtitle: Text("Id:983821",style: kBody12kWhite500),
                     ),
                   ),
                 ),
@@ -100,6 +150,9 @@ class _HomeViewState extends State<HomeView> {
                             borderRadius: BorderRadius.circular(7)
                         ),
                         child: ListTile(
+                          onTap: (){
+                            Get.to(()=>Details(title: "${subtitle[index].toString()}",));
+                          },
                           horizontalTitleGap:13,
                           isThreeLine : true,
                           leading: SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
@@ -135,49 +188,53 @@ class _HomeViewState extends State<HomeView> {
                         child: Text("Submit Claims and Get Reward",style: k14Body323232black600,),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 16,left: 22,right: 22),
+                        padding: const EdgeInsets.only(top: 16,left: 22,),
                         child: Row(
                           children: [
-                            SizedBox(
-                              width:106,//176.5,
-                              child: Column(
-                                mainAxisAlignment : MainAxisAlignment.start,
-                                mainAxisSize : MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                 const Text("Submit 5 Claims Today. Get a Surprise Reward.",style: kBody13black400,
-                                  maxLines: 5,
-                                  softWrap: true,
-                                    overflow: TextOverflow.ellipsis,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                               const SizedBox(
+                                  width:140.5,
+                                  child:  Text("Submit 5 Claims Today. Get a Surprise Reward.",style: kBody13black400,
+                                   maxLines: 5,
+                                   softWrap: true,
+                                     overflow: TextOverflow.ellipsis,
+                                   ),
+                                ),
+                                SizedBox(height: 11,),
+                                MaterialButton(
+                                  height: 30,
+                                  minWidth: 104,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  color: kdarkBlue,
+                                  onPressed: () {
+
+                                  },
+                                  child: Text(
+                                    "Claim Now",
+                                    style: CustomFonts.getMultipleStyle(
+                                        15.0, Colors.white, FontWeight.w400),
                                   ),
-
-
-
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                             const Spacer(),
-                            SizedBox(
-                                width: 142.6,
-                                height: 106,
-                                child: SvgPicture.asset("assets/icons/cashback_happiness.svg")),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: SizedBox(
+                                  width: 142.6,
+                                  height: 106,
+                                  child: Image.asset("assets/icons/cashback_happiness 1.png")),
+                            ),
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Address",style: kBody13black400,),
-                            SizedBox(height: 4,),
 
 
-                            Text("H-23, Gali Number 45, Lal bagh Chowk, Prayagraj, UP ",style: kBody14black600,),
 
-                          ],
-                        ),
-                      ),
+                      SizedBox(height: 26,)
 
                     ],
                   ),

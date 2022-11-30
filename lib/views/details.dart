@@ -1,12 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
+import 'package:punchin/views/home/home_view.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class Details extends StatefulWidget {
-  const Details({Key? key}) : super(key: key);
-
+  const Details({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
   State<Details> createState() => _DetailsState();
 }
@@ -18,8 +20,12 @@ class _DetailsState extends State<Details> {
 
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: Icon(Icons.arrow_back_ios_new ,color: Colors.black),
-          title: Text("Claims Allocated",style: TextStyle(
+          leading: GestureDetector(
+              onTap: (){
+                Get.off(()=>HomeView());
+              },
+              child: Icon(Icons.arrow_back_ios_new ,color: Colors.black)),
+          title: Text(widget.title.toString(),style: TextStyle(
             color: Colors.black,
           ),),
           centerTitle: true,

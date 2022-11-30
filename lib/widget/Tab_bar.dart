@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:punchin/constant/const_color.dart';
+import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/views/details.dart';
 import 'package:punchin/views/home/home_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -138,8 +139,8 @@ class _CustomNavigationState extends State<CustomNavigation> {
   /// list of screens
   final List<Widget> screens = [
     const HomeView(),
-    const Details(),
-    const Details(),
+    const HomeView(),
+    const HomeView(),
 
   ];
   @override
@@ -152,7 +153,9 @@ class _CustomNavigationState extends State<CustomNavigation> {
       home: Scaffold(
         body: screens[_currentIndex],
         bottomNavigationBar: SalomonBottomBar(
-          itemShape:  const StadiumBorder(),
+          itemShape: RoundedRectangleBorder(
+             borderRadius : BorderRadius.circular(12)
+          ),// const StadiumBorder(),
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           items: [
@@ -164,26 +167,48 @@ class _CustomNavigationState extends State<CustomNavigation> {
                     width: 20,
                   ),
                   icon: SvgPicture.asset(
-                    "assets/bottom_bar/home.svg",
+                    "assets/bottom_bar/home-2.svg",
                     height: 20,
                     width: 20,
-                    color: kMediumBlack,
+                    color: unselectBottombarColor,
                   ),
-              title: Text("Home"),
-              selectedColor: Colors.purple,
+              title: Text("Home",style: kBody14kdarkBlue700),
+              selectedColor: bottombarColor,
             ),
 
             /// Likes
             SalomonBottomBarItem(
-              icon: Icon(Icons.mark_unread_chat_alt_rounded),
-              title: Text("Tracking"),
-              selectedColor: Colors.pink,
+              activeIcon: SvgPicture.asset(
+                "assets/bottom_bar/bottomactiveseach.svg",
+                height: 20,
+                width: 20,
+                color: kdarkBlue,
+              ),
+              icon: SvgPicture.asset(
+                "assets/icons/bottomsearch.svg",
+                height: 20,
+                width: 20,
+                color: unselectBottombarColor,
+              ),
+              title: Text("Tracking" ,style: kBody14kdarkBlue700),
+              selectedColor: bottombarColor,
             ),
             /// Profile
             SalomonBottomBarItem(
-              icon: Icon(Icons.person),
-              title: Text("Profile"),
-              selectedColor: Colors.teal,
+              activeIcon: SvgPicture.asset(
+                "assets/icons/profile.svg",
+                height: 20,
+                width: 20,
+                color: kdarkBlue,
+              ),
+              icon: SvgPicture.asset(
+                "assets/icons/profile.svg",
+                height: 20,
+                width: 20,
+                color: unselectBottombarColor,
+              ),
+              title: Text("Agent Profile",style: kBody14kdarkBlue700),
+              selectedColor: bottombarColor,
             ),
           ],
         ),
