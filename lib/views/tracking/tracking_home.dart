@@ -1,6 +1,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
@@ -13,6 +14,14 @@ class TrackingHome extends StatefulWidget {
 }
 
 class _TrackingHomeState extends State<TrackingHome> {
+
+  RxBool details = false.obs;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,15 +70,13 @@ class _TrackingHomeState extends State<TrackingHome> {
                                 ),
                               ),
                             ),
-
-                            //SvgPicture.asset("assets/icons/search.svg"),
                           ),
                         ],
                       ),
                       Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        children:const [
                           SizedBox(height: 8,),
                           Text("Claim Tracking",style: kBody16black600,),
 
@@ -88,7 +95,7 @@ class _TrackingHomeState extends State<TrackingHome> {
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(width: 2,color: Colors.black12),
                             ),
-                            child: Padding(
+                            child:const Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Icon(Icons.notifications_outlined,color:Colors.black,),
                             )),
@@ -176,7 +183,16 @@ class _TrackingHomeState extends State<TrackingHome> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Center(child: Text("View More ",style: kBody14black600,)),
+                            Obx(() => details.value== false? GestureDetector(
+                                  onTap: (){
+
+                                    details.value=true;
+                                  },
+                                  child: Center(child: Text("View More ",style: kBody14black600,))): GestureDetector(
+            onTap: (){
+              details.value=false;
+          },
+        child: Center(child: Text("View less ",style: kBody14black600,)))),
                               SizedBox(height: 4,),
                             ],
                           ),

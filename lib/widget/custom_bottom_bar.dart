@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/views/home/home_view.dart';
-import 'package:punchin/views/profile_view.dart';
+import 'package:punchin/views/profile/profile_view.dart';
 import 'package:punchin/views/tracking/tracking_home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
