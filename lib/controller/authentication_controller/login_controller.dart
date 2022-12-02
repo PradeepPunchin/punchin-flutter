@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:punchin/constant/api_url.dart';
+import 'package:punchin/views/login/login_screen.dart';
 import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/custom_snackBar.dart';
 
@@ -31,31 +33,32 @@ class LoginController extends GetxController {
         },
         body: jsonEncode(data),
       );
-
-      print(response.body);
-      print(data);
-      print(loginApi);
-      print(response.statusCode);
       if (response.statusCode==200) {
 
         var details= jsonDecode(response.body);
+        var data=details["data"];
+        var user=data["user"];
 
-        Get.offAll(() => CustomNavigation());
 
-
-       // return  LoginResponse.fromJson(jsonDecode(response.body));
+        if(user["role"]=="AGENT"){
+          GetStorage().write("authToken", data["authToken"]);
+          Get.offAll(() => CustomNavigation());
+        }
+        else{
+          getErrorToaster("you are not authorized");
+        }
       }
-      if(response.statusCode==401){
+      else if(response.statusCode==401){
         final details=jsonDecode(response.body);
-        getSuccessToaster(details["message"]);
+        getErrorToaster(details["message"]);
       }
-      if(response.statusCode==400){
+      else if(response.statusCode==400){
         final details=jsonDecode(response.body);
-        getSuccessToaster(details["message"]);
+        getErrorToaster(details["message"]);
       }
-      if(response.statusCode==405){
+      else if(response.statusCode==405){
         final details=jsonDecode(response.body);
-        getSuccessToaster(details["message"]);
+        getErrorToaster(details["message"]);
       }
     }
     on SocketException {
@@ -76,6 +79,30 @@ class LoginController extends GetxController {
       //btnController.value.stop();
     }
 
+  }
+
+  Future postLogout() async {
+
+    final response = await http.get(
+      Uri.parse(logoutApi),
+      headers: {
+        "Content-Type":"application/json",
+      },
+
+    );
+
+    if (response.statusCode==200) {
+
+      GetStorage().remove("authToken");
+      Get.offAll(()=>LoginScreen());
+
+
+
+    } else {
+      final details=jsonDecode(response.body);
+      getErrorToaster(details["message"]);
+
+    }
   }
 
 }

@@ -2,9 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
-import 'package:punchin/views/details.dart';
+import 'package:punchin/controller/authentication_controller/login_controller.dart';
+import 'package:punchin/controller/home_controller/home_controller.dart';
+import 'package:punchin/model/home_model/home_count_model.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class HomeView extends StatefulWidget {
@@ -15,11 +18,11 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<String> title = ["22", "11", "01","03","05","07"];
-  List<String> subtitle = ["Action Pending", "Claims In-Progress", "Under Verification",
-    "Sent to Insurer","Claims Paid","Claims Repudiated"];
-  List<String> colorsValue = ["Colors.green", "Colors.green", "Colors.green","Colors.green","Colors.green"];
-
+  List<String> title = ["22", "11"];
+  List<String> subtitle = ["WIP Case", "Settled cases "];
+  //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
+  LoginController loginController=Get.put(LoginController());
+  HomeController homeController=Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
+                /// app bar
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -107,6 +110,7 @@ class _HomeViewState extends State<HomeView> {
                   ],
                 ),
 
+                //search
                 const Padding(
                   padding:  EdgeInsets.only(top: 12,bottom: 2),
                   child: CustomSearch(
@@ -116,132 +120,346 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      color: kBlue,
-                      borderRadius: BorderRadius.circular(7)
-                    ),
-                    child: ListTile(
-                      onTap: (){
-                        Get.to(()=>Details(title: "Claims Allocated"));
-                      },
 
-                      leading: SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
-                      title: Text("12",style: kBody20white700,),
-                      subtitle: Text("Claims Allocated",style: kBody12kWhite500),
-                    ),
-                  ),
-                ),
+                FutureBuilder(
+                    future: homeController.homeCount(),
+                    builder: (context, AsyncSnapshot snapshot) {
 
-                  GridView.builder(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: 6,
-                    itemBuilder: (BuildContext context, int index) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        // If we got an error
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              '${snapshot.error} occurred',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          );
+                        }
+                        // if we got our data
+                        else if (snapshot.hasData) {
+                          // Extracting data from snapshot object
+                          HomeCount? homeCount = snapshot.data as HomeCount;
+                          return ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: 1 ,//homeCount.data.length,
+                            itemBuilder: (context, index) {
+                              // var singleData = peOrderLine.products?[index];
+                              return Column(
+                                children: [
+                                  // total case
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Container(
+                                      width: Get.width,
+                                      height: 77,
+                                      decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            colors: totalCasseColor,
+                                          ),
+                                          color: kLightBlue,
+                                          borderRadius: BorderRadius.circular(7)
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Stack(
+                                                alignment : AlignmentDirectional.center,
+                                                children: [
+                                                  SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                  //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                  Positioned(
+                                                    //left: 18,
+                                                    // top: 20,
+                                                    child: Container(
+                                                      width: 68,
+                                                      height: 68,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        gradient: LinearGradient(
+                                                          colors: circleColor,
+                                                        ),
+
+                                                        //borderRadius: BorderRadius.circular(100)
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          // SizedBox(width: 13,),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 20),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(homeCount.data!.aLL.toString(),style: kBody20white700,),
+                                                Text(subtitle[1].toString(),style: kBody12kWhite500),
 
 
-                      return GridTile(child: Container(
-                        width: Get.width,
-                        height: 77,
-                        padding: EdgeInsets.only(top: 20),
-                        decoration: BoxDecoration(
-                            color: kBlue,
-                            borderRadius: BorderRadius.circular(7)
+                                              ],
+                                            ),
+                                          ),
+
+
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// card
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 170,
+                                        height: 77,
+                                        decoration: BoxDecoration(
+                                            color: kPurpul,
+                                            borderRadius: BorderRadius.circular(7)
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Stack(
+                                                  alignment : AlignmentDirectional.center,
+                                                  children: [
+                                                    SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                    //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                    Positioned(
+                                                      //left: 18,
+                                                      // top: 20,
+                                                      child: Container(
+                                                        width: 68,
+                                                        height: 68,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          gradient: LinearGradient(
+                                                            colors: circleColor,
+                                                          ),
+
+                                                          //borderRadius: BorderRadius.circular(100)
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    //   Positioned(
+                                                    //     //left: 18,
+                                                    //   top: 20,
+                                                    //   child: SvgPicture.asset("assets/icons/book.svg",color: kWhite,)),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            //SizedBox(width: 13,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 20),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(homeCount.data!.iNPROGRESS.toString(),style: kBody20white700,),
+                                                  Text(subtitle[0].toString(),style: kBody12kWhite500),
+
+
+                                                ],
+                                              ),
+                                            ),
+
+
+
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Container(
+                                        width: 170,
+                                        height: 77,
+                                        decoration: BoxDecoration(
+                                            color: kLightBlue,
+                                            borderRadius: BorderRadius.circular(7)
+                                        ),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Stack(
+                                                  alignment : AlignmentDirectional.center,
+                                                  children: [
+                                                    SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                    //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                    Positioned(
+                                                      //left: 18,
+                                                      // top: 20,
+                                                      child: Container(
+                                                        width: 68,
+                                                        height: 68,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.circle,
+                                                          gradient: LinearGradient(
+                                                            colors: circleColor,
+                                                          ),
+
+                                                          //borderRadius: BorderRadius.circular(100)
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    //   Positioned(
+                                                    //     //left: 18,
+                                                    //   top: 20,
+                                                    //   child: SvgPicture.asset("assets/icons/book.svg",color: kWhite,)),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            //SizedBox(width: 13,),
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 20),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(homeCount.data!.sETTLED.toString(),style: kBody20white700,),
+                                                  Text(subtitle[1].toString(),style: kBody12kWhite500),
+
+
+                                                ],
+                                              ),
+                                            ),
+
+
+
+                                          ],
+                                        ),
+                                      ),
+
+
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(
+                                height: 10,
+                              );
+                            },
+                          );
+                        }
+                      }
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.3,
+                        child:const Center(
+                          child: CircularProgressIndicator(),
                         ),
-                        child: ListTile(
-                          onTap: (){
-                            Get.to(()=>Details(title: "${subtitle[index].toString()}",));
-                          },
-                          horizontalTitleGap:13,
-                          isThreeLine : true,
-                          leading: SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
-                            minLeadingWidth:13,
-                          title:   Text(title[index].toString(),style: kBody20white700,),
-                          subtitle:  Text(subtitle[index].toString(),style: kBody12kWhite500),
-                        ),
-                      ));
-                    },
-
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio:1.75 ,// 2.15 / 2.8, //2 / 3.05,
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                    ),
-                  ),
+                      );
+                    }),
 
 
-                  SizedBox(height: 4,),
-                  Container(
-                  //width: Get.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border.all(width:5,color:kBorder )
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
 
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.12,left: 22.06),
-                        child: Text("Submit Claims and Get Reward",style: k14Body323232black600,),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16,left: 22,),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                               const SizedBox(
-                                  width:140.5,
-                                  child:  Text("Submit 5 Claims Today. Get a Surprise Reward.",style: kBody13black400,
-                                   maxLines: 5,
-                                   softWrap: true,
-                                     overflow: TextOverflow.ellipsis,
-                                   ),
-                                ),
-                                SizedBox(height: 11,),
-                                MaterialButton(
-                                  height: 30,
-                                  minWidth: 104,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  color: kdarkBlue,
-                                  onPressed: () {
 
-                                  },
-                                  child: Text(
-                                    "Claim Now",
-                                    style: CustomFonts.getMultipleStyle(
-                                        15.0, Colors.white, FontWeight.w400),
+
+             SizedBox(height: 20,),
+
+             Center(
+                                  child: MaterialButton(
+                                    height: 30,
+                                    minWidth: 104,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5.0)),
+                                    color: kdarkBlue,
+                                    onPressed: () {
+                                      loginController.postLogout();
+
+                                    },
+                                    child: Text(
+                                      "Logout",
+                                      style: CustomFonts.getMultipleStyle(
+                                          15.0, Colors.white, FontWeight.w400),
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                            const Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: SizedBox(
-                                  width: 142.6,
-                                  height: 106,
-                                  child: Image.asset("assets/icons/cashback_happiness 1.png")),
-                            ),
-                          ],
-                        ),
-                      ),
 
 
-
-                      SizedBox(height: 26,)
-
-                    ],
-                  ),
-                ),
+                /// claim settlement card
+                //  SizedBox(height: 4,),
+                //   Container(
+                //   //width: Get.width,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(7),
+                //       border: Border.all(width:5,color:kBorder )
+                //   ),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 20.12,left: 22.06),
+                //         child: Text("Submit Claims and Get Reward",style: k14Body323232black600,),
+                //       ),
+                //       Padding(
+                //         padding: const EdgeInsets.only(top: 16,left: 22,),
+                //         child: Row(
+                //           children: [
+                //             Column(
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                const SizedBox(
+                //                   width:140.5,
+                //                   child:  Text("Submit 5 Claims Today. Get a Surprise Reward.",style: kBody13black400,
+                //                    maxLines: 5,
+                //                    softWrap: true,
+                //                      overflow: TextOverflow.ellipsis,
+                //                    ),
+                //                 ),
+                //                 SizedBox(height: 11,),
+                //                 MaterialButton(
+                //                   height: 30,
+                //                   minWidth: 104,
+                //                   shape: RoundedRectangleBorder(
+                //                       borderRadius: BorderRadius.circular(5.0)),
+                //                   color: kdarkBlue,
+                //                   onPressed: () {
+                //
+                //                   },
+                //                   child: Text(
+                //                     "Claim Now",
+                //                     style: CustomFonts.getMultipleStyle(
+                //                         15.0, Colors.white, FontWeight.w400),
+                //                   ),
+                //                 ),
+                //               ],
+                //             ),
+                //             const Spacer(),
+                //             Padding(
+                //               padding: const EdgeInsets.only(right: 8.0),
+                //               child: SizedBox(
+                //                   width: 142.6,
+                //                   height: 106,
+                //                   child: Image.asset("assets/icons/cashback_happiness 1.png")),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //
+                //
+                //
+                //       SizedBox(height: 26,)
+                //
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -2,6 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:punchin/constant/const_color.dart';
 
+
+const k11Body929292LightBlack500 = TextStyle(
+  fontSize: 11,
+  color: kLightBlack,
+  overflow: TextOverflow.fade,
+  fontWeight: FontWeight.w500,
+);
+
+
+
+/// 12
+const k12Body323232Black500 = TextStyle(
+  fontSize: 12,
+  color: kText323232Black,
+  overflow: TextOverflow.fade,
+  fontWeight: FontWeight.w500,
+);
 const kBody12kWhite500 = TextStyle(
   fontSize: 12,
   color: kWhite,
@@ -9,6 +26,7 @@ const kBody12kWhite500 = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
+/// 13
 const kBody13black400 = TextStyle(
   fontSize: 13,
   color: kLightBlack,

@@ -25,3 +25,10 @@ const kYellow = Color(0xffC5C5C);
 const kTextFieldBorder = Color(0xffD5D9E0);
 const kFilledTextColor = Color(0xffF9F9F9);
 const kBack = Color(0xffF1F6FC);
+const kPurpul =Color.fromRGBO(136, 136, 221, 1);
+const kLightBlue=Color.fromRGBO(124, 181, 236, 1);
+
+//// gradient
+///Total case
+var totalCasseColor =[Color.fromRGBO(26, 176, 176, 1),Color.fromRGBO(33, 172, 172, 1)];
+var circleColor =[Color.fromRGBO(255,255,255, 0.2),Color.fromRGBO(255,255,255, 0)];
