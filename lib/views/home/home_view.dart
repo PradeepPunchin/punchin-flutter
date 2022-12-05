@@ -6,7 +6,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/authentication_controller/login_controller.dart';
+import 'package:punchin/controller/file_controller/file_controller.dart';
 import 'package:punchin/controller/home_controller/home_controller.dart';
+import 'package:punchin/controller/image_controller/image_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
 import 'package:punchin/views/details.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
@@ -24,6 +26,7 @@ class _HomeViewState extends State<HomeView> {
   //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
   LoginController loginController=Get.put(LoginController());
   HomeController homeController=Get.put(HomeController());
+ // FileController fileController=Get.put(FileController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 20,),
                 /// app bar
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -402,6 +406,7 @@ class _HomeViewState extends State<HomeView> {
                                     ),
                                   ),
                                 ),
+
 
 
                 /// claim settlement card

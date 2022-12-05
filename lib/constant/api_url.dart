@@ -9,3 +9,8 @@ var logoutApi = baseUrl+"auth/logout";
 
 /// home page
 var homeCountApi = baseUrl+"banker/getDashboardData";
+
+
+
+// multipart testing
+var multipartApi=baseUrl + "banker/claim/0/uploadDocument";

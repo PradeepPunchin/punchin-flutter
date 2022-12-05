@@ -102,7 +102,11 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
+<<<<<<< HEAD:build/ios/app-delta/763e93217ccd836e16d97927b29dcab0/00008020-00062D4C3EA3002E/Runner.app/Frameworks/App.framework/_CodeSignature/CodeResources
 		01umjx47wcBUW66LOdocqB9VDt0=
+=======
+		4WpmBsniEZAHYVe34wNP3SlrMp0=
+>>>>>>> saurabh:build/ios/Debug-iphonesimulator/App.framework/_CodeSignature/CodeResources
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -284,7 +288,11 @@
 		<dict>
 			<key>hash2</key>
 			<data>
+<<<<<<< HEAD:build/ios/app-delta/763e93217ccd836e16d97927b29dcab0/00008020-00062D4C3EA3002E/Runner.app/Frameworks/App.framework/_CodeSignature/CodeResources
 			NLLduK1ApOv9njd9Srspu3rO/sAImpD48cmIMEwTS3A=
+=======
+			mmdIZOCS7gdu6Yhi7h+hUG0gxJmON0ienJLbUoBm0JU=
+>>>>>>> saurabh:build/ios/Debug-iphonesimulator/App.framework/_CodeSignature/CodeResources
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
