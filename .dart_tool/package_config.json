@@ -404,6 +404,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "status_change",
+      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/status_change-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "stream_channel",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0",
       "packageUri": "lib/",
@@ -476,7 +482,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-12-02T09:47:18.103873Z",
+  "generated": "2022-12-05T04:49:01.885388Z",
   "generator": "pub",
   "generatorVersion": "2.18.4"
 }

@@ -21,7 +21,7 @@ class MyClass extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ClaimFormView(),
+        home: SplashScreen(),
       ),
     );
   }
