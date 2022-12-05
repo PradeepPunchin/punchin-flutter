@@ -45,20 +45,20 @@ class LoginController extends GetxController {
           Get.offAll(() => CustomNavigation());
         }
         else{
-          getErrorToaster("you are not authorized");
+          //getErrorToaster("you are not authorized");
         }
       }
       else if(response.statusCode==401){
         final details=jsonDecode(response.body);
-        getErrorToaster(details["message"]);
+       // getErrorToaster(details["message"]);
       }
       else if(response.statusCode==400){
         final details=jsonDecode(response.body);
-        getErrorToaster(details["message"]);
+       // getErrorToaster(details["message"]);
       }
       else if(response.statusCode==405){
         final details=jsonDecode(response.body);
-        getErrorToaster(details["message"]);
+      //  getErrorToaster(details["message"]);
       }
     }
     on SocketException {
@@ -100,7 +100,7 @@ class LoginController extends GetxController {
 
     } else {
       final details=jsonDecode(response.body);
-      getErrorToaster(details["message"]);
+      //getErrorToaster(details["message"]);
 
     }
   }

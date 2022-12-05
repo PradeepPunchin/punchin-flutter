@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
+import 'package:punchin/views/claim_form_view/claim_form_view.dart';
 import 'package:punchin/views/home/home_view.dart';
 import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
@@ -117,99 +118,105 @@ class _DetailsState extends State<Details> {
                     ),
                   ),
 
-                  Container(
-                    //width: Get.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border.all(width:1,color:kBorder )
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          //width: Get.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft : Radius.circular(7),
-                                topRight : Radius.circular(7),
+                  GestureDetector(
+                    onTap: (){
+                      Get.off(()=>ClaimFormView());
 
+                  },
+                    child: Container(
+                      //width: Get.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        border: Border.all(width:1,color:kBorder )
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            //width: Get.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft : Radius.circular(7),
+                                  topRight : Radius.circular(7),
+
+                                ),
+                              color:kBlue,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20,top: 12,bottom: 12),
+                              child: Row(
+                                children: [
+                                  Text("Case/Claim ID : 27193", style: kBody14kWhite600)
+
+                                ],
                               ),
-                            color:kBlue,
+                            ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20,top: 12,bottom: 12),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 14,left: 22,right: 22),
                             child: Row(
                               children: [
-                                Text("Case/Claim ID : 27193", style: kBody14kWhite600)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Nominee Name",style: kBody13black400,),
+                                    SizedBox(height: 4,),
+                                    Text("Sanjay Prakash",style: kBody14black600,),
+                                  ],
+                                ),
+                               const Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Nominee Number",style: kBody13black400,),
+                                    SizedBox(height: 4,),
+                                    Text("9462302854",style: kBody14black600,),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16,left: 22,right: 22),
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Allocation date",style: kBody13black400,),
+                                    SizedBox(height: 4,),
+                                    Text("6/06/2022",style: kBody14black600,),
+                                  ],
+                                ),
+                                const Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Borrower Name"),
+                                    SizedBox(height: 4,),
+                                    Text("Ram Prakash",style: kBody14black600,),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Address",style: kBody13black400,),
+                                SizedBox(height: 4,),
+
+
+                                Text("H-23, Gali Number 45, Lal bagh Chowk, Prayagraj, UP ",style: kBody14black600,),
 
                               ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 14,left: 22,right: 22),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Nominee Name",style: kBody13black400,),
-                                  SizedBox(height: 4,),
-                                  Text("Sanjay Prakash",style: kBody14black600,),
-                                ],
-                              ),
-                             const Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Nominee Number",style: kBody13black400,),
-                                  SizedBox(height: 4,),
-                                  Text("9462302854",style: kBody14black600,),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 16,left: 22,right: 22),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Allocation date",style: kBody13black400,),
-                                  SizedBox(height: 4,),
-                                  Text("6/06/2022",style: kBody14black600,),
-                                ],
-                              ),
-                              const Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Borrower Name"),
-                                  SizedBox(height: 4,),
-                                  Text("Ram Prakash",style: kBody14black600,),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Address",style: kBody13black400,),
-                              SizedBox(height: 4,),
 
-
-                              Text("H-23, Gali Number 45, Lal bagh Chowk, Prayagraj, UP ",style: kBody14black600,),
-
-                            ],
-                          ),
-                        ),
-
-                      ],
+                        ],
+                      ),
                     ),
                   ),
 
