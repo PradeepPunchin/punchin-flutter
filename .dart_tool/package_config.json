@@ -320,6 +320,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "status_change",
+      "rootUri": "file:///Users/sangamsharma/.pub-cache/hosted/pub.dartlang.org/status_change-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "stream_channel",
       "rootUri": "file:///Users/sangamsharma/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0",
       "packageUri": "lib/",
@@ -392,7 +398,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-11-30T05:57:06.380968Z",
+  "generated": "2022-12-01T13:53:11.118616Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }
