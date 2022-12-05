@@ -6,7 +6,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/authentication_controller/login_controller.dart';
+import 'package:punchin/controller/file_controller/file_controller.dart';
 import 'package:punchin/controller/home_controller/home_controller.dart';
+import 'package:punchin/controller/image_controller/image_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
 import 'package:punchin/views/details.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
@@ -24,6 +26,7 @@ class _HomeViewState extends State<HomeView> {
   //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
   LoginController loginController=Get.put(LoginController());
   HomeController homeController=Get.put(HomeController());
+  FileController fileController=Get.put(FileController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 20,),
                 /// app bar
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -403,7 +407,50 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ),
 
+             SizedBox(height: 20,),
 
+             Center(
+                  child: MaterialButton(
+                    height: 30,
+                    minWidth: 104,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    color: kdarkBlue,
+                    onPressed: () {
+                      ImageController().pickImageCamera();
+
+                    },
+                    child: Text(
+                      "pick camera",
+                      style: CustomFonts.getMultipleStyle(
+                          15.0, Colors.white, FontWeight.w400),
+                    ),
+                  ),
+                ),
+
+             SizedBox(height: 20,),
+
+             Center(
+                  child: MaterialButton(
+                    height: 30,
+                    minWidth: 104,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    color: kdarkBlue,
+                    onPressed: () {
+                      ImageController().UpdateFile();// "/data/user/0/com.punchin.punchin/cache/scaled_ed9b8fec-3ccc-49ab-8a84-a09ca5d996b22556970293706575497.jpg");
+
+                    },
+                    child: Text(
+                      "Camera",
+                      style: CustomFonts.getMultipleStyle(
+                          15.0, Colors.white, FontWeight.w400),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20,),
+
+                Text(ImageController().filepath.toString(),style: kBody20white700.copyWith(color: Colors.black),),
                 /// claim settlement card
                 //  SizedBox(height: 4,),
                 //   Container(
