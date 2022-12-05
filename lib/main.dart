@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:punchin/views/claim_form_view/claim_form_view.dart';
+import 'package:punchin/widget/custom_bottom_bar.dart';
+import 'package:punchin/widget/splash_views.dart';
 
 void main() {
   runApp(const MyClass());
@@ -19,7 +21,7 @@ class MyClass extends StatelessWidget {
       splitScreenMode: true,
       builder: (BuildContext context, Widget? child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ClaimFormView(),
+        home: SplashScreen(),
       ),
     );
   }

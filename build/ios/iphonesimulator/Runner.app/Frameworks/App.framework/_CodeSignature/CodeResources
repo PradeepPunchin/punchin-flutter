@@ -10,7 +10,7 @@
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		NbHpzM3h9QakpgZeHERQMzSixNs=
+		Y/6e1J2uncKkFCCguOI8yXKEOJE=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -18,11 +18,23 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		fNHHyNaIEGSM0G/K7IviOIqH1Yk=
+		5fg2IQSq7+fXymADfrNK0Bmwb/4=
 		</data>
 		<key>flutter_assets/assets/24625-dr-vector-insurance-protection%201.svg</key>
 		<data>
 		hEKPcRjHennIKUu1XR2cD7bEoK8=
+		</data>
+		<key>flutter_assets/assets/animation/login.json</key>
+		<data>
+		5XeAw4dGxbZZjNy6mTJdlRiLCUc=
+		</data>
+		<key>flutter_assets/assets/bottom_bar/bottomactiveseach.svg</key>
+		<data>
+		pViu99x/PCdiozSnWAQIxe9apmU=
+		</data>
+		<key>flutter_assets/assets/bottom_bar/home-2.svg</key>
+		<data>
+		q8BfHcSBaUMaamGxzdTI4mwNDbg=
 		</data>
 		<key>flutter_assets/assets/bottom_bar/home.svg</key>
 		<data>
@@ -32,9 +44,33 @@
 		<data>
 		2LRxqF2qKkDPRfQsEKyHLdmv9y8=
 		</data>
+		<key>flutter_assets/assets/icons/book.svg</key>
+		<data>
+		QQoCavPAEQpnsOXmwS45SCwchLI=
+		</data>
+		<key>flutter_assets/assets/icons/bottomsearch.svg</key>
+		<data>
+		R6jZInNust73QPl88f31NVMU2MM=
+		</data>
+		<key>flutter_assets/assets/icons/cashback_happiness%201.png</key>
+		<data>
+		g0T5m1moRZibFNMPkwLSx8XFoZ0=
+		</data>
+		<key>flutter_assets/assets/icons/cashback_happiness.svg</key>
+		<data>
+		CBHtfLy8sJYmtvK0Go8S3PFIXSM=
+		</data>
+		<key>flutter_assets/assets/icons/profile.svg</key>
+		<data>
+		FxbNK4wHqziPmHGPk9F+NiQ4S84=
+		</data>
 		<key>flutter_assets/assets/icons/search.svg</key>
 		<data>
 		+2b2GCEihkYJ2vMfbdOWSeVzolA=
+		</data>
+		<key>flutter_assets/assets/icons/transparentcircle.svg</key>
+		<data>
+		Rsjy+I+Hiz+fvpo8K96mbBVi4eg=
 		</data>
 		<key>flutter_assets/assets/img.png</key>
 		<data>
@@ -66,7 +102,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		z8si/QYTzli39F3tHZJP3FG7W+Q=
+		rBvlpu9U/x15AbbIltpc+8E5muY=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -74,7 +110,7 @@
 		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
-		E1SptJhkWrn7FSgtfT8TTP1xoYA=
+		903IxRpkEqaEw+PbdP0wHktGYUM=
 		</data>
 		<key>flutter_assets/vm_snapshot_data</key>
 		<data>
@@ -87,7 +123,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4zedQOqvXIcavuaukRKh1HXQ3uTHPKsCTUMuTEcQQ2w=
+			sNnybRIQ84l3oW90h+/xtcH1XIFJubGTlaDW/wX/RAY=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -101,7 +137,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8qRqm/6MpUjRqvA75zCAIZv6AJ5wlzI9aylTT03cIQ4=
+			9wmIYBIXpX987MX9WY6of9nMpNHsu6a7Qb9tBpPOLnM=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/24625-dr-vector-insurance-protection%201.svg</key>
@@ -109,6 +145,27 @@
 			<key>hash2</key>
 			<data>
 			LoIiEWLcI7tAEgYDBI1EuP2kgPiuqWGaAuTQYA+rtLo=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/animation/login.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			AolbUyTGbKlODxLqSa4fLj/+YK/yw9H+B+Gj3u7rpDQ=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/bottom_bar/bottomactiveseach.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			MM5Gy4rl+D3QewEB04yZZZ/YYiXxFx4pXozpf4WM/f4=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/bottom_bar/home-2.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			qLu7/s0ocWVet+KmTOUCIuvSH+X1kBNyDSHj6uD8X5A=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/bottom_bar/home.svg</key>
@@ -125,11 +182,53 @@
 			YRNa4/dMYE52YjOTQjI4Z1bBRSwnPVfhPyhawFMmfzI=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/icons/book.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			6iOASC/FNQlmeJMt5YCKz4huuJjsV+5rhAb/t+tBARk=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/bottomsearch.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			J8Meo+O50u7luvk9UoEt3XWDnDDUhP6nMYx9BrR0bMc=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/cashback_happiness%201.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			XucxIiYX+FNurnVexUbyH5AGA6+y3GhhYR0g9r7Vocc=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/cashback_happiness.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			lZdUJ/HKshgQTB3XcX56SVz28+uE2jRTa3Z1WVqFB+w=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/profile.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			SOnoDE8gLU5Ev0j+So2t+adY5dHW/d5PSuzNt/qbwMw=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/icons/search.svg</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			FnaBxSrSHml8cZbsXVZIVSuNK1HoFwEHa3tyGIseQS4=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/icons/transparentcircle.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			M+TJ0Fq/iJUTyg1laNmQPtYUYq/S8PLqi0uB03qoqbc=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/img.png</key>
@@ -185,7 +284,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			IX7DSuUqsSL+R/i0mjWF1JmMuNROO4Cd31lI8nNWTFQ=
+			16DRx5ZXZ39v52HugjmC4gb9WGvV3pUvy5/yfSU1UK4=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -199,7 +298,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GorMPeaRyObWaY7OL9NrBxCe/JLPhRW3tGfPFaf/JlE=
+			SXa/wCtcJDFj6WRFcCPMmGIY+97/ITXWAx0OlpEttE8=
 			</data>
 		</dict>
 		<key>flutter_assets/vm_snapshot_data</key>

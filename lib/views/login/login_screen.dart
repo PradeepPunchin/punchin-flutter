@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
-import 'package:punchin/widget/Tab_bar.dart';
+import 'package:punchin/widget/custom_bottom_bar.dart';
 
 import '../../controller/authentication_controller/login_controller.dart';
 
@@ -24,7 +25,11 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.12,
               ),
-              Image.asset("assets/insurance.png"),
+              // Load a Lottie file from your assets
+              SizedBox(
+                  height: 177,
+                  width: 177,
+                  child: Lottie.asset('assets/animation/login.json')),
               SizedBox(
                 height: 15.0.h,
               ),
@@ -59,8 +64,11 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     if (loginController.formKey.currentState!.validate()) {
                       // Get.off(()=>OtpV());
+                      loginController.postlogin();//loginController.email.value, loginController.password.value);
                       FocusManager.instance.primaryFocus?.unfocus();
-                      Get.offAll(() => CustomNavigation());
+
+
+                     //
                     }
                   },
                   child: Text(
@@ -105,6 +113,7 @@ class LoginScreen extends StatelessWidget {
                         15.0, kBlack, FontWeight.w400),
                   ),
                   TextFormField(
+                    controller: loginController.email,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "userid cannot be empty";
@@ -137,7 +146,7 @@ class LoginScreen extends StatelessWidget {
         child: Row(
           children: [
             const Icon(
-              Icons.visibility,
+              Icons.lock,
               color: kdarkBlue,
             ),
             SizedBox(
@@ -155,6 +164,7 @@ class LoginScreen extends StatelessWidget {
                         15.0, kBlack, FontWeight.w400),
                   ),
                   Obx(() => TextFormField(
+                    controller: loginController.password,
                         obscureText: loginController.showPassword.value,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -171,12 +181,12 @@ class LoginScreen extends StatelessWidget {
                               },
                               child: loginController.showPassword.value
                                   ? const Icon(
-                                      Icons.visibility,
+                                      Icons.visibility_off,
                                       size: 20.0,
                                       color: kdarkBlue,
                                     )
                                   : const Icon(
-                                      Icons.visibility_off,
+                                      Icons.visibility,
                                       size: 20.0,
                                       color: kdarkBlue,
                                     ),

@@ -44,6 +44,9 @@ dependencies:
   flutter_screenutil: ^5.6.0
   flutter_svg: ^1.1.6
   google_fonts: ^3.0.1
+  lottie: ^2.0.0
+  image_picker: ^0.8.5+3
+  get_storage: ^2.0.3
   status_change: ^2.0.0
 
 
@@ -75,6 +78,7 @@ flutter:
     - assets/bottom_bar/
     - assets/icons/
     - assets/
+    - assets/animation/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
