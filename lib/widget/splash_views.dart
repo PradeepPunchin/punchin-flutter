@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:punchin/controller/user_controller/user_controller.dart';
 import 'package:punchin/views/login/login_screen.dart';
 
 
@@ -11,13 +12,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  //final UserController userController =Get.find<UserController>();
+  final UserController userController = Get.put(UserController());//Get.find<UserController>();
   @override
   void initState() {
-    // userController.initialNavigate();
+    userController.initialNavigate();
     super.initState();
-    Future.delayed(
-        const Duration(seconds: 3), () => Get.offAll(() => LoginScreen()));
   }
 
   @override
