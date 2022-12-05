@@ -18,7 +18,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		5fg2IQSq7+fXymADfrNK0Bmwb/4=
+		I25q/C14r9fd0CmTg52fi0lFcx0=
 		</data>
 		<key>flutter_assets/assets/24625-dr-vector-insurance-protection%201.svg</key>
 		<data>
@@ -102,11 +102,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-<<<<<<< HEAD:build/ios/Debug-iphoneos/App.framework/_CodeSignature/CodeResources
-		01umjx47wcBUW66LOdocqB9VDt0=
-=======
-		4WpmBsniEZAHYVe34wNP3SlrMp0=
->>>>>>> saurabh:build/ios/Debug-iphonesimulator/Runner.app/Frameworks/App.framework/_CodeSignature/CodeResources
+		hLIwLDHTlkCRYI6fbNYLbkBQb8Y=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -141,7 +137,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9wmIYBIXpX987MX9WY6of9nMpNHsu6a7Qb9tBpPOLnM=
+			TqgDjeEd7b/iDDeSByOrwemPz6kF0jOGrY0IbC+/xy0=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/24625-dr-vector-insurance-protection%201.svg</key>
@@ -288,11 +284,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-<<<<<<< HEAD:build/ios/Debug-iphoneos/App.framework/_CodeSignature/CodeResources
-			NLLduK1ApOv9njd9Srspu3rO/sAImpD48cmIMEwTS3A=
-=======
-			mmdIZOCS7gdu6Yhi7h+hUG0gxJmON0ienJLbUoBm0JU=
->>>>>>> saurabh:build/ios/Debug-iphonesimulator/Runner.app/Frameworks/App.framework/_CodeSignature/CodeResources
+			lwfAIctGFNEGZL+bwaZOLCmK1tjLkZXaEOPBnXRPuPk=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

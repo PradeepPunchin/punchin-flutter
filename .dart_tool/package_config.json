@@ -104,6 +104,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "file_picker",
+      "rootUri": "file:///Users/sangamsharma/.pub-cache/hosted/pub.dartlang.org/file_picker-5.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/sangamsharma/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -482,11 +488,7 @@
       "languageVersion": "2.18"
     }
   ],
-<<<<<<< HEAD
-  "generated": "2022-12-05T09:41:46.734570Z",
-=======
-  "generated": "2022-12-05T10:10:42.028164Z",
->>>>>>> saurabh
+  "generated": "2022-12-05T11:10:56.862040Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }

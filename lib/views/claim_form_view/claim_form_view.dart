@@ -594,7 +594,51 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            imagePick(certificate: "Scan 1"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Obx(() => Text(
+                                          "${controller.filled.value}",
+                                          style: CustomFonts.kBlack15Black
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 14.0),
+                                        )),
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.filled.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -602,7 +646,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            imagePick(certificate: "Dealth Certificate"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.dealthCertificate.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                    fit: FlexFit.tight,
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.dealthCertificate.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -664,7 +755,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.borroweridProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                    fit: FlexFit.tight,
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.borroweridProof.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -716,7 +854,55 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.borrowerAddressProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                    fit: FlexFit.tight,
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.borrowerAddressProof.value =
+                                          file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -778,7 +964,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.nomineeIdProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                    fit: FlexFit.tight,
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.nomineeIdProof.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -830,7 +1063,55 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.nomineeAddressProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.nomineeAddressProof.value =
+                                          file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -882,7 +1163,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.bankProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.bankProof.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -890,7 +1218,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.firProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                    fit: FlexFit.tight,
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.firProof.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -942,7 +1317,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            imagePick(certificate: "Aadhaar Card.jpeg"),
+                            Container(
+                              height: 40.0.h,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  border: Border.all(
+                                    color: kGrey,
+                                  )),
+                              child: Row(
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Obx(() => Text(
+                                            "${controller.additionalProof.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  MaterialButton(
+                                    elevation: 1.0,
+                                    onPressed: () async {
+                                      var file = await controller.uploadFile();
+                                      print(file);
+                                      controller.additionalProof.value = file;
+                                    },
+                                    shape: RoundedRectangleBorder(
+                                        side: BorderSide(color: kGrey),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    color: Colors.white,
+                                    child: Text("Upload",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                         isActive: _currentStep >= 0,
@@ -1050,7 +1472,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             },
           ),
         ),
-        Expanded(
+        const Expanded(
           child: SizedBox(),
           flex: 1,
         )
@@ -1058,7 +1480,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
     );
   }
 
-  Widget imagePick({certificate}) => Container(
+  Widget imagePick({certificate, type}) => Container(
         height: 40.0.h,
         decoration: BoxDecoration(
             color: Colors.grey.shade50,
@@ -1079,7 +1501,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             Spacer(),
             MaterialButton(
               elevation: 1.0,
-              onPressed: () {},
+              onPressed: () async {
+                var file = await controller.uploadFile();
+                print(file);
+                if (type == "1") {
+                  controller.filled.value = file;
+                }
+              },
               shape: RoundedRectangleBorder(
                   side: BorderSide(color: kGrey),
                   borderRadius: BorderRadius.circular(5.0)),
