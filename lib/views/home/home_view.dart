@@ -8,6 +8,7 @@ import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/authentication_controller/login_controller.dart';
 import 'package:punchin/controller/home_controller/home_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
+import 'package:punchin/views/details.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class HomeView extends StatefulWidget {
@@ -19,7 +20,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<String> title = ["22", "11"];
-  List<String> subtitle = ["WIP Case", "Settled cases "];
+  List<String> subtitle = ["WIP Cases", "Settled Cases ","Total Cases"];
   //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
   LoginController loginController=Get.put(LoginController());
   HomeController homeController=Get.put(HomeController());
@@ -89,21 +90,21 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                     Spacer(),
-                    CircleAvatar(
-                      backgroundColor: Colors.white10,
-
-                      radius: 17.0,
-                      child: Container(
-
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(width: 2,color: Colors.black12),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.notifications_outlined,color:Colors.black,),
-                          )),
-                    ),
+                    // CircleAvatar(
+                    //   backgroundColor: Colors.white10,
+                    //
+                    //   radius: 17.0,
+                    //   child: Container(
+                    //
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(100),
+                    //         border: Border.all(width: 2,color: Colors.black12),
+                    //       ),
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.all(4.0),
+                    //         child: Icon(Icons.notifications_outlined,color:Colors.black,),
+                    //       )),
+                    // ),
 
 
 
@@ -149,141 +150,20 @@ class _HomeViewState extends State<HomeView> {
                               return Column(
                                 children: [
                                   // total case
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Container(
-                                      width: Get.width,
-                                      height: 77,
-                                      decoration: BoxDecoration(
-                                          gradient: RadialGradient(
-                                            colors: totalCasseColor,
-                                          ),
-                                          color: kLightBlue,
-                                          borderRadius: BorderRadius.circular(7)
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Stack(
-                                                alignment : AlignmentDirectional.center,
-                                                children: [
-                                                  SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
-                                                  //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                  Positioned(
-                                                    //left: 18,
-                                                    // top: 20,
-                                                    child: Container(
-                                                      width: 68,
-                                                      height: 68,
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        gradient: LinearGradient(
-                                                          colors: circleColor,
-                                                        ),
+                                  GestureDetector(
+                                    onTap:(){
+                                      Get.off(()=>Details(title: subtitle[0]));
 
-                                                        //borderRadius: BorderRadius.circular(100)
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          // SizedBox(width: 13,),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 20),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(homeCount.data!.aLL.toString(),style: kBody20white700,),
-                                                Text(subtitle[1].toString(),style: kBody12kWhite500),
-
-
-                                              ],
-                                            ),
-                                          ),
-
-
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-
-                                  /// card
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width: 170,
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 8.0),
+                                      child: Container(
+                                        width: Get.width,
                                         height: 77,
                                         decoration: BoxDecoration(
-                                            color: kPurpul,
-                                            borderRadius: BorderRadius.circular(7)
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Stack(
-                                                  alignment : AlignmentDirectional.center,
-                                                  children: [
-                                                    SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
-                                                    //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                    Positioned(
-                                                      //left: 18,
-                                                      // top: 20,
-                                                      child: Container(
-                                                        width: 68,
-                                                        height: 68,
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          gradient: LinearGradient(
-                                                            colors: circleColor,
-                                                          ),
-
-                                                          //borderRadius: BorderRadius.circular(100)
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    //   Positioned(
-                                                    //     //left: 18,
-                                                    //   top: 20,
-                                                    //   child: SvgPicture.asset("assets/icons/book.svg",color: kWhite,)),
-                                                  ],
-                                                ),
-                                              ],
+                                            gradient: RadialGradient(
+                                              colors: totalCasseColor,
                                             ),
-                                            //SizedBox(width: 13,),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 20),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(homeCount.data!.iNPROGRESS.toString(),style: kBody20white700,),
-                                                  Text(subtitle[0].toString(),style: kBody12kWhite500),
-
-
-                                                ],
-                                              ),
-                                            ),
-
-
-
-                                          ],
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      Container(
-                                        width: 170,
-                                        height: 77,
-                                        decoration: BoxDecoration(
                                             color: kLightBlue,
                                             borderRadius: BorderRadius.circular(7)
                                         ),
@@ -315,22 +195,18 @@ class _HomeViewState extends State<HomeView> {
                                                         ),
                                                       ),
                                                     ),
-                                                    //   Positioned(
-                                                    //     //left: 18,
-                                                    //   top: 20,
-                                                    //   child: SvgPicture.asset("assets/icons/book.svg",color: kWhite,)),
                                                   ],
                                                 ),
                                               ],
                                             ),
-                                            //SizedBox(width: 13,),
+                                            // SizedBox(width: 13,),
                                             Padding(
                                               padding: const EdgeInsets.only(top: 20),
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(homeCount.data!.sETTLED.toString(),style: kBody20white700,),
-                                                  Text(subtitle[1].toString(),style: kBody12kWhite500),
+                                                  Text(homeCount.data!.aLL.toString(),style: kBody20white700,),
+                                                  Text(subtitle[2].toString(),style: kBody12kWhite500),
 
 
                                                 ],
@@ -340,6 +216,142 @@ class _HomeViewState extends State<HomeView> {
 
 
                                           ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  /// card
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap:(){
+                                          Get.off(()=>Details(title: subtitle[0]));
+
+                                                              },
+                                        child: Container(
+                                          width: 170,
+                                          height: 77,
+                                          decoration: BoxDecoration(
+                                              color: kPurpul,
+                                              borderRadius: BorderRadius.circular(7)
+                                          ),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Stack(
+                                                    alignment : AlignmentDirectional.center,
+                                                    children: [
+                                                      SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                      //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                      Positioned(
+                                                        //left: 18,
+                                                        // top: 20,
+                                                        child: Container(
+                                                          width: 68,
+                                                          height: 68,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            gradient: LinearGradient(
+                                                              colors: circleColor,
+                                                            ),
+
+                                                            //borderRadius: BorderRadius.circular(100)
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              //SizedBox(width: 13,),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 20),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(homeCount.data!.iNPROGRESS.toString(),style: kBody20white700,),
+                                                    Text(subtitle[0].toString(),style: kBody12kWhite500),
+
+
+                                                  ],
+                                                ),
+                                              ),
+
+
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      GestureDetector(
+                                        onTap:(){
+                                          Get.off(()=>Details(title: subtitle[1]));
+
+                                        },
+                                        child: Container(
+                                          width: 170,
+                                          height: 77,
+                                          decoration: BoxDecoration(
+                                              color: kLightBlue,
+                                              borderRadius: BorderRadius.circular(7)
+                                          ),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Stack(
+                                                    alignment : AlignmentDirectional.center,
+                                                    children: [
+                                                      SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                      //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                      Positioned(
+                                                        //left: 18,
+                                                        // top: 20,
+                                                        child: Container(
+                                                          width: 68,
+                                                          height: 68,
+                                                          decoration: BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                            gradient: LinearGradient(
+                                                              colors: circleColor,
+                                                            ),
+
+                                                            //borderRadius: BorderRadius.circular(100)
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              //SizedBox(width: 13,),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 20),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(homeCount.data!.sETTLED.toString(),style: kBody20white700,),
+                                                    Text(subtitle[1].toString(),style: kBody12kWhite500),
+
+
+                                                  ],
+                                                ),
+                                              ),
+
+
+
+                                            ],
+                                          ),
                                         ),
                                       ),
 

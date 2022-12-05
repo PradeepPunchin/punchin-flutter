@@ -181,12 +181,12 @@ class LoginScreen extends StatelessWidget {
                               },
                               child: loginController.showPassword.value
                                   ? const Icon(
-                                      Icons.visibility,
+                                      Icons.visibility_off,
                                       size: 20.0,
                                       color: kdarkBlue,
                                     )
                                   : const Icon(
-                                      Icons.visibility_off,
+                                      Icons.visibility,
                                       size: 20.0,
                                       color: kdarkBlue,
                                     ),
