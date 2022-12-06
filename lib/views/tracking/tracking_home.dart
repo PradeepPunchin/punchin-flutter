@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
+import 'package:punchin/controller/authentication_controller/login_controller.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class TrackingHome extends StatefulWidget {
@@ -17,6 +18,8 @@ class TrackingHome extends StatefulWidget {
 
 class _TrackingHomeState extends State<TrackingHome> {
   RxBool details = false.obs;
+  final loginController = Get.put(LoginController());
+
   @override
   void initState() {
     // TODO: implement initState
@@ -591,7 +594,24 @@ class _TrackingHomeState extends State<TrackingHome> {
                 ],
               ):SizedBox()),
 
+              Center(
+                child: MaterialButton(
+                  height: 30,
+                  minWidth: 104,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  color: kdarkBlue,
+                  onPressed: () {
+                    loginController.postLogout();
 
+                  },
+                  child: Text(
+                    "Logout",
+                    style: CustomFonts.getMultipleStyle(
+                        15.0, Colors.white, FontWeight.w400),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

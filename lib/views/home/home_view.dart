@@ -2,13 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/authentication_controller/login_controller.dart';
-import 'package:punchin/controller/file_controller/file_controller.dart';
 import 'package:punchin/controller/home_controller/home_controller.dart';
-import 'package:punchin/controller/image_controller/image_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
 import 'package:punchin/views/details.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
@@ -22,7 +19,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<String> title = ["22", "11"];
-  List<String> subtitle = ["WIP Cases", "Settled Cases ","Total Cases"];
+  List<String> subtitle = ["WIP Cases", "Settled Cases","Total Cases"];
   //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
   LoginController loginController=Get.put(LoginController());
   HomeController homeController=Get.put(HomeController());
@@ -156,7 +153,7 @@ class _HomeViewState extends State<HomeView> {
                                   // total case
                                   GestureDetector(
                                     onTap:(){
-                                      Get.off(()=>Details(title: subtitle[0]));
+                                      Get.off(()=>Details(title: subtitle[2]));
 
                                     },
                                     child: Padding(
