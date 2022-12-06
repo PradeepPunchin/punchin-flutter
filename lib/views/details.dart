@@ -242,6 +242,193 @@ class _DetailsState extends State<Details> {
 
                       }
                   ):Container(),
+                  widget.title.toString()=="Action Pending"?FutureBuilder(
+                      future: controller.getClaimSubmitted(),
+                      builder: (context,AsyncSnapshot snapshot) {
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          // If we got an error
+
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(
+                                '${snapshot.error} occurred',
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            );
+
+                            // if we got our data
+                          } else if (snapshot.hasData) {
+                            // Extracting data from snapshot object
+                            ClaimSubmitted? claimSubmitted= snapshot
+                                .data
+                            as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
+                            return   ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: BouncingScrollPhysics(),
+                              //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
+                              itemCount: claimSubmitted.data!.content!.length,
+                              itemBuilder: (context,index){
+
+                                var singleData=claimSubmitted.data!.content![index];
+                                return Container(
+                                  //width: Get.width,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7),
+                                      border: Border.all(width:1,color:kBorder )
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        //width: Get.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft : Radius.circular(7),
+                                            topRight : Radius.circular(7),
+
+                                          ),
+                                          color:kBlue,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 20,top: 12,bottom: 12),
+                                          child: Row(
+                                            children: [
+                                              Text("Case/Claim ID : ${singleData.policyNumber}", style: kBody14kWhite600)
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 14,left: 22,right: 22),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Nominee Name",style: kBody13black400,),
+                                                SizedBox(height: 4,),
+                                                Text(singleData.nomineeName.toString(),style: kBody14black600,),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Nominee Number",style: kBody13black400,),
+                                                SizedBox(height: 4,),
+                                                Text(singleData.nomineeContactNumber.toString(),style: kBody14black600,),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 16,left: 22,right: 22),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Allocation date",style: kBody13black400,),
+                                                SizedBox(height: 4,),
+                                                Text(singleData.policyStartDate.toString(),style: kBody14black600,),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Borrower Name"),
+                                                SizedBox(height: 4,),
+                                                Text(singleData.borrowerName.toString(),style: kBody14black600,),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Address",style: kBody13black400,),
+                                            SizedBox(height: 4,),
+
+
+                                            Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
+
+                                          ],
+                                        ),
+                                      ),
+
+                                      const  Padding(
+                                        padding:
+                                        EdgeInsets.only(top: 16, left: 22, right: 22),
+                                        child: Divider(
+                                          thickness: 2,
+                                          height: 2,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 14, left: 22, right: 22, bottom: 16),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+
+                                               GestureDetector(
+                                                onTap: () {
+                                                  Get.off(()=>ClaimFormView(),arguments: [widget.title,claimSubmitted.data!.content![index]]);
+
+                                                },
+                                                child:const Center(
+                                                    child: Text(
+                                                      "Act Now",
+                                                      style: kBody14black600,
+                                                    ))),
+                                                // : GestureDetector(
+                                                // onTap: () {
+                                                //   details.value = false;
+                                                // },
+                                                // child: Center(
+                                                //     child: Text(
+                                                //       "View less ",
+                                                //       style: kBody14black600,
+                                                //     )))),
+                                            SizedBox(
+                                              height: 4,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (BuildContext context, int index){
+                                return SizedBox( height: 10,);
+                              },
+
+                            );
+                          }
+                        }
+
+                        // Displaying LoadingSpinner to indicate waiting state
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height / 1.3,
+                          child:const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+
+                      }
+                  ):Container(),
                   widget.title.toString()=="Settled Cases"?FutureBuilder(
                       future: controller.getClaimSubmitted(),
                       builder: (context,AsyncSnapshot snapshot) {
