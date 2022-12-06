@@ -11,6 +11,9 @@ var logoutApi = baseUrl+"auth/logout";
 var homeCountApi = baseUrl+"banker/getDashboardData";
 
 
+/// claim data
+var getBankerClaimApi= baseUrl + "banker/claim?claimDataFilter=SUBMITTED&page=1&limit=10" ;
+
 
 // multipart testing
 var multipartApi=baseUrl + "banker/claim/0/uploadDocument";
