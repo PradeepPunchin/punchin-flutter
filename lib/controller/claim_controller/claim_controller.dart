@@ -2,26 +2,17 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'package:punchin/constant/api_url.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
-import 'package:get/get.dart';
-import 'package:path/path.dart';
-
-
-
-
-
-class ClaimController extends GetxController{
-
-
-  var box =GetStorage();
+class ClaimController extends GetxController {
+  var box = GetStorage();
   RxString causeofDealth = "".obs;
   RxString document = "".obs;
   RxString nominee = "Major".obs;
@@ -36,10 +27,9 @@ class ClaimController extends GetxController{
   RxString firProof = "".obs;
   RxString additionalProof = "".obs;
 
-
   /// claim draft
-   getClaimSubmitted() async {
-
+  getClaimSubmitted() async {
+    log(box.read("authToken"));
     try {
       var response = await http.get(
         Uri.parse(getBankerClaimApi),
@@ -47,22 +37,18 @@ class ClaimController extends GetxController{
           "Content-Type": "application/json",
           "X-Xsrf-Token": box.read("authToken"),
         },
-
       );
 
       if (response.statusCode == 200) {
         return ClaimSubmitted.fromJson(jsonDecode(response.body));
-      }
-      else if(response.statusCode==401){
-        final details=jsonDecode(response.body);
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
-      }
-      else if(response.statusCode==400){
-        final details=jsonDecode(response.body);
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
-      }
-      else if(response.statusCode==405){
-        final details=jsonDecode(response.body);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
     } on SocketException {
@@ -73,7 +59,6 @@ class ClaimController extends GetxController{
           snackStyle: SnackStyle.GROUNDED,
           backgroundColor: Colors.red);
     } catch (e) {
-
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -85,6 +70,46 @@ class ClaimController extends GetxController{
     }
   }
 
+  getClaimSubmittedOne() async {
+    try {
+      var response = await http.get(
+        Uri.parse(getBankerClaimApi),
+        headers: {
+          "Content-Type": "application/json",
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return ClaimSubmitted.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      }
+    } on SocketException {
+      Get.rawSnackbar(
+          message: "Internet Exception",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } catch (e) {
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
 
   /// upload file
   Future<String> uploadFile() async {
@@ -101,4 +126,9 @@ class ClaimController extends GetxController{
     return path.value;
   }
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
 }
