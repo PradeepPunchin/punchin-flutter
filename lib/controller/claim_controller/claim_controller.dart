@@ -21,12 +21,18 @@ class ClaimController extends GetxController {
   RxString filled = "".obs;
   RxString dealthCertificate = "".obs;
   RxString borroweridProof = "".obs;
+  RxString borroweridProofDoc = "".obs;
   RxString borrowerAddressProof = "".obs;
+  RxString borrowerAddressProofDoc = "".obs;
   RxString nomineeIdProof = "".obs;
+  RxString nomineeIdProofDoc = "".obs;
   RxString nomineeAddressProof = "".obs;
+  RxString nomineeAddressProofDoc = "".obs;
   RxString bankProof = "".obs;
+  RxString bankProofDoc = "".obs;
   RxString firProof = "".obs;
   RxString additionalProof = "".obs;
+  RxString additionalProofDoc = "".obs;
 
   RxBool loading = true.obs;
 
@@ -201,7 +207,7 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
-  uploadFormData(body) async {
+  uploadFormData() async {
     var postUri = Uri.parse(formUpload);
     var request = http.MultipartRequest("POST", postUri);
     request.headers.addAll({
@@ -224,6 +230,7 @@ class ClaimController extends GetxController {
     request.fields["additionalDocType"] = documentReturn(additionalProof.value);
 
     /// code for adding file image
+    log("Path is ${filledPath.value}");
     request.files
         .add(await http.MultipartFile.fromPath('signedForm', filledPath.value));
     request.files.add(await http.MultipartFile.fromPath(
@@ -251,6 +258,7 @@ class ClaimController extends GetxController {
 
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
+    log("$responsed");
     final responseData = json.decode(responsed.body);
     if (response.statusCode == 200) {
       log("Success");

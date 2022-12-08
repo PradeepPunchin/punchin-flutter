@@ -665,15 +665,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   )),
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Obx(() => Text(
-                                          "${controller.filled.value}",
-                                          style: CustomFonts.kBlack15Black
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 14.0),
-                                        )),
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 5),
+                                      child: Obx(() => Text(
+                                            "${controller.filled.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
                                   ),
                                   Spacer(),
                                   MaterialButton(
@@ -720,7 +723,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 children: [
                                   Flexible(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
                                             "${controller.dealthCertificate.value}",
                                             style: CustomFonts.kBlack15Black
@@ -834,7 +837,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.borroweridProof.value}",
+                                            "${controller.borroweridProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -849,7 +852,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.borroweridProof.value =
+                                      controller.borroweridProofDoc.value =
                                           basename(file);
                                       controller.borrowerIdDocPath.value = file;
                                     },
@@ -937,7 +940,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.borrowerAddressProof.value}",
+                                            "${controller.borrowerAddressProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -952,7 +955,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.borrowerAddressProof.value =
+                                      controller.borrowerAddressProofDoc.value =
                                           basename(file);
                                       controller.borrowerAddressDocPath.value =
                                           file;
@@ -1049,7 +1052,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.nomineeIdProof.value}",
+                                            "${controller.nomineeIdProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1064,7 +1067,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.nomineeIdProof.value = file;
+                                      controller.nomineeIdProofDoc.value =
+                                          basename(file);
+                                      controller.nomineeIdDocPath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
                                         side: BorderSide(color: kGrey),
@@ -1099,10 +1104,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     isExpanded: true,
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: controller
-                                              .document.value.isNotEmpty
+                                      child: controller.nomineeAddressProof
+                                              .value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller
+                                                  .nomineeAddressProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -1127,7 +1133,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.nomineeAddressProof.value =
+                                          value!;
                                     },
                                   )),
                             ),
@@ -1149,7 +1156,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.nomineeAddressProof.value}",
+                                            "${controller.nomineeAddressProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1163,7 +1170,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.nomineeAddressProof.value =
+                                      controller.nomineeAddressProofDoc.value =
+                                          basename(file);
+                                      controller.nomineeAddressDocPath.value =
                                           file;
                                     },
                                     shape: RoundedRectangleBorder(
@@ -1200,9 +1209,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: controller
-                                              .document.value.isNotEmpty
+                                              .bankProof.value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller.bankProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -1227,7 +1236,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.bankProof.value = value!;
                                     },
                                   )),
                             ),
@@ -1249,7 +1258,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.bankProof.value}",
+                                            "${controller.bankProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1263,7 +1272,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.bankProof.value = file;
+                                      controller.bankProofDoc.value =
+                                          basename(file);
+                                      controller.bankAccountDocPath.value =
+                                          file;
                                     },
                                     shape: RoundedRectangleBorder(
                                         side: BorderSide(color: kGrey),
@@ -1285,58 +1297,82 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            smallText(text: "FIR / postmortem report"),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Container(
-                              height: 40.0.h,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: kGrey,
-                                  )),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Obx(() => Text(
-                                            "${controller.firProof.value}",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 14.0),
-                                          )),
-                                    ),
-                                    fit: FlexFit.tight,
-                                  ),
-                                  Spacer(),
-                                  MaterialButton(
-                                    elevation: 1.0,
-                                    onPressed: () async {
-                                      var file = await controller.uploadFile();
-                                      print(file);
-                                      controller.firProof.value = file;
-                                    },
-                                    shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    color: Colors.white,
-                                    child: Text("Upload",
-                                        style: CustomFonts.kBlack15Black
-                                            .copyWith(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400)),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
+                            controller.causeofDealth.value == "Accident"
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      smallText(
+                                          text: "FIR / postmortem report"),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Container(
+                                        height: 40.0.h,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.shade50,
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            border: Border.all(
+                                              color: kGrey,
+                                            )),
+                                        child: Row(
+                                          children: [
+                                            Flexible(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Obx(() => Text(
+                                                      "${controller.firProof.value}",
+                                                      style: CustomFonts
+                                                          .kBlack15Black
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 14.0),
+                                                    )),
+                                              ),
+                                              fit: FlexFit.tight,
+                                            ),
+                                            Spacer(),
+                                            MaterialButton(
+                                              elevation: 1.0,
+                                              onPressed: () async {
+                                                var file = await controller
+                                                    .uploadFile();
+                                                print(file);
+                                                controller.firProof.value =
+                                                    basename(file);
+                                                controller
+                                                    .firOrPostmortemReportPath
+                                                    .value = file;
+                                              },
+                                              shape: RoundedRectangleBorder(
+                                                  side:
+                                                      BorderSide(color: kGrey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                              color: Colors.white,
+                                              child: Text("Upload",
+                                                  style: CustomFonts
+                                                      .kBlack15Black
+                                                      .copyWith(
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w400)),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   )
-                                ],
-                              ),
-                            ),
+                                : SizedBox(),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -1354,9 +1390,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: controller
-                                              .document.value.isNotEmpty
+                                              .additionalProof.value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller.additionalProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -1381,7 +1417,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.additionalProof.value = value!;
                                     },
                                   )),
                             ),
@@ -1403,7 +1439,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.additionalProof.value}",
+                                            "${controller.additionalProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1417,7 +1453,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.additionalProof.value = file;
+                                      controller.additionalProofDoc.value =
+                                          basename(file);
+                                      controller.additionalDocpath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
                                         side: BorderSide(color: kGrey),
@@ -1458,6 +1496,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   continued() {
     _currentStep < 3 ? setState(() => _currentStep += 1) : null;
+    if (_currentStep == 3) {
+      controller.uploadFormData();
+    }
   }
 
   cancel() {

@@ -62,7 +62,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
-          <line>277</line>
+          <line>285</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
