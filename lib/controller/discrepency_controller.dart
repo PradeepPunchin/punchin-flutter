@@ -4,21 +4,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 
-class ClaimFormController extends GetxController {
-  RxString causeofDealth = "".obs;
+class DiscrepencyController extends GetxController {
   RxString document = "".obs;
-
-  RxString nominee = "Major".obs;
-  RxString path = "".obs;
-  RxString filled = "".obs;
-  RxString dealthCertificate = "".obs;
-  RxString borroweridProof = "".obs;
-  RxString borrowerAddressProof = "".obs;
-  RxString nomineeIdProof = "".obs;
-  RxString nomineeAddressProof = "".obs;
   RxString bankProof = "".obs;
-  RxString firProof = "".obs;
-  RxString additionalProof = "".obs;
+  RxString path = "".obs;
 
   Future<String> uploadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(

@@ -7,10 +7,10 @@ class HomeCount {
 
   HomeCount(
       {this.timeStamp,
-        this.data,
-        this.message,
-        this.isSuccess,
-        this.statusCode});
+      this.data,
+      this.message,
+      this.isSuccess,
+      this.statusCode});
 
   HomeCount.fromJson(Map<String, dynamic> json) {
     timeStamp = json['timeStamp'];
@@ -35,22 +35,24 @@ class HomeCount {
 
 class Data {
   int? iNPROGRESS;
-  int? aLL;
-  int? sETTLED;
+  // int? aLL;
+  int? actionPending;
+  // int? sETTLED;
+  int? agentAllocated;
 
-  Data({this.iNPROGRESS, this.aLL, this.sETTLED});
+  Data({this.iNPROGRESS, this.actionPending, this.agentAllocated});
 
   Data.fromJson(Map<String, dynamic> json) {
     iNPROGRESS = json['IN_PROGRESS'];
-    aLL = json['ALL'];
-    sETTLED = json['SETTLED'];
+    actionPending = json['ACTION_PENDING'];
+    agentAllocated = json['AGENT_ALLOCATED'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['IN_PROGRESS'] = this.iNPROGRESS;
-    data['ALL'] = this.aLL;
-    data['SETTLED'] = this.sETTLED;
+    data['ACTION_PENDING'] = this.actionPending;
+    data['AGENT_ALLOCATED'] = this.agentAllocated;
     return data;
   }
 }
