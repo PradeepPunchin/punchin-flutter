@@ -16,6 +16,13 @@ import '../../model/claim_model/claim_details.dart';
 
 class ClaimController extends GetxController {
   var box = GetStorage();
+  late final PageController pageController;
+  RxInt currentIndex = 0.obs;
+
+  updateIndex(int index) {
+    currentIndex.value = index;
+  }
+
   RxString causeofDealth = "".obs;
   RxString document = "".obs;
   RxString nominee = "Major".obs;
@@ -347,6 +354,7 @@ class ClaimController extends GetxController {
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
           backgroundColor: Colors.green);
+
       Get.offAll(() => Details(
             title: 'Allocated',
           ));
@@ -367,6 +375,7 @@ class ClaimController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    pageController = PageController(initialPage: 0);
     getStepperFormData();
   }
 
