@@ -281,7 +281,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             ),
           ]),
       body: Obx(() => !controller.loading.value
-          ? stepperForm()
+          ? Obx(() => !controller.loadUpload.value
+              ? stepperForm()
+              : Center(
+                  child: CupertinoActivityIndicator(),
+                ))
           : Center(child: CupertinoActivityIndicator())),
     );
   }
@@ -666,9 +670,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               child: Row(
                                 children: [
                                   Flexible(
+                                    fit: FlexFit.tight,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 5),
+                                          horizontal: 8, vertical: 8),
                                       child: Obx(() => Text(
                                             "${controller.filled.value}",
                                             style: CustomFonts.kBlack15Black
@@ -1223,12 +1228,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     underline: const SizedBox(),
                                     items: <String>[
-                                      'Aadhar Card',
-                                      'Passport',
-                                      'Voter card',
-                                      'Driving License',
-                                      'Bank Passbook',
-                                      'Any other Govt ID Card',
+                                      'Bank passbook',
+                                      'Bank statement',
+                                      'Cheque',
+                                      'Neft form',
+                                      'Other',
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -1404,12 +1408,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     underline: const SizedBox(),
                                     items: <String>[
-                                      'Aadhar Card',
-                                      'Passport',
-                                      'Voter card',
-                                      'Driving License',
-                                      'Bank Passbook',
-                                      'Any other Govt ID Card',
+                                      'Income Tax Return',
+                                      'Medical Records',
+                                      'Legal Heir Certificate',
+                                      'Police Investigation Report',
+                                      'Other',
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,

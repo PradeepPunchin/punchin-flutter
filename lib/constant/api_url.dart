@@ -16,4 +16,4 @@ var multipartApi = baseUrl + "banker/claim/0/uploadDocument";
 
 //claim details
 var claimDetails = baseUrl + "agent/claim/";
-var formUpload = baseUrl + "agent/claim/{claimId}/uploadDocument";
+var formUpload = baseUrl + "agent/claim/";
