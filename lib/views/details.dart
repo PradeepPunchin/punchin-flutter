@@ -391,16 +391,7 @@ class _DetailsState extends State<Details> {
                                                       "Act Now",
                                                       style: kBody14black600,
                                                     ))),
-                                                // : GestureDetector(
-                                                // onTap: () {
-                                                //   details.value = false;
-                                                // },
-                                                // child: Center(
-                                                //     child: Text(
-                                                //       "View less ",
-                                                //       style: kBody14black600,
-                                                //     )))),
-                                            SizedBox(
+                                           const SizedBox(
                                               height: 4,
                                             ),
                                           ],
