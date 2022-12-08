@@ -102,9 +102,9 @@ class _DetailsState extends State<Details> {
                 ),
               ),
 
-              widget.title.toString() == "Total Cases"
+              widget.title.toString() == "Allocated"
                   ? FutureBuilder(
-                      future: controller.getClaimSubmitted(),
+                      future: controller.getClaimSubmitted(status: "ALLOCATED"),
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           // If we got an error
@@ -163,7 +163,7 @@ class _DetailsState extends State<Details> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                    "Case/Claim ID : ${singleData.policyNumber}",
+                                                    "Case/Claim ID : ${singleData.punchinClaimId}",
                                                     style: kBody14kWhite600)
                                               ],
                                             ),
@@ -232,8 +232,7 @@ class _DetailsState extends State<Details> {
                                                     height: 4,
                                                   ),
                                                   Text(
-                                                    singleData.policyStartDate
-                                                        .toString(),
+                                                    "${dateChange(singleData.allocationDate)}",
                                                     style: kBody14black600,
                                                   ),
                                                 ],
@@ -306,9 +305,10 @@ class _DetailsState extends State<Details> {
                         );
                       })
                   : Container(),
-              widget.title.toString() == "Settled Cases"
+              widget.title.toString() == "Action Pending Cases"
                   ? FutureBuilder(
-                      future: controller.getClaimSubmitted(),
+                      future: controller.getClaimSubmitted(
+                          status: "Action Pending Cases"),
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           // If we got an error
@@ -700,7 +700,7 @@ class _DetailsState extends State<Details> {
                       })
                   : Container(),
 
-              widget.title.toString() == "WIP Cases" ? tab() : Container()
+              widget.title.toString() == "WIP" ? tab() : Container()
             ],
           ),
         ),
@@ -755,7 +755,7 @@ class _DetailsState extends State<Details> {
       ));
 
   Widget one() => FutureBuilder(
-      future: controller.getClaimSubmitted(),
+      future: controller.getClaimSubmitted(status: "WIP"),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           // If we got an error
@@ -1393,4 +1393,9 @@ class _DetailsState extends State<Details> {
           ),
         );
       });
+
+  String dateChange(date) {
+    var temp = DateTime.fromMillisecondsSinceEpoch(date);
+    return temp.toString();
+  }
 }

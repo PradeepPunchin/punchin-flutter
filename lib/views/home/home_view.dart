@@ -19,11 +19,15 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<String> title = ["22", "11"];
-  List<String> subtitle = ["WIP Cases", "Settled Cases","Total Cases"];
+
+  // List<String> subtitle = ["WIP Cases", "Settled Cases","Total Cases"];
+  List<String> subtitle = ["Allocated", "Action Pending Cases", "WIP"];
+
   //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
-  LoginController loginController=Get.put(LoginController());
-  HomeController homeController=Get.put(HomeController());
- // FileController fileController=Get.put(FileController());
+  LoginController loginController = Get.put(LoginController());
+  HomeController homeController = Get.put(HomeController());
+
+  // FileController fileController=Get.put(FileController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,10 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
+
                 /// app bar
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,30 +53,25 @@ class _HomeViewState extends State<HomeView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                             BorderRadius.circular(100),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
                             child: CachedNetworkImage(
                               // height: 150,
                               // width: Get.width,
                               imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
+                                  "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                              imageBuilder: (context, imageProvider) =>
                                   Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.fill,
                                   ),
+                                ),
+                              ),
                               placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => const Icon(
                                 Icons.error,
                                 color: kBlack,
                               ),
@@ -80,14 +82,14 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 13,),
+                    SizedBox(
+                      width: 13,
+                    ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Anil Kumar"),
                         Text("Id:983821"),
-
-
                       ],
                     ),
                     Spacer(),
@@ -106,15 +108,12 @@ class _HomeViewState extends State<HomeView> {
                     //         child: Icon(Icons.notifications_outlined,color:Colors.black,),
                     //       )),
                     // ),
-
-
-
                   ],
                 ),
 
                 //search
                 const Padding(
-                  padding:  EdgeInsets.only(top: 12,bottom: 2),
+                  padding: EdgeInsets.only(top: 12, bottom: 2),
                   child: CustomSearch(
                     hint: "Search by Name, LAN & Claim id...",
                     search: true,
@@ -122,11 +121,9 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
 
-
                 FutureBuilder(
                     future: homeController.homeCount(),
                     builder: (context, AsyncSnapshot snapshot) {
-
                       if (snapshot.connectionState == ConnectionState.done) {
                         // If we got an error
                         if (snapshot.hasError) {
@@ -145,19 +142,21 @@ class _HomeViewState extends State<HomeView> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             physics: const BouncingScrollPhysics(),
-                            itemCount: 1 ,//homeCount.data.length,
+                            itemCount: 1,
+                            //homeCount.data.length,
                             itemBuilder: (context, index) {
                               // var singleData = peOrderLine.products?[index];
                               return Column(
                                 children: [
                                   // total case
                                   GestureDetector(
-                                    onTap:(){
-                                      Get.off(()=>Details(title: subtitle[2]));
-
+                                    onTap: () {
+                                      Get.off(
+                                          () => Details(title: subtitle[2]));
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 8.0),
                                       child: Container(
                                         width: Get.width,
                                         height: 77,
@@ -166,19 +165,27 @@ class _HomeViewState extends State<HomeView> {
                                               colors: totalCasseColor,
                                             ),
                                             color: kLightBlue,
-                                            borderRadius: BorderRadius.circular(7)
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(7)),
                                         child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Stack(
-                                                  alignment : AlignmentDirectional.center,
+                                                  alignment:
+                                                      AlignmentDirectional
+                                                          .center,
                                                   children: [
-                                                    SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                    SvgPicture.asset(
+                                                      "assets/icons/book.svg",
+                                                      color: kWhite,
+                                                    ),
                                                     //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
                                                     Positioned(
                                                       //left: 18,
@@ -186,9 +193,12 @@ class _HomeViewState extends State<HomeView> {
                                                       child: Container(
                                                         width: 68,
                                                         height: 68,
-                                                        decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          gradient: LinearGradient(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          gradient:
+                                                              LinearGradient(
                                                             colors: circleColor,
                                                           ),
 
@@ -202,20 +212,22 @@ class _HomeViewState extends State<HomeView> {
                                             ),
                                             // SizedBox(width: 13,),
                                             Padding(
-                                              padding: const EdgeInsets.only(top: 20),
+                                              padding: const EdgeInsets.only(
+                                                  top: 20),
                                               child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(homeCount.data!.aLL.toString(),style: kBody20white700,),
-                                                  Text(subtitle[2].toString(),style: kBody12kWhite500),
-
-
+                                                  Text(
+                                                    homeCount.data!.iNPROGRESS
+                                                        .toString(),
+                                                    style: kBody20white700,
+                                                  ),
+                                                  Text(subtitle[2].toString(),
+                                                      style: kBody12kWhite500),
                                                 ],
                                               ),
                                             ),
-
-
-
                                           ],
                                         ),
                                       ),
@@ -226,28 +238,36 @@ class _HomeViewState extends State<HomeView> {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap:(){
-                                          Get.off(()=>Details(title: subtitle[0]));
-
-                                                              },
+                                        onTap: () {
+                                          Get.off(() =>
+                                              Details(title: subtitle[0]));
+                                        },
                                         child: Container(
                                           width: 170,
                                           height: 77,
                                           decoration: BoxDecoration(
                                               color: kPurpul,
-                                              borderRadius: BorderRadius.circular(7)
-                                          ),
+                                              borderRadius:
+                                                  BorderRadius.circular(7)),
                                           child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Stack(
-                                                    alignment : AlignmentDirectional.center,
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .center,
                                                     children: [
-                                                      SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                      SvgPicture.asset(
+                                                        "assets/icons/book.svg",
+                                                        color: kWhite,
+                                                      ),
                                                       //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
                                                       Positioned(
                                                         //left: 18,
@@ -255,65 +275,80 @@ class _HomeViewState extends State<HomeView> {
                                                         child: Container(
                                                           width: 68,
                                                           height: 68,
-                                                          decoration: BoxDecoration(
-                                                            shape: BoxShape.circle,
-                                                            gradient: LinearGradient(
-                                                              colors: circleColor,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            gradient:
+                                                                LinearGradient(
+                                                              colors:
+                                                                  circleColor,
                                                             ),
 
                                                             //borderRadius: BorderRadius.circular(100)
                                                           ),
                                                         ),
                                                       ),
-
                                                     ],
                                                   ),
                                                 ],
                                               ),
                                               //SizedBox(width: 13,),
                                               Padding(
-                                                padding: const EdgeInsets.only(top: 20),
+                                                padding: const EdgeInsets.only(
+                                                    top: 20),
                                                 child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(homeCount.data!.iNPROGRESS.toString(),style: kBody20white700,),
-                                                    Text(subtitle[0].toString(),style: kBody12kWhite500),
-
-
+                                                    Text(
+                                                      homeCount
+                                                          .data!.agentAllocated
+                                                          .toString(),
+                                                      style: kBody20white700,
+                                                    ),
+                                                    Text(subtitle[0].toString(),
+                                                        style:
+                                                            kBody12kWhite500),
                                                   ],
                                                 ),
                                               ),
-
-
-
                                             ],
                                           ),
                                         ),
                                       ),
                                       Spacer(),
                                       GestureDetector(
-                                        onTap:(){
-                                          Get.off(()=>Details(title: subtitle[1]));
-
+                                        onTap: () {
+                                          Get.off(() =>
+                                              Details(title: subtitle[1]));
                                         },
                                         child: Container(
-                                          width: 170,
+                                          width: 190,
                                           height: 77,
                                           decoration: BoxDecoration(
                                               color: kLightBlue,
-                                              borderRadius: BorderRadius.circular(7)
-                                          ),
+                                              borderRadius:
+                                                  BorderRadius.circular(7)),
                                           child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Stack(
-                                                    alignment : AlignmentDirectional.center,
+                                                    alignment:
+                                                        AlignmentDirectional
+                                                            .center,
                                                     children: [
-                                                      SvgPicture.asset("assets/icons/book.svg",color: kWhite,),
+                                                      SvgPicture.asset(
+                                                        "assets/icons/book.svg",
+                                                        color: kWhite,
+                                                      ),
                                                       //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
                                                       Positioned(
                                                         //left: 18,
@@ -321,10 +356,14 @@ class _HomeViewState extends State<HomeView> {
                                                         child: Container(
                                                           width: 68,
                                                           height: 68,
-                                                          decoration: BoxDecoration(
-                                                            shape: BoxShape.circle,
-                                                            gradient: LinearGradient(
-                                                              colors: circleColor,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            gradient:
+                                                                LinearGradient(
+                                                              colors:
+                                                                  circleColor,
                                                             ),
 
                                                             //borderRadius: BorderRadius.circular(100)
@@ -336,27 +375,35 @@ class _HomeViewState extends State<HomeView> {
                                                 ],
                                               ),
                                               //SizedBox(width: 13,),
-                                              Padding(
-                                                padding: const EdgeInsets.only(top: 20),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(homeCount.data!.sETTLED.toString(),style: kBody20white700,),
-                                                    Text(subtitle[1].toString(),style: kBody12kWhite500),
-
-
-                                                  ],
+                                              Flexible(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 20),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        homeCount
+                                                            .data!.actionPending
+                                                            .toString(),
+                                                        style: kBody20white700,
+                                                      ),
+                                                      Text(
+                                                          subtitle[1]
+                                                              .toString(),
+                                                          style:
+                                                              kBody12kWhite500),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-
-
-
                                             ],
                                           ),
                                         ),
                                       ),
-
-
                                     ],
                                   ),
                                 ],
@@ -373,38 +420,33 @@ class _HomeViewState extends State<HomeView> {
                       }
                       return SizedBox(
                         height: MediaQuery.of(context).size.height / 1.3,
-                        child:const Center(
+                        child: const Center(
                           child: CircularProgressIndicator(),
                         ),
                       );
                     }),
 
+                SizedBox(
+                  height: 20,
+                ),
 
-
-
-
-             SizedBox(height: 20,),
-
-             Center(
-                                  child: MaterialButton(
-                                    height: 30,
-                                    minWidth: 104,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5.0)),
-                                    color: kdarkBlue,
-                                    onPressed: () {
-                                      loginController.postLogout();
-
-                                    },
-                                    child: Text(
-                                      "Logout",
-                                      style: CustomFonts.getMultipleStyle(
-                                          15.0, Colors.white, FontWeight.w400),
-                                    ),
-                                  ),
-                                ),
-
-
+                Center(
+                  child: MaterialButton(
+                    height: 30,
+                    minWidth: 104,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                    color: kdarkBlue,
+                    onPressed: () {
+                      loginController.postLogout();
+                    },
+                    child: Text(
+                      "Logout",
+                      style: CustomFonts.getMultipleStyle(
+                          15.0, Colors.white, FontWeight.w400),
+                    ),
+                  ),
+                ),
 
                 /// claim settlement card
                 //  SizedBox(height: 4,),

@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/claim_controller/claim_controller.dart';
@@ -238,7 +242,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             },
             child: const Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: Colors.blue,
               size: 20,
             ),
           ),
@@ -251,7 +255,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: Text(
-              "Case/Claim ID :  ${dataArg[1].policyNumber}",
+              "Case/Claim ID :  ",
               style: CustomFonts.kBlack15Black.copyWith(
                   color: Colors.white,
                   fontSize: 14.0,
@@ -276,7 +280,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                   )),
             ),
           ]),
-      body: stepperForm(),
+      body: Obx(() => !controller.loading.value
+          ? stepperForm()
+          : Center(child: CupertinoActivityIndicator())),
     );
   }
 
@@ -316,7 +322,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].borrowerName}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["borrowerName"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -324,7 +333,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].borrowerName}"),
+                            field(text: ""),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -332,7 +341,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].borrowerContactNumber}"),
+                            field(
+                                text: controller.claimDetail
+                                    .value["borrowerContactNumber"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -340,7 +351,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].borrowerContactNumber}"),
+                            field(
+                                text: controller.claimDetail
+                                    .value["borrowerContactNumber"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -348,7 +361,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            addressField(text: "${dataArg[1].borrowerAddress}")
+                            addressField(
+                                text: controller
+                                    .claimDetail.value["borrowerAddress"])
                           ],
                         ),
                         isActive: _currentStep >= 0,
@@ -376,7 +391,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].loanAccountNumber}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["loanAccountNumber"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -384,7 +401,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].loanType}"),
+                            field(
+                                text: controller.claimDetail.value["loanType"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -392,7 +410,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].loanAmount}"),
+                            field(
+                                text: controller.claimDetail.value["loanAmount"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -400,7 +420,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].insurerName}"),
+                            field(
+                                text: controller.claimDetail.value["loanAmount"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -408,7 +430,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].loanAccountManagerName}"),
+                            field(
+                                text: controller.claimDetail.value["loanAmount"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -417,8 +441,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               height: 5.0,
                             ),
                             field(
-                                text:
-                                    "${dataArg[1].accountManagerContactNumber}")
+                                text: controller.claimDetail.value["loanAmount"]
+                                    .toString())
                           ],
                         ),
                         isActive: _currentStep >= 0,
@@ -446,7 +470,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].insurerName}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["insurerName"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -454,7 +480,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].policyNumber}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["insurerName"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -462,7 +490,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].masterPolNumber}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["masterPolNumber"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -470,7 +500,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].policyStartDate}"),
+                            field(
+                                text: controller.claimDetail
+                                            .value["policyStartDate"] !=
+                                        null
+                                    ? dateChange(controller
+                                        .claimDetail.value["policyStartDate"])
+                                    : ""),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -479,7 +515,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].policyCoverageDuration}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["policyCoverageDuration"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -487,7 +526,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].policySumAssured}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["policySumAssured"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -495,7 +537,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].nomineeName}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["nomineeName"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -503,7 +548,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].nomineeRelationShip}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["nomineeRelationShip"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -511,7 +559,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].nomineeContactNumber}"),
+                            field(
+                                text: controller
+                                    .claimDetail.value["nomineeContactNumber"]
+                                    .toString()),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -519,7 +570,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: "${dataArg[1].nomineeEmailId}")
+                            field(
+                                text: controller
+                                    .claimDetail.value["nomineeEmailId"])
                           ],
                         ),
                         isActive: _currentStep >= 0,
@@ -628,7 +681,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.filled.value = file;
+                                      controller.filled.value = basename(file);
+                                      controller.filledPath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
                                         side: BorderSide(color: kGrey),
@@ -683,7 +737,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.dealthCertificate.value = file;
+                                      controller.dealthCertificate.value =
+                                          basename(file);
+                                      controller.deathCertificatePath.value =
+                                          file;
                                     },
                                     shape: RoundedRectangleBorder(
                                         side: BorderSide(color: kGrey),
@@ -729,9 +786,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: controller
-                                              .document.value.isNotEmpty
+                                              .borroweridProof.value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller.borroweridProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -756,7 +813,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.borroweridProof.value = value!;
                                     },
                                   )),
                             ),
@@ -792,7 +849,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.borroweridProof.value = file;
+                                      controller.borroweridProof.value =
+                                          basename(file);
+                                      controller.borrowerIdDocPath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
                                         side: BorderSide(color: kGrey),
@@ -827,10 +886,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     isExpanded: true,
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: controller
-                                              .document.value.isNotEmpty
+                                      child: controller.borrowerAddressProof
+                                              .value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller
+                                                  .borrowerAddressProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -855,7 +915,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.borrowerAddressProof.value =
+                                          value!;
                                     },
                                   )),
                             ),
@@ -892,6 +953,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       var file = await controller.uploadFile();
                                       print(file);
                                       controller.borrowerAddressProof.value =
+                                          basename(file);
+                                      controller.borrowerAddressDocPath.value =
                                           file;
                                     },
                                     shape: RoundedRectangleBorder(
@@ -938,9 +1001,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: controller
-                                              .document.value.isNotEmpty
+                                              .nomineeIdProof.value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller.nomineeIdProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -965,7 +1028,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.nomineeIdProof.value = value!;
                                     },
                                   )),
                             ),
@@ -1403,6 +1466,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   static Widget field({text}) => Container(
         child: TextFormField(
+          enabled: false,
           decoration: InputDecoration(
               hintText: text,
               hintStyle: CustomFonts.kBlack15Black,
@@ -1460,6 +1524,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             groupValue: controller.nominee.value,
             activeColor: kdarkBlue,
             onChanged: (value) {
+              log(value.toString());
               setState(() {
                 controller.nominee.value = value.toString();
               });
@@ -1474,6 +1539,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             groupValue: controller.nominee.value,
             activeColor: kdarkBlue,
             onChanged: (value) {
+              log(value.toString());
               setState(() {
                 controller.nominee.value = value.toString();
               });
@@ -1530,4 +1596,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
           ],
         ),
       );
+
+  String dateChange(date) {
+    var temp = DateTime.fromMillisecondsSinceEpoch(date);
+    return temp.toString();
+  }
 }

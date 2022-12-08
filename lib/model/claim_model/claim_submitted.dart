@@ -7,10 +7,10 @@ class ClaimSubmitted {
 
   ClaimSubmitted(
       {this.timeStamp,
-        this.data,
-        this.message,
-        this.isSuccess,
-        this.statusCode});
+      this.data,
+      this.message,
+      this.isSuccess,
+      this.statusCode});
 
   ClaimSubmitted.fromJson(Map<String, dynamic> json) {
     timeStamp = json['timeStamp'];
@@ -48,16 +48,16 @@ class Data {
 
   Data(
       {this.content,
-        this.pageable,
-        this.last,
-        this.totalPages,
-        this.totalElements,
-        this.sort,
-        this.numberOfElements,
-        this.first,
-        this.size,
-        this.number,
-        this.empty});
+      this.pageable,
+      this.last,
+      this.totalPages,
+      this.totalElements,
+      this.sort,
+      this.numberOfElements,
+      this.first,
+      this.size,
+      this.number,
+      this.empty});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['content'] != null) {
@@ -143,47 +143,49 @@ class Content {
   int? submittedAt;
   bool? isForwardToVerifier;
   int? createdDate;
+  int? allocationDate;
 
   Content(
       {this.createdAt,
-        this.updatedAt,
-        this.isDeleted,
-        this.isActive,
-        this.id,
-        this.punchinClaimId,
-        this.insurerClaimId,
-        this.punchinBankerId,
-        this.claimInwardDate,
-        this.borrowerName,
-        this.borrowerContactNumber,
-        this.loanAccountNumber,
-        this.borrowerAddress,
-        this.borrowerState,
-        this.loanType,
-        this.loanAmount,
-        this.branchCode,
-        this.branchName,
-        this.branchAddress,
-        this.branchPinCode,
-        this.branchState,
-        this.loanAccountManagerName,
-        this.accountManagerContactNumber,
-        this.insurerName,
-        this.masterPolNumber,
-        this.policyNumber,
-        this.policyStartDate,
-        this.policyCoverageDuration,
-        this.policySumAssured,
-        this.nomineeName,
-        this.nomineeRelationShip,
-        this.nomineeContactNumber,
-        this.nomineeEmailId,
-        this.nomineeAddress,
-        this.claimStatus,
-        this.submittedBy,
-        this.submittedAt,
-        this.isForwardToVerifier,
-        this.createdDate});
+      this.updatedAt,
+      this.isDeleted,
+      this.isActive,
+      this.id,
+      this.punchinClaimId,
+      this.insurerClaimId,
+      this.punchinBankerId,
+      this.claimInwardDate,
+      this.borrowerName,
+      this.borrowerContactNumber,
+      this.loanAccountNumber,
+      this.borrowerAddress,
+      this.borrowerState,
+      this.loanType,
+      this.loanAmount,
+      this.branchCode,
+      this.branchName,
+      this.branchAddress,
+      this.branchPinCode,
+      this.branchState,
+      this.loanAccountManagerName,
+      this.accountManagerContactNumber,
+      this.insurerName,
+      this.masterPolNumber,
+      this.policyNumber,
+      this.policyStartDate,
+      this.policyCoverageDuration,
+      this.policySumAssured,
+      this.nomineeName,
+      this.nomineeRelationShip,
+      this.nomineeContactNumber,
+      this.nomineeEmailId,
+      this.nomineeAddress,
+      this.claimStatus,
+      this.submittedBy,
+      this.submittedAt,
+      this.isForwardToVerifier,
+      this.createdDate,
+      this.allocationDate});
 
   Content.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -191,8 +193,8 @@ class Content {
     isDeleted = json['isDeleted'];
     isActive = json['isActive'];
     id = json['id'];
-    punchinClaimId = json['punchinClaimId'];
-    insurerClaimId = json['insurerClaimId'];
+    punchinClaimId = json['claimId'];
+    insurerClaimId = json['claimId'];
     punchinBankerId = json['punchinBankerId'];
     claimInwardDate = json['claimInwardDate'];
     borrowerName = json['borrowerName'];
@@ -225,6 +227,7 @@ class Content {
     submittedAt = json['submittedAt'];
     isForwardToVerifier = json['isForwardToVerifier'];
     createdDate = json['createdDate'];
+    allocationDate = json["allocationDate"];
   }
 
   Map<String, dynamic> toJson() {
@@ -234,8 +237,8 @@ class Content {
     data['isDeleted'] = this.isDeleted;
     data['isActive'] = this.isActive;
     data['id'] = this.id;
-    data['punchinClaimId'] = this.punchinClaimId;
-    data['insurerClaimId'] = this.insurerClaimId;
+    data['claimId'] = this.punchinClaimId;
+    data['claimId'] = this.insurerClaimId;
     data['punchinBankerId'] = this.punchinBankerId;
     data['claimInwardDate'] = this.claimInwardDate;
     data['borrowerName'] = this.borrowerName;
@@ -268,6 +271,7 @@ class Content {
     data['submittedAt'] = this.submittedAt;
     data['isForwardToVerifier'] = this.isForwardToVerifier;
     data['createdDate'] = this.createdDate;
+    data["allocationDate"] = this.allocationDate;
     return data;
   }
 }
@@ -282,11 +286,11 @@ class Pageable {
 
   Pageable(
       {this.sort,
-        this.pageNumber,
-        this.pageSize,
-        this.offset,
-        this.unpaged,
-        this.paged});
+      this.pageNumber,
+      this.pageSize,
+      this.offset,
+      this.unpaged,
+      this.paged});
 
   Pageable.fromJson(Map<String, dynamic> json) {
     sort = json['sort'] != null ? new Sort.fromJson(json['sort']) : null;
