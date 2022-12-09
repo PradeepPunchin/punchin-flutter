@@ -18,12 +18,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<String> title = ["22", "11"];
 
-  // List<String> subtitle = ["WIP Cases", "Settled Cases","Total Cases"];
   List<String> subtitle = ["Allocated", "Action Pending Cases", "WIP"];
 
-  //List<String> colorsValue = [Color.fromRGBO(136, 136, 221, 1),Color.fromRGBO(124, 181, 236, 1)];
   LoginController loginController = Get.put(LoginController());
   HomeController homeController = Get.put(HomeController());
 
@@ -40,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+               const SizedBox(
                   height: 20,
                 ),
 
@@ -82,17 +79,17 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 13,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children:const [
                         Text("Anil Kumar"),
                         Text("Id:983821"),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     // CircleAvatar(
                     //   backgroundColor: Colors.white10,
                     //
@@ -151,8 +148,13 @@ class _HomeViewState extends State<HomeView> {
                                   // total case
                                   GestureDetector(
                                     onTap: () {
-                                      Get.off(
-                                          () => Details(title: subtitle[2]));
+                                      if(homeCount.data!.iNPROGRESS.toString()=="0"){
+
+                                      }
+                                      else {
+                                        Get.off(() => Details(title: subtitle[2]));
+                                      }
+
                                     },
                                     child: Padding(
                                       padding:
@@ -186,8 +188,7 @@ class _HomeViewState extends State<HomeView> {
                                                       "assets/icons/book.svg",
                                                       color: kWhite,
                                                     ),
-                                                    //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                    Positioned(
+                                                   Positioned(
                                                       //left: 18,
                                                       // top: 20,
                                                       child: Container(
@@ -201,8 +202,6 @@ class _HomeViewState extends State<HomeView> {
                                                               LinearGradient(
                                                             colors: circleColor,
                                                           ),
-
-                                                          //borderRadius: BorderRadius.circular(100)
                                                         ),
                                                       ),
                                                     ),
@@ -239,8 +238,12 @@ class _HomeViewState extends State<HomeView> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          Get.off(() =>
-                                              Details(title: subtitle[0]));
+                                          if(homeCount.data!.agentAllocated.toString()=="0"){
+
+                                          }
+                                          else {
+                                            Get.off(() => Details(title: subtitle[0]));
+                                          }
                                         },
                                         child: Container(
                                           width: 170,
@@ -285,7 +288,6 @@ class _HomeViewState extends State<HomeView> {
                                                                   circleColor,
                                                             ),
 
-                                                            //borderRadius: BorderRadius.circular(100)
                                                           ),
                                                         ),
                                                       ),
@@ -320,11 +322,16 @@ class _HomeViewState extends State<HomeView> {
                                       Spacer(),
                                       GestureDetector(
                                         onTap: () {
-                                          Get.off(() =>
-                                              Details(title: subtitle[1]));
+                                          if(homeCount.data!.actionPending.toString()=="0"){
+
+                                          }
+                                          else {
+                                            Get.off(() => Details(title: subtitle[1]));
+                                          }
+
                                         },
                                         child: Container(
-                                          width: 190,
+                                          width: 170,
                                           height: 77,
                                           decoration: BoxDecoration(
                                               color: kLightBlue,

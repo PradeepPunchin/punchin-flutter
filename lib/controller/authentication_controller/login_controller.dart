@@ -30,6 +30,8 @@ class LoginController extends GetxController {
         },
         body: jsonEncode(data),
       );
+      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         var details = jsonDecode(response.body);
         var data = details["data"];

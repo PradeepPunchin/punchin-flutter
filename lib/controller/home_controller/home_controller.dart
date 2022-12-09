@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:punchin/constant/api_url.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
+import 'package:punchin/views/login/login_screen.dart';
 
 class HomeController extends GetxController {
   var box = GetStorage();
@@ -27,6 +28,7 @@ class HomeController extends GetxController {
         return HomeCount.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
+        Get.off(()=>LoginScreen());
         //getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
