@@ -21,211 +21,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   ClaimController controller = Get.put(ClaimController());
   int _currentStep = 0;
   StepperType stepperType = StepperType.horizontal;
-  List forms = <Widget>[
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Borrower Details",
-          style: CustomFonts.kBlack15Black.copyWith(
-              fontSize: 15.0, fontWeight: FontWeight.w700, color: Colors.black),
-        ),
-        SizedBox(
-          height: 15.0.h,
-        ),
-        smallText(text: "Name"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "34675000002146"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Date of Birth"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "10-12-1977"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Mobile number"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "9876543210"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Email id"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "sanjayp@gmail.com"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Address"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        addressField(
-            text:
-                "H No - 36, Masjid Bunder road, Mohalla no-12,Gaur Gali, Hyderabad")
-      ],
-    ),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Loan Account Details",
-          style: CustomFonts.kBlack15Black.copyWith(
-              fontSize: 15.0, fontWeight: FontWeight.w700, color: Colors.black),
-        ),
-        SizedBox(
-          height: 15.0.h,
-        ),
-        smallText(text: "Loan account number"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "34675000002146"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Loan Type / category"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "Housing Loan "),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Loan o/s amt"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "1,235,700.00"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Lender name"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "ABC Bank"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Lender RM name"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "Ashish Kumar"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Lender RM number"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "9761245896")
-      ],
-    ),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          "Insurance policy details",
-          style: CustomFonts.kBlack15Black.copyWith(
-              fontSize: 15.0, fontWeight: FontWeight.w700, color: Colors.black),
-        ),
-        SizedBox(
-          height: 15.0.h,
-        ),
-        smallText(text: "Insurer name"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "HDFC"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Borrower policy number"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "201304672"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Master policy number"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "45296/18"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Policy start date"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "4/1/2018"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Policy coverage duration ( In years)"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "12"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Policy sum assured"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "1,500,000"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Nominee name"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "Sanjay Prakash"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Nominee relationship"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "Son"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Contact number"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "9462302854"),
-        const SizedBox(
-          height: 10.0,
-        ),
-        smallText(text: "Email Id"),
-        const SizedBox(
-          height: 5.0,
-        ),
-        field(text: "sanjayp@gmail.com")
-      ],
-    ),
-  ];
+  List forms = <Widget>[];
   var dataArg = Get.arguments;
 
   @override
@@ -280,9 +76,16 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                   )),
             ),
           ]),
-      body: Obx(() => !controller.loading.value
-          ? stepperForm()
-          : Center(child: CupertinoActivityIndicator())),
+      // body: Obx(() =>
+      // !controller.loading.value
+      //     ? Obx(() =>
+      // !controller.loadUpload.value
+      //     ? stepperForm()
+      //     : Center(
+      //   child: CupertinoActivityIndicator(),
+      // ))
+      //     : Center(child: CupertinoActivityIndicator())),
+      body: customStepperForm(),
     );
   }
 
@@ -665,17 +468,21 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   )),
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Obx(() => Text(
-                                          "${controller.filled.value}",
-                                          style: CustomFonts.kBlack15Black
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 14.0),
-                                        )),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 8),
+                                      child: Obx(() => Text(
+                                            "${controller.filled.value}",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 14.0),
+                                          )),
+                                    ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
@@ -685,7 +492,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       controller.filledPath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -695,7 +502,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   )
                                 ],
@@ -731,7 +538,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     fit: FlexFit.tight,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
@@ -743,7 +550,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -753,7 +560,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   )
                                 ],
@@ -834,7 +641,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.borroweridProof.value}",
+                                            "${controller.borroweridProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -843,18 +650,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     fit: FlexFit.tight,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.borroweridProof.value =
+                                      controller.borroweridProofDoc.value =
                                           basename(file);
                                       controller.borrowerIdDocPath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -864,7 +671,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   )
                                 ],
@@ -937,7 +744,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.borrowerAddressProof.value}",
+                                            "${controller.borrowerAddressProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -946,19 +753,19 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     fit: FlexFit.tight,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.borrowerAddressProof.value =
+                                      controller.borrowerAddressProofDoc.value =
                                           basename(file);
                                       controller.borrowerAddressDocPath.value =
                                           file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -968,7 +775,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   )
                                 ],
@@ -1049,7 +856,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.nomineeIdProof.value}",
+                                            "${controller.nomineeIdProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1058,16 +865,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     fit: FlexFit.tight,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.nomineeIdProof.value = file;
+                                      controller.nomineeIdProofDoc.value =
+                                          basename(file);
+                                      controller.nomineeIdDocPath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -1077,7 +886,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   )
                                 ],
@@ -1099,10 +908,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     isExpanded: true,
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: controller
-                                              .document.value.isNotEmpty
+                                      child: controller.nomineeAddressProof
+                                              .value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller
+                                                  .nomineeAddressProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -1127,7 +937,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.nomineeAddressProof.value =
+                                          value!;
                                     },
                                   )),
                             ),
@@ -1149,7 +960,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.nomineeAddressProof.value}",
+                                            "${controller.nomineeAddressProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1157,17 +968,19 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           )),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.nomineeAddressProof.value =
+                                      controller.nomineeAddressProofDoc.value =
+                                          basename(file);
+                                      controller.nomineeAddressDocPath.value =
                                           file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -1177,7 +990,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.w400)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   )
                                 ],
@@ -1200,9 +1013,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: controller
-                                              .document.value.isNotEmpty
+                                              .bankProof.value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller.bankProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -1214,12 +1027,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     underline: const SizedBox(),
                                     items: <String>[
-                                      'Aadhar Card',
-                                      'Passport',
-                                      'Voter card',
-                                      'Driving License',
-                                      'Bank Passbook',
-                                      'Any other Govt ID Card',
+                                      'Bank passbook',
+                                      'Bank statement',
+                                      'Cheque',
+                                      'Neft form',
+                                      'Other',
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -1227,7 +1039,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.bankProof.value = value!;
                                     },
                                   )),
                             ),
@@ -1249,7 +1061,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.bankProof.value}",
+                                            "${controller.bankProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1257,16 +1069,19 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           )),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.bankProof.value = file;
+                                      controller.bankProofDoc.value =
+                                          basename(file);
+                                      controller.bankAccountDocPath.value =
+                                          file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -1285,58 +1100,82 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 10.0,
                             ),
-                            smallText(text: "FIR / postmortem report"),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Container(
-                              height: 40.0.h,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade50,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: kGrey,
-                                  )),
-                              child: Row(
-                                children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Obx(() => Text(
-                                            "${controller.firProof.value}",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 14.0),
-                                          )),
-                                    ),
-                                    fit: FlexFit.tight,
-                                  ),
-                                  Spacer(),
-                                  MaterialButton(
-                                    elevation: 1.0,
-                                    onPressed: () async {
-                                      var file = await controller.uploadFile();
-                                      print(file);
-                                      controller.firProof.value = file;
-                                    },
-                                    shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    color: Colors.white,
-                                    child: Text("Upload",
-                                        style: CustomFonts.kBlack15Black
-                                            .copyWith(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.w400)),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
+                            controller.causeofDealth.value == "Accident"
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      smallText(
+                                          text: "FIR / postmortem report"),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Container(
+                                        height: 40.0.h,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.shade50,
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            border: Border.all(
+                                              color: kGrey,
+                                            )),
+                                        child: Row(
+                                          children: [
+                                            Flexible(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Obx(() => Text(
+                                                      "${controller.firProof.value}",
+                                                      style: CustomFonts
+                                                          .kBlack15Black
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                              fontSize: 14.0),
+                                                    )),
+                                              ),
+                                              fit: FlexFit.tight,
+                                            ),
+                                            const Spacer(),
+                                            MaterialButton(
+                                              elevation: 1.0,
+                                              onPressed: () async {
+                                                var file = await controller
+                                                    .uploadFile();
+                                                print(file);
+                                                controller.firProof.value =
+                                                    basename(file);
+                                                controller
+                                                    .firOrPostmortemReportPath
+                                                    .value = file;
+                                              },
+                                              shape: RoundedRectangleBorder(
+                                                  side: const BorderSide(
+                                                      color: kGrey),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                              color: Colors.white,
+                                              child: Text("Upload",
+                                                  style: CustomFonts
+                                                      .kBlack15Black
+                                                      .copyWith(
+                                                          fontSize: 15.0,
+                                                          fontWeight:
+                                                              FontWeight.w400)),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   )
-                                ],
-                              ),
-                            ),
+                                : const SizedBox(),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -1354,9 +1193,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     hint: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: controller
-                                              .document.value.isNotEmpty
+                                              .additionalProof.value.isNotEmpty
                                           ? Text(
-                                              controller.document.value,
+                                              controller.additionalProof.value,
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(fontSize: 14.0),
                                             )
@@ -1368,12 +1207,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                     underline: const SizedBox(),
                                     items: <String>[
-                                      'Aadhar Card',
-                                      'Passport',
-                                      'Voter card',
-                                      'Driving License',
-                                      'Bank Passbook',
-                                      'Any other Govt ID Card',
+                                      'Income Tax Return',
+                                      'Medical Records',
+                                      'Legal Heir Certificate',
+                                      'Police Investigation Report',
+                                      'Other',
                                     ].map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -1381,7 +1219,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       );
                                     }).toList(),
                                     onChanged: (value) {
-                                      controller.document.value = value!;
+                                      controller.additionalProof.value = value!;
                                     },
                                   )),
                             ),
@@ -1403,7 +1241,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Obx(() => Text(
-                                            "${controller.additionalProof.value}",
+                                            "${controller.additionalProofDoc.value}",
                                             style: CustomFonts.kBlack15Black
                                                 .copyWith(
                                                     fontWeight: FontWeight.w600,
@@ -1411,16 +1249,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           )),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   MaterialButton(
                                     elevation: 1.0,
                                     onPressed: () async {
                                       var file = await controller.uploadFile();
                                       print(file);
-                                      controller.additionalProof.value = file;
+                                      controller.additionalProofDoc.value =
+                                          basename(file);
+                                      controller.additionalDocpath.value = file;
                                     },
                                     shape: RoundedRectangleBorder(
-                                        side: BorderSide(color: kGrey),
+                                        side: const BorderSide(color: kGrey),
                                         borderRadius:
                                             BorderRadius.circular(5.0)),
                                     color: Colors.white,
@@ -1452,12 +1292,1249 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         ),
       );
 
+  customStepperForm() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        children: [
+          buildRow(),
+          SizedBox(
+            height: 10.0,
+          ),
+          Expanded(
+            flex: 8,
+            child: PageView(
+              controller: controller.pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Borrower Details",
+                        style: CustomFonts.kBlack15Black.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 15.0.h,
+                      ),
+                      smallText(text: "Name"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["borrowerName"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Date of Birth"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(text: ""),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Mobile number"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller
+                              .claimDetail.value["borrowerContactNumber"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Email id"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller
+                              .claimDetail.value["borrowerContactNumber"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Address"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      addressField(
+                          text: controller.claimDetail.value["borrowerAddress"])
+                    ],
+                  ),
+                ),
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Loan Account Details",
+                        style: CustomFonts.kBlack15Black.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 15.0.h,
+                      ),
+                      smallText(text: "Loan account number"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller
+                              .claimDetail.value["loanAccountNumber"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Loan Type / category"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(text: controller.claimDetail.value["loanType"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Loan o/s amt"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["loanAmount"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Lender name"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["loanAmount"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Lender RM name"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["loanAmount"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Lender RM number"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["loanAmount"]
+                              .toString())
+                    ],
+                  ),
+                ),
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Insurance policy details",
+                        style: CustomFonts.kBlack15Black.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 15.0.h,
+                      ),
+                      smallText(text: "Insurer name"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(text: controller.claimDetail.value["insurerName"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Borrower policy number"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(text: controller.claimDetail.value["insurerName"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Master policy number"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text:
+                              controller.claimDetail.value["masterPolNumber"]),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Policy start date"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text:
+                              controller.claimDetail.value["policyStartDate"] !=
+                                      null
+                                  ? dateChange(controller
+                                      .claimDetail.value["policyStartDate"])
+                                  : ""),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Policy coverage duration ( In years)"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller
+                              .claimDetail.value["policyCoverageDuration"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Policy sum assured"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["policySumAssured"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Nominee name"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["nomineeName"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Nominee relationship"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller
+                              .claimDetail.value["nomineeRelationShip"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Contact number"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller
+                              .claimDetail.value["nomineeContactNumber"]
+                              .toString()),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Email Id"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      field(
+                          text: controller.claimDetail.value["nomineeEmailId"])
+                    ],
+                  ),
+                ),
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Documentation Upload",
+                        style: CustomFonts.kBlack15Black.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 15.0.h,
+                      ),
+                      smallText(text: "Cause of death / Life Insurance"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: controller.causeofDealth.value.isNotEmpty
+                                    ? Text(
+                                        controller.causeofDealth.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                    : Text(
+                                        "Choose the cause ",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Accident',
+                                'Natural Dealth',
+                                'Suicide',
+                                'Illness &  Medical Reason',
+                                'Dealth due to Natural Calamity'
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.causeofDealth.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Is Nominee "),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      nominee(),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Filled & Signed Claim form"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              fit: FlexFit.tight,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 8),
+                                child: Obx(() => Text(
+                                      "${controller.filled.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.filled.value = basename(file);
+                                controller.filledPath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Dealth certificate"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.dealthCertificate.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                              fit: FlexFit.tight,
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.dealthCertificate.value =
+                                    basename(file);
+                                controller.deathCertificatePath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        "KYC - Borrower",
+                        style: CustomFonts.kBlack15Black.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Id proof"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child:
+                                    controller.borroweridProof.value.isNotEmpty
+                                        ? Text(
+                                            controller.borroweridProof.value,
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(fontSize: 14.0),
+                                          )
+                                        : Text(
+                                            "Select Document Type",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(fontSize: 14.0),
+                                          ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Aadhar Card',
+                                'Passport',
+                                'Voter card',
+                                'Driving License',
+                                'Bank Passbook',
+                                'Any other Govt ID Card',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.borroweridProof.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.borroweridProofDoc.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                              fit: FlexFit.tight,
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.borroweridProofDoc.value =
+                                    basename(file);
+                                controller.borrowerIdDocPath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Address Proof"),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: controller
+                                        .borrowerAddressProof.value.isNotEmpty
+                                    ? Text(
+                                        controller.borrowerAddressProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                    : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Aadhar Card',
+                                'Passport',
+                                'Voter card',
+                                'Driving License',
+                                'Bank Passbook',
+                                'Any other Govt ID Card',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.borrowerAddressProof.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.borrowerAddressProofDoc.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                              fit: FlexFit.tight,
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.borrowerAddressProofDoc.value =
+                                    basename(file);
+                                controller.borrowerAddressDocPath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        "KYC - Nominee",
+                        style: CustomFonts.kBlack15Black.copyWith(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Id proof"),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child:
+                                    controller.nomineeIdProof.value.isNotEmpty
+                                        ? Text(
+                                            controller.nomineeIdProof.value,
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(fontSize: 14.0),
+                                          )
+                                        : Text(
+                                            "Select Document Type",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(fontSize: 14.0),
+                                          ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Aadhar Card',
+                                'Passport',
+                                'Voter card',
+                                'Driving License',
+                                'Bank Passbook',
+                                'Any other Govt ID Card',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.nomineeIdProof.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.nomineeIdProofDoc.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                              fit: FlexFit.tight,
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.nomineeIdProofDoc.value =
+                                    basename(file);
+                                controller.nomineeIdDocPath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Address Proof"),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: controller
+                                        .nomineeAddressProof.value.isNotEmpty
+                                    ? Text(
+                                        controller.nomineeAddressProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                    : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Aadhar Card',
+                                'Passport',
+                                'Voter card',
+                                'Driving License',
+                                'Bank Passbook',
+                                'Any other Govt ID Card',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.nomineeAddressProof.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              fit: FlexFit.tight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.nomineeAddressProofDoc.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.nomineeAddressProofDoc.value =
+                                    basename(file);
+                                controller.nomineeAddressDocPath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Bank A/C proof"),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: controller.bankProof.value.isNotEmpty
+                                    ? Text(
+                                        controller.bankProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                    : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Bank passbook',
+                                'Bank statement',
+                                'Cheque',
+                                'Neft form',
+                                'Other',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.bankProof.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              fit: FlexFit.tight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.bankProofDoc.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+                                controller.bankProofDoc.value = basename(file);
+                                controller.bankAccountDocPath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      controller.causeofDealth.value == "Accident"
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                smallText(text: "FIR / postmortem report"),
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
+                                Container(
+                                  height: 40.0.h,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade50,
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(
+                                        color: kGrey,
+                                      )),
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        fit: FlexFit.tight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Obx(() => Text(
+                                                "${controller.firProof.value}",
+                                                style: CustomFonts.kBlack15Black
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 14.0),
+                                              )),
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      MaterialButton(
+                                        elevation: 1.0,
+                                        onPressed: () async {
+                                          var file =
+                                              await controller.uploadFile();
+                                          print(file);
+                                          controller.firProof.value =
+                                              basename(file);
+                                          controller.firOrPostmortemReportPath
+                                              .value = file;
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            side:
+                                                const BorderSide(color: kGrey),
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                        color: Colors.white,
+                                        child: Text("Upload",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(
+                                                    fontSize: 15.0,
+                                                    fontWeight:
+                                                        FontWeight.w400)),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      smallText(text: "Additional document"),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(1.0),
+                            border: Border.all(color: kGrey)),
+                        child: Obx(() => DropdownButton<String>(
+                              isExpanded: true,
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child:
+                                    controller.additionalProof.value.isNotEmpty
+                                        ? Text(
+                                            controller.additionalProof.value,
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(fontSize: 14.0),
+                                          )
+                                        : Text(
+                                            "Select Document Type",
+                                            style: CustomFonts.kBlack15Black
+                                                .copyWith(fontSize: 14.0),
+                                          ),
+                              ),
+                              underline: const SizedBox(),
+                              items: <String>[
+                                'Income Tax Return',
+                                'Medical Records',
+                                'Legal Heir Certificate',
+                                'Police Investigation Report',
+                                'Other',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                controller.additionalProof.value = value!;
+                              },
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        height: 40.0.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(5.0),
+                            border: Border.all(
+                              color: kGrey,
+                            )),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              fit: FlexFit.tight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Obx(() => Text(
+                                      "${controller.additionalProofDoc.value}",
+                                      style: CustomFonts.kBlack15Black.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14.0),
+                                    )),
+                              ),
+                            ),
+                            const Spacer(),
+                            MaterialButton(
+                              elevation: 1.0,
+                              onPressed: () async {
+                                var file = await controller.uploadFile();
+                                print(file);
+
+                                controller.additionalProofDoc.value =
+                                    basename(file);
+                                controller.additionalDocpath.value = file;
+                              },
+                              shape: RoundedRectangleBorder(
+                                  side: const BorderSide(color: kGrey),
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.white,
+                              child: Text("Upload",
+                                  style: CustomFonts.kBlack15Black.copyWith(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w400)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: [
+                Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        log(controller.currentIndex.value.toString());
+                        if (controller.currentIndex.value > 0) {
+                          controller.pageController.animateToPage(
+                              controller.currentIndex.value - 1,
+                              duration: const Duration(milliseconds: 100),
+                              curve: Curves.ease);
+                          controller.currentIndex.value =
+                              controller.currentIndex.value - 1;
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Center(child: Text("Back")),
+                      ),
+                    )),
+                const SizedBox(
+                  width: 15.0,
+                ),
+                Expanded(
+                    flex: 1,
+                    child: InkWell(
+                      onTap: () {
+                        log(controller.currentIndex.value.toString());
+                        if (controller.currentIndex.value < 3) {
+                          controller.pageController.animateToPage(
+                              controller.currentIndex.value + 1,
+                              duration: const Duration(milliseconds: 100),
+                              curve: Curves.ease);
+                          controller.currentIndex.value =
+                              controller.currentIndex.value + 1;
+                        }
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: const Color(0xff134E85),
+                            border: Border.all(color: const Color(0xff134E85)),
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: const Center(
+                            child: Text(
+                          "Next",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                      ),
+                    )),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  buildRow() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15.0),
+      child: Obx(() => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              for (int i = 0; i < 4; i++)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: controller.currentIndex.value != i &&
+                                  controller.currentIndex.value <= i
+                              ? Colors.white
+                              : Colors.green,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                              color: controller.currentIndex.value != i &&
+                                      controller.currentIndex.value <= i
+                                  ? Colors.grey
+                                  : Colors.green)),
+                      height: 15.0.h,
+                      width: 15.0.w,
+                    ),
+                    i != 3
+                        ? Container(
+                            width: Get.width * 0.15,
+                            height: 2.0,
+                            color: controller.currentIndex.value != i &&
+                                    controller.currentIndex.value <= i
+                                ? Colors.grey
+                                : Colors.green,
+                          )
+                        : SizedBox()
+                  ],
+                ),
+            ],
+          )),
+    );
+  }
+
   tapped(int step) {
     setState(() => _currentStep = step);
   }
 
   continued() {
     _currentStep < 3 ? setState(() => _currentStep += 1) : null;
+    if (_currentStep == 3) {
+      controller.uploadFormData();
+    }
   }
 
   cancel() {
@@ -1519,7 +2596,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         Expanded(
           flex: 2,
           child: RadioListTile(
-            title: Text("Major"),
+            title: const Text("Major"),
             value: "Major",
             groupValue: controller.nominee.value,
             activeColor: kdarkBlue,
@@ -1534,7 +2611,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         Expanded(
           flex: 2,
           child: RadioListTile(
-            title: Text("Minor"),
+            title: const Text("Minor"),
             value: "Minor",
             groupValue: controller.nominee.value,
             activeColor: kdarkBlue,
@@ -1572,7 +2649,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                     .copyWith(fontWeight: FontWeight.w600, fontSize: 14.0),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             MaterialButton(
               elevation: 1.0,
               onPressed: () async {
@@ -1583,14 +2660,14 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                 }
               },
               shape: RoundedRectangleBorder(
-                  side: BorderSide(color: kGrey),
+                  side: const BorderSide(color: kGrey),
                   borderRadius: BorderRadius.circular(5.0)),
               color: Colors.white,
               child: Text("Upload",
                   style: CustomFonts.kBlack15Black
                       .copyWith(fontSize: 15.0, fontWeight: FontWeight.w400)),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             )
           ],
