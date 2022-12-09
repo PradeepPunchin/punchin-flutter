@@ -49,6 +49,7 @@ dependencies:
   get_storage: ^2.0.3
   status_change: ^2.0.0
   file_picker: ^5.2.3
+  flutter_filereader: ^3.0.0
 
 
 
