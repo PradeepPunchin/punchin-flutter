@@ -9,7 +9,7 @@ var logoutApi = baseUrl + "auth/logout";
 var homeCountApi = baseUrl + "agent/getDashboardData";
 
 /// claim data
-var getBankerClaimApi = baseUrl + "agent/claim?claimDataFilter=";
+var getAgentClaimApi = baseUrl + "agent/claim?claimDataFilter=";
 
 // multipart testing
 var multipartApi = baseUrl + "banker/claim/0/uploadDocument";

@@ -7,7 +7,7 @@ import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/authentication_controller/login_controller.dart';
 import 'package:punchin/controller/home_controller/home_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
-import 'package:punchin/views/details.dart';
+import 'package:punchin/views/claim_details/details.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class HomeView extends StatefulWidget {
@@ -19,7 +19,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
 
-  List<String> subtitle = ["Allocated", "Action Pending Cases", "WIP"];
+  List<String> subtitle = ["Allocated", "Action Pending Cases", "WIP","UNDER VERIFICATION"];
 
   LoginController loginController = Get.put(LoginController());
   HomeController homeController = Get.put(HomeController());
@@ -148,11 +148,11 @@ class _HomeViewState extends State<HomeView> {
                                   // total case
                                   GestureDetector(
                                     onTap: () {
-                                      if(homeCount.data!.iNPROGRESS.toString()=="0"){
+                                      if(homeCount.data!.aGENTALLOCATED.toString()=="0"){
 
                                       }
                                       else {
-                                        Get.off(() => Details(title: subtitle[2]));
+                                        Get.off(() => Details(title: subtitle[0]));
                                       }
 
                                     },
@@ -218,11 +218,11 @@ class _HomeViewState extends State<HomeView> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    homeCount.data!.iNPROGRESS
+                                                    homeCount.data!.aGENTALLOCATED
                                                         .toString(),
                                                     style: kBody20white700,
                                                   ),
-                                                  Text(subtitle[2].toString(),
+                                                  Text(subtitle[0].toString(),
                                                       style: kBody12kWhite500),
                                                 ],
                                               ),
@@ -234,184 +234,369 @@ class _HomeViewState extends State<HomeView> {
                                   ),
 
                                   /// card
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          if(homeCount.data!.agentAllocated.toString()=="0"){
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if(homeCount.data!.iNPROGRESS.toString()=="0"){
 
-                                          }
-                                          else {
-                                            Get.off(() => Details(title: subtitle[0]));
-                                          }
-                                        },
-                                        child: Container(
-                                          width: 170,
-                                          height: 77,
-                                          decoration: BoxDecoration(
-                                              color: kPurpul,
-                                              borderRadius:
-                                                  BorderRadius.circular(7)),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Stack(
-                                                    alignment:
-                                                        AlignmentDirectional
-                                                            .center,
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        "assets/icons/book.svg",
-                                                        color: kWhite,
-                                                      ),
-                                                      //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                      Positioned(
-                                                        //left: 18,
-                                                        // top: 20,
-                                                        child: Container(
-                                                          width: 68,
-                                                          height: 68,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            gradient:
-                                                                LinearGradient(
-                                                              colors:
-                                                                  circleColor,
-                                                            ),
-
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              //SizedBox(width: 13,),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 20),
-                                                child: Column(
+                                            }
+                                            else {
+                                              Get.off(() => Details(title: subtitle[2]));
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 170,
+                                            height: 77,
+                                            decoration: BoxDecoration(
+                                                color: kPurpul,
+                                                borderRadius:
+                                                    BorderRadius.circular(7)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      homeCount
-                                                          .data!.agentAllocated
-                                                          .toString(),
-                                                      style: kBody20white700,
-                                                    ),
-                                                    Text(subtitle[0].toString(),
-                                                        style:
-                                                            kBody12kWhite500),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Spacer(),
-                                      GestureDetector(
-                                        onTap: () {
-                                          if(homeCount.data!.actionPending.toString()=="0"){
+                                                    Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/icons/book.svg",
+                                                          color: kWhite,
+                                                        ),
+                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                        Positioned(
+                                                          //left: 18,
+                                                          // top: 20,
+                                                          child: Container(
+                                                            width: 68,
+                                                            height: 68,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape:
+                                                                  BoxShape.circle,
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                colors:
+                                                                    circleColor,
+                                                              ),
 
-                                          }
-                                          else {
-                                            Get.off(() => Details(title: subtitle[1]));
-                                          }
-
-                                        },
-                                        child: Container(
-                                          width: 170,
-                                          height: 77,
-                                          decoration: BoxDecoration(
-                                              color: kLightBlue,
-                                              borderRadius:
-                                                  BorderRadius.circular(7)),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Stack(
-                                                    alignment:
-                                                        AlignmentDirectional
-                                                            .center,
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        "assets/icons/book.svg",
-                                                        color: kWhite,
-                                                      ),
-                                                      //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                      Positioned(
-                                                        //left: 18,
-                                                        // top: 20,
-                                                        child: Container(
-                                                          width: 68,
-                                                          height: 68,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            shape:
-                                                                BoxShape.circle,
-                                                            gradient:
-                                                                LinearGradient(
-                                                              colors:
-                                                                  circleColor,
                                                             ),
-
-                                                            //borderRadius: BorderRadius.circular(100)
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              //SizedBox(width: 13,),
-                                              Flexible(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 20),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                //SizedBox(width: 13,),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      top: 20),
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                        CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
                                                         homeCount
-                                                            .data!.actionPending
+                                                            .data!.iNPROGRESS
                                                             .toString(),
                                                         style: kBody20white700,
                                                       ),
-                                                      Text(
-                                                          subtitle[1]
-                                                              .toString(),
+                                                      Text(subtitle[2].toString(),
                                                           style:
                                                               kBody12kWhite500),
                                                     ],
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            if(homeCount.data!.aCTIONPENDING.toString()=="0"){
+
+                                            }
+                                            else {
+                                              Get.off(() => Details(title: subtitle[1]));
+                                            }
+
+                                          },
+                                          child: Container(
+                                            width: 170,
+                                            height: 77,
+                                            decoration: BoxDecoration(
+                                                color: kLightBlue,
+                                                borderRadius:
+                                                    BorderRadius.circular(7)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/icons/book.svg",
+                                                          color: kWhite,
+                                                        ),
+                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                        Positioned(
+                                                          //left: 18,
+                                                          // top: 20,
+                                                          child: Container(
+                                                            width: 68,
+                                                            height: 68,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape:
+                                                                  BoxShape.circle,
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                colors:
+                                                                    circleColor,
+                                                              ),
+
+                                                              //borderRadius: BorderRadius.circular(100)
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                //SizedBox(width: 13,),
+                                                Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          homeCount
+                                                              .data!.aCTIONPENDING
+                                                              .toString(),
+                                                          style: kBody20white700,
+                                                        ),
+                                                        Text(
+                                                            subtitle[1]
+                                                                .toString(),
+                                                            style:
+                                                                kBody12kWhite500),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Row(
+                                      children: [
+                                        // GestureDetector(
+                                        //   onTap: () {
+                                        //     if(homeCount.data!.uNDERVERIFICATION.toString()=="0"){
+                                        //
+                                        //     }
+                                        //     else {
+                                        //       Get.off(() => Details(title: subtitle[3]));
+                                        //     }
+                                        //   },
+                                        //   child: Container(
+                                        //     width: 170,
+                                        //     height: 77,
+                                        //     decoration: BoxDecoration(
+                                        //         color: kPurpul,
+                                        //         borderRadius:
+                                        //         BorderRadius.circular(7)),
+                                        //     child: Row(
+                                        //       crossAxisAlignment:
+                                        //       CrossAxisAlignment.start,
+                                        //       mainAxisAlignment:
+                                        //       MainAxisAlignment.start,
+                                        //       children: [
+                                        //         Column(
+                                        //           crossAxisAlignment:
+                                        //           CrossAxisAlignment.start,
+                                        //           children: [
+                                        //             Stack(
+                                        //               alignment:
+                                        //               AlignmentDirectional
+                                        //                   .center,
+                                        //               children: [
+                                        //                 SvgPicture.asset(
+                                        //                   "assets/icons/book.svg",
+                                        //                   color: kWhite,
+                                        //                 ),
+                                        //                 //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                        //                 Positioned(
+                                        //                   //left: 18,
+                                        //                   // top: 20,
+                                        //                   child: Container(
+                                        //                     width: 68,
+                                        //                     height: 68,
+                                        //                     decoration:
+                                        //                     BoxDecoration(
+                                        //                       shape:
+                                        //                       BoxShape.circle,
+                                        //                       gradient:
+                                        //                       LinearGradient(
+                                        //                         colors:
+                                        //                         circleColor,
+                                        //                       ),
+                                        //
+                                        //                     ),
+                                        //                   ),
+                                        //                 ),
+                                        //               ],
+                                        //             ),
+                                        //           ],
+                                        //         ),
+                                        //         //SizedBox(width: 13,),
+                                        //         Padding(
+                                        //           padding: const EdgeInsets.only(
+                                        //               top: 20),
+                                        //           child: Column(
+                                        //             crossAxisAlignment:
+                                        //             CrossAxisAlignment.start,
+                                        //             children: [
+                                        //               Text(
+                                        //                 homeCount
+                                        //                     .data!.uNDERVERIFICATION
+                                        //                     .toString(),
+                                        //                 style: kBody20white700,
+                                        //               ),
+                                        //               Text(subtitle[3].toString(),
+                                        //                   style:
+                                        //                   kBody12kWhite500),
+                                        //             ],
+                                        //           ),
+                                        //         ),
+                                        //       ],
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        // Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            if(homeCount.data!.uNDERVERIFICATION.toString()=="0"){
+
+                                            }
+                                            else {
+                                              Get.off(() => Details(title: subtitle[3]));
+                                            }
+
+                                          },
+                                          child: Container(
+                                            width: 170,
+                                            height: 77,
+                                            decoration: BoxDecoration(
+                                                color: kLightBlue,
+                                                borderRadius:
+                                                BorderRadius.circular(7)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                      AlignmentDirectional
+                                                          .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/icons/book.svg",
+                                                          color: kWhite,
+                                                        ),
+                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                        Positioned(
+                                                          //left: 18,
+                                                          // top: 20,
+                                                          child: Container(
+                                                            width: 68,
+                                                            height: 68,
+                                                            decoration:
+                                                            BoxDecoration(
+                                                              shape:
+                                                              BoxShape.circle,
+                                                              gradient:
+                                                              LinearGradient(
+                                                                colors:
+                                                                circleColor,
+                                                              ),
+
+                                                              //borderRadius: BorderRadius.circular(100)
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                //SizedBox(width: 13,),
+                                                Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets.only(
+                                                        top: 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        Text(
+                                                          homeCount
+                                                              .data!.uNDERVERIFICATION
+                                                              .toString(),
+                                                          style: kBody20white700,
+                                                        ),
+                                                        Text(
+                                                            subtitle[3]
+                                                                .toString(),
+                                                            style:
+                                                            kBody12kWhite500),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               );

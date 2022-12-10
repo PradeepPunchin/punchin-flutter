@@ -54,6 +54,8 @@ class ClaimDetailsData {
     this.claimInwardDate,
     this.borrowerName,
     this.borrowerContactNumber,
+    this.borrowerDob,
+    this.borrowerEmailId,
     this.loanAccountNumber,
     this.borrowerAddress,
     this.borrowerState,
@@ -95,11 +97,13 @@ class ClaimDetailsData {
   int? claimInwardDate;
   String? borrowerName;
   String? borrowerContactNumber;
+  int? borrowerDob;
+  String? borrowerEmailId;
   String? loanAccountNumber;
   String? borrowerAddress;
   String? borrowerState;
   String? loanType;
-  int? loanAmount;
+  double? loanAmount;
   String? branchCode;
   String? branchName;
   String? branchAddress;
@@ -112,7 +116,7 @@ class ClaimDetailsData {
   String? policyNumber;
   int? policyStartDate;
   int? policyCoverageDuration;
-  int? policySumAssured;
+  double? policySumAssured;
   String? nomineeName;
   String? nomineeRelationShip;
   String? nomineeContactNumber;
@@ -141,9 +145,9 @@ class ClaimDetailsData {
             json["claimInwardDate"] == null ? null : json["claimInwardDate"],
         borrowerName:
             json["borrowerName"] == null ? null : json["borrowerName"],
-        borrowerContactNumber: json["borrowerContactNumber"] == null
-            ? null
-            : json["borrowerContactNumber"],
+        borrowerContactNumber: json["borrowerContactNumber"] == null ? null : json["borrowerContactNumber"],
+        borrowerDob:json["borrowerDob"] == null ? null : json["borrowerDob"],
+        borrowerEmailId : json["borrowerEmailId"] == null ? null : json["borrowerEmailId"],
         loanAccountNumber: json["loanAccountNumber"] == null
             ? null
             : json["loanAccountNumber"],
@@ -211,6 +215,8 @@ class ClaimDetailsData {
         "borrowerName": borrowerName == null ? null : borrowerName,
         "borrowerContactNumber":
             borrowerContactNumber == null ? null : borrowerContactNumber,
+        "borrowerDob":borrowerDob==null? null:borrowerDob,
+        "borrowerEmailId":borrowerEmailId==null?null:borrowerEmailId,
         "loanAccountNumber":
             loanAccountNumber == null ? null : loanAccountNumber,
         "borrowerAddress": borrowerAddress == null ? null : borrowerAddress,
