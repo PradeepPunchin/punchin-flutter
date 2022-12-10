@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:punchin/constant/api_url.dart';
 import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
@@ -273,6 +274,15 @@ class ClaimController extends GetxController {
     } else {
       // User canceled the picker
     }
+    return path.value;
+  }
+
+  Future<String> imageFromCamera() async {
+    ImagePicker picker = ImagePicker();
+    XFile? imageXFile = await picker.pickImage(source: ImageSource.camera);
+    log("$imageXFile");
+    path.value = imageXFile!.path;
+
     return path.value;
   }
 
