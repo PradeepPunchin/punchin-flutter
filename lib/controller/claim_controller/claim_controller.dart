@@ -110,7 +110,50 @@ class ClaimController extends GetxController {
     }
   }
 
+  /// claim under verification
+  getClaimUnderVerification({status}) async {
+    log(box.read("authToken"));
+    try {
+      var response = await http.get(
+        Uri.parse(getAgentClaimApi + "$status&page=1&limit=10"),
+        headers: {
+          "Content-Type": "application/json",
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+      );
 
+
+      log("inprogress"+response.body);
+      if (response.statusCode == 200) {
+        return WipInProgressModel.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      }
+    } on SocketException {
+      Get.rawSnackbar(
+          message: "Internet Exception",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } catch (e) {
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
 
 
 
