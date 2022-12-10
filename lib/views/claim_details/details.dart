@@ -6,8 +6,8 @@ import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/claim_controller/claim_controller.dart';
 import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
+import 'package:punchin/views/claim_details/claim_discrepancy_details.dart';
 import 'package:punchin/views/claim_form_view/claim_form_view.dart';
-import 'package:punchin/views/discrepency_view_screen.dart';
 import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
@@ -35,6 +35,7 @@ class _DetailsState extends State<Details> {
     {"name": "Affidavit (Name mismatch etc)", "status": true},
     {"name": "Discrepancy / AR / FR resolution", "status": false},
   ];
+
 
   @override
   void initState() {
@@ -732,23 +733,6 @@ class _DetailsState extends State<Details> {
                         ),
                       ),
 
-                      // address
-
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Text("Address",style: kBody13black400,),
-                      //       SizedBox(height: 4,),
-                      //
-                      //
-                      //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
-                      //
-                      //     ],
-                      //   ),
-                      // ),
-
                       const Padding(
                         padding: EdgeInsets.only(top: 16, left: 22, right: 22),
                         child: Divider(
@@ -842,12 +826,12 @@ class _DetailsState extends State<Details> {
                                                         child: !options[index]
                                                                 ["status"]
                                                             ? Icon(Icons.cancel,
-                                                                color: kGrey)
+                                                            color: Colors.red)
                                                             : Icon(
-                                                                Icons
-                                                                    .check_circle,
-                                                                color: Colors
-                                                                    .green),
+                                                            Icons
+                                                                .check_circle,
+                                                            color: Colors
+                                                                .blue),
                                                         height: 50,
                                                       ),
                                                     ),
@@ -1058,107 +1042,7 @@ class _DetailsState extends State<Details> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Get.defaultDialog(
-                                title: "",
-                                content: Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Document Uploaded",
-                                        style: CustomFonts.kBlack15Black,
-                                      ),
-                                      const SizedBox(
-                                        height: 8.0,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(5.0),
-                                            border: Border.all(color: kGrey)),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 10.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Application process:",
-                                              style: CustomFonts.kBlack15Black
-                                                  .copyWith(
-                                                  fontSize: 14.0,
-                                                  color: Colors.black),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "In-progress",
-                                              style: CustomFonts.kBlack15Black
-                                                  .copyWith(
-                                                  fontSize: 15.0,
-                                                  color: klightBlue),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: Get.height * 0.6,
-                                        width: Get.width,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 3.0, vertical: 10),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                        child: ListView.builder(
-                                            itemCount: options.length,
-                                            itemBuilder: (context, int index) {
-                                              return Container(
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: kGrey)),
-                                                        child: Text(
-                                                          "${options[index]["name"]}",
-                                                          style: CustomFonts
-                                                              .kBlack15Black,
-                                                        ),
-                                                        height: 50,
-                                                        alignment:
-                                                        Alignment.center,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: kGrey)),
-                                                        child: !options[index]
-                                                        ["status"]
-                                                            ? Icon(Icons.cancel,
-                                                            color: kGrey)
-                                                            : Icon(
-                                                            Icons
-                                                                .check_circle,
-                                                            color: Colors
-                                                                .green),
-                                                        height: 50,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }),
-                                      )
-                                    ],
-                                  ),
-                                ));
+                            Get.to(()=>ClaimDiscrepancy(),arguments: widget.title);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),

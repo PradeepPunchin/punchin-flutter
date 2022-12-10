@@ -119,7 +119,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
 
                 FutureBuilder(
-                    future: homeController.homeCount(),
+                    future: homeController.homeTile(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         // If we got an error

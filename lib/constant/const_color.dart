@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 const bottombarColor = Color.fromRGBO(19, 78, 133, 0.1);
 const unselectBottombarColor =Color.fromRGBO(134, 150, 187, 1);
 
-
+// 213, 217, 224, 1
+// D5D9E0
 const kWhite = Color.fromRGBO(255, 255, 255, 1);
 const kBlack = Color.fromRGBO(0, 0, 0, 1);
 const kMediumBlack = Color.fromRGBO(130, 133, 136, 1);

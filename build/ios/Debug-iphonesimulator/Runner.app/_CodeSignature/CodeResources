@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		VP0T2N9IDNa0XFEZxlrTMEw7YXc=
+		V5aSOfCOX2357/6NW1+sz9pyJ2A=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		jQ92V8PBGxxXdW1oE0RcO+/6S4w=
+		agZdP3YJhFpnrLZ84Hmg6sE2VLM=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		I25q/C14r9fd0CmTg52fi0lFcx0=
+		21AKNQs5gYPh0BTkvWnmJNX1WH8=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/24625-dr-vector-insurance-protection%201.svg</key>
 		<data>
@@ -150,7 +150,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		j7gEN3MVetRlLAZ1UrpiQN6tvpg=
+		NiIy4gATX0dQbXSjy/KwI98BE84=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -366,7 +366,7 @@
 		</data>
 		<key>Frameworks/DKPhotoGallery.framework/DKPhotoGallery</key>
 		<data>
-		AMXOhjDloeA6SQ2h+MVFM1xMfy4=
+		vttnHQf6OZRbnyLHFwaeB3oIIow=
 		</data>
 		<key>Frameworks/DKPhotoGallery.framework/DKPhotoGallery.bundle/Assets.car</key>
 		<data>
@@ -413,7 +413,7 @@
 		</data>
 		<key>Frameworks/FMDB.framework/FMDB</key>
 		<data>
-		bzpq5gIhrp48I/eHLMmea8H6iBU=
+		exClxIISB5bivZYSOARuCo2UP8Q=
 		</data>
 		<key>Frameworks/FMDB.framework/Info.plist</key>
 		<data>
@@ -513,7 +513,7 @@
 		</data>
 		<key>Frameworks/SDWebImage.framework/SDWebImage</key>
 		<data>
-		DqKKZ3xKUIJbGQiKFu/lbNm55a4=
+		Khab51r8xh87xAal+S++3QQLdUQ=
 		</data>
 		<key>Frameworks/SDWebImage.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -525,7 +525,7 @@
 		</data>
 		<key>Frameworks/SwiftyGif.framework/SwiftyGif</key>
 		<data>
-		wgUS/Bt96uV1aR1YtqpjpIBWNY8=
+		BmJzpLVOkBNZIcfayNrT4BOvh+A=
 		</data>
 		<key>Frameworks/SwiftyGif.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -553,7 +553,19 @@
 		</data>
 		<key>Frameworks/file_picker.framework/file_picker</key>
 		<data>
-		YnQiHFyCzLyDJuosahSyvV740wk=
+		5O+nlOlEZgdGKxzp3k8kAdwjPnA=
+		</data>
+		<key>Frameworks/flutter_filereader.framework/Info.plist</key>
+		<data>
+		B/ijTSwCsAnVRG3iducYIrVQe70=
+		</data>
+		<key>Frameworks/flutter_filereader.framework/_CodeSignature/CodeResources</key>
+		<data>
+		vLgR7DGmmDa0dyrQuZHI1SN34WA=
+		</data>
+		<key>Frameworks/flutter_filereader.framework/flutter_filereader</key>
+		<data>
+		hIym07/SaPKbp06qhkiV1XRHZhU=
 		</data>
 		<key>Frameworks/image_picker_ios.framework/Info.plist</key>
 		<data>
@@ -589,11 +601,11 @@
 		</data>
 		<key>Frameworks/sqflite.framework/sqflite</key>
 		<data>
-		RLM6Qa4eRb49VbM/Gr6Y5+8Cr1k=
+		zttvAtm+oc88zSfe+7ouFKPrlcE=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		1WfwB0SZJhvzZs63hb4uHbt63Ew=
+		k7eO9MZtN+GHXfbaueZS6Xhfpdc=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -676,7 +688,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fvA1wkP5LFyuq7KAXD6ls22RRtomvpyNgp9d06BEh4I=
+			SQTU2FH4Vx4BtpOgLvsgcTH6YmzQMvHTJi0fzHzClOU=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -690,7 +702,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QgMVlbbouxeRWRhfYadJT9uqOPp7nBjC69l9iUcr/BY=
+			d7WbKOB5m3+gXx7Sd7eu0SnujQOH/OvnGbrGOI0nAgw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -711,7 +723,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TqgDjeEd7b/iDDeSByOrwemPz6kF0jOGrY0IbC+/xy0=
+			c59Ks1fOUu7XFm0vekR9JHs0kgMyoYD6CGmCMFn3zII=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/24625-dr-vector-insurance-protection%201.svg</key>
@@ -858,7 +870,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			KwINUzRvOpogHg+ZJxUvCDGQIVFfvu8Ujc0WGDL7DuI=
+			o8sTXIgP7paFU0NSiiWntHUNj9xrNVmBsIUHFJTGLcI=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -1101,7 +1113,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			amEpCnccWGPx8W57RT06zy67ZhVBYiyaVElDzaMXAtU=
+			4zUnO7Shq6a7Tg++N6riq9jzFGsxqwKvGhAJ+Wgdc1E=
 			</data>
 		</dict>
 		<key>Frameworks/DKPhotoGallery.framework/DKPhotoGallery.bundle/Assets.car</key>
@@ -1163,7 +1175,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			FObdCa3zk7vQbmKMSC8gAvCNDgE2RJnZEwMMVdhRnCY=
+			0cl5E+HF/RRcIIhBDCyFSJumwMx5Rp9Ukmofjzmj+q0=
 			</data>
 		</dict>
 		<key>Frameworks/FMDB.framework/Info.plist</key>
@@ -1338,7 +1350,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			CdO0W3EBUQMYpezB3V8CaZNV1JE7Nrezao1eE2dnvoA=
+			fRxL2z28KbVAvzN+aydGJQn3zHNWRNBsaSpsIC+aNM8=
 			</data>
 		</dict>
 		<key>Frameworks/SDWebImage.framework/_CodeSignature/CodeResources</key>
@@ -1359,7 +1371,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			g0xoqy1OZx/RfWVUMuM7XcaNOiH10nb/3wTWB/FrRNI=
+			obl7lfkf/0bB6gWGvq1KVdZrcB6q7qX4mnn8wUn4SP4=
 			</data>
 		</dict>
 		<key>Frameworks/SwiftyGif.framework/_CodeSignature/CodeResources</key>
@@ -1408,7 +1420,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			be7w/wXw3+qLQ7GL/RUBB0K50vv8190ODGs3OHkCBLM=
+			dKd/wKx3z3ltA6paPfftDeUzUP+41odZLHHwuVa1ngk=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_filereader.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			C4gyzTaOqt8tieKmY/BCNoUUzTx8WV0noWbWRMTcfl8=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_filereader.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QLqYLpk6wSs8NnaMd/r4GamXr/5xBkQpD6D0qE5XnZE=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_filereader.framework/flutter_filereader</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Vv4h4ebORIHaxz675mElP1Fl0fqi3xBFiKkiPh0Q6l4=
 			</data>
 		</dict>
 		<key>Frameworks/image_picker_ios.framework/Info.plist</key>
@@ -1471,7 +1504,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			v/6NxSKoycUSaladWWghhWS6qmVQE9Y0laLts+G0rJQ=
+			XSNTGKRxL7Lock/TEqRC0kvMiPgB+PJrnBnmGj49Viw=
 			</data>
 		</dict>
 	</dict>

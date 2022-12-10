@@ -13,7 +13,7 @@ import 'package:punchin/views/login/login_screen.dart';
 class HomeController extends GetxController {
   var box = GetStorage();
 
-  Future homeCount() async {
+  Future homeTile() async {
     try {
       final response = await http.get(
         Uri.parse(homeCountApi),
@@ -22,14 +22,12 @@ class HomeController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-      log(response.body);
+
       if (response.statusCode == 200) {
-        log(response.body);
+
         return HomeCount.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
-        final details = jsonDecode(response.body);
         Get.off(()=>LoginScreen());
-        //getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);

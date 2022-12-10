@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,8 +7,8 @@ import 'package:path/path.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/claim_controller/claim_controller.dart';
+import 'package:punchin/views/claim_details/details.dart';
 import 'package:punchin/views/claim_form_view/preview_screen.dart';
-import 'package:punchin/views/details.dart';
 
 class ClaimFormView extends StatefulWidget {
   const ClaimFormView({Key? key}) : super(key: key);
@@ -21,9 +20,13 @@ class ClaimFormView extends StatefulWidget {
 class _ClaimFormViewState extends State<ClaimFormView> {
   ClaimController controller = Get.put(ClaimController());
 
-  StepperType stepperType = StepperType.horizontal;
-
   var dataArg = Get.arguments;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.getStepperFormData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +35,32 @@ class _ClaimFormViewState extends State<ClaimFormView> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           leading: GestureDetector(
-            onTap: () {
-              Get.off(() => Details(
+            onTap: () async{
+              // Get.off(() => Details(
+              //       title: '${dataArg[0]}',
+              //     ));
+              if (controller.currentIndex.value > 0) {
+                controller.pageController.animateToPage(
+                    controller.currentIndex.value - 1,
+                    duration: const Duration(milliseconds: 100),
+                    curve: Curves.ease);
+
+                log(" value of index${controller.currentIndex.value.toString()== "0"}");
+                if(controller.currentIndex.value.toString() == "0"){
+                  Get.off(() => Details(
                     title: '${dataArg[0]}',
                   ));
+
+                }
+                else{
+                  controller.currentIndex.value = controller.currentIndex.value - 1;
+                }
+              }
+              else{
+                Get.off(() => Details(
+                  title: '${dataArg[0]}',
+                ));
+              }
             },
             child: const Icon(
               Icons.arrow_back_ios,
@@ -51,13 +76,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
               color: klightBlue,
               borderRadius: BorderRadius.circular(15.0),
             ),
-            child: Text(
-              "Case/Claim ID :  ",
+            child: Obx(() =>Text(
+              "Case/Claim ID : ${controller.claimDetail.value["punchinClaimId"]} ",
               style: CustomFonts.kBlack15Black.copyWith(
                   color: Colors.white,
-                  fontSize: 14.0,
+                  fontSize: 8.0,
                   fontWeight: FontWeight.w400),
-            ),
+            ),),
           ),
           actions: <Widget>[
             CircleAvatar(
@@ -85,7 +110,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
     return Container(
       child: Stack(
         children: [
-          Container(
+          Obx(() => Container(
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               children: [
@@ -129,7 +154,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             const SizedBox(
                               height: 5.0,
                             ),
-                            field(text: ""),
+                            field(text: controller.claimDetail.value["borrowerDob"] !=null? dateChange(controller.claimDetail.value["borrowerDob"]):""),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -149,7 +174,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             ),
                             field(
                                 text: controller.claimDetail
-                                    .value["borrowerContactNumber"]),
+                                    .value["borrowerEmailId"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -212,7 +237,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               height: 5.0,
                             ),
                             field(
-                                text: controller.claimDetail.value["loanAmount"]
+                                text: controller.claimDetail.value["insurerName"]
                                     .toString()),
                             const SizedBox(
                               height: 10.0,
@@ -222,7 +247,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               height: 5.0,
                             ),
                             field(
-                                text: controller.claimDetail.value["loanAmount"]
+                                text: controller.claimDetail.value["loanAccountManagerName"]
                                     .toString()),
                             const SizedBox(
                               height: 10.0,
@@ -232,7 +257,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               height: 5.0,
                             ),
                             field(
-                                text: controller.claimDetail.value["loanAmount"]
+                                text: controller.claimDetail.value["accountManagerContactNumber"]
                                     .toString())
                           ],
                         ),
@@ -268,7 +293,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             ),
                             field(
                                 text: controller
-                                    .claimDetail.value["insurerName"]),
+                                    .claimDetail.value["policyNumber"]),
                             const SizedBox(
                               height: 10.0,
                             ),
@@ -2273,8 +2298,22 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     controller.currentIndex.value - 1,
                                     duration: const Duration(milliseconds: 100),
                                     curve: Curves.ease);
-                                controller.currentIndex.value =
-                                    controller.currentIndex.value - 1;
+
+                                log(" value of index${controller.currentIndex.value.toString()== "0"}");
+                                if(controller.currentIndex.value.toString() == "0"){
+                                  Get.off(() => Details(
+                                    title: '${dataArg[0]}',
+                                  ));
+
+                                }
+                                else{
+                                  controller.currentIndex.value = controller.currentIndex.value - 1;
+                                }
+                              }
+                              else{
+                                Get.off(() => Details(
+                                  title: '${dataArg[0]}',
+                                ));
                               }
                             },
                             child: Container(
@@ -2328,7 +2367,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                 )
               ],
             ),
-          ),
+          ),),
           Obx(() => controller.loadUpload.value
               ? Container(
                   height: Get.height - kToolbarHeight,
