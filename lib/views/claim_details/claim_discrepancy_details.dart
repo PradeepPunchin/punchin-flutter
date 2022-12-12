@@ -461,7 +461,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                         HitTestBehavior.opaque,
                                                         onTap: () async {
                                                           var file = await controller
-                                                              .uploadFile();
+                                                              .discrepancyFile();
 
                                                           controller.additionalProofDoc
                                                               .value = basename(file);

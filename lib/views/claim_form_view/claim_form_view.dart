@@ -541,7 +541,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(
@@ -711,7 +711,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(
@@ -936,7 +936,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(
@@ -1157,7 +1157,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(
@@ -1383,7 +1383,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(
@@ -1610,7 +1610,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(
@@ -1955,7 +1955,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                     true);
                                                           },
                                                           child: Text(
-                                                            "Choose Files from Custom options",
+                                                            "Choose Files from Phone",
                                                             style: CustomFonts
                                                                 .kBlack15Black
                                                                 .copyWith(
@@ -2188,7 +2188,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 child: Text(
-                                                  "Choose Files from Custom options",
+                                                  "Choose Files from Phone",
                                                   style: CustomFonts
                                                       .kBlack15Black
                                                       .copyWith(

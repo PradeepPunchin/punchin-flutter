@@ -31,6 +31,7 @@ class ClaimController extends GetxController {
   RxString document = "".obs;
   RxString nominee = "Major".obs;
   RxString path = "".obs;
+  RxString DiscrepancyFilePath = "".obs;
   RxString filled = "".obs;
   RxString dealthCertificate = "".obs;
   RxString borroweridProof = "".obs;
@@ -600,9 +601,11 @@ class ClaimController extends GetxController {
       File file = File(result.files.single.path!);
       // path.value = basename(file.path);
       path.value = file.path;
+      print("file part "+path.value.toString());
     } else {
       // User canceled the picker
     }
+    print("file part "+ path.value.toString());
     return path.value;
   }
 
@@ -613,110 +616,34 @@ class ClaimController extends GetxController {
     log(postUri.toString());
     var request = http.MultipartRequest("Put", postUri);
     Map<String, String> headers = {
-      // "Content-Type": "multipart/form-data",
+      "Content-Type": "multipart/form-data",
       "X-Xsrf-Token": box.read("authToken"),
     };
     request.headers.addAll(headers);
 
 
     /// code for adding file image
-    log("Path is ${filledPath.value}");
+    log("Path is 1 ${additionalDocpath.value}");
 
-    if (filledPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'signedForm',
-          filledPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (deathCertificatePath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'deathCertificate',
-          deathCertificatePath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-    if (borrowerIdDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerIdDoc',
-          borrowerIdDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (borrowerAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerAddressDoc',
-          borrowerAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeIdDoc',
-          nomineeAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeAddressDoc',
-          nomineeAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (bankAccountDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'bankAccountDoc',
-          bankAccountDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (firOrPostmortemReportPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'FirOrPostmortemReport',
-          firOrPostmortemReportPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
 
     if (additionalDocpath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'additionalDoc',
-          additionalDocpath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
+      print("1"+additionalDocpath.value);
+      request.files
+          .add(await http.MultipartFile.fromPath('multipartFile', additionalDocpath.value,));
+      // request.files.add(
+      //   await http.MultipartFile.fromPath(
+      //     '$docType',
+      //     additionalDocpath.value,
+      //     contentType: MediaType('file', 'jpg'),
+      //   ),
+      // );
     }
-    log("Request $request");
+    print(additionalDocpath.value.isNotEmpty);
+    print(request.files.length.toString());
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
     log("${responsed.statusCode}");
 
-    //final responseData = json.decode(responsed.body);
-    // log("$responseData");
     if (response.statusCode == 200) {
       loadUpload.value = false;
       Get.rawSnackbar(
@@ -727,9 +654,9 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.green);
 
       Get.offAll(() => Details(
-        title: 'Allocated',
+        title: 'WIP',
       ));
-      log("Success");
+
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");
