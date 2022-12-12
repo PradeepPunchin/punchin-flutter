@@ -218,7 +218,7 @@ class ClaimController extends GetxController {
         },
       );
 
-
+log(""+response.body);
 
       if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
