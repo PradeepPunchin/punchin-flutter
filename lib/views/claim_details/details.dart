@@ -23,18 +23,6 @@ class _DetailsState extends State<Details> {
   ClaimController controller = Get.put(ClaimController());
   RxBool details = false.obs;
 
-  List options = [
-    {"name": "Nominee Signed Claim Form ", "status": true},
-    {"name": "Death Certificate ", "status": false},
-    {"name": "Borrower ID Proof", "status": true},
-    {"name": "Borrower Add proof", "status": true},
-    {"name": "Nominee Id Proof ", "status": true},
-    {"name": "Nominee Add proof ", "status": true},
-    {"name": "Nominee Bank A/c Proof ", "status": true},
-    {"name": "FIR / Postmortem report", "status": true},
-    {"name": "Affidavit (Name mismatch etc)", "status": true},
-    {"name": "Discrepancy / AR / FR resolution", "status": false},
-  ];
 
 
   @override
@@ -308,6 +296,7 @@ class _DetailsState extends State<Details> {
                         );
                       })
                   : Container(),
+
               widget.title.toString() == "Action Pending Cases"
                   ? FutureBuilder(
                       future: controller.getClaimSubmitted(
@@ -1148,14 +1137,23 @@ class _DetailsState extends State<Details> {
                       ),
                       GestureDetector(
                           onTap: () {
+                            controller.getClaimDiscrepeancy(id: singleData.id
+                            );
                             Get.defaultDialog(
                                 title: "",
-                                content: Container(
+                                content: controller.discrepancyData.value["claimDocuments"].length ==0 ?Container(
+                                  child: Column(
+                                    children:const [
+                                      Icon(Icons.hourglass_empty),
+                                      Text("No Data Found"),
+                                    ],
+                                  ),
+                                ):Container(
                                   padding: EdgeInsets.all(10.0),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Document Uploaded",
@@ -1167,7 +1165,7 @@ class _DetailsState extends State<Details> {
                                       Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(5.0),
+                                            BorderRadius.circular(5.0),
                                             border: Border.all(color: kGrey)),
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 15, vertical: 10.0),
@@ -1177,8 +1175,8 @@ class _DetailsState extends State<Details> {
                                               "Application process:",
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(
-                                                      fontSize: 14.0,
-                                                      color: Colors.black),
+                                                  fontSize: 14.0,
+                                                  color: Colors.black),
                                             ),
                                             const SizedBox(
                                               width: 10,
@@ -1187,8 +1185,8 @@ class _DetailsState extends State<Details> {
                                               "In-progress",
                                               style: CustomFonts.kBlack15Black
                                                   .copyWith(
-                                                      fontSize: 15.0,
-                                                      color: klightBlue),
+                                                  fontSize: 15.0,
+                                                  color: klightBlue),
                                             ),
                                           ],
                                         ),
@@ -1200,10 +1198,12 @@ class _DetailsState extends State<Details> {
                                             horizontal: 3.0, vertical: 10),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(10.0)),
+                                            BorderRadius.circular(10.0)),
                                         child: ListView.builder(
-                                            itemCount: options.length,
+                                            itemCount: controller.discrepancyData.value["claimDocuments"].length,
                                             itemBuilder: (context, int index) {
+                                              var claimDiscrepancy= controller.discrepancyData.value["claimDocuments"][index];
+
                                               return Container(
                                                 child: Row(
                                                   children: [
@@ -1214,13 +1214,13 @@ class _DetailsState extends State<Details> {
                                                             border: Border.all(
                                                                 color: kGrey)),
                                                         child: Text(
-                                                          "${options[index]["name"]}",
+                                                          "${claimDiscrepancy["agentDocType"]}",
                                                           style: CustomFonts
                                                               .kBlack15Black,
                                                         ),
                                                         height: 50,
                                                         alignment:
-                                                            Alignment.center,
+                                                        Alignment.center,
                                                       ),
                                                     ),
                                                     Expanded(
@@ -1229,8 +1229,8 @@ class _DetailsState extends State<Details> {
                                                         decoration: BoxDecoration(
                                                             border: Border.all(
                                                                 color: kGrey)),
-                                                        child: !options[index]
-                                                                ["status"]
+                                                        height: 50,
+                                                        child: !claimDiscrepancy["isApproved"]
                                                             ? Icon(Icons.cancel,
                                                             color: Colors.red)
                                                             : Icon(
@@ -1238,7 +1238,6 @@ class _DetailsState extends State<Details> {
                                                                 .check_circle,
                                                             color: Colors
                                                                 .blue),
-                                                        height: 50,
                                                       ),
                                                     ),
                                                   ],
@@ -1249,6 +1248,8 @@ class _DetailsState extends State<Details> {
                                     ],
                                   ),
                                 ));
+
+
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -1448,7 +1449,7 @@ class _DetailsState extends State<Details> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            Get.to(()=>ClaimDiscrepancy(),arguments: widget.title);
+                            Get.off(()=>ClaimDiscrepancy(),arguments: [widget.title,singleData.id]);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
