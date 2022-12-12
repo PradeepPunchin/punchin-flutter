@@ -10,8 +10,11 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:punchin/constant/api_url.dart';
+import 'package:punchin/model/claim_model/claim_discrepancy_model.dart';
+import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
-import 'package:punchin/views/details.dart';
+import 'package:punchin/views/claim_details/details.dart';
+import 'package:punchin/views/login/login_screen.dart';
 
 import '../../model/claim_model/claim_details.dart';
 
@@ -43,6 +46,7 @@ class ClaimController extends GetxController {
   RxString firProof = "".obs;
   RxString additionalProof = "".obs;
   RxString additionalProofDoc = "".obs;
+  var discrepancyData={}.obs;
 
   RxBool loading = true.obs;
   RxBool loadUpload = false.obs;
@@ -63,19 +67,113 @@ class ClaimController extends GetxController {
   var claimDetailsObject = ClaimDetailsData().obs;
   var claimDetail = {}.obs;
 
-  /// claim draft
-  getClaimSubmitted({status}) async {
-    log(box.read("authToken"));
+  getClaimInProgress({status}) async {
+
     try {
       var response = await http.get(
-        Uri.parse(getBankerClaimApi + "$status&page=1&limit=10"),
+        Uri.parse(getAgentClaimApi + "$status&page=0&limit=100"),
         headers: {
           "Content-Type": "application/json",
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
 
-      log(response.body);
+
+
+      if (response.statusCode == 200) {
+        return WipInProgressModel.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
+        Get.off(()=>LoginScreen());
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      }
+    } on SocketException {
+      Get.rawSnackbar(
+          message: "Internet Exception",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } catch (e) {
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
+
+  /// claim under verification
+  getClaimUnderVerification({status}) async {
+    log(box.read("authToken"));
+    try {
+      var response = await http.get(
+        Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+        headers: {
+          "Content-Type": "application/json",
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+      );
+
+
+      log("inprogress"+response.body);
+      if (response.statusCode == 200) {
+        return WipInProgressModel.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      }
+    } on SocketException {
+      Get.rawSnackbar(
+          message: "Internet Exception",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } catch (e) {
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
+
+
+
+
+  /// claim draft
+  getClaimSubmitted({status}) async {
+    log(box.read("authToken"));
+    try {
+      var response = await http.get(
+        Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+        headers: {
+          "Content-Type": "application/json",
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+      );
+
+
+      log("inprogress"+response.body);
       if (response.statusCode == 200) {
         return ClaimSubmitted.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -107,10 +205,70 @@ class ClaimController extends GetxController {
     }
   }
 
+
+  /// claim  discrepeancy document
+  getClaimDiscrepeancy({id}) async {
+    try {
+      var response = await http.get(
+        Uri.parse("$claimDetails$id/documents"),
+        headers: {
+          "Content-Type": "application/json",
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+      );
+
+
+
+      if (response.statusCode == 200) {
+        // discrepancyData.value=jsonDecode(response.body);
+        Map data = jsonDecode(response.body);
+
+
+        if (data != null && data["isSuccess"]) {
+          loading.value = false;
+
+          discrepancyData.value = data["data"];
+
+         // discrepancyData.value = ClaimDiscrepancyModel.fromJson(data["data"]);
+         //  log("Dat ${discrepancyData.value.toString()}");
+        }
+
+
+       return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      }
+    } on SocketException {
+      Get.rawSnackbar(
+          message: "Internet Exception",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } catch (e) {
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
+
+
   getClaimSubmittedOne() async {
     try {
       var response = await http.get(
-        Uri.parse(getBankerClaimApi),
+        Uri.parse(getAgentClaimApi),
         headers: {
           "Content-Type": "application/json",
           "X-Xsrf-Token": box.read("authToken"),
@@ -157,25 +315,24 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-      log("$claimDetails${Get.arguments[1].id.toString()}");
-      log("${response.statusCode}");
       if (response.statusCode == 200) {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
 
         Map data = jsonDecode(response.body);
 
-        log("var $data");
+
         if (data != null && data["isSuccess"]) {
           loading.value = false;
-          log("Entered here");
+
           claimDetail.value = data["data"];
-          log(claimDetail.value["borrowerName"]);
+
           claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]);
-          log("Dat ${claimDetailsObject.value.punchinClaimId.toString()}");
+
         }
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
+        Get.off(()=>LoginScreen());
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
@@ -428,5 +585,160 @@ class ClaimController extends GetxController {
     }
 
     return temp.value.toString();
+  }
+
+
+
+  /// claim discrepancy file
+  /// upload file
+  Future<String> discrepancyFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      // path.value = basename(file.path);
+      path.value = file.path;
+    } else {
+      // User canceled the picker
+    }
+    return path.value;
+  }
+
+  uploadDiscrepancyData({id,docType}) async {
+    loadUpload.value = true;
+    var postUri = Uri.parse(
+        "$formUpload$id/discrepancy-document-upload/$docType");
+    log(postUri.toString());
+    var request = http.MultipartRequest("Put", postUri);
+    Map<String, String> headers = {
+      // "Content-Type": "multipart/form-data",
+      "X-Xsrf-Token": box.read("authToken"),
+    };
+    request.headers.addAll(headers);
+
+
+    /// code for adding file image
+    log("Path is ${filledPath.value}");
+
+    if (filledPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'signedForm',
+          filledPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (deathCertificatePath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'deathCertificate',
+          deathCertificatePath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+    if (borrowerIdDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'borrowerIdDoc',
+          borrowerIdDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (borrowerAddressDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'borrowerAddressDoc',
+          borrowerAddressDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (nomineeAddressDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'nomineeIdDoc',
+          nomineeAddressDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (nomineeAddressDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'nomineeAddressDoc',
+          nomineeAddressDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (bankAccountDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'bankAccountDoc',
+          bankAccountDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (firOrPostmortemReportPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'FirOrPostmortemReport',
+          firOrPostmortemReportPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (additionalDocpath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'additionalDoc',
+          additionalDocpath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+    log("Request $request");
+    var response = await request.send();
+    var responsed = await http.Response.fromStream(response);
+    log("${responsed.statusCode}");
+
+    //final responseData = json.decode(responsed.body);
+    // log("$responseData");
+    if (response.statusCode == 200) {
+      loadUpload.value = false;
+      Get.rawSnackbar(
+          message: "Form Submitted Successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.green);
+
+      Get.offAll(() => Details(
+        title: 'Allocated',
+      ));
+      log("Success");
+    } else {
+      loadUpload.value = false;
+      log("errorCode ${response.statusCode}");
+      Get.rawSnackbar(
+          message: "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    }
   }
 }

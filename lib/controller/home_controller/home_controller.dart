@@ -8,11 +8,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:punchin/constant/api_url.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
+import 'package:punchin/views/login/login_screen.dart';
 
 class HomeController extends GetxController {
   var box = GetStorage();
 
-  Future homeCount() async {
+  Future homeTile() async {
     try {
       final response = await http.get(
         Uri.parse(homeCountApi),
@@ -21,13 +22,12 @@ class HomeController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-      log(response.body);
+
       if (response.statusCode == 200) {
-        log(response.body);
+
         return HomeCount.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
+        Get.off(()=>LoginScreen());
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);

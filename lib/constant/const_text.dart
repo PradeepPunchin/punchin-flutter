@@ -33,6 +33,14 @@ const kBody13black400 = TextStyle(
   overflow: TextOverflow.fade,
   fontWeight: FontWeight.w400,
 );
+
+const kBody13black700 = TextStyle(
+  fontSize: 13,
+  color: kBlack,
+  overflow: TextOverflow.fade,
+  fontWeight: FontWeight.w700,
+);
+
 const kBody14black600 = TextStyle(
   fontSize: 14,
   color: kTextBlack,
