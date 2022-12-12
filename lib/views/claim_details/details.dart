@@ -40,6 +40,9 @@ class _DetailsState extends State<Details> {
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
             children: [
+              const SizedBox(
+                height: 20,
+              ),
               // app bar
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
