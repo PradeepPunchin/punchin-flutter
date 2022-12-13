@@ -615,8 +615,7 @@ class _DetailsState extends State<Details> {
                                               height: 4,
                                             ),
                                             Text(
-                                              singleData.claimDate
-                                                  .toString(),
+                                              "${dateChange(singleData.claimDate)}",
                                               style: kBody14black600,
                                             ),
                                             SizedBox(
@@ -758,10 +757,7 @@ class _DetailsState extends State<Details> {
                                                 SizedBox(
                                                   height: 4,
                                                 ),
-                                                Text(
-                                                  singleData
-                                                      .claimDate
-                                                      .toString(),
+                                                Text("${dateChange(singleData.claimDate)}",
                                                   style:
                                                   kBody14black600,
                                                 ),
@@ -797,9 +793,7 @@ class _DetailsState extends State<Details> {
                                                   height: 4,
                                                 ),
                                                 Text(
-                                                  singleData
-                                                      .claimDate
-                                                      .toString(),
+                                                  "${dateChange(singleData.claimDate)}",
                                                   style:
                                                   kBody14black600,
                                                 ),
@@ -1074,7 +1068,7 @@ class _DetailsState extends State<Details> {
                                   height: 4,
                                 ),
                                 Text(
-                                  singleData.claimDate.toString(),
+                                    "${dateChange(singleData.claimDate)}",
                                   style: kBody14black600,
                                 ),
                                 SizedBox(
@@ -1133,11 +1127,13 @@ class _DetailsState extends State<Details> {
                                 SizedBox(
                                   height: 16,
                                 ),
+
                               ],
                             ),
                           ],
                         ),
                       ),
+
 
                       const Padding(
                         padding: EdgeInsets.only(top: 16, left: 22, right: 22),
@@ -1383,7 +1379,7 @@ class _DetailsState extends State<Details> {
                                   height: 4,
                                 ),
                                 Text(
-                                  singleData.claimDate.toString(),
+                                  "${dateChange(singleData.claimDate)}",
                                   style: kBody14black600,
                                 ),
                                const SizedBox(
@@ -1447,7 +1443,31 @@ class _DetailsState extends State<Details> {
                           ],
                         ),
                       ),
-
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 14,
+                            left: 22,
+                            right: 22,
+                            bottom: 16),
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Address",
+                              style: kBody13black400,
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Text(
+                              singleData.borrowerAddress
+                                  .toString(),
+                              style: kBody14black600,
+                            ),
+                          ],
+                        ),
+                      ),
                       // address
 
                       // Padding(
@@ -1511,6 +1531,7 @@ class _DetailsState extends State<Details> {
 
   String dateChange(date) {
     var temp = DateTime.fromMillisecondsSinceEpoch(date);
-    return temp.toString();
+    var currentDate= "${temp.day}/ ${temp.month}/ ${temp.year}";
+    return currentDate.toString();
   }
 }
