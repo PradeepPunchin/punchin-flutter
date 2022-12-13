@@ -29,6 +29,7 @@ const kBack = Color(0xffF1F6FC);
 const kPurpul =Color.fromRGBO(136, 136, 221, 1);
 const kLightBlue=Color.fromRGBO(124, 181, 236, 1);
 const kBorderColor=Color.fromRGBO(218, 218, 218, 1);
+const kYellowColor=Color.fromRGBO(216, 193, 72, 1);
 //// gradient
 ///Total case
 var totalCasseColor =[Color.fromRGBO(26, 176, 176, 1),Color.fromRGBO(33, 172, 172, 1)];

@@ -948,7 +948,7 @@ class _DetailsState extends State<Details> {
   Widget tab() => DefaultTabController(
       length: 2,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         children: [
           Align(
             alignment: Alignment.center,
@@ -963,7 +963,7 @@ class _DetailsState extends State<Details> {
                 indicatorColor: kdarkBlue,
                 unselectedLabelStyle: CustomFonts.kBlack15Black
                     .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-                isScrollable: false,
+                isScrollable: true,
                 indicator: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
@@ -1010,7 +1010,15 @@ class _DetailsState extends State<Details> {
             // Extracting data from snapshot object
             WipInProgressModel? claimSubmitted = snapshot.data
                 as WipInProgressModel; // paymentModelFromJson(snapshot.data);
-            return ListView.separated(
+            return claimSubmitted.data!.content!.length ==0 ?Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                SizedBox(height: 100,),
+
+                Center(child: Text("No Data Found"))
+              ],
+            ): ListView.separated(
               padding: EdgeInsets.only(top: 15.0.h),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
@@ -1019,7 +1027,7 @@ class _DetailsState extends State<Details> {
               itemCount: claimSubmitted.data!.content!.length,
               itemBuilder: (context, index) {
                 var singleData = claimSubmitted.data!.content![index];
-                return Container(
+                return  Container(
                   //width: Get.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7),
@@ -1195,7 +1203,7 @@ class _DetailsState extends State<Details> {
                                         ),
                                       ),
                                       Container(
-                                        height: Get.height * 0.6,
+                                        //height: Get.height * 0.6,
                                         width: Get.width,
                                         margin: const EdgeInsets.symmetric(
                                             horizontal: 3.0, vertical: 10),
@@ -1233,14 +1241,20 @@ class _DetailsState extends State<Details> {
                                                             border: Border.all(
                                                                 color: kGrey)),
                                                         height: 50,
-                                                        child: !claimDiscrepancy["isApproved"]
-                                                            ? Icon(Icons.cancel,
-                                                            color: Colors.red)
-                                                            : Icon(
+                                                        child:claimDiscrepancy["isApproved"]==false && claimDiscrepancy["isVerified"] ==false
+                                                            ? Icon(
                                                             Icons
                                                                 .check_circle,
                                                             color: Colors
-                                                                .blue),
+                                                                .blue)
+                                                            : claimDiscrepancy["isApproved"]==true && claimDiscrepancy["isVerified"] ==true
+                                                            ? Icon(
+                                                            Icons
+                                                                .check_circle,
+                                                            color: Colors
+                                                                .green)
+                                                            : Icon(Icons.cancel,
+                                                            color: Colors.red)
                                                       ),
                                                     ),
                                                   ],
@@ -1305,7 +1319,15 @@ class _DetailsState extends State<Details> {
             // Extracting data from snapshot object
             WipInProgressModel? claimSubmitted = snapshot.data
             as WipInProgressModel; // paymentModelFromJson(snapshot.data);
-            return ListView.separated(
+            return  claimSubmitted.data!.content!.length ==0 ?Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                SizedBox(height: 100,),
+
+                Center(child: Text("No Data Found"))
+              ],
+            ): ListView.separated(
               padding: EdgeInsets.only(top: 15.0.h),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,

@@ -150,7 +150,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                             ),
                                           ),
                                           Container(
-                                            height: Get.height * 0.3,
+                                            //height: Get.height * 0.8,
                                             width: Get.width,
                                             margin: const EdgeInsets.symmetric(
                                                 horizontal: 3.0, vertical: 10),
@@ -190,14 +190,20 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                                 border: Border.all(
                                                                     color: kGrey)),
                                                             height: 50,
-                                                            child: !claimDiscrepancy["isApproved"]
-                                                                ? Icon(Icons.cancel,
-                                                                color: Colors.red)
-                                                                : Icon(
+                                                            child: claimDiscrepancy["isApproved"]==false && claimDiscrepancy["isVerified"] ==false
+                                                                ? Icon(
                                                                 Icons
                                                                     .check_circle,
                                                                 color: Colors
-                                                                    .blue),
+                                                                    .blue)
+                                                                : claimDiscrepancy["isApproved"]==true && claimDiscrepancy["isVerified"] ==true
+                                                                ? Icon(
+                                                                Icons
+                                                                    .check_circle,
+                                                                color: Colors
+                                                                    .green)
+                                                                : Icon(Icons.cancel,
+                                                                color: Colors.red)
                                                           ),
                                                         ),
                                                       ],
@@ -208,77 +214,6 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         ],
                                       ),
                                     ),
-                                    // Container(
-                                    //   padding: EdgeInsets.all(10.0),
-                                    //   child: Column(
-                                    //     mainAxisAlignment: MainAxisAlignment.start,
-                                    //     crossAxisAlignment:
-                                    //     CrossAxisAlignment.start,
-                                    //     children: [
-                                    //       Text(
-                                    //         "Document Uploaded",
-                                    //         style: CustomFonts.kBlack15Black,
-                                    //       ),
-                                    //       const SizedBox(
-                                    //         height: 8.0,
-                                    //       ),
-                                    //       Container(
-                                    //         height: Get.height * 0.6,
-                                    //         width: Get.width,
-                                    //         margin: const EdgeInsets.symmetric(
-                                    //             horizontal: 3.0, vertical: 10),
-                                    //         decoration: BoxDecoration(
-                                    //             borderRadius:
-                                    //             BorderRadius.circular(10.0)),
-                                    //         child: ListView.builder(
-                                    //             itemCount: options.length,
-                                    //             physics: NeverScrollableScrollPhysics(),
-                                    //             itemBuilder: (context, int index) {
-                                    //               return Container(
-                                    //                 child: Row(
-                                    //                   children: [
-                                    //                     Expanded(
-                                    //                       flex: 3,
-                                    //                       child: Container(
-                                    //                         decoration: BoxDecoration(
-                                    //                             border: Border.all(
-                                    //                                 color: kGrey)),
-                                    //                         child: Text(
-                                    //                           "${options[index]["name"]}",
-                                    //                           style: CustomFonts
-                                    //                               .kBlack15Black,
-                                    //                         ),
-                                    //                         height: 50,
-                                    //                         alignment:
-                                    //                         Alignment.center,
-                                    //                       ),
-                                    //                     ),
-                                    //                     Expanded(
-                                    //                       flex: 1,
-                                    //                       child: Container(
-                                    //                         decoration: BoxDecoration(
-                                    //                             border: Border.all(
-                                    //                                 color: kGrey)),
-                                    //                         child: !options[index]
-                                    //                         ["status"]
-                                    //                             ? Icon(Icons.cancel,
-                                    //                             color: Colors.red)
-                                    //                             : Icon(
-                                    //                             Icons
-                                    //                                 .check_circle,
-                                    //                             color: Colors
-                                    //                                 .blue),
-                                    //                         height: 50,
-                                    //                       ),
-                                    //                     ),
-                                    //                   ],
-                                    //                 ),
-                                    //               );
-                                    //             }),
-                                    //       )
-                                    //     ],
-                                    //   ),
-                                    // ),
 
                                     Text(
                                       "Discrepancy Remark",

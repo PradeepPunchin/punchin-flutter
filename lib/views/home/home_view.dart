@@ -518,7 +518,7 @@ class _HomeViewState extends State<HomeView> {
                                             width: 170,
                                             height: 77,
                                             decoration: BoxDecoration(
-                                                color: kLightBlue,
+                                                color: kYellowColor,
                                                 borderRadius:
                                                 BorderRadius.circular(7)),
                                             child: Row(

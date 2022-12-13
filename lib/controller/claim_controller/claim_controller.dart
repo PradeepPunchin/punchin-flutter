@@ -174,6 +174,7 @@ class ClaimController extends GetxController {
       );
 
 
+      log(status);
       log("inprogress"+response.body);
       if (response.statusCode == 200) {
         return ClaimSubmitted.fromJson(jsonDecode(response.body));
@@ -218,9 +219,9 @@ class ClaimController extends GetxController {
         },
       );
 
-log(""+response.body);
-
-      if (response.statusCode == 200) {
+      log(response.body);
+      print(id)
+;      if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
         Map data = jsonDecode(response.body);
 
@@ -614,7 +615,7 @@ log(""+response.body);
     var postUri = Uri.parse(
         "$formUpload$id/discrepancy-document-upload/$docType");
     log(postUri.toString());
-    var request = http.MultipartRequest("Put", postUri);
+    var request = http.MultipartRequest("Post", postUri);
     Map<String, String> headers = {
       "Content-Type": "multipart/form-data",
       "X-Xsrf-Token": box.read("authToken"),
@@ -643,6 +644,52 @@ log(""+response.body);
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
     log("${responsed.statusCode}");
+
+    if (response.statusCode == 200) {
+      moveToVerify(id: id);
+      loadUpload.value = false;
+      Get.rawSnackbar(
+          message: "Form Submitted Successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.green);
+
+      Get.offAll(() => Details(
+        title: 'WIP',
+      ));
+
+    } else {
+      loadUpload.value = false;
+      log("errorCode ${response.statusCode}");
+      Get.rawSnackbar(
+          message: "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    }
+  }
+
+
+  /// get verify
+ moveToVerify({id}) async {
+    loadUpload.value = true;
+    var postUri = Uri.parse(
+        "$formUpload$id/forward-to-verifier");
+    Map<String,dynamic> data={
+      "id":id,
+    };
+    log(postUri.toString());
+    var response= await http.post(postUri,
+        headers :{
+
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+    body: jsonEncode(data),
+    );
+
+
 
     if (response.statusCode == 200) {
       loadUpload.value = false;

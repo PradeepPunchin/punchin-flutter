@@ -36,31 +36,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
           elevation: 0.0,
           leading: GestureDetector(
             onTap: () async{
-              // Get.off(() => Details(
-              //       title: '${dataArg[0]}',
-              //     ));
-              if (controller.currentIndex.value > 0) {
-                controller.pageController.animateToPage(
-                    controller.currentIndex.value - 1,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.ease);
-
-                log(" value of index${controller.currentIndex.value.toString()== "0"}");
-                if(controller.currentIndex.value.toString() == "0"){
-                  Get.off(() => Details(
+              Get.off(() => Details(
                     title: '${dataArg[0]}',
                   ));
 
-                }
-                else{
-                  controller.currentIndex.value = controller.currentIndex.value - 1;
-                }
-              }
-              else{
-                Get.off(() => Details(
-                  title: '${dataArg[0]}',
-                ));
-              }
             },
             child: const Icon(
               Icons.arrow_back_ios,
@@ -604,10 +583,14 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   color: kdarkBlue,
                                                   fontWeight: FontWeight.w700),
                                         ),
-                                        onTap: () => Get.to(() => PreviewScreen(
+                                        onTap: () {
+                                          print("Resting "+ controller.filledPath.value);
+
+                                          Get.to(() => PreviewScreen(
                                               filePath:
                                                   controller.filledPath.value,
-                                            )),
+                                            ),);
+                                        },
                                       ),
                                       Spacer(),
                                       GestureDetector(
@@ -2299,22 +2282,23 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     duration: const Duration(milliseconds: 100),
                                     curve: Curves.ease);
 
-                                log(" value of index${controller.currentIndex.value.toString()== "0"}");
-                                if(controller.currentIndex.value.toString() == "0"){
-                                  Get.off(() => Details(
-                                    title: '${dataArg[0]}',
-                                  ));
-
-                                }
-                                else{
-                                  controller.currentIndex.value = controller.currentIndex.value - 1;
-                                }
+                                // log(" value of index${controller.currentIndex.value.toString()== "0"}");
+                                controller.currentIndex.value = controller.currentIndex.value - 1;
+                                // if(controller.currentIndex.value.toString() == "0"){
+                                //   Get.off(() => Details(
+                                //     title: '${dataArg[0]}',
+                                //   ));
+                                //
+                                // }
+                                // else{
+                                //
+                                // }
                               }
-                              else{
-                                Get.off(() => Details(
-                                  title: '${dataArg[0]}',
-                                ));
-                              }
+                              // else{
+                              //   Get.off(() => Details(
+                              //     title: '${dataArg[0]}',
+                              //   ));
+                              // }
                             },
                             child: Container(
                               height: 50,
