@@ -1,25 +1,45 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_filereader/flutter_filereader.dart';
-import 'package:get/get.dart';
 
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
 import '../../constant/const_text.dart';
 
 class PreviewScreen extends StatefulWidget {
-  String filePath;
-
   PreviewScreen({Key? key, required this.filePath}) : super(key: key);
+  final  filePath;
+
+
 
   @override
-  State<PreviewScreen> createState() => _PreviewScreenState(filePath);
+  State<PreviewScreen> createState() => _PreviewScreenState();
 }
 
 class _PreviewScreenState extends State<PreviewScreen> {
-  String filePath;
 
-  _PreviewScreenState(this.filePath);
+  var filextension;
+  String getFileExtension(String fileName) {
+    print("." + fileName.split('.').last);
+    filextension =fileName.split('.').last;
+    print("file type"+filextension);
+    print(fileName);
+    final file = File('${fileName}');
+
+    return "." + fileName.split('.').last;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    getFileExtension(widget.filePath.toString());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -36,12 +56,17 @@ class _PreviewScreenState extends State<PreviewScreen> {
         title: Text(
           "Preview your uploaded file",
           style: CustomFonts.kBlack15Black.copyWith(
-              color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w400),
+              color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w400),
         ),
       ),
-      body: FileReaderView(
-        filePath: filePath,
-      ),
+      body: filextension == "jpg" || filextension == "jpeg"|| filextension == "png"?//ImageByteFormat.png ?
+      Image.file(File(widget.filePath),
+      ):
+      Container(
+        width: 400,//Get.width,
+          height: Get.height,
+
+          child: PdfView(path: "${widget.filePath.toString()}")),
     );
   }
 }
