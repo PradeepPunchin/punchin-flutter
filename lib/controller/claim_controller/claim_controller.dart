@@ -47,7 +47,7 @@ class ClaimController extends GetxController {
   RxString firProof = "".obs;
   RxString additionalProof = "".obs;
   RxString additionalProofDoc = "".obs;
-  var discrepancyData={}.obs;
+  var discrepancyData = {}.obs;
 
   RxBool loading = true.obs;
   RxBool loadUpload = false.obs;
@@ -69,7 +69,6 @@ class ClaimController extends GetxController {
   var claimDetail = {}.obs;
 
   getClaimInProgress({status}) async {
-
     try {
       var response = await http.get(
         Uri.parse(getAgentClaimApi + "$status&page=0&limit=100"),
@@ -79,13 +78,11 @@ class ClaimController extends GetxController {
         },
       );
 
-
-
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
-        Get.off(()=>LoginScreen());
+        Get.off(() => LoginScreen());
         //getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
@@ -96,7 +93,7 @@ class ClaimController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
@@ -125,8 +122,7 @@ class ClaimController extends GetxController {
         },
       );
 
-
-      log("inprogress"+response.body);
+      log("inprogress" + response.body);
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -141,7 +137,7 @@ class ClaimController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
@@ -158,9 +154,6 @@ class ClaimController extends GetxController {
     }
   }
 
-
-
-
   /// claim draft
   getClaimSubmitted({status}) async {
     log(box.read("authToken"));
@@ -173,9 +166,8 @@ class ClaimController extends GetxController {
         },
       );
 
-
       log(status);
-      log("inprogress"+response.body);
+      log("inprogress" + response.body);
       if (response.statusCode == 200) {
         return ClaimSubmitted.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -190,7 +182,7 @@ class ClaimController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
@@ -206,7 +198,6 @@ class ClaimController extends GetxController {
       //btnController.value.stop();
     }
   }
-
 
   /// claim  discrepeancy document
   getClaimDiscrepeancy({id}) async {
@@ -220,23 +211,21 @@ class ClaimController extends GetxController {
       );
 
       log(response.body);
-      print(id)
-;      if (response.statusCode == 200) {
+      print(id);
+      if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
         Map data = jsonDecode(response.body);
-
 
         if (data != null && data["isSuccess"]) {
           loading.value = false;
 
           discrepancyData.value = data["data"];
 
-         // discrepancyData.value = ClaimDiscrepancyModel.fromJson(data["data"]);
-         //  log("Dat ${discrepancyData.value.toString()}");
+          // discrepancyData.value = ClaimDiscrepancyModel.fromJson(data["data"]);
+          //  log("Dat ${discrepancyData.value.toString()}");
         }
 
-
-       return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
+        return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
@@ -249,7 +238,7 @@ class ClaimController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
@@ -265,7 +254,6 @@ class ClaimController extends GetxController {
       //btnController.value.stop();
     }
   }
-
 
   getClaimSubmittedOne() async {
     try {
@@ -291,7 +279,7 @@ class ClaimController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
@@ -322,19 +310,17 @@ class ClaimController extends GetxController {
 
         Map data = jsonDecode(response.body);
 
-
         if (data != null && data["isSuccess"]) {
           loading.value = false;
 
           claimDetail.value = data["data"];
 
           claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]);
-
         }
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
-        Get.off(()=>LoginScreen());
+        Get.off(() => LoginScreen());
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
@@ -344,7 +330,7 @@ class ClaimController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
@@ -589,8 +575,6 @@ class ClaimController extends GetxController {
     return temp.value.toString();
   }
 
-
-
   /// claim discrepancy file
   /// upload file
   Future<String> discrepancyFile() async {
@@ -602,18 +586,18 @@ class ClaimController extends GetxController {
       File file = File(result.files.single.path!);
       // path.value = basename(file.path);
       path.value = file.path;
-      print("file part "+path.value.toString());
+      print("file part " + path.value.toString());
     } else {
       // User canceled the picker
     }
-    print("file part "+ path.value.toString());
+    print("file part " + path.value.toString());
     return path.value;
   }
 
-  uploadDiscrepancyData({id,docType}) async {
+  uploadDiscrepancyData({id, docType}) async {
     loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload$id/discrepancy-document-upload/$docType");
+    var postUri =
+        Uri.parse("$formUpload$id/discrepancy-document-upload/$docType");
     log(postUri.toString());
     var request = http.MultipartRequest("Post", postUri);
     Map<String, String> headers = {
@@ -622,15 +606,15 @@ class ClaimController extends GetxController {
     };
     request.headers.addAll(headers);
 
-
     /// code for adding file image
     log("Path is 1 ${additionalDocpath.value}");
 
-
     if (additionalDocpath.value.isNotEmpty) {
-      print("1"+additionalDocpath.value);
-      request.files
-          .add(await http.MultipartFile.fromPath('multipartFile', additionalDocpath.value,));
+      print("1" + additionalDocpath.value);
+      request.files.add(await http.MultipartFile.fromPath(
+        'multipartFile',
+        additionalDocpath.value,
+      ));
       // request.files.add(
       //   await http.MultipartFile.fromPath(
       //     '$docType',
@@ -656,9 +640,8 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.green);
 
       Get.offAll(() => Details(
-        title: 'WIP',
-      ));
-
+            title: 'WIP',
+          ));
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");
@@ -671,25 +654,21 @@ class ClaimController extends GetxController {
     }
   }
 
-
   /// get verify
- moveToVerify({id}) async {
+  moveToVerify({id}) async {
     loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload$id/forward-to-verifier");
-    Map<String,dynamic> data={
-      "id":id,
+    var postUri = Uri.parse("$formUpload$id/forward-to-verifier");
+    Map<String, dynamic> data = {
+      "id": id,
     };
     log(postUri.toString());
-    var response= await http.post(postUri,
-        headers :{
-
-          "X-Xsrf-Token": box.read("authToken"),
-        },
-    body: jsonEncode(data),
+    var response = await http.post(
+      postUri,
+      headers: {
+        "X-Xsrf-Token": box.read("authToken"),
+      },
+      body: jsonEncode(data),
     );
-
-
 
     if (response.statusCode == 200) {
       loadUpload.value = false;
@@ -701,9 +680,8 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.green);
 
       Get.offAll(() => Details(
-        title: 'WIP',
-      ));
-
+            title: 'WIP',
+          ));
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");

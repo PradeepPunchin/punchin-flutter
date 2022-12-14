@@ -18,7 +18,7 @@ class MyClass extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (BuildContext context, Widget? child) => GetMaterialApp(
+      builder: (BuildContext context, Widget? child) => const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),
         // home: ClaimFormView(),

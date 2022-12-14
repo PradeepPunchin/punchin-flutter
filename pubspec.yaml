@@ -51,6 +51,7 @@ dependencies:
   file_picker: ^5.2.3
 
   pdf_viewer_plugin: ^2.0.1
+  fluttertoast: ^8.1.2
 
 
 
