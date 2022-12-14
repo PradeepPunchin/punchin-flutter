@@ -210,9 +210,69 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                     ),
                                                   );
                                                 }),
-                                          )
+                                          ),
+
+
                                         ],
                                       ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Remark",
+                                      style: CustomFonts.kBlack15Black
+                                          .copyWith(
+                                          fontSize: 15.0,
+                                          color: klightBlue),
+                                    ),
+                                    Container(
+                                      //height: Get.height * 0.8,
+                                      width: Get.width,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 3.0, vertical: 10),
+                                      padding: EdgeInsets.all(10.0),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(7),
+                                          color: kFilledTextColor,
+                                          border: Border.all(color: kTextFieldBorder)
+                                      ),
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          physics: NeverScrollableScrollPhysics(),
+                                          itemCount: controller.discrepancyData.value["claimDocuments"].length,
+                                          itemBuilder: (context, int index) {
+                                            var claimDiscrepancy= controller.discrepancyData.value["claimDocuments"][index];
+
+                                            return Container(
+                                              //padding: EdgeInsets.all(10.0),
+                                              decoration: BoxDecoration(
+                                                 // borderRadius: BorderRadius.circular(7),
+                                                  color: kWhite,
+                                                 // border: Border.all(color: kTextFieldBorder)
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  claimDiscrepancy["reason"]==null || claimDiscrepancy["reason"]=="null" ||claimDiscrepancy["reason"]=="" ?SizedBox():Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        "${index+1}. ${claimDiscrepancy["agentDocType"]}",
+                                                        style: CustomFonts
+                                                            .kBlack15Black,
+                                                      ),
+                                                      Text(
+                                                        " reason :${claimDiscrepancy["reason"]}",
+                                                        style: CustomFonts
+                                                            .kBlack15Black,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }),
                                     ),
 
                                     Text(
