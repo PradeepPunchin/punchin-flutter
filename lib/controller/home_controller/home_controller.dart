@@ -37,7 +37,7 @@ class HomeController extends GetxController {
       }
     } on SocketException {
       Get.rawSnackbar(
-          message: "Internet Exception",
+          message: "Bad Connectivity",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,
