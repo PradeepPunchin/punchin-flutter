@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/authentication_controller/login_controller.dart';
@@ -24,7 +29,32 @@ class _HomeViewState extends State<HomeView> {
   LoginController loginController = Get.put(LoginController());
   HomeController homeController = Get.put(HomeController());
 
-  // FileController fileController=Get.put(FileController());
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  @override
+  void initState() {
+    getConnectivity();
+    super.initState();
+  }
+
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+            (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -654,74 +684,6 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
 
-                /// claim settlement card
-                //  SizedBox(height: 4,),
-                //   Container(
-                //   //width: Get.width,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(7),
-                //       border: Border.all(width:5,color:kBorder )
-                //   ),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //
-                //       Padding(
-                //         padding: const EdgeInsets.only(top: 20.12,left: 22.06),
-                //         child: Text("Submit Claims and Get Reward",style: k14Body323232black600,),
-                //       ),
-                //       Padding(
-                //         padding: const EdgeInsets.only(top: 16,left: 22,),
-                //         child: Row(
-                //           children: [
-                //             Column(
-                //               crossAxisAlignment: CrossAxisAlignment.start,
-                //               children: [
-                //                const SizedBox(
-                //                   width:140.5,
-                //                   child:  Text("Submit 5 Claims Today. Get a Surprise Reward.",style: kBody13black400,
-                //                    maxLines: 5,
-                //                    softWrap: true,
-                //                      overflow: TextOverflow.ellipsis,
-                //                    ),
-                //                 ),
-                //                 SizedBox(height: 11,),
-                //                 MaterialButton(
-                //                   height: 30,
-                //                   minWidth: 104,
-                //                   shape: RoundedRectangleBorder(
-                //                       borderRadius: BorderRadius.circular(5.0)),
-                //                   color: kdarkBlue,
-                //                   onPressed: () {
-                //
-                //                   },
-                //                   child: Text(
-                //                     "Claim Now",
-                //                     style: CustomFonts.getMultipleStyle(
-                //                         15.0, Colors.white, FontWeight.w400),
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //             const Spacer(),
-                //             Padding(
-                //               padding: const EdgeInsets.only(right: 8.0),
-                //               child: SizedBox(
-                //                   width: 142.6,
-                //                   height: 106,
-                //                   child: Image.asset("assets/icons/cashback_happiness 1.png")),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //
-                //
-                //
-                //       SizedBox(height: 26,)
-                //
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -729,4 +691,26 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+  showDialogBox() => showCupertinoDialog<String>(
+    context: context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: const Text('No Connection'),
+      content: const Text('Please check your internet connectivity'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, 'Cancel');
+            setState(() => isAlertSet = false);
+            isDeviceConnected =
+            await InternetConnectionChecker().hasConnection;
+            if (!isDeviceConnected && isAlertSet == false) {
+              showDialogBox();
+              setState(() => isAlertSet = true);
+            }
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }

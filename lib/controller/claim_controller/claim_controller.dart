@@ -81,6 +81,7 @@ class ClaimController extends GetxController {
 
 
 
+      log("dis"+response.body);
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -219,8 +220,6 @@ class ClaimController extends GetxController {
         },
       );
 
-      log(response.body);
-      print(id)
 ;      if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
         Map data = jsonDecode(response.body);
@@ -228,24 +227,17 @@ class ClaimController extends GetxController {
 
         if (data != null && data["isSuccess"]) {
           loading.value = false;
-
           discrepancyData.value = data["data"];
-
-         // discrepancyData.value = ClaimDiscrepancyModel.fromJson(data["data"]);
-         //  log("Dat ${discrepancyData.value.toString()}");
         }
 
 
        return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
       } else if (response.statusCode == 405) {
         final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
       }
     } on SocketException {
       Get.rawSnackbar(
