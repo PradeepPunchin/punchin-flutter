@@ -145,99 +145,195 @@ class _HomeViewState extends State<HomeView> {
                               // var singleData = peOrderLine.products?[index];
                               return Column(
                                 children: [
-                                  // total case
-                                  GestureDetector(
-                                    onTap: () {
-                                      if(homeCount.data!.aGENTALLOCATED.toString()=="0"){
-
-                                      }
-                                      else {
-                                        Get.off(() => Details(title: subtitle[0]));
-                                      }
-
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 8.0),
-                                      child: Container(
-                                        width: Get.width,
-                                        height: 77,
-                                        decoration: BoxDecoration(
-                                            gradient: RadialGradient(
-                                              colors: totalCasseColor,
-                                            ),
-                                            color: kLightBlue,
-                                            borderRadius:
-                                                BorderRadius.circular(7)),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Stack(
-                                                  alignment:
-                                                      AlignmentDirectional
-                                                          .center,
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      "assets/icons/book.svg",
-                                                      color: kWhite,
-                                                    ),
-                                                   Positioned(
-                                                      //left: 18,
-                                                      // top: 20,
-                                                      child: Container(
-                                                        width: 68,
-                                                        height: 68,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          gradient:
-                                                              LinearGradient(
-                                                            colors: circleColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            // SizedBox(width: 13,),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    homeCount.data!.aGENTALLOCATED
-                                                        .toString(),
-                                                    style: kBody20white700,
-                                                  ),
-                                                  Text(subtitle[0].toString(),
-                                                      style: kBody12kWhite500),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  // // total case
+                                  // GestureDetector(
+                                  //   onTap: () {
+                                  //     if(homeCount.data!.aGENTALLOCATED.toString()=="0"){
+                                  //
+                                  //     }
+                                  //     else {
+                                  //       Get.off(() => Details(title: subtitle[0]));
+                                  //     }
+                                  //
+                                  //   },
+                                  //   child: Padding(
+                                  //     padding:
+                                  //         const EdgeInsets.only(bottom: 8.0),
+                                  //     child: Container(
+                                  //       width: Get.width,
+                                  //       height: 77,
+                                  //       decoration: BoxDecoration(
+                                  //           gradient: RadialGradient(
+                                  //             colors: totalCasseColor,
+                                  //           ),
+                                  //           color: kLightBlue,
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(7)),
+                                  //       child: Row(
+                                  //         crossAxisAlignment:
+                                  //             CrossAxisAlignment.start,
+                                  //         mainAxisAlignment:
+                                  //             MainAxisAlignment.start,
+                                  //         children: [
+                                  //           Column(
+                                  //             crossAxisAlignment:
+                                  //                 CrossAxisAlignment.start,
+                                  //             children: [
+                                  //               Stack(
+                                  //                 alignment:
+                                  //                     AlignmentDirectional
+                                  //                         .center,
+                                  //                 children: [
+                                  //                   SvgPicture.asset(
+                                  //                     "assets/icons/book.svg",
+                                  //                     color: kWhite,
+                                  //                   ),
+                                  //                  Positioned(
+                                  //                     //left: 18,
+                                  //                     // top: 20,
+                                  //                     child: Container(
+                                  //                       width: 68,
+                                  //                       height: 68,
+                                  //                       decoration:
+                                  //                           BoxDecoration(
+                                  //                         shape:
+                                  //                             BoxShape.circle,
+                                  //                         gradient:
+                                  //                             LinearGradient(
+                                  //                           colors: circleColor,
+                                  //                         ),
+                                  //                       ),
+                                  //                     ),
+                                  //                   ),
+                                  //                 ],
+                                  //               ),
+                                  //             ],
+                                  //           ),
+                                  //           // SizedBox(width: 13,),
+                                  //           Padding(
+                                  //             padding: const EdgeInsets.only(
+                                  //                 top: 20),
+                                  //             child: Column(
+                                  //               crossAxisAlignment:
+                                  //                   CrossAxisAlignment.start,
+                                  //               children: [
+                                  //                 Text(
+                                  //                   homeCount.data!.aGENTALLOCATED
+                                  //                       .toString(),
+                                  //                   style: kBody20white700,
+                                  //                 ),
+                                  //                 Text(subtitle[0].toString(),
+                                  //                     style: kBody12kWhite500),
+                                  //               ],
+                                  //             ),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
 
                                   /// card
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 8.0),
                                     child: Row(
                                       children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if(homeCount.data!.aGENTALLOCATED.toString()=="0"){
+
+                                            }
+                                            else {
+                                              Get.off(() => Details(title: subtitle[0]));
+                                            }
+
+                                          },
+                                          child: Container(
+                                            width: 170,
+                                            height: 77,
+                                            decoration: BoxDecoration(
+                                                gradient: RadialGradient(
+                                                  colors: totalCasseColor,
+                                                ),
+                                                color: kLightBlue,
+                                                borderRadius:
+                                                BorderRadius.circular(7)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                      AlignmentDirectional
+                                                          .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/icons/book.svg",
+                                                          color: kWhite,
+                                                        ),
+                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                        Positioned(
+                                                          //left: 18,
+                                                          // top: 20,
+                                                          child: Container(
+                                                            width: 68,
+                                                            height: 68,
+                                                            decoration:
+                                                            BoxDecoration(
+                                                              shape:
+                                                              BoxShape.circle,
+                                                              gradient:
+                                                              LinearGradient(
+                                                                colors:
+                                                                circleColor,
+                                                              ),
+
+                                                              //borderRadius: BorderRadius.circular(100)
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                //SizedBox(width: 13,),
+                                                Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets.only(
+                                                        top: 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+
+                                                        Text(
+                                                          homeCount
+                                                              .data!.aGENTALLOCATED
+                                                              .toString(),
+                                                          style: kBody20white700,
+                                                        ),
+                                                        Text(
+                                                            subtitle[0]
+                                                                .toString(),
+                                                            style:
+                                                            kBody12kWhite500),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
                                         GestureDetector(
                                           onTap: () {
                                             if(homeCount.data!.iNPROGRESS.toString()=="0"){
@@ -321,7 +417,15 @@ class _HomeViewState extends State<HomeView> {
                                             ),
                                           ),
                                         ),
-                                        Spacer(),
+
+
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Row(
+                                      children: [
                                         GestureDetector(
                                           onTap: () {
                                             if(homeCount.data!.aCTIONPENDING.toString()=="0"){
@@ -338,21 +442,21 @@ class _HomeViewState extends State<HomeView> {
                                             decoration: BoxDecoration(
                                                 color: kLightBlue,
                                                 borderRadius:
-                                                    BorderRadius.circular(7)),
+                                                BorderRadius.circular(7)),
                                             child: Row(
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                               children: [
                                                 Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                                   children: [
                                                     Stack(
                                                       alignment:
-                                                          AlignmentDirectional
-                                                              .center,
+                                                      AlignmentDirectional
+                                                          .center,
                                                       children: [
                                                         SvgPicture.asset(
                                                           "assets/icons/book.svg",
@@ -366,13 +470,13 @@ class _HomeViewState extends State<HomeView> {
                                                             width: 68,
                                                             height: 68,
                                                             decoration:
-                                                                BoxDecoration(
+                                                            BoxDecoration(
                                                               shape:
-                                                                  BoxShape.circle,
+                                                              BoxShape.circle,
                                                               gradient:
-                                                                  LinearGradient(
+                                                              LinearGradient(
                                                                 colors:
-                                                                    circleColor,
+                                                                circleColor,
                                                               ),
 
                                                               //borderRadius: BorderRadius.circular(100)
@@ -387,12 +491,12 @@ class _HomeViewState extends State<HomeView> {
                                                 Flexible(
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.only(
-                                                            top: 20),
+                                                    const EdgeInsets.only(
+                                                        top: 20),
                                                     child: Column(
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                      CrossAxisAlignment
+                                                          .start,
                                                       children: [
                                                         Text(
                                                           homeCount
@@ -404,7 +508,7 @@ class _HomeViewState extends State<HomeView> {
                                                             subtitle[1]
                                                                 .toString(),
                                                             style:
-                                                                kBody12kWhite500),
+                                                            kBody12kWhite500),
                                                       ],
                                                     ),
                                                   ),
@@ -413,97 +517,7 @@ class _HomeViewState extends State<HomeView> {
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Row(
-                                      children: [
-                                        // GestureDetector(
-                                        //   onTap: () {
-                                        //     if(homeCount.data!.uNDERVERIFICATION.toString()=="0"){
-                                        //
-                                        //     }
-                                        //     else {
-                                        //       Get.off(() => Details(title: subtitle[3]));
-                                        //     }
-                                        //   },
-                                        //   child: Container(
-                                        //     width: 170,
-                                        //     height: 77,
-                                        //     decoration: BoxDecoration(
-                                        //         color: kPurpul,
-                                        //         borderRadius:
-                                        //         BorderRadius.circular(7)),
-                                        //     child: Row(
-                                        //       crossAxisAlignment:
-                                        //       CrossAxisAlignment.start,
-                                        //       mainAxisAlignment:
-                                        //       MainAxisAlignment.start,
-                                        //       children: [
-                                        //         Column(
-                                        //           crossAxisAlignment:
-                                        //           CrossAxisAlignment.start,
-                                        //           children: [
-                                        //             Stack(
-                                        //               alignment:
-                                        //               AlignmentDirectional
-                                        //                   .center,
-                                        //               children: [
-                                        //                 SvgPicture.asset(
-                                        //                   "assets/icons/book.svg",
-                                        //                   color: kWhite,
-                                        //                 ),
-                                        //                 //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                        //                 Positioned(
-                                        //                   //left: 18,
-                                        //                   // top: 20,
-                                        //                   child: Container(
-                                        //                     width: 68,
-                                        //                     height: 68,
-                                        //                     decoration:
-                                        //                     BoxDecoration(
-                                        //                       shape:
-                                        //                       BoxShape.circle,
-                                        //                       gradient:
-                                        //                       LinearGradient(
-                                        //                         colors:
-                                        //                         circleColor,
-                                        //                       ),
-                                        //
-                                        //                     ),
-                                        //                   ),
-                                        //                 ),
-                                        //               ],
-                                        //             ),
-                                        //           ],
-                                        //         ),
-                                        //         //SizedBox(width: 13,),
-                                        //         Padding(
-                                        //           padding: const EdgeInsets.only(
-                                        //               top: 20),
-                                        //           child: Column(
-                                        //             crossAxisAlignment:
-                                        //             CrossAxisAlignment.start,
-                                        //             children: [
-                                        //               Text(
-                                        //                 homeCount
-                                        //                     .data!.uNDERVERIFICATION
-                                        //                     .toString(),
-                                        //                 style: kBody20white700,
-                                        //               ),
-                                        //               Text(subtitle[3].toString(),
-                                        //                   style:
-                                        //                   kBody12kWhite500),
-                                        //             ],
-                                        //           ),
-                                        //         ),
-                                        //       ],
-                                        //     ),
-                                        //   ),
-                                        // ),
-                                        // Spacer(),
+                                        Spacer(),
                                         GestureDetector(
                                           onTap: () {
                                             if(homeCount.data!.uNDERVERIFICATION.toString()=="0"){
@@ -618,8 +632,8 @@ class _HomeViewState extends State<HomeView> {
                       );
                     }),
 
-                SizedBox(
-                  height: 20,
+               const SizedBox(
+                  height: 220,
                 ),
 
                 Center(

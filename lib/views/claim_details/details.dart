@@ -947,6 +947,8 @@ class _DetailsState extends State<Details> {
           Align(
             alignment: Alignment.center,
             child: Container(
+             // width: Get.width,
+
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(25.0)),
@@ -965,11 +967,21 @@ class _DetailsState extends State<Details> {
                     color: kdarkBlue),
                 tabs: [
                   Tab(
-                    child: Text("In-Progress"),
+
+                    child: Container(
+                      //width:172,
+                        //padding: const EdgeInsets.only(bottom: 14.0,top: 13,left: 51.0,right: 46),
+                        child: Text("In-Progress")),
                   ),
                   Tab(
-                    child: Text(
-                      "Discrepancy",
+                    child: Container(
+                      //width:Get.width,
+                      padding: const EdgeInsets.only(bottom: 14.0,top: 13,left: 0,right: 0),
+                      child: Center(
+                        child: Text(
+                          "Discrepancy",
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -977,8 +989,12 @@ class _DetailsState extends State<Details> {
             ),
           ),
           Container(
+            padding: EdgeInsets.only(top: 16),
+
+
             height: Get.height,
             child: TabBarView(
+              viewportFraction : 1.0,
               children: [one(), two()],
             ),
           )

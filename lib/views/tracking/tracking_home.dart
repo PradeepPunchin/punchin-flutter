@@ -594,24 +594,6 @@ class _TrackingHomeState extends State<TrackingHome> {
                 ],
               ):SizedBox()),
 
-              Center(
-                child: MaterialButton(
-                  height: 30,
-                  minWidth: 104,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                  color: kdarkBlue,
-                  onPressed: () {
-                    loginController.postLogout();
-
-                  },
-                  child: Text(
-                    "Logout",
-                    style: CustomFonts.getMultipleStyle(
-                        15.0, Colors.white, FontWeight.w400),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
