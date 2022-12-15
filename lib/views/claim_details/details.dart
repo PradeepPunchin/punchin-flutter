@@ -23,8 +23,6 @@ class _DetailsState extends State<Details> {
   ClaimController controller = Get.put(ClaimController());
   RxBool details = false.obs;
 
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -304,230 +302,237 @@ class _DetailsState extends State<Details> {
                   ? FutureBuilder(
                       future: controller.getClaimSubmitted(
                           status: "ACTION_PENDING"),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // If we got an error
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If we got an error
 
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            '${snapshot.error} occurred',
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        );
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(
+                                '${snapshot.error} occurred',
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            );
 
-                        // if we got our data
-                      } else if (snapshot.hasData) {
-                        // Extracting data from snapshot object
-                        ClaimSubmitted? claimSubmitted = snapshot.data
-                        as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
-                        return ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
-                          itemCount: claimSubmitted.data!.content!.length,
-                          itemBuilder: (context, index) {
-                            var singleData =
-                            claimSubmitted.data!.content![index];
-                            return Container(
-                              //width: Get.width,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(7),
-                                  border: Border.all(
-                                      width: 1, color: kBorder)),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    //width: Get.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(7),
-                                        topRight: Radius.circular(7),
+                            // if we got our data
+                          } else if (snapshot.hasData) {
+                            // Extracting data from snapshot object
+                            ClaimSubmitted? claimSubmitted = snapshot.data
+                                as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: BouncingScrollPhysics(),
+                              //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
+                              itemCount: claimSubmitted.data!.content!.length,
+                              itemBuilder: (context, index) {
+                                var singleData =
+                                    claimSubmitted.data!.content![index];
+                                return Container(
+                                  //width: Get.width,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7),
+                                      border:
+                                          Border.all(width: 1, color: kBorder)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        //width: Get.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(7),
+                                            topRight: Radius.circular(7),
+                                          ),
+                                          color: kBlue,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, top: 12, bottom: 12),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "Case/Claim ID : ${singleData.punchinClaimId}",
+                                                  style: kBody14kWhite600)
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      color: kBlue,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, top: 12, bottom: 12),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                              "Case/Claim ID : ${singleData.punchinClaimId}",
-                                              style: kBody14kWhite600)
-                                        ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 14, left: 22, right: 22),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Nominee Name",
+                                                  style: kBody13black400,
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  singleData.nomineeName
+                                                      .toString(),
+                                                  style: kBody14black600,
+                                                ),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Nominee Number",
+                                                  style: kBody13black400,
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  singleData
+                                                      .nomineeContactNumber
+                                                      .toString(),
+                                                  style: kBody14black600,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14, left: 22, right: 22),
-                                    child: Row(
-                                      children: [
-                                        Column(
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 16, left: 22, right: 22),
+                                        child: Row(
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Allocation date",
+                                                  style: kBody13black400,
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  "${dateChange(singleData.allocationDate)}",
+                                                  style: kBody14black600,
+                                                ),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text("Borrower Name"),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  singleData.borrowerName
+                                                      .toString(),
+                                                  style: kBody14black600,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 14,
+                                            left: 22,
+                                            right: 22,
+                                            bottom: 16),
+                                        child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Nominee Name",
+                                              "Address",
                                               style: kBody13black400,
                                             ),
                                             SizedBox(
                                               height: 4,
                                             ),
                                             Text(
-                                              singleData.nomineeName
+                                              singleData.borrowerAddress
                                                   .toString(),
                                               style: kBody14black600,
                                             ),
                                           ],
                                         ),
-                                        const Spacer(),
-                                        Column(
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 16, left: 22, right: 22),
+                                        child: Divider(
+                                          thickness: 2,
+                                          height: 2,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 14,
+                                            left: 22,
+                                            right: 22,
+                                            bottom: 16),
+                                        child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "Nominee Number",
-                                              style: kBody13black400,
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              singleData
-                                                  .nomineeContactNumber
-                                                  .toString(),
-                                              style: kBody14black600,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 16, left: 22, right: 22),
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Allocation date",
-                                              style: kBody13black400,
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              "${dateChange(singleData.allocationDate)}",
-                                              style: kBody14black600,
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Borrower Name"),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              singleData.borrowerName
-                                                  .toString(),
-                                              style: kBody14black600,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14,
-                                        left: 22,
-                                        right: 22,
-                                        bottom: 16),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Address",
-                                          style: kBody13black400,
-                                        ),
-                                        SizedBox(
-                                          height: 4,
-                                        ),
-                                        Text(
-                                          singleData.borrowerAddress
-                                              .toString(),
-                                          style: kBody14black600,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const  Padding(
-                                    padding:
-                                    EdgeInsets.only(top: 16, left: 22, right: 22),
-                                    child: Divider(
-                                      thickness: 2,
-                                      height: 2,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14, left: 22, right: 22, bottom: 16),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () {
-                                              Get.off(() => ClaimFormView(), arguments: [
-                                                widget.title,
-                                                claimSubmitted.data!.content![index]
-                                              ]);
-                                            },
-                                            child:const Center(
-                                                child: Text(
+                                            GestureDetector(
+                                                onTap: () {
+                                                  Get.off(() => ClaimFormView(),
+                                                      arguments: [
+                                                        widget.title,
+                                                        claimSubmitted.data!
+                                                            .content![index]
+                                                      ]);
+                                                },
+                                                child: const Center(
+                                                    child: Text(
                                                   "Act Now",
                                                   style: kBody14black600,
                                                 ))),
-                                        const SizedBox(
-                                          height: 4,
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 10,
+                                );
+                              },
                             );
-                          },
-                          separatorBuilder:
-                              (BuildContext context, int index) {
-                            return SizedBox(
-                              height: 10,
-                            );
-                          },
-                        );
-                      }
-                    }
+                          }
+                        }
 
-                    // Displaying LoadingSpinner to indicate waiting state
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.3,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  })
+                        // Displaying LoadingSpinner to indicate waiting state
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height / 1.3,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      })
                   : Container(),
 
               // WIP
@@ -535,267 +540,104 @@ class _DetailsState extends State<Details> {
 
               widget.title.toString() == "UNDER VERIFICATION"
                   ? FutureBuilder(
+                      future: controller.getClaimUnderVerification(
+                          status: "UNDER_VERIFICATION"),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          // If we got an error
 
-                  future: controller.getClaimUnderVerification(
-                      status: "UNDER_VERIFICATION"),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      // If we got an error
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(
+                                '${snapshot.error} occurred',
+                                style: const TextStyle(fontSize: 18),
+                              ),
+                            );
 
-                      if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            '${snapshot.error} occurred',
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        );
-
-                        // if we got our data
-                      } else if (snapshot.hasData) {
-                        // Extracting data from snapshot object
-                        WipInProgressModel? claimSubmitted = snapshot.data
-                        as WipInProgressModel; // paymentModelFromJson(snapshot.data);
-                        return ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: BouncingScrollPhysics(),
-                          //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
-                          itemCount: claimSubmitted.data!.content!.length,
-                          itemBuilder: (context, index) {
-                            var singleData =
-                            claimSubmitted.data!.content![index];
-                            return Container(
-                              //width: Get.width,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(7),
-                                  border:
-                                  Border.all(width: 1, color: kBorder)),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  // claim id
-                                  Container(
-                                    //width: Get.width,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(7),
-                                        topRight: Radius.circular(7),
-                                      ),
-                                      color: kBlue,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, top: 12, bottom: 12),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                              "Case/Claim ID : ${singleData.claimId}",
-                                              style: kBody14kWhite600)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  // details like name contact and date
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14, left: 22, right: 22),
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            // claim register date
-                                            Text(
-                                              "Claim Registration Date",
-                                              style: kBody13black400,
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              "${dateChange(singleData.claimDate)}",
-                                              style: kBody14black600,
-                                            ),
-                                            SizedBox(
-                                              height: 16,
-                                            ),
-
-                                            // Nominee Name
-                                            Text(
-                                              "Nominee Name",
-                                              style: kBody13black400,
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              singleData.nomineeName
-                                                  .toString(),
-                                              style: kBody14black600,
-                                            ),
-                                            SizedBox(
-                                              height: 16,
-                                            ),
-                                          ],
+                            // if we got our data
+                          } else if (snapshot.hasData) {
+                            // Extracting data from snapshot object
+                            WipInProgressModel? claimSubmitted = snapshot.data
+                                as WipInProgressModel; // paymentModelFromJson(snapshot.data);
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: BouncingScrollPhysics(),
+                              //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
+                              itemCount: claimSubmitted.data!.content!.length,
+                              itemBuilder: (context, index) {
+                                var singleData =
+                                    claimSubmitted.data!.content![index];
+                                return Container(
+                                  //width: Get.width,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(7),
+                                      border:
+                                          Border.all(width: 1, color: kBorder)),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // claim id
+                                      Container(
+                                        //width: Get.width,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(7),
+                                            topRight: Radius.circular(7),
+                                          ),
+                                          color: kBlue,
                                         ),
-                                        const Spacer(),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            // claim register date
-                                            Text(
-                                              "Borrower Name",
-                                              style: kBody13black400,
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              singleData.borrowerName
-                                                  .toString(),
-                                              style: kBody14black600,
-                                            ),
-                                            SizedBox(
-                                              height: 16,
-                                            ),
-
-                                            // Nominee Name
-                                            Text(
-                                              "Nominee Contact No.",
-                                              style: kBody13black400,
-                                            ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              singleData
-                                                  .nomineeContactNumber
-                                                  .toString(),
-                                              style: kBody14black600,
-                                            ),
-                                            SizedBox(
-                                              height: 16,
-                                            ),
-                                          ],
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20, top: 12, bottom: 12),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                  "Case/Claim ID : ${singleData.claimId}",
+                                                  style: kBody14kWhite600)
+                                            ],
+                                          ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-
-                                  // address
-
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                                  //   child: Column(
-                                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                                  //     children: [
-                                  //       Text("Address",style: kBody13black400,),
-                                  //       SizedBox(height: 4,),
-                                  //
-                                  //
-                                  //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
-                                  //
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  Obx(() => details.value == true
-                                      ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0, left: 22, right: 22),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                                      ),
+                                      // details like name contact and date
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 14, left: 22, right: 22),
+                                        child: Row(
                                           children: [
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 // claim register date
                                                 Text(
-                                                  "Nominee Address",
-                                                  style:
-                                                  kBody13black400,
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Container(
-                                                    width:
-                                                    Get.width / 4,
-                                                    child: Text(
-                                                      singleData
-                                                          .borrowerAddress
-                                                          .toString(),
-                                                      style:
-                                                      kBody14black600,
-                                                      maxLines: 6,
-                                                      softWrap: true,
-                                                      overflow:
-                                                      TextOverflow
-                                                          .ellipsis,
-                                                    )),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                // claim register date
-                                                Text(
-                                                  "Date of Doc Completion",
-                                                  style:
-                                                  kBody13black400,
-                                                ),
-                                                SizedBox(
-                                                  height: 4,
-                                                ),
-                                                Text("${dateChange(singleData.claimDate)}",
-                                                  style:
-                                                  kBody14black600,
-                                                ),
-                                                SizedBox(
-                                                  height: 16,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 16,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
-                                              children: [
-                                                // Nominee Name
-                                                // Text(
-                                                //   "Insurer Submission Date",
-                                                //   style:
-                                                //   kBody13black400,
-                                                // ),
-                                                Text(
-                                                  "Submission Date",
-                                                  style:
-                                                  kBody13black400,
+                                                  "Claim Registration Date",
+                                                  style: kBody13black400,
                                                 ),
                                                 SizedBox(
                                                   height: 4,
                                                 ),
                                                 Text(
                                                   "${dateChange(singleData.claimDate)}",
-                                                  style:
-                                                  kBody14black600,
+                                                  style: kBody14black600,
+                                                ),
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+
+                                                // Nominee Name
+                                                Text(
+                                                  "Nominee Name",
+                                                  style: kBody13black400,
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  singleData.nomineeName
+                                                      .toString(),
+                                                  style: kBody14black600,
                                                 ),
                                                 SizedBox(
                                                   height: 16,
@@ -805,28 +647,38 @@ class _DetailsState extends State<Details> {
                                             const Spacer(),
                                             Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
+                                                  CrossAxisAlignment.start,
                                               children: [
+                                                // claim register date
+                                                Text(
+                                                  "Borrower Name",
+                                                  style: kBody13black400,
+                                                ),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  singleData.borrowerName
+                                                      .toString(),
+                                                  style: kBody14black600,
+                                                ),
+                                                SizedBox(
+                                                  height: 16,
+                                                ),
+
                                                 // Nominee Name
                                                 Text(
-                                                  "Verifier Name",
-                                                  style:
-                                                  kBody13black400,
+                                                  "Nominee Contact No.",
+                                                  style: kBody13black400,
                                                 ),
                                                 SizedBox(
                                                   height: 4,
                                                 ),
                                                 Text(
                                                   singleData
-                                                      .borrowerName
+                                                      .nomineeContactNumber
                                                       .toString(),
-                                                  softWrap: true,
-                                                  maxLines: 3,
-                                                  overflow: TextOverflow.ellipsis,
-
-                                                  style:
-                                                  kBody14black600.copyWith(fontSize: 14),
+                                                  style: kBody14black600,
                                                 ),
                                                 SizedBox(
                                                   height: 16,
@@ -835,103 +687,259 @@ class _DetailsState extends State<Details> {
                                             ),
                                           ],
                                         ),
-                                        // Column(
-                                        //   crossAxisAlignment:
-                                        //   CrossAxisAlignment
-                                        //       .start,
-                                        //   children: [
-                                        //     // claim register date
-                                        //     Text(
-                                        //       "Claim Amount ",
-                                        //       style: kBody13black400,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       height: 4,
-                                        //     ),
-                                        //     Text(
-                                        //       singleData
-                                        //           .id
-                                        //           .toString(),
-                                        //       style: kBody14black600,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       height: 16,
-                                        //     ),
-                                        //   ],
-                                        // ),
-                                      ],
-                                    ),
-                                  )
-                                      : SizedBox()),
-                                  const Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 16, left: 22, right: 22),
-                                    child: Divider(
-                                      thickness: 2,
-                                      height: 2,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 14,
-                                        left: 22,
-                                        right: 22,
-                                        bottom: 16),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      children: [
-                                        Obx(() => details.value == false
-                                            ? GestureDetector(
-                                            onTap: () {
-                                              details.value = true;
-                                            },
-                                            child: Center(
-                                                child: Text(
-                                                  "View More ",
-                                                  style: kBody14black600,
-                                                )))
-                                            : GestureDetector(
-                                            onTap: () {
-                                              details.value = false;
-                                            },
-                                            child: Center(
-                                                child: Text(
-                                                  "View less ",
-                                                  style: kBody14black600,
-                                                )))),
-                                        SizedBox(
-                                          height: 4,
+                                      ),
+
+                                      // address
+
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
+                                      //   child: Column(
+                                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                                      //     children: [
+                                      //       Text("Address",style: kBody13black400,),
+                                      //       SizedBox(height: 4,),
+                                      //
+                                      //
+                                      //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
+                                      //
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      Obx(() => details.value == true
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 0, left: 22, right: 22),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // claim register date
+                                                          Text(
+                                                            "Nominee Address",
+                                                            style:
+                                                                kBody13black400,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 4,
+                                                          ),
+                                                          Container(
+                                                              width:
+                                                                  Get.width / 4,
+                                                              child: Text(
+                                                                singleData
+                                                                    .borrowerAddress
+                                                                    .toString(),
+                                                                style:
+                                                                    kBody14black600,
+                                                                maxLines: 6,
+                                                                softWrap: true,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                      const Spacer(),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // claim register date
+                                                          Text(
+                                                            "Date of Doc Completion",
+                                                            style:
+                                                                kBody13black400,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 4,
+                                                          ),
+                                                          Text(
+                                                            "${dateChange(singleData.claimDate)}",
+                                                            style:
+                                                                kBody14black600,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 16,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 16,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // Nominee Name
+                                                          // Text(
+                                                          //   "Insurer Submission Date",
+                                                          //   style:
+                                                          //   kBody13black400,
+                                                          // ),
+                                                          Text(
+                                                            "Submission Date",
+                                                            style:
+                                                                kBody13black400,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 4,
+                                                          ),
+                                                          Text(
+                                                            "${dateChange(singleData.claimDate)}",
+                                                            style:
+                                                                kBody14black600,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 16,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const Spacer(),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // Nominee Name
+                                                          Text(
+                                                            "Verifier Name",
+                                                            style:
+                                                                kBody13black400,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 4,
+                                                          ),
+                                                          Text(
+                                                            singleData
+                                                                .borrowerName
+                                                                .toString(),
+                                                            softWrap: true,
+                                                            maxLines: 3,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style:
+                                                                kBody14black600
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            14),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 16,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // Column(
+                                                  //   crossAxisAlignment:
+                                                  //   CrossAxisAlignment
+                                                  //       .start,
+                                                  //   children: [
+                                                  //     // claim register date
+                                                  //     Text(
+                                                  //       "Claim Amount ",
+                                                  //       style: kBody13black400,
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       height: 4,
+                                                  //     ),
+                                                  //     Text(
+                                                  //       singleData
+                                                  //           .id
+                                                  //           .toString(),
+                                                  //       style: kBody14black600,
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       height: 16,
+                                                  //     ),
+                                                  //   ],
+                                                  // ),
+                                                ],
+                                              ),
+                                            )
+                                          : SizedBox()),
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 16, left: 22, right: 22),
+                                        child: Divider(
+                                          thickness: 2,
+                                          height: 2,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 14,
+                                            left: 22,
+                                            right: 22,
+                                            bottom: 16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Obx(() => details.value == false
+                                                ? GestureDetector(
+                                                    onTap: () {
+                                                      details.value = true;
+                                                    },
+                                                    child: Center(
+                                                        child: Text(
+                                                      "View More ",
+                                                      style: kBody14black600,
+                                                    )))
+                                                : GestureDetector(
+                                                    onTap: () {
+                                                      details.value = false;
+                                                    },
+                                                    child: Center(
+                                                        child: Text(
+                                                      "View less ",
+                                                      style: kBody14black600,
+                                                    )))),
+                                            SizedBox(
+                                              height: 4,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 10,
+                                );
+                              },
                             );
-                          },
-                          separatorBuilder:
-                              (BuildContext context, int index) {
-                            return SizedBox(
-                              height: 10,
-                            );
-                          },
+                          }
+                        }
+
+                        // Displaying LoadingSpinner to indicate waiting state
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height / 1.3,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         );
-                      }
-                    }
-
-                    // Displaying LoadingSpinner to indicate waiting state
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.3,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  })
+                      })
                   : Container(),
-
             ],
           ),
         ),
@@ -957,7 +965,7 @@ class _DetailsState extends State<Details> {
                 indicatorColor: kdarkBlue,
                 unselectedLabelStyle: CustomFonts.kBlack15Black
                     .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-                isScrollable: true,
+                isScrollable: false,
                 indicator: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
@@ -1004,287 +1012,312 @@ class _DetailsState extends State<Details> {
             // Extracting data from snapshot object
             WipInProgressModel? claimSubmitted = snapshot.data
                 as WipInProgressModel; // paymentModelFromJson(snapshot.data);
-            return claimSubmitted.data!.content!.length ==0 ?Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                SizedBox(height: 100,),
-
-                Center(child: Text("No Data Found"))
-              ],
-            ): ListView.separated(
-              padding: EdgeInsets.only(top: 15.0.h),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              physics: BouncingScrollPhysics(),
-              //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
-              itemCount: claimSubmitted.data!.content!.length,
-              itemBuilder: (context, index) {
-                var singleData = claimSubmitted.data!.content![index];
-                return  Container(
-                  //width: Get.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border.all(width: 1, color: kBorder)),
-                  child: Column(
+            return claimSubmitted.data!.content!.length == 0
+                ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // claim id
-                      Container(
+                      SizedBox(
+                        height: 100,
+                      ),
+                      Center(child: Text("No Data Found"))
+                    ],
+                  )
+                : ListView.separated(
+                    padding: EdgeInsets.only(top: 15.0.h),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: BouncingScrollPhysics(),
+                    //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
+                    itemCount: claimSubmitted.data!.content!.length,
+                    itemBuilder: (context, index) {
+                      var singleData = claimSubmitted.data!.content![index];
+                      return Container(
                         //width: Get.width,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(7),
-                            topRight: Radius.circular(7),
-                          ),
-                          color: kBlue,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, top: 12, bottom: 12),
-                          child: Row(
-                            children: [
-                              Text("Case/Claim ID : ${singleData.claimId}",
-                                  style: kBody14kWhite600)
-                            ],
-                          ),
-                        ),
-                      ),
-                      // details like name contact and date
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 14, left: 22, right: 22),
-                        child: Row(
+                            borderRadius: BorderRadius.circular(7),
+                            border: Border.all(width: 1, color: kBorder)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // claim register date
-                                Text(
-                                  "Claim Registration Date",
-                                  style: kBody13black400,
+                            // claim id
+                            Container(
+                              //width: Get.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
                                 ),
-                                SizedBox(
-                                  height: 4,
+                                color: kBlue,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, top: 12, bottom: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        "Case/Claim ID : ${singleData.claimId}",
+                                        style: kBody14kWhite600)
+                                  ],
                                 ),
-                                Text(
-                                    "${dateChange(singleData.claimDate)}",
-                                  style: kBody14black600,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-
-                                // Nominee Name
-                                Text(
-                                  "Nominee Name",
-                                  style: kBody13black400,
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  singleData.nomineeName.toString(),
-                                  style: kBody14black600,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                              ],
+                              ),
                             ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // claim register date
-                                Text(
-                                  "Borrower Name",
-                                  style: kBody13black400,
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  singleData.borrowerName.toString(),
-                                  style: kBody14black600,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
+                            // details like name contact and date
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 14, left: 22, right: 22),
+                              child: Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // claim register date
+                                      Text(
+                                        "Claim Registration Date",
+                                        style: kBody13black400,
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        "${dateChange(singleData.claimDate)}",
+                                        style: kBody14black600,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
 
-                                // Nominee Name
-                                Text(
-                                  "Nominee Contact No.",
-                                  style: kBody13black400,
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  singleData.nomineeContactNumber.toString(),
-                                  style: kBody14black600,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
+                                      // Nominee Name
+                                      Text(
+                                        "Nominee Name",
+                                        style: kBody13black400,
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        singleData.nomineeName.toString(),
+                                        style: kBody14black600,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // claim register date
+                                      Text(
+                                        "Borrower Name",
+                                        style: kBody13black400,
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        singleData.borrowerName.toString(),
+                                        style: kBody14black600,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
 
-                              ],
+                                      // Nominee Name
+                                      Text(
+                                        "Nominee Contact No.",
+                                        style: kBody13black400,
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        singleData.nomineeContactNumber
+                                            .toString(),
+                                        style: kBody14black600,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
+
+                            const Padding(
+                              padding:
+                                  EdgeInsets.only(top: 16, left: 22, right: 22),
+                              child: Divider(
+                                thickness: 2,
+                                height: 2,
+                              ),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  controller.getClaimDiscrepeancy(
+                                      id: singleData.id);
+                                  Get.defaultDialog(
+                                      title: "",
+                                      content: controller
+                                                  .discrepancyData
+                                                  .value["claimDocuments"]
+                                                  .length ==
+                                              0
+                                          ? Container(
+                                              child: Column(
+                                                children: const [
+                                                  Icon(Icons.hourglass_empty),
+                                                  Text("No Data Found"),
+                                                ],
+                                              ),
+                                            )
+                                          : Container(
+                                              padding: EdgeInsets.all(10.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Document Uploaded",
+                                                    style: CustomFonts
+                                                        .kBlack15Black,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 8.0,
+                                                  ),
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                        border: Border.all(
+                                                            color: kGrey)),
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 10.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Application process:",
+                                                          style: CustomFonts
+                                                              .kBlack15Black
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  color: Colors
+                                                                      .black),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(
+                                                          "In-progress",
+                                                          style: CustomFonts
+                                                              .kBlack15Black
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      15.0,
+                                                                  color:
+                                                                      klightBlue),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    //height: Get.height * 0.6,
+                                                    width: Get.width,
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 3.0,
+                                                        vertical: 10),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                    10.0)),
+                                                    child: ListView.builder(
+                                                        itemCount: controller
+                                                            .discrepancyData
+                                                            .value[
+                                                                "claimDocuments"]
+                                                            .length,
+                                                        itemBuilder: (context,
+                                                            int index) {
+                                                          var claimDiscrepancy =
+                                                              controller.discrepancyData
+                                                                          .value[
+                                                                      "claimDocuments"]
+                                                                  [index];
+
+                                                          return Container(
+                                                            child: Row(
+                                                              children: [
+                                                                Expanded(
+                                                                  flex: 3,
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                            border:
+                                                                                Border.all(color: kGrey)),
+                                                                    child: Text(
+                                                                      "${claimDiscrepancy["agentDocType"]}",
+                                                                      style: CustomFonts
+                                                                          .kBlack15Black,
+                                                                    ),
+                                                                    height: 50,
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  flex: 1,
+                                                                  child: Container(
+                                                                      decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                      height: 50,
+                                                                      child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
+                                                                          ? Icon(Icons.check_circle, color: Colors.blue)
+                                                                          : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
+                                                                              ? Icon(Icons.check_circle, color: Colors.green)
+                                                                              : Icon(Icons.cancel, color: Colors.red)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        }),
+                                                  )
+                                                ],
+                                              ),
+                                            ));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Text(
+                                    "View More ",
+                                    style: CustomFonts.kBlack15Black.copyWith(
+                                        fontWeight: FontWeight.w800,
+                                        color: kdarkBlue,
+                                        fontSize: 15.0),
+                                  )),
+                                )),
                           ],
                         ),
-                      ),
-
-
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16, left: 22, right: 22),
-                        child: Divider(
-                          thickness: 2,
-                          height: 2,
-                        ),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            controller.getClaimDiscrepeancy(id: singleData.id
-                            );
-                            Get.defaultDialog(
-                                title: "",
-                                content: controller.discrepancyData.value["claimDocuments"].length ==0 ?Container(
-                                  child: Column(
-                                    children:const [
-                                      Icon(Icons.hourglass_empty),
-                                      Text("No Data Found"),
-                                    ],
-                                  ),
-                                ):Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Document Uploaded",
-                                        style: CustomFonts.kBlack15Black,
-                                      ),
-                                      const SizedBox(
-                                        height: 8.0,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(5.0),
-                                            border: Border.all(color: kGrey)),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 10.0),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Application process:",
-                                              style: CustomFonts.kBlack15Black
-                                                  .copyWith(
-                                                  fontSize: 14.0,
-                                                  color: Colors.black),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "In-progress",
-                                              style: CustomFonts.kBlack15Black
-                                                  .copyWith(
-                                                  fontSize: 15.0,
-                                                  color: klightBlue),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        //height: Get.height * 0.6,
-                                        width: Get.width,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 3.0, vertical: 10),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                        child: ListView.builder(
-                                            itemCount: controller.discrepancyData.value["claimDocuments"].length,
-                                            itemBuilder: (context, int index) {
-                                              var claimDiscrepancy= controller.discrepancyData.value["claimDocuments"][index];
-
-                                              return Container(
-                                                child: Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 3,
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: kGrey)),
-                                                        child: Text(
-                                                          "${claimDiscrepancy["agentDocType"]}",
-                                                          style: CustomFonts
-                                                              .kBlack15Black,
-                                                        ),
-                                                        height: 50,
-                                                        alignment:
-                                                        Alignment.center,
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color: kGrey)),
-                                                        height: 50,
-                                                        child:claimDiscrepancy["isApproved"]==false && claimDiscrepancy["isVerified"] ==false
-                                                            ? Icon(
-                                                            Icons
-                                                                .check_circle,
-                                                            color: Colors
-                                                                .blue)
-                                                            : claimDiscrepancy["isApproved"]==true && claimDiscrepancy["isVerified"] ==true
-                                                            ? Icon(
-                                                            Icons
-                                                                .check_circle,
-                                                            color: Colors
-                                                                .green)
-                                                            : Icon(Icons.cancel,
-                                                            color: Colors.red)
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }),
-                                      )
-                                    ],
-                                  ),
-                                ));
-
-
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Text(
-                              "View More ",
-                              style: CustomFonts.kBlack15Black.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  color: kdarkBlue,
-                                  fontSize: 15.0),
-                            )),
-                          )),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 10,
-                );
-              },
-            );
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    },
+                  );
           }
         }
 
@@ -1314,209 +1347,212 @@ class _DetailsState extends State<Details> {
           } else if (snapshot.hasData) {
             // Extracting data from snapshot object
             WipInProgressModel? claimSubmitted = snapshot.data
-            as WipInProgressModel; // paymentModelFromJson(snapshot.data);
-            return  claimSubmitted.data!.content!.length ==0 ?Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                SizedBox(height: 100,),
-
-                Center(child: Text("No Data Found"))
-              ],
-            ): ListView.separated(
-              padding: EdgeInsets.only(top: 15.0.h),
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              physics: BouncingScrollPhysics(),
-              //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
-              itemCount: claimSubmitted.data!.content!.length,
-              itemBuilder: (context, index) {
-                var singleData = claimSubmitted.data!.content![index];
-                return Container(
-                  //width: Get.width,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7),
-                      border: Border.all(width: 1, color: kBorder)),
-                  child: Column(
+                as WipInProgressModel; // paymentModelFromJson(snapshot.data);
+            return claimSubmitted.data!.content!.length == 0
+                ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // claim id
-                      Container(
+                      SizedBox(
+                        height: 100,
+                      ),
+                      Center(child: Text("No Data Found"))
+                    ],
+                  )
+                : ListView.separated(
+                    padding: EdgeInsets.only(top: 15.0.h),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: BouncingScrollPhysics(),
+                    //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
+                    itemCount: claimSubmitted.data!.content!.length,
+                    itemBuilder: (context, index) {
+                      var singleData = claimSubmitted.data!.content![index];
+                      return Container(
                         //width: Get.width,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(7),
-                            topRight: Radius.circular(7),
-                          ),
-                          color: kBlue,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, top: 12, bottom: 12),
-                          child: Row(
-                            children: [
-                              Text("Case/Claim ID : ${singleData.claimId}",
-                                  style: kBody14kWhite600)
-                            ],
-                          ),
-                        ),
-                      ),
-                      // details like name contact and date
-                      Padding(
-                        padding:
-                        const EdgeInsets.only(top: 14, left: 22, right: 22),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // claim register date
-                               const Text(
-                                  "Claim Registration Date",
-                                  style: kBody13black400,
-                                ),
-                               const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  "${dateChange(singleData.claimDate)}",
-                                  style: kBody14black600,
-                                ),
-                               const SizedBox(
-                                  height: 16,
-                                ),
-
-                                // Nominee Name
-                               const Text(
-                                  "Nominee Name",
-                                  style: kBody13black400,
-                                ),
-                              const  SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  singleData.nomineeName.toString(),
-                                  style: kBody14black600,
-                                ),
-                               const SizedBox(
-                                  height: 16,
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // claim register date
-                              const  Text(
-                                  "Borrower Name",
-                                  style: kBody13black400,
-                                ),
-                              const  SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  singleData.borrowerName.toString(),
-                                  style: kBody14black600,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-
-                                // Nominee Name
-                                Text(
-                                  "Nominee Contact No.",
-                                  style: kBody13black400,
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  singleData.nomineeContactNumber.toString(),
-                                  style: kBody14black600,
-                                ),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 14,
-                            left: 22,
-                            right: 22,
-                            bottom: 16),
+                            borderRadius: BorderRadius.circular(7),
+                            border: Border.all(width: 1, color: kBorder)),
                         child: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Address",
-                              style: kBody13black400,
+                            // claim id
+                            Container(
+                              //width: Get.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(7),
+                                  topRight: Radius.circular(7),
+                                ),
+                                color: kBlue,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, top: 12, bottom: 12),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        "Case/Claim ID : ${singleData.claimId}",
+                                        style: kBody14kWhite600)
+                                  ],
+                                ),
+                              ),
                             ),
-                            SizedBox(
-                              height: 4,
+                            // details like name contact and date
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 14, left: 22, right: 22),
+                              child: Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // claim register date
+                                      const Text(
+                                        "Claim Registration Date",
+                                        style: kBody13black400,
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        "${dateChange(singleData.claimDate)}",
+                                        style: kBody14black600,
+                                      ),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+
+                                      // Nominee Name
+                                      const Text(
+                                        "Nominee Name",
+                                        style: kBody13black400,
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        singleData.nomineeName.toString(),
+                                        style: kBody14black600,
+                                      ),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // claim register date
+                                      const Text(
+                                        "Borrower Name",
+                                        style: kBody13black400,
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        singleData.borrowerName.toString(),
+                                        style: kBody14black600,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+
+                                      // Nominee Name
+                                      Text(
+                                        "Nominee Contact No.",
+                                        style: kBody13black400,
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        singleData.nomineeContactNumber
+                                            .toString(),
+                                        style: kBody14black600,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            Text(
-                              singleData.borrowerAddress
-                                  .toString(),
-                              style: kBody14black600,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 14, left: 22, right: 22, bottom: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Address",
+                                    style: kBody13black400,
+                                  ),
+                                  SizedBox(
+                                    height: 4,
+                                  ),
+                                  Text(
+                                    singleData.borrowerAddress.toString(),
+                                    style: kBody14black600,
+                                  ),
+                                ],
+                              ),
                             ),
+                            // address
+
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
+                            //   child: Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       Text("Address",style: kBody13black400,),
+                            //       SizedBox(height: 4,),
+                            //
+                            //
+                            //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
+                            //
+                            //     ],
+                            //   ),
+                            // ),
+
+                            const Padding(
+                              padding:
+                                  EdgeInsets.only(top: 16, left: 22, right: 22),
+                              child: Divider(
+                                thickness: 2,
+                                height: 2,
+                              ),
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  Get.off(() => ClaimDiscrepancy(),
+                                      arguments: [widget.title, singleData.id]);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Text(
+                                    "View More ",
+                                    style: CustomFonts.kBlack15Black.copyWith(
+                                        fontWeight: FontWeight.w800,
+                                        color: kdarkBlue,
+                                        fontSize: 15.0),
+                                  )),
+                                )),
                           ],
                         ),
-                      ),
-                      // address
-
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Text("Address",style: kBody13black400,),
-                      //       SizedBox(height: 4,),
-                      //
-                      //
-                      //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
-                      //
-                      //     ],
-                      //   ),
-                      // ),
-
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16, left: 22, right: 22),
-                        child: Divider(
-                          thickness: 2,
-                          height: 2,
-                        ),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            Get.off(()=>ClaimDiscrepancy(),arguments: [widget.title,singleData.id]);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: Text(
-                                  "View More ",
-                                  style: CustomFonts.kBlack15Black.copyWith(
-                                      fontWeight: FontWeight.w800,
-                                      color: kdarkBlue,
-                                      fontSize: 15.0),
-                                )),
-                          )),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: 10,
-                );
-              },
-            );
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    },
+                  );
           }
         }
 
@@ -1531,7 +1567,7 @@ class _DetailsState extends State<Details> {
 
   String dateChange(date) {
     var temp = DateTime.fromMillisecondsSinceEpoch(date);
-    var currentDate= "${temp.day}/ ${temp.month}/ ${temp.year}";
+    var currentDate = "${temp.day}/ ${temp.month}/ ${temp.year}";
     return currentDate.toString();
   }
 }

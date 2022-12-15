@@ -113,7 +113,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Borrower Details",
+                                "Borrower details",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w700,
@@ -183,7 +183,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Loan Account Details",
+                                "Loan account details",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w700,
@@ -387,7 +387,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Documentation Upload",
+                                "Documentation upload",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w700,
@@ -397,7 +397,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 height: 15.0.h,
                               ),
                               smallText(
-                                  text: "Cause of death / Life Insurance"),
+                                  text: "Cause of Death / (Life Insurance)"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -636,7 +636,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Dealth certificate"),
+                              smallText(text: "Death certificate"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -685,7 +685,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Divider(),
+                                                const Divider(),
                                                 GestureDetector(
                                                   onTap: () async {
                                                     var file = await controller
@@ -2696,5 +2696,115 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   String dateChange(date) {
     var temp = DateTime.fromMillisecondsSinceEpoch(date);
     return temp.toString();
+  }
+
+  validation() {
+    // Condition for non-empty documents if type is selected
+
+    if (controller.borroweridProof.value.isNotEmpty) {
+      if (controller.borrowerIdDocPath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select KYC ID Proof");
+      }
+    }
+    if (controller.borrowerAddressProof.value.isNotEmpty) {
+      if (controller.borrowerAddressDocPath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select KYC Address Proof");
+      }
+    }
+    if (controller.nomineeIdProof.value.isNotEmpty) {
+      if (controller.nomineeIdDocPath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Nominee ID Proof");
+      }
+    }
+    if (controller.nomineeAddressProof.value.isNotEmpty) {
+      if (controller.nomineeIdDocPath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Nominee Address Proof");
+      }
+    }
+    if (controller.bankProof.value.isNotEmpty) {
+      if (controller.bankAccountDocPath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Bank Proof");
+      }
+    }
+    if (controller.additionalProof.value.isNotEmpty) {
+      if (controller.additionalDocpath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Additional Proof");
+      }
+    }
+    if (controller.causeofDealth.value != "Natural Dealth") {
+      if (controller.firOrPostmortemReportPath.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select FIR Document");
+      }
+    }
+
+    //condition for non empty type if document is uploaded
+
+    if (controller.borrowerIdDocPath.value.isNotEmpty) {
+      if (controller.borroweridProof.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select KYC ID Proof Type");
+      }
+    }
+    if (controller.borrowerAddressDocPath.value.isNotEmpty) {
+      if (controller.borrowerAddressProof.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select KYC Address Proof");
+      }
+    }
+    if (controller.nomineeIdDocPath.value.isNotEmpty) {
+      if (controller.nomineeIdProof.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Nominee ID Proof");
+      }
+    }
+    if (controller.nomineeAddressProof.value.isNotEmpty) {
+      if (controller.nomineeAddressProofDoc.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Nominee Address Proof");
+      }
+    }
+    if (controller.bankAccountDocPath.value.isNotEmpty) {
+      if (controller.bankProof.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Bank Proof");
+      }
+    }
+    if (controller.additionalDocpath.value.isNotEmpty) {
+      if (controller.additionalProof.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Additional Proof");
+      }
+    }
+  }
+
+  showMessage({required String message}) {
+    return Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
