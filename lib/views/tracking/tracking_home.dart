@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
@@ -94,7 +93,7 @@ class _TrackingHomeState extends State<TrackingHome> {
                           border: Border.all(width: 2, color: Colors.black12),
                         ),
                         child: const Padding(
-                          padding: const EdgeInsets.all(4.0),
+                          padding: EdgeInsets.all(4.0),
                           child: Icon(
                             Icons.notifications_outlined,
                             color: Colors.black,
@@ -185,9 +184,8 @@ class _TrackingHomeState extends State<TrackingHome> {
                         ],
                       ),
                     ),
-                    const  Padding(
-                      padding:
-                           EdgeInsets.only(top: 16, left: 22, right: 22),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 16, left: 22, right: 22),
                       child: Divider(
                         thickness: 2,
                         height: 2,
@@ -228,372 +226,376 @@ class _TrackingHomeState extends State<TrackingHome> {
                   ],
                 ),
               ),
-              Obx(()=>details.value==true? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                         // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
+              Obx(() => details.value == true
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
-                              ),
-                            ),
-                          ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
-                        ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Claim Intimation",style: k12Body323232Black500),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                          // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
                                     ),
                                   ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
                               ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text("Claim Intimation",
+                                  style: k12Body323232Black500),
                             ),
                           ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
                         ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Claim Registration and Nominee Intimation",style: k12Body323232Black500),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                          // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
-                              ),
-                            ),
-                          ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
-                        ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Documentation Upload ",style: k12Body323232Black500),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                          // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
                                     ),
                                   ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
                               ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text(
+                                  "Claim Registration and Nominee Intimation",
+                                  style: k12Body323232Black500),
                             ),
                           ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
                         ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Documentation Verification",style: k12Body323232Black500),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                          // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
-                              ),
-                            ),
-                          ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
-                        ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Insurer Feedback (Discrepancy/AR/FR) ",style: k12Body323232Black500),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                          // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
-                                      ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
                                     ),
                                   ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
                               ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text("Documentation Upload ",
+                                  style: k12Body323232Black500),
                             ),
                           ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
                         ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Feedback Resolution & Submission",style: k12Body323232Black500),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Container(
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(7)
-                      ),
-                      child: ListTile(
-                        onTap: (){
-                          // Get.to(()=>Details(title: "Claims Allocated"));
-                        },
-
-                        leading: CircleAvatar(
-
-                          child:ClipRRect(
-                            borderRadius:
-                            BorderRadius.circular(100),
-                            child: CachedNetworkImage(
-                              // height: 150,
-                              // width: Get.width,
-                              imageUrl:
-                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              imageBuilder:
-                                  (context, imageProvider) =>
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.fill,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
+                                    ),
                                   ),
-                              placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                              errorWidget:
-                                  (context, url, error) =>
-                              const Icon(
-                                Icons.error,
-                                color: kBlack,
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
                               ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text("Documentation Verification",
+                                  style: k12Body323232Black500),
                             ),
                           ),
-
-                          //SvgPicture.asset("assets/icons/search.svg"),
                         ),
-                        title: Text("06/06/2022 | 05:30 PM",style: k11Body929292LightBlack500,),
-                        subtitle: Text("Claim Settlement",style: k12Body323232Black500),
-                      ),
-                    ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
+                                    ),
+                                  ),
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
+                              ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text(
+                                  "Insurer Feedback (Discrepancy/AR/FR) ",
+                                  style: k12Body323232Black500),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
+                                    ),
+                                  ),
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
+                              ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text("Feedback Resolution & Submission",
+                                  style: k12Body323232Black500),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(7)),
+                            child: ListTile(
+                              onTap: () {
+                                // Get.to(()=>Details(title: "Claims Allocated"));
+                              },
+                              leading: CircleAvatar(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    // height: 150,
+                                    // width: Get.width,
+                                    imageUrl:
+                                        "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(
+                                      Icons.error,
+                                      color: kBlack,
+                                    ),
+                                  ),
+                                ),
+
+                                //SvgPicture.asset("assets/icons/search.svg"),
+                              ),
+                              title: Text(
+                                "06/06/2022 | 05:30 PM",
+                                style: k11Body929292LightBlack500,
+                              ),
+                              subtitle: Text("Claim Settlement",
+                                  style: k12Body323232Black500),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox()),
+
+              Center(
+                child: MaterialButton(
+                  height: 30,
+                  minWidth: 104,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0)),
+                  color: kdarkBlue,
+                  onPressed: () {
+                    loginController.postLogout();
+                  },
+                  child: Text(
+                    "Logout",
+                    style: CustomFonts.getMultipleStyle(
+                        15.0, Colors.white, FontWeight.w400),
                   ),
-                  
-
-
-                ],
-              ):SizedBox()),
-
+                ),
+              ),
             ],
           ),
         ),

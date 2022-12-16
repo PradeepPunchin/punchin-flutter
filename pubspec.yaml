@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   cached_network_image: ^3.2.0
   salomon_bottom_bar: ^3.3.1
+  alt_sms_autofill: ^1.0.0
+  pin_code_fields: ^7.4.0
   get: ^4.6.5
   flutter_screenutil: ^5.6.0
   flutter_svg: ^1.1.6
@@ -45,11 +47,18 @@ dependencies:
   lottie: ^2.0.0
   image_picker: ^0.8.5+3
   get_storage: ^2.0.3
+  status_change: ^2.0.0
   file_picker: ^5.2.3
-  pdf_viewer_plugin: ^2.0.1
   internet_connection_checker: ^0.0.1+4
   connectivity_plus: ^2.3.5
   flutter_launcher_icons: ^0.11.0
+  pdf_viewer_plugin: ^2.0.1
+  fluttertoast: ^8.1.2
+
+
+
+
+
 
 
 
@@ -63,10 +72,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/With No BG.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
