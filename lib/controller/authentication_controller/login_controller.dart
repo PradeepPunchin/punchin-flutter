@@ -49,6 +49,13 @@ class LoginController extends GetxController {
         // getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
+        print(details);
+        Get.rawSnackbar(
+            message: "${details["message"]}",
+            snackPosition: SnackPosition.BOTTOM,
+            margin: EdgeInsets.zero,
+            snackStyle: SnackStyle.GROUNDED,
+            backgroundColor: Colors.red);
         // getErrorToaster(details["message"]);
       } else if (response.statusCode == 405) {
         final details = jsonDecode(response.body);
