@@ -35,14 +35,16 @@ class HomeController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,

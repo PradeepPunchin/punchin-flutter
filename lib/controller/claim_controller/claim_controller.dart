@@ -69,7 +69,6 @@ class ClaimController extends GetxController {
   var claimDetail = {}.obs;
 
   getClaimInProgress({status}) async {
-
     try {
       var response = await http.get(
         Uri.parse(getAgentClaimApi + "$status&page=0&limit=100"),
@@ -78,10 +77,6 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-
-
-
-      log("dis"+response.body);
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -95,14 +90,16 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -116,7 +113,6 @@ class ClaimController extends GetxController {
 
   /// claim under verification
   getClaimUnderVerification({status}) async {
-    log(box.read("authToken"));
     try {
       var response = await http.get(
         Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
@@ -125,9 +121,6 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-
-
-      log("inprogress"+response.body);
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -140,14 +133,17 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -164,7 +160,6 @@ class ClaimController extends GetxController {
 
   /// claim draft
   getClaimSubmitted({status}) async {
-    log(box.read("authToken"));
     try {
       var response = await http.get(
         Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
@@ -174,9 +169,6 @@ class ClaimController extends GetxController {
         },
       );
 
-
-      log(status);
-      log("inprogress"+response.body);
       if (response.statusCode == 200) {
         return ClaimSubmitted.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -189,14 +181,16 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -239,14 +233,16 @@ class ClaimController extends GetxController {
       } else if (response.statusCode == 405) {
         final details = jsonDecode(response.body);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -281,14 +277,16 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -311,7 +309,6 @@ class ClaimController extends GetxController {
       );
       if (response.statusCode == 200) {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
-
         Map data = jsonDecode(response.body);
 
 
@@ -334,14 +331,16 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,

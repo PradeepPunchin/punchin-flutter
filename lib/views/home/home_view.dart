@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -274,7 +275,7 @@ class _HomeViewState extends State<HomeView> {
 
                                             }
                                             else {
-                                              Get.off(() => Details(title: subtitle[0]));
+                                              Get.offAll(() => Details(title: subtitle[0]));
                                             }
 
                                           },
@@ -370,7 +371,7 @@ class _HomeViewState extends State<HomeView> {
 
                                             }
                                             else {
-                                              Get.off(() => Details(title: subtitle[2]));
+                                              Get.offAll(() => Details(title: subtitle[2]));
                                             }
                                           },
                                           child: Container(
@@ -462,7 +463,7 @@ class _HomeViewState extends State<HomeView> {
 
                                             }
                                             else {
-                                              Get.off(() => Details(title: subtitle[1]));
+                                              Get.offAll(() => Details(title: subtitle[1]));
                                             }
 
                                           },
@@ -554,7 +555,7 @@ class _HomeViewState extends State<HomeView> {
 
                                             }
                                             else {
-                                              Get.off(() => Details(title: subtitle[3]));
+                                              Get.offAll(() => Details(title: subtitle[3]));
                                             }
 
                                           },
@@ -691,7 +692,7 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
-  showDialogBox() => showCupertinoDialog<String>(
+   showDialogBox() => showCupertinoDialog<String>(
     context: context,
     builder: (BuildContext context) => CupertinoAlertDialog(
       title: const Text('No Connection'),

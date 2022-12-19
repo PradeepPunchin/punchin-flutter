@@ -984,7 +984,7 @@ class _DetailsState extends State<Details> {
                 indicatorColor: kdarkBlue,
                 unselectedLabelStyle: CustomFonts.kBlack15Black
                     .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
-                isScrollable: true,
+                isScrollable: false,
                 indicator: ShapeDecoration(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
