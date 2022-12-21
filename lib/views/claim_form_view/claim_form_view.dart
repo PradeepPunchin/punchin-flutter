@@ -505,7 +505,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Filled & Signed Claim form"),
+
+                              Row(
+                                children: [
+                                  smallText(text: "Filled & Signed Claim form"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -699,7 +705,14 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Death Certificate"),
+
+                              Row(
+                                children: [
+                                  smallText(text: "Death Certificate"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
+
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -1874,7 +1887,15 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               // const SizedBox(
                               //   height: 10.0,
                               // ),
-                              smallText(text: "Bank A/C Proof"),
+
+                              Row(
+                                children: [
+                                  smallText(text: "Bank A/C Proof"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
+                              smallText(text: "(atleast one  document is mandatory)"
+                              ),
                               const SizedBox(
                                 height: 10.0,
                               ),
