@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:punchin/constant/const_color.dart';
@@ -37,6 +38,12 @@ class _DetailsState extends State<Details> {
   void initState() {
     getConnectivity();
     super.initState();
+    // controller.searchController.value.addListener(() {
+    //
+    //   setState(() {
+    //
+    //   });
+    // });
   }
 
   getConnectivity() =>
@@ -68,6 +75,7 @@ class _DetailsState extends State<Details> {
               const SizedBox(
                 height: 20,
               ),
+
               // app bar
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,19 +119,116 @@ class _DetailsState extends State<Details> {
                 ],
               ),
               // search bar
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(top: 12, bottom: 2),
-                child: CustomSearch(
-                  hint: "Search by Name, LAN & Claim id...",
-                  search: true,
-                  //controller: ,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: kWhite
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 8),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(1.0),
+                              border: Border.all(color: kGrey)),
+                          child: Obx(() => DropdownButton<String>(
+                            isExpanded: true,
+                            hint: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: controller
+                                  .causeofDeath.value.isNotEmpty
+                                  ? Text(
+                                controller.causeofDeath.value,
+                                style: CustomFonts.kBlack15Black
+                                    .copyWith(fontSize: 14.0),
+                              )
+                                  : Text(
+                                "Search Type",
+                                style: CustomFonts.kBlack15Black
+                                    .copyWith(fontSize: 14.0),
+                              ),
+                            ),
+                            underline: const SizedBox(),
+                            items: <String>[
+                              'Claim Data Id',
+                              'Loan Account Number',
+                              'Name',
+                            ].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              controller.causeofDeath.value = value!;
+                            },
+                          )),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: 12, bottom: 0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: kWhite,
+                                border: Border.all()
+                            ),
+                            child: SizedBox(
+                              child:  CustomSearch(
+                                controller: controller.searchController.value,
+                                hint: "Search by Name, LAN & Claim id...",
+                                search: true,
+                                //controller: ,
+                              ),
+                            ),
+                          ),
+                        ),
+                        OutlinedButton(
+                          // style:OutlinedButton.styleFrom(
+                          //   side: BorderSide(width: 2, color: Colors.white),
+                          // ),
+                          onPressed: () {
+                          if(controller.causeofDeath.value == '' || controller.causeofDeath.value ==null){
+                            Fluttertoast.showToast(
+                                msg: "Search Type cannot be Empty",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                            }
+                           else{
+                             print(controller.causeofDeath.value);
+                             print(controller.searchController.value.text);
+                             controller.getClaimSearch(status:widget.title.toString(),searchKey:controller.searchController.value.text);
+                             setState(() {
+
+                             });
+                          }
+                          }, child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text("Search"),
+                          ),
+
+
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-
+              const SizedBox(
+                height: 20,
+              ),
               // Allocated
               widget.title.toString() == "Allocated"
                   ? FutureBuilder(
-                      future: controller.getClaimSubmitted(status: "ALLOCATED"),
+                      future: controller.getClaimSearch(status:widget.title.toString(),searchKey:controller.searchController.value.text ),//getClaimSubmitted(status: "ALLOCATED"),
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           // If we got an error
@@ -141,7 +246,12 @@ class _DetailsState extends State<Details> {
                             // Extracting data from snapshot object
                             ClaimSubmitted? claimSubmitted = snapshot.data
                                 as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
-                            return ListView.separated(
+                            return claimSubmitted.statusCode == 404? Column(
+                              children: [
+
+                                Text(" No Data Found"),
+                              ],
+                            ) :ListView.separated(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: BouncingScrollPhysics(),
@@ -250,10 +360,10 @@ class _DetailsState extends State<Details> {
                                                   SizedBox(
                                                     height: 4,
                                                   ),
-                                                  Text(
-                                                    "${dateChange(singleData.allocationDate)}",
-                                                    style: kBody14black600,
-                                                  ),
+                                                  // Text(
+                                                  //   "${dateChange(singleData.allocationDate.toString()==null?DateTime.now().toString():singleData.allocationDate.toString())}",
+                                                  //   style: kBody14black600,
+                                                  // ),
                                                 ],
                                               ),
                                               const Spacer(),
@@ -327,8 +437,7 @@ class _DetailsState extends State<Details> {
 
               widget.title.toString() == "Action Pending Cases"
                   ? FutureBuilder(
-                      future: controller.getClaimSubmitted(
-                          status: "ACTION_PENDING"),
+                      future: controller.getClaimSearch(status:widget.title.toString(),searchKey:controller.searchController.value.text ),//getClaimSubmitted(status: "ACTION_PENDING"),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       // If we got an error
@@ -346,7 +455,12 @@ class _DetailsState extends State<Details> {
                         // Extracting data from snapshot object
                         ClaimSubmitted? claimSubmitted = snapshot.data
                         as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
-                        return ListView.separated(
+                        return claimSubmitted.statusCode == 404? Column(
+                          children: [
+
+                            Text(" No Data Found"),
+                          ],
+                        ) :ListView.separated(
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           physics: BouncingScrollPhysics(),
@@ -448,10 +562,10 @@ class _DetailsState extends State<Details> {
                                             SizedBox(
                                               height: 4,
                                             ),
-                                            Text(
-                                              "${dateChange(singleData.allocationDate)}",
-                                              style: kBody14black600,
-                                            ),
+                                            // Text(
+                                            //   "${dateChange(singleData.allocationDate)}",
+                                            //   style: kBody14black600,
+                                            // ),
                                           ],
                                         ),
                                         const Spacer(),

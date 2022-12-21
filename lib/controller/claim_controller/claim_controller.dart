@@ -27,7 +27,8 @@ class ClaimController extends GetxController {
     currentIndex.value = index;
   }
 
-  RxString causeofDealth = "".obs;
+  RxString causeofDeath = "".obs;
+  Rx<TextEditingController> searchController = TextEditingController().obs;
   RxString document = "".obs;
   RxString nominee = "Major".obs;
   RxString path = "".obs;
@@ -155,32 +156,147 @@ class ClaimController extends GetxController {
     }
   }
 
+  getClaimSearch({status,searchKey}) async {
+    try {
+
+      if(status != null && (searchController.value.text=='' ||searchController.value.text==null||searchController.value.text=="null")) {
+        var Url=getAgentClaimApi + "ALLOCATED&page=0&limit=10";
+        var response = await http.get(
+          Uri.parse(Url),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+        log(Url);
+        log(status.toString());
+        log("response allocation" + response.body);
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        if (response.statusCode == 404) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        else if (response.statusCode == 401) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+        else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+      }
+      else{
+        var response = await http.get(
+          Uri.parse(SearchApi + "${causeofDeath.value}&searchedKeyword=$searchKey&pageNo=0&limit=10"),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+
+        print("${SearchApi + "${causeofDeath.value}&searchedKeyword=$searchKey&pageNo=0&limit=10"}");
+        log("search message"+ response.body);
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        if (response.statusCode == 404) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        else if (response.statusCode == 401)
+        {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+        else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+      }
+
+
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
 
 
 
   /// claim draft
   getClaimSubmitted({status}) async {
     try {
-      var response = await http.get(
-        Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
-        headers: {
-          "Content-Type": "application/json",
-          "X-Xsrf-Token": box.read("authToken"),
-        },
-      );
+      if(status == null) {
+        var response = await http.get(
+          Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
 
-      if (response.statusCode == 200) {
-        return ClaimSubmitted.fromJson(jsonDecode(response.body));
-      } else if (response.statusCode == 401) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
-      } else if (response.statusCode == 400) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
-      } else if (response.statusCode == 405) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        } else if (response.statusCode == 401) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
       }
+      else{
+        var response = await http.get(
+          Uri.parse(SearchApi + "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=10"),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+
+        log("search message"+ response.body);
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        else if (response.statusCode == 401)
+        {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+        else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+      }
+
+
     }
     // on SocketException {
     //   Get.rawSnackbar(
@@ -307,6 +423,7 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
+      log(response.body);
       if (response.statusCode == 200) {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
         Map data = jsonDecode(response.body);
@@ -357,7 +474,6 @@ class ClaimController extends GetxController {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
-
     if (result != null) {
       File file = File(result.files.single.path!);
       // path.value = basename(file.path);
@@ -394,8 +510,8 @@ class ClaimController extends GetxController {
     ///code for adding keys
     log(Get.arguments[1].id.toString());
     request.fields["claimId"] = Get.arguments[1].id.toString();
-    log(documentReturn(causeofDealth.value));
-    request.fields["causeOfDeath"] = documentReturn(causeofDealth.value);
+    log(documentReturn(causeofDeath.value));
+    request.fields["causeOfDeath"] = documentReturn(causeofDeath.value);
     log(isMinor().toString());
     request.fields["isMinor"] = isMinor().toString();
     request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);

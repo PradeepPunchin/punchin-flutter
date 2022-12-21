@@ -194,7 +194,7 @@ class Content {
     isActive = json['isActive'];
     id = json['id'];
     punchinClaimId = json['claimId'];
-    insurerClaimId = json['claimId'];
+    insurerClaimId = json['claimId']==null?null:json['claimId'];
     punchinBankerId = json['punchinBankerId'];
     claimInwardDate = json['claimInwardDate'];
     borrowerName = json['borrowerName'];
