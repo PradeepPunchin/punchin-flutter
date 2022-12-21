@@ -121,21 +121,6 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
                     const Spacer(),
-                    // CircleAvatar(
-                    //   backgroundColor: Colors.white10,
-                    //
-                    //   radius: 17.0,
-                    //   child: Container(
-                    //
-                    //       decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(100),
-                    //         border: Border.all(width: 2,color: Colors.black12),
-                    //       ),
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.all(4.0),
-                    //         child: Icon(Icons.notifications_outlined,color:Colors.black,),
-                    //       )),
-                    // ),
                   ],
                 ),
 

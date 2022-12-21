@@ -101,6 +101,8 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("2");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -145,6 +147,8 @@ class ClaimController extends GetxController {
     // }
 
     catch (e) {
+      print("1");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -168,9 +172,6 @@ class ClaimController extends GetxController {
             "X-Xsrf-Token": box.read("authToken"),
           },
         );
-        log(Url);
-        log(status.toString());
-        log("response allocation" + response.body);
         if (response.statusCode == 200) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
         }
@@ -198,8 +199,6 @@ class ClaimController extends GetxController {
           },
         );
 
-        print("${SearchApi + "${causeofDeath.value}&searchedKeyword=$searchKey&pageNo=0&limit=10"}");
-        log("search message"+ response.body);
         if (response.statusCode == 200) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
         }
@@ -231,6 +230,8 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("12345"+e.toString());
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -307,6 +308,8 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("6");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -359,6 +362,8 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("5");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -403,6 +408,8 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("4");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -423,7 +430,6 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-      log(response.body);
       if (response.statusCode == 200) {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
         Map data = jsonDecode(response.body);
@@ -458,6 +464,8 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("3");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -652,7 +660,6 @@ class ClaimController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     pageController = PageController(initialPage: 0);
-    getStepperFormData();
   }
 
   bool isMinor() {

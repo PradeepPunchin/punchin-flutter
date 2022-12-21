@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -31,9 +30,62 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   bool isDeviceConnected = false;
   bool isAlertSet = false;
 
+  List<String> minorList=['Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof *',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Guardian - Id proof *',
+    'Guardian - Add proof *',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
 
+  List<String> medicialList=<String>['Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records *',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Guardian - Id proof',
+    'Guardian - Add proof',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
 
+  List<String> accientList=<String>[
+    'Police FIR Copy *',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Guardian - Id proof',
+    'Guardian - Add proof',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
 
+  List<String> sickList=<String>['Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate *',
+    'Guardian - Id proof',
+    'Guardian - Add proof',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
 
 
   @override
@@ -479,7 +531,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       underline: const SizedBox(),
                                       items: <String>[
                                         'Accident',
-                                        'Natural Dealth',
+                                        'Natural Death',
                                         'Suicide',
                                         'Illness &  Medical Reason',
                                         'Dealth due to Natural Calamity'
@@ -2305,6 +2357,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
+                              if(controller.nominee.value=="Minor")
                               Container(
                                 decoration: BoxDecoration(
                                     color: Colors.grey.shade100,
@@ -2329,26 +2382,30 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               ),
                                       ),
                                       underline: const SizedBox(),
-                                      items: <String>[
-                                        'Police FIR Copy',
-                                        'Postmortem Report',
-                                        'Income Tax Returns',
-                                        'Medical Records',
-                                        'Legal Heir Certificate',
-                                        'Police Investigation Report',
-                                        'Relationship Proof',
-                                        'Stamped Affidavit',
-                                        'Medical Attendant Certificate',
-                                        'Guardian - Id proof',
-                                        'Guardian - Add proof',
-                                        'Any utility bill (gas / electricity / rental agreement)',
-                                        'Other Document',
-                                        // 'Income Tax Return',
-                                        // 'Medical Records',
-                                        // 'Legal Heir Certificate',
-                                        // 'Police Investigation Report',
-                                        // 'Other',
-                                      ].map((String value) {
+                                      items:
+
+                                      minorList
+                                      // <String>[
+                                      //   'Police FIR Copy',
+                                      //   'Postmortem Report',
+                                      //   'Income Tax Returns',
+                                      //   'Medical Records',
+                                      //   'Legal Heir Certificate',
+                                      //   'Police Investigation Report',
+                                      //   'Relationship Proof',
+                                      //   'Stamped Affidavit',
+                                      //   'Medical Attendant Certificate',
+                                      //   'Guardian - Id proof',
+                                      //   'Guardian - Add proof',
+                                      //   'Any utility bill (gas / electricity / rental agreement)',
+                                      //   'Other Document',
+                                      //   // 'Income Tax Return',
+                                      //   // 'Medical Records',
+                                      //   // 'Legal Heir Certificate',
+                                      //   // 'Police Investigation Report',
+                                      //   // 'Other',
+                                      // ]
+                                          .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -2360,6 +2417,309 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       },
                                     )),
                               ),
+                              if(controller.causeofDeath.value=="Accident")
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: controller.additionalProof.value
+                                          .isNotEmpty
+                                          ? Text(
+                                        controller
+                                            .additionalProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                          : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                                    ),
+                                    underline: const SizedBox(),
+                                    items:
+
+                                    accientList
+                                    // <String>[
+                                    //   'Police FIR Copy',
+                                    //   'Postmortem Report',
+                                    //   'Income Tax Returns',
+                                    //   'Medical Records',
+                                    //   'Legal Heir Certificate',
+                                    //   'Police Investigation Report',
+                                    //   'Relationship Proof',
+                                    //   'Stamped Affidavit',
+                                    //   'Medical Attendant Certificate',
+                                    //   'Guardian - Id proof',
+                                    //   'Guardian - Add proof',
+                                    //   'Any utility bill (gas / electricity / rental agreement)',
+                                    //   'Other Document',
+                                    //   // 'Income Tax Return',
+                                    //   // 'Medical Records',
+                                    //   // 'Legal Heir Certificate',
+                                    //   // 'Police Investigation Report',
+                                    //   // 'Other',
+                                    // ]
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.additionalProof.value =
+                                      value!;
+                                    },
+                                  )),
+                                ),
+                              if(controller.causeofDeath.value=="Illness &  Medical Reason")
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: controller.additionalProof.value
+                                          .isNotEmpty
+                                          ? Text(
+                                        controller
+                                            .additionalProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                          : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                                    ),
+                                    underline: const SizedBox(),
+                                    items:
+
+                                    sickList
+                                    // <String>[
+                                    //   'Police FIR Copy',
+                                    //   'Postmortem Report',
+                                    //   'Income Tax Returns',
+                                    //   'Medical Records',
+                                    //   'Legal Heir Certificate',
+                                    //   'Police Investigation Report',
+                                    //   'Relationship Proof',
+                                    //   'Stamped Affidavit',
+                                    //   'Medical Attendant Certificate',
+                                    //   'Guardian - Id proof',
+                                    //   'Guardian - Add proof',
+                                    //   'Any utility bill (gas / electricity / rental agreement)',
+                                    //   'Other Document',
+                                    //   // 'Income Tax Return',
+                                    //   // 'Medical Records',
+                                    //   // 'Legal Heir Certificate',
+                                    //   // 'Police Investigation Report',
+                                    //   // 'Other',
+                                    // ]
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.additionalProof.value =
+                                      value!;
+                                    },
+                                  )),
+                                ),
+
+                              if(controller.causeofDeath.value=="Major" && (controller.causeofDeath.value!="Accident" ||controller.causeofDeath.value!="Natural Death" ||
+                                  controller.causeofDeath.value!="Dealth due to Natural Calamity" ||controller.causeofDeath.value!="Suicide" || controller.causeofDeath.value!="Illness &  Medical Reason"))
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: controller.additionalProof.value
+                                          .isNotEmpty
+                                          ? Text(
+                                        controller
+                                            .additionalProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                          : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                                    ),
+                                    underline: const SizedBox(),
+                                    items:
+
+
+                                    <String>[
+                                      'Police FIR Copy',
+                                      'Postmortem Report',
+                                      'Income Tax Returns',
+                                      'Medical Records',
+                                      'Legal Heir Certificate',
+                                      'Police Investigation Report',
+                                      'Relationship Proof',
+                                      'Stamped Affidavit',
+                                      'Medical Attendant Certificate',
+                                      'Guardian - Id proof',
+                                      'Guardian - Add proof',
+                                      'Any utility bill (gas / electricity / rental agreement)',
+                                      'Other Document',
+                                      // 'Income Tax Return',
+                                      // 'Medical Records',
+                                      // 'Legal Heir Certificate',
+                                      // 'Police Investigation Report',
+                                      // 'Other',
+                                    ]
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.additionalProof.value =
+                                      value!;
+                                    },
+                                  )),
+                                ),
+                              // if(controller.nominee.value=="Minor")
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.grey.shade100,
+                              //         borderRadius: BorderRadius.circular(1.0),
+                              //         border: Border.all(color: kGrey)),
+                              //     child: Obx(() => DropdownButton<String>(
+                              //       isExpanded: true,
+                              //       hint: Padding(
+                              //         padding: const EdgeInsets.all(8.0),
+                              //         child: controller.additionalProof.value
+                              //             .isNotEmpty
+                              //             ? Text(
+                              //           controller
+                              //               .additionalProof.value,
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         )
+                              //             : Text(
+                              //           "Select Document Type",
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         ),
+                              //       ),
+                              //       underline: const SizedBox(),
+                              //       items:
+                              //
+                              //       minorList
+                              //       // <String>[
+                              //       //   'Police FIR Copy',
+                              //       //   'Postmortem Report',
+                              //       //   'Income Tax Returns',
+                              //       //   'Medical Records',
+                              //       //   'Legal Heir Certificate',
+                              //       //   'Police Investigation Report',
+                              //       //   'Relationship Proof',
+                              //       //   'Stamped Affidavit',
+                              //       //   'Medical Attendant Certificate',
+                              //       //   'Guardian - Id proof',
+                              //       //   'Guardian - Add proof',
+                              //       //   'Any utility bill (gas / electricity / rental agreement)',
+                              //       //   'Other Document',
+                              //       //   // 'Income Tax Return',
+                              //       //   // 'Medical Records',
+                              //       //   // 'Legal Heir Certificate',
+                              //       //   // 'Police Investigation Report',
+                              //       //   // 'Other',
+                              //       // ]
+                              //           .map((String value) {
+                              //         return DropdownMenuItem<String>(
+                              //           value: value,
+                              //           child: Text(value),
+                              //         );
+                              //       }).toList(),
+                              //       onChanged: (value) {
+                              //         controller.additionalProof.value =
+                              //         value!;
+                              //       },
+                              //     )),
+                              //   ),
+                              // if(controller.nominee.value=="Minor")
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.grey.shade100,
+                              //         borderRadius: BorderRadius.circular(1.0),
+                              //         border: Border.all(color: kGrey)),
+                              //     child: Obx(() => DropdownButton<String>(
+                              //       isExpanded: true,
+                              //       hint: Padding(
+                              //         padding: const EdgeInsets.all(8.0),
+                              //         child: controller.additionalProof.value
+                              //             .isNotEmpty
+                              //             ? Text(
+                              //           controller
+                              //               .additionalProof.value,
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         )
+                              //             : Text(
+                              //           "Select Document Type",
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         ),
+                              //       ),
+                              //       underline: const SizedBox(),
+                              //       items:
+                              //
+                              //       minorList
+                              //       // <String>[
+                              //       //   'Police FIR Copy',
+                              //       //   'Postmortem Report',
+                              //       //   'Income Tax Returns',
+                              //       //   'Medical Records',
+                              //       //   'Legal Heir Certificate',
+                              //       //   'Police Investigation Report',
+                              //       //   'Relationship Proof',
+                              //       //   'Stamped Affidavit',
+                              //       //   'Medical Attendant Certificate',
+                              //       //   'Guardian - Id proof',
+                              //       //   'Guardian - Add proof',
+                              //       //   'Any utility bill (gas / electricity / rental agreement)',
+                              //       //   'Other Document',
+                              //       //   // 'Income Tax Return',
+                              //       //   // 'Medical Records',
+                              //       //   // 'Legal Heir Certificate',
+                              //       //   // 'Police Investigation Report',
+                              //       //   // 'Other',
+                              //       // ]
+                              //           .map((String value) {
+                              //         return DropdownMenuItem<String>(
+                              //           value: value,
+                              //           child: Text(value),
+                              //         );
+                              //       }).toList(),
+                              //       onChanged: (value) {
+                              //         controller.additionalProof.value =
+                              //         value!;
+                              //       },
+                              //     )),
+                              //   ),
+
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -3013,7 +3373,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select Additional Proof");
       }
     }
-    if (controller.causeofDeath.value != "Natural Dealth") {
+    if (controller.causeofDeath.value != "Natural Death") {
       if (controller.firOrPostmortemReportPath.isNotEmpty) {
         ///Api call krni h yha se
       } else {

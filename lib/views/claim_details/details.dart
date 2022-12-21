@@ -188,9 +188,11 @@ class _DetailsState extends State<Details> {
                           ),
                         ),
                         OutlinedButton(
-                          // style:OutlinedButton.styleFrom(
-                          //   side: BorderSide(width: 2, color: Colors.white),
-                          // ),
+                          style:OutlinedButton.styleFrom(
+
+                            backgroundColor: kBlue,
+                            side: BorderSide(width: 2, color: Colors.white),
+                          ),
                           onPressed: () {
                           if(controller.causeofDeath.value == '' || controller.causeofDeath.value ==null){
                             Fluttertoast.showToast(
@@ -212,7 +214,7 @@ class _DetailsState extends State<Details> {
                           }
                           }, child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("Search"),
+                            child: Text("Search",style: kBody20white700,),
                           ),
 
 

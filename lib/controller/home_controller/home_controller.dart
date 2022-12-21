@@ -45,6 +45,8 @@ class HomeController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
+      print("object");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
