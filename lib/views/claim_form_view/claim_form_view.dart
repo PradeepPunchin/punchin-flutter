@@ -2704,6 +2704,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
     if (controller.borroweridProof.value.isNotEmpty) {
       if (controller.borrowerIdDocPath.isNotEmpty) {
         ///Api call krni h yha se
+
       } else {
         showMessage(message: "Please Select KYC ID Proof");
       }
@@ -2723,7 +2724,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
       }
     }
     if (controller.nomineeAddressProof.value.isNotEmpty) {
-      if (controller.nomineeIdDocPath.isNotEmpty) {
+      if (controller.nomineeAddressDocPath.isNotEmpty) {
         ///Api call krni h yha se
       } else {
         showMessage(message: "Please Select Nominee Address Proof");
