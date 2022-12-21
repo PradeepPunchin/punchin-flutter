@@ -27,7 +27,8 @@ class ClaimController extends GetxController {
     currentIndex.value = index;
   }
 
-  RxString causeofDealth = "".obs;
+  RxString causeofDeath = "".obs;
+  Rx<TextEditingController> searchController = TextEditingController().obs;
   RxString document = "".obs;
   RxString nominee = "Major".obs;
   RxString path = "".obs;
@@ -47,7 +48,7 @@ class ClaimController extends GetxController {
   RxString firProof = "".obs;
   RxString additionalProof = "".obs;
   RxString additionalProofDoc = "".obs;
-  var discrepancyData = {}.obs;
+  var discrepancyData={}.obs;
 
   RxBool loading = true.obs;
   RxBool loadUpload = false.obs;
@@ -77,12 +78,11 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
-        Get.off(() => LoginScreen());
+        Get.off(()=>LoginScreen());
         //getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
@@ -91,14 +91,18 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      print("2");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -112,7 +116,6 @@ class ClaimController extends GetxController {
 
   /// claim under verification
   getClaimUnderVerification({status}) async {
-    log(box.read("authToken"));
     try {
       var response = await http.get(
         Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
@@ -121,8 +124,6 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
-
-      log("inprogress" + response.body);
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -135,14 +136,19 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+
+    catch (e) {
+      print("1");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -153,41 +159,157 @@ class ClaimController extends GetxController {
       //btnController.value.stop();
     }
   }
+
+  getClaimSearch({status,searchKey}) async {
+    try {
+
+      if(status != null && (searchController.value.text=='' ||searchController.value.text==null||searchController.value.text=="null")) {
+        var Url=getAgentClaimApi + "ALLOCATED&page=0&limit=10";
+        var response = await http.get(
+          Uri.parse(Url),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        if (response.statusCode == 404) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        else if (response.statusCode == 401) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+        else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+      }
+      else{
+        var response = await http.get(
+          Uri.parse(SearchApi + "${causeofDeath.value}&searchedKeyword=$searchKey&pageNo=0&limit=10"),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        if (response.statusCode == 404) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        else if (response.statusCode == 401)
+        {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+        else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+      }
+
+
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      print("12345"+e.toString());
+      print(e);
+      Get.rawSnackbar(
+          message: " $e Error Occured",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
+
+
 
   /// claim draft
   getClaimSubmitted({status}) async {
-    log(box.read("authToken"));
     try {
-      var response = await http.get(
-        Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
-        headers: {
-          "Content-Type": "application/json",
-          "X-Xsrf-Token": box.read("authToken"),
-        },
-      );
+      if(status == null) {
+        var response = await http.get(
+          Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
 
-      log(status);
-      log("inprogress" + response.body);
-      if (response.statusCode == 200) {
-        return ClaimSubmitted.fromJson(jsonDecode(response.body));
-      } else if (response.statusCode == 401) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
-      } else if (response.statusCode == 400) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
-      } else if (response.statusCode == 405) {
-        final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        } else if (response.statusCode == 401) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+      else{
+        var response = await http.get(
+          Uri.parse(SearchApi + "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=10"),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+
+        log("search message"+ response.body);
+        if (response.statusCode == 200) {
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+        }
+        else if (response.statusCode == 401)
+        {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+        else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+      }
+
+
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      print("6");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -198,6 +320,7 @@ class ClaimController extends GetxController {
       //btnController.value.stop();
     }
   }
+
 
   /// claim  discrepeancy document
   getClaimDiscrepeancy({id}) async {
@@ -210,40 +333,37 @@ class ClaimController extends GetxController {
         },
       );
 
-      log(response.body);
-      print(id);
-      if (response.statusCode == 200) {
+;      if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
         Map data = jsonDecode(response.body);
 
+
         if (data != null && data["isSuccess"]) {
           loading.value = false;
-
           discrepancyData.value = data["data"];
-
-          // discrepancyData.value = ClaimDiscrepancyModel.fromJson(data["data"]);
-          //  log("Dat ${discrepancyData.value.toString()}");
         }
 
-        return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
+
+       return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
       } else if (response.statusCode == 405) {
         final details = jsonDecode(response.body);
-        //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      print("5");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -254,6 +374,7 @@ class ClaimController extends GetxController {
       //btnController.value.stop();
     }
   }
+
 
   getClaimSubmittedOne() async {
     try {
@@ -277,14 +398,18 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      print("4");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -307,8 +432,8 @@ class ClaimController extends GetxController {
       );
       if (response.statusCode == 200) {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
-
         Map data = jsonDecode(response.body);
+
 
         if (data != null && data["isSuccess"]) {
           loading.value = false;
@@ -316,11 +441,12 @@ class ClaimController extends GetxController {
           claimDetail.value = data["data"];
 
           claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]);
+
         }
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
-        Get.off(() => LoginScreen());
+        Get.off(()=>LoginScreen());
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
@@ -328,14 +454,18 @@ class ClaimController extends GetxController {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
       }
-    } on SocketException {
-      Get.rawSnackbar(
-          message: "Bad Connectivity",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      print("3");
+      print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
@@ -352,7 +482,6 @@ class ClaimController extends GetxController {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
-
     if (result != null) {
       File file = File(result.files.single.path!);
       // path.value = basename(file.path);
@@ -389,8 +518,8 @@ class ClaimController extends GetxController {
     ///code for adding keys
     log(Get.arguments[1].id.toString());
     request.fields["claimId"] = Get.arguments[1].id.toString();
-    log(documentReturn(causeofDealth.value));
-    request.fields["causeOfDeath"] = documentReturn(causeofDealth.value);
+    log(documentReturn(causeofDeath.value));
+    request.fields["causeOfDeath"] = documentReturn(causeofDeath.value);
     log(isMinor().toString());
     request.fields["isMinor"] = isMinor().toString();
     request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);
@@ -531,7 +660,6 @@ class ClaimController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     pageController = PageController(initialPage: 0);
-    getStepperFormData();
   }
 
   bool isMinor() {
@@ -575,6 +703,8 @@ class ClaimController extends GetxController {
     return temp.value.toString();
   }
 
+
+
   /// claim discrepancy file
   /// upload file
   Future<String> discrepancyFile() async {
@@ -586,18 +716,18 @@ class ClaimController extends GetxController {
       File file = File(result.files.single.path!);
       // path.value = basename(file.path);
       path.value = file.path;
-      print("file part " + path.value.toString());
+      print("file part "+path.value.toString());
     } else {
       // User canceled the picker
     }
-    print("file part " + path.value.toString());
+    print("file part "+ path.value.toString());
     return path.value;
   }
 
-  uploadDiscrepancyData({id, docType}) async {
+  uploadDiscrepancyData({id,docType}) async {
     loadUpload.value = true;
-    var postUri =
-        Uri.parse("$formUpload$id/discrepancy-document-upload/$docType");
+    var postUri = Uri.parse(
+        "$formUpload$id/discrepancy-document-upload/$docType");
     log(postUri.toString());
     var request = http.MultipartRequest("Post", postUri);
     Map<String, String> headers = {
@@ -606,15 +736,15 @@ class ClaimController extends GetxController {
     };
     request.headers.addAll(headers);
 
+
     /// code for adding file image
     log("Path is 1 ${additionalDocpath.value}");
 
+
     if (additionalDocpath.value.isNotEmpty) {
-      print("1" + additionalDocpath.value);
-      request.files.add(await http.MultipartFile.fromPath(
-        'multipartFile',
-        additionalDocpath.value,
-      ));
+      print("1"+additionalDocpath.value);
+      request.files
+          .add(await http.MultipartFile.fromPath('multipartFile', additionalDocpath.value,));
       // request.files.add(
       //   await http.MultipartFile.fromPath(
       //     '$docType',
@@ -640,8 +770,9 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.green);
 
       Get.offAll(() => Details(
-            title: 'WIP',
-          ));
+        title: 'WIP',
+      ));
+
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");
@@ -654,21 +785,25 @@ class ClaimController extends GetxController {
     }
   }
 
+
   /// get verify
-  moveToVerify({id}) async {
+ moveToVerify({id}) async {
     loadUpload.value = true;
-    var postUri = Uri.parse("$formUpload$id/forward-to-verifier");
-    Map<String, dynamic> data = {
-      "id": id,
+    var postUri = Uri.parse(
+        "$formUpload$id/forward-to-verifier");
+    Map<String,dynamic> data={
+      "id":id,
     };
     log(postUri.toString());
-    var response = await http.post(
-      postUri,
-      headers: {
-        "X-Xsrf-Token": box.read("authToken"),
-      },
-      body: jsonEncode(data),
+    var response= await http.post(postUri,
+        headers :{
+
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+    body: jsonEncode(data),
     );
+
+
 
     if (response.statusCode == 200) {
       loadUpload.value = false;
@@ -680,8 +815,9 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.green);
 
       Get.offAll(() => Details(
-            title: 'WIP',
-          ));
+        title: 'WIP',
+      ));
+
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");

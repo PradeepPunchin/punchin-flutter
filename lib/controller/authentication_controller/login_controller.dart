@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -21,6 +18,7 @@ class LoginController extends GetxController {
       Map<String, String> data = {
         "userId": email.text.toString(),
         "password": password.text.toString(),
+        //"platform": "ANDROID",
       };
 
       var response = await http.post(
@@ -30,14 +28,12 @@ class LoginController extends GetxController {
         },
         body: jsonEncode(data),
       );
-      print(response.statusCode);
-      print(response.body);
+
       if (response.statusCode == 200) {
         var details = jsonDecode(response.body);
         var data = details["data"];
         var user = data["user"];
 
-        log("${data["authToken"]}");
         if (user["role"] == "AGENT") {
           GetStorage().write("authToken", data["authToken"]);
           Get.offAll(() => CustomNavigation());
@@ -49,21 +45,30 @@ class LoginController extends GetxController {
         // getErrorToaster(details["message"]);
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
+        print(details);
+        Get.rawSnackbar(
+            message: "${details["message"]}",
+            snackPosition: SnackPosition.BOTTOM,
+            margin: EdgeInsets.zero,
+            snackStyle: SnackStyle.GROUNDED,
+            backgroundColor: Colors.red);
         // getErrorToaster(details["message"]);
       } else if (response.statusCode == 405) {
         final details = jsonDecode(response.body);
         //  getErrorToaster(details["message"]);
       }
-    } on SocketException {
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Internet Exception",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
       Get.rawSnackbar(
-          message: "Internet Exception",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    } catch (e) {
-      Get.rawSnackbar(
-          message: " $e Error Occured",
+          message: "$e Error Occured",
           snackPosition: SnackPosition.BOTTOM,
           margin: EdgeInsets.zero,
           snackStyle: SnackStyle.GROUNDED,

@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:developer';
-
+import 'package:flutter/cupertino.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:path/path.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
@@ -23,12 +26,82 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   var dataArg = Get.arguments;
 
+  late StreamSubscription subscription;
+  bool isDeviceConnected = false;
+  bool isAlertSet = false;
+
+  List<String> minorList=['Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof *',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Guardian - Id proof *',
+    'Guardian - Add proof *',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
+
+  List<String> medicialList=<String>['Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records *',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Guardian - Id proof',
+    'Guardian - Add proof',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
+
+  List<String> accientList=<String>[
+    'Police FIR Copy *',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Guardian - Id proof',
+    'Guardian - Add proof',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
+
+  List<String> sickList=<String>['Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Relationship Proof',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate *',
+    'Guardian - Id proof',
+    'Guardian - Add proof',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document',];
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getConnectivity();
     controller.getStepperFormData();
   }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,8 +159,40 @@ class _ClaimFormViewState extends State<ClaimFormView> {
           ]),
       body: customStepperForm(),
     );
-  }
 
+  }
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+            (ConnectivityResult result) async {
+          isDeviceConnected = await InternetConnectionChecker().hasConnection;
+          if (!isDeviceConnected && isAlertSet == false) {
+            showDialogBox();
+            setState(() => isAlertSet = true);
+          }
+        },
+      );
+  showDialogBox() => showCupertinoDialog<String>(
+    context: this.context,
+    builder: (BuildContext context) => CupertinoAlertDialog(
+      title: const Text('No Connection'),
+      content: const Text('Please check your internet connectivity'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(context, 'Cancel');
+            setState(() => isAlertSet = false);
+            isDeviceConnected =
+            await InternetConnectionChecker().hasConnection;
+            if (!isDeviceConnected && isAlertSet == false) {
+              showDialogBox();
+              setState(() => isAlertSet = true);
+            }
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
   customStepperForm() {
     return Container(
       child: Stack(
@@ -113,10 +218,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Borrower details",
+                                "Borrower Details",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.black),
                               ),
                               SizedBox(
@@ -147,7 +252,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Mobile number"),
+                              smallText(text: "Mobile Number"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -157,7 +262,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Email id"),
+                              smallText(text: "Email Id"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -183,16 +288,16 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Loan account details",
+                                "Loan Account Details",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.black),
                               ),
                               SizedBox(
                                 height: 15.0.h,
                               ),
-                              smallText(text: "Loan account number"),
+                              smallText(text: "Loan Account Number"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -202,7 +307,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Loan Type / category"),
+                              smallText(text: "Loan Type / Category"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -212,7 +317,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Loan o/s amt"),
+                              smallText(text: "Loan O/S Amt"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -223,18 +328,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Lender name"),
+                              smallText(text: "Lender Name"),
                               const SizedBox(
                                 height: 5.0,
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["insurerName"]
+                                      .claimDetail.value["loanAccountManagerName"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Lender RM name"),
+                              smallText(text: "Lender RM Name"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -245,7 +350,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Lender RM number"),
+                              smallText(text: "Lender RM Number"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -262,16 +367,16 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Insurance policy details",
+                                "Insurance Policy Details",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.black),
                               ),
                               SizedBox(
                                 height: 15.0.h,
                               ),
-                              smallText(text: "Insurer name"),
+                              smallText(text: "Insurer Name"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -281,7 +386,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Borrower policy number"),
+                              smallText(text: "Borrower Policy Number"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -291,7 +396,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Master policy number"),
+                              smallText(text: "Master Policy Number"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -301,7 +406,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Policy start date"),
+                              smallText(text: "Policy Start Date"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -316,7 +421,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 height: 10.0,
                               ),
                               smallText(
-                                  text: "Policy coverage duration ( In years)"),
+                                  text: "Policy Coverage Duration ( In Years)"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -327,7 +432,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Policy sum assured"),
+                              smallText(text: "Policy Sum Assured"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -338,7 +443,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Nominee name"),
+                              smallText(text: "Nominee Name"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -349,7 +454,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Nominee relationship"),
+                              smallText(text: "Nominee Relationship"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -360,7 +465,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Contact number"),
+                              smallText(text: "Contact Number"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -387,17 +492,17 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Documentation upload",
+                                "Documentation Upload",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.black),
                               ),
                               SizedBox(
                                 height: 15.0.h,
                               ),
                               smallText(
-                                  text: "Cause of Death / (Life Insurance)"),
+                                  text: "Cause of Death (Life Insurance)"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -411,14 +516,14 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       hint: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: controller
-                                                .causeofDealth.value.isNotEmpty
+                                                .causeofDeath.value.isNotEmpty
                                             ? Text(
-                                                controller.causeofDealth.value,
+                                                controller.causeofDeath.value,
                                                 style: CustomFonts.kBlack15Black
                                                     .copyWith(fontSize: 14.0),
                                               )
                                             : Text(
-                                                "Choose the cause ",
+                                                "Choose The Cause ",
                                                 style: CustomFonts.kBlack15Black
                                                     .copyWith(fontSize: 14.0),
                                               ),
@@ -426,7 +531,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       underline: const SizedBox(),
                                       items: <String>[
                                         'Accident',
-                                        'Natural Dealth',
+                                        'Natural Death',
                                         'Suicide',
                                         'Illness &  Medical Reason',
                                         'Dealth due to Natural Calamity'
@@ -437,7 +542,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         );
                                       }).toList(),
                                       onChanged: (value) {
-                                        controller.causeofDealth.value = value!;
+                                        controller.causeofDeath.value = value!;
                                       },
                                     )),
                               ),
@@ -452,7 +557,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Filled & Signed Claim form"),
+
+                              Row(
+                                children: [
+                                  smallText(text: "Filled & Signed Claim form"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -485,6 +596,17 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     MaterialButton(
                                       elevation: 1.0,
                                       onPressed: () async {
+    if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+    Fluttertoast.showToast(
+    msg: "Already Under Verification",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+    else{
                                         Get.defaultDialog(
                                             title: "Upload",
                                             titleStyle: CustomFonts
@@ -506,7 +628,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   onTap: () async {
                                                     var file = await controller
                                                         .imageFromCamera();
-                                                    print(file);
                                                     controller.filled.value =
                                                         basename(file);
                                                     controller.filledPath
@@ -573,7 +694,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 ),
                                               ),
                                             ),
-                                            onCancel: () => Get.back());
+                                            onCancel: () => Get.back());}
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -636,7 +757,14 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Death certificate"),
+
+                              Row(
+                                children: [
+                                  smallText(text: "Death Certificate"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
+
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -669,6 +797,17 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     MaterialButton(
                                       elevation: 1.0,
                                       onPressed: () async {
+    if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+    Fluttertoast.showToast(
+    msg: "Already Under Verification",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+    else{
                                         Get.defaultDialog(
                                             title: "Upload",
                                             titleStyle: CustomFonts
@@ -758,7 +897,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 ),
                                               ),
                                             ),
-                                            onCancel: () => Get.back());
+                                            onCancel: () => Get.back());}
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -820,18 +959,22 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 height: 10.0,
                               ),
                               Text(
-                                "KYC - Borrower",
+                                "KYC - Proof Borrower",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.black),
                               ),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Id proof"),
-                              const SizedBox(
-                                height: 5.0,
+                              Row(
+                                children: [
+                                  smallText(text: "Id Proof"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
+                              smallText(text: "(atleast one  document is mandatory)"
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -862,8 +1005,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         'Passport',
                                         'Voter card',
                                         'Driving License',
-                                        'Bank Passbook',
-                                        'Any other Govt ID Card',
+                                        "Ration Card ",
+                                        'Pan Card',
+                                        'Any other Govt Id card ',
+                                        'Other',
+
                                       ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -907,6 +1053,17 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     MaterialButton(
                                       elevation: 1.0,
                                       onPressed: () async {
+    if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+    Fluttertoast.showToast(
+    msg: "Already Under Verification",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+    else{
                                         Get.defaultDialog(
                                             title: "Upload",
                                             titleStyle: CustomFonts
@@ -995,7 +1152,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 ),
                                               ),
                                             ),
-                                            onCancel: () => Get.back());
+                                            onCancel: () => Get.back());}
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -1056,248 +1213,256 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Address Proof"),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(1.0),
-                                    border: Border.all(color: kGrey)),
-                                child: Obx(() => DropdownButton<String>(
-                                      isExpanded: true,
-                                      hint: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: controller.borrowerAddressProof
-                                                .value.isNotEmpty
-                                            ? Text(
-                                                controller
-                                                    .borrowerAddressProof.value,
-                                                style: CustomFonts.kBlack15Black
-                                                    .copyWith(fontSize: 14.0),
-                                              )
-                                            : Text(
-                                                "Select Document Type",
-                                                style: CustomFonts.kBlack15Black
-                                                    .copyWith(fontSize: 14.0),
-                                              ),
-                                      ),
-                                      underline: const SizedBox(),
-                                      items: <String>[
-                                        'Aadhar Card',
-                                        'Passport',
-                                        'Voter card',
-                                        'Driving License',
-                                        'Bank Passbook',
-                                        'Any other Govt ID Card',
-                                      ].map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        controller.borrowerAddressProof.value =
-                                            value!;
-                                      },
-                                    )),
-                              ),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              Container(
-                                height: 40.0.h,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade50,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(
-                                      color: kGrey,
-                                    )),
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Obx(() => Text(
-                                              "${controller.borrowerAddressProofDoc.value}",
-                                              style: CustomFonts.kBlack15Black
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 14.0),
-                                            )),
-                                      ),
-                                      fit: FlexFit.tight,
-                                    ),
-                                    const Spacer(),
-                                    MaterialButton(
-                                      elevation: 1.0,
-                                      onPressed: () async {
-                                        Get.defaultDialog(
-                                            title: "Upload",
-                                            titleStyle: CustomFonts
-                                                .kBlack15Black
-                                                .copyWith(
-                                                    color: Colors.black,
-                                                    fontSize: 20.0,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                const Divider(),
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .imageFromCamera();
-                                                    print(file);
-                                                    controller
-                                                        .borrowerAddressProofDoc
-                                                        .value = basename(file);
-                                                    controller
-                                                        .borrowerAddressDocPath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Take Photo ...",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                Divider(),
-                                                GestureDetector(
-                                                  behavior:
-                                                      HitTestBehavior.opaque,
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .uploadFile();
-
-                                                    controller
-                                                        .borrowerAddressProofDoc
-                                                        .value = basename(file);
-                                                    controller
-                                                        .borrowerAddressDocPath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Choose Files from Phone",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                Divider(),
-                                              ],
-                                            ),
-                                            cancel: GestureDetector(
-                                              onTap: () {
-                                                log("**");
-                                                Get.back(closeOverlays: true);
-                                              },
-                                              behavior: HitTestBehavior.opaque,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Cancel",
-                                                  style: CustomFonts
-                                                      .kBlack15Black
-                                                      .copyWith(
-                                                          color: Colors.red,
-                                                          fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            onCancel: () => Get.back());
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          side: const BorderSide(color: kGrey),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0)),
-                                      color: Colors.white,
-                                      child: Text("Upload",
-                                          style: CustomFonts.kBlack15Black
-                                              .copyWith(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400)),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 10.0),
-                              Obx(() => controller
-                                      .borrowerAddressDocPath.value.isNotEmpty
-                                  ? Row(
-                                      children: [
-                                        GestureDetector(
-                                          child: Text(
-                                            "Preview",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(
-                                                    fontSize: 14.0,
-                                                    color: kdarkBlue,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                          ),
-                                          onTap: () =>
-                                              Get.to(() => PreviewScreen(
-                                                    filePath: controller
-                                                        .borrowerAddressDocPath
-                                                        .value,
-                                                  )),
-                                        ),
-                                        const Spacer(),
-                                        GestureDetector(
-                                          onTap: () {
-                                            controller.borrowerAddressProofDoc
-                                                .value = "";
-                                            controller.borrowerAddressDocPath
-                                                .value = "";
-                                          },
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: klightBlue,
-                                            size: 20,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  : SizedBox()),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
+                              // smallText(text: "Address Proof"),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.grey.shade100,
+                              //       borderRadius: BorderRadius.circular(1.0),
+                              //       border: Border.all(color: kGrey)),
+                              //   child: Obx(() => DropdownButton<String>(
+                              //         isExpanded: true,
+                              //         hint: Padding(
+                              //           padding: const EdgeInsets.all(8.0),
+                              //           child: controller.borrowerAddressProof
+                              //                   .value.isNotEmpty
+                              //               ? Text(
+                              //                   controller
+                              //                       .borrowerAddressProof.value,
+                              //                   style: CustomFonts.kBlack15Black
+                              //                       .copyWith(fontSize: 14.0),
+                              //                 )
+                              //               : Text(
+                              //                   "Select Document Type",
+                              //                   style: CustomFonts.kBlack15Black
+                              //                       .copyWith(fontSize: 14.0),
+                              //                 ),
+                              //         ),
+                              //         underline: const SizedBox(),
+                              //         items: <String>[
+                              //           'Aadhar Card',
+                              //           'Passport',
+                              //           'Voter card',
+                              //           'Driving License',
+                              //           'Bank Passbook',
+                              //           'Any other Govt ID Card',
+                              //         ].map((String value) {
+                              //           return DropdownMenuItem<String>(
+                              //             value: value,
+                              //             child: Text(value),
+                              //           );
+                              //         }).toList(),
+                              //         onChanged: (value) {
+                              //           controller.borrowerAddressProof.value =
+                              //               value!;
+                              //         },
+                              //       )),
+                              // ),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              // Container(
+                              //   height: 40.0.h,
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.grey.shade50,
+                              //       borderRadius: BorderRadius.circular(5.0),
+                              //       border: Border.all(
+                              //         color: kGrey,
+                              //       )),
+                              //   child: Row(
+                              //     children: [
+                              //       Flexible(
+                              //         child: Padding(
+                              //           padding: const EdgeInsets.all(8.0),
+                              //           child: Obx(() => Text(
+                              //                 "${controller.borrowerAddressProofDoc.value}",
+                              //                 style: CustomFonts.kBlack15Black
+                              //                     .copyWith(
+                              //                         fontWeight:
+                              //                             FontWeight.w600,
+                              //                         fontSize: 14.0),
+                              //               )),
+                              //         ),
+                              //         fit: FlexFit.tight,
+                              //       ),
+                              //       const Spacer(),
+                              //       MaterialButton(
+                              //         elevation: 1.0,
+                              //         onPressed: () async {
+                              //           Get.defaultDialog(
+                              //               title: "Upload",
+                              //               titleStyle: CustomFonts
+                              //                   .kBlack15Black
+                              //                   .copyWith(
+                              //                       color: Colors.black,
+                              //                       fontSize: 20.0,
+                              //                       fontWeight:
+                              //                           FontWeight.bold),
+                              //               content: Column(
+                              //                 mainAxisSize: MainAxisSize.min,
+                              //                 crossAxisAlignment:
+                              //                     CrossAxisAlignment.center,
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment.center,
+                              //                 children: [
+                              //                   const Divider(),
+                              //                   GestureDetector(
+                              //                     onTap: () async {
+                              //                       var file = await controller
+                              //                           .imageFromCamera();
+                              //                       print(file);
+                              //                       controller
+                              //                           .borrowerAddressProofDoc
+                              //                           .value = basename(file);
+                              //                       controller
+                              //                           .borrowerAddressDocPath
+                              //                           .value = file;
+                              //                       Get.back(
+                              //                           closeOverlays: true);
+                              //                     },
+                              //                     child: Text(
+                              //                       "Take Photo ...",
+                              //                       style: CustomFonts
+                              //                           .kBlack15Black
+                              //                           .copyWith(
+                              //                               color: kdarkBlue,
+                              //                               fontWeight:
+                              //                                   FontWeight.w600,
+                              //                               fontSize: 16.0),
+                              //                     ),
+                              //                   ),
+                              //                   Divider(),
+                              //                   GestureDetector(
+                              //                     behavior:
+                              //                         HitTestBehavior.opaque,
+                              //                     onTap: () async {
+                              //                       var file = await controller
+                              //                           .uploadFile();
+                              //
+                              //                       controller
+                              //                           .borrowerAddressProofDoc
+                              //                           .value = basename(file);
+                              //                       controller
+                              //                           .borrowerAddressDocPath
+                              //                           .value = file;
+                              //                       Get.back(
+                              //                           closeOverlays: true);
+                              //                     },
+                              //                     child: Text(
+                              //                       "Choose Files from Phone",
+                              //                       style: CustomFonts
+                              //                           .kBlack15Black
+                              //                           .copyWith(
+                              //                               color: kdarkBlue,
+                              //                               fontWeight:
+                              //                                   FontWeight.w600,
+                              //                               fontSize: 16.0),
+                              //                     ),
+                              //                   ),
+                              //                   Divider(),
+                              //                 ],
+                              //               ),
+                              //               cancel: GestureDetector(
+                              //                 onTap: () {
+                              //                   log("**");
+                              //                   Get.back(closeOverlays: true);
+                              //                 },
+                              //                 behavior: HitTestBehavior.opaque,
+                              //                 child: Padding(
+                              //                   padding:
+                              //                       const EdgeInsets.all(8.0),
+                              //                   child: Text(
+                              //                     "Cancel",
+                              //                     style: CustomFonts
+                              //                         .kBlack15Black
+                              //                         .copyWith(
+                              //                             color: Colors.red,
+                              //                             fontSize: 16),
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //               onCancel: () => Get.back());
+                              //         },
+                              //         shape: RoundedRectangleBorder(
+                              //             side: const BorderSide(color: kGrey),
+                              //             borderRadius:
+                              //                 BorderRadius.circular(5.0)),
+                              //         color: Colors.white,
+                              //         child: Text("Upload",
+                              //             style: CustomFonts.kBlack15Black
+                              //                 .copyWith(
+                              //                     fontSize: 15.0,
+                              //                     fontWeight: FontWeight.w400)),
+                              //       ),
+                              //       const SizedBox(
+                              //         width: 10,
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
+                              // const SizedBox(height: 10.0),
+                              // Obx(() => controller
+                              //         .borrowerAddressDocPath.value.isNotEmpty
+                              //     ? Row(
+                              //         children: [
+                              //           GestureDetector(
+                              //             child: Text(
+                              //               "Preview",
+                              //               style: CustomFonts.kBlack15Black
+                              //                   .copyWith(
+                              //                       fontSize: 14.0,
+                              //                       color: kdarkBlue,
+                              //                       fontWeight:
+                              //                           FontWeight.w700),
+                              //             ),
+                              //             onTap: () =>
+                              //                 Get.to(() => PreviewScreen(
+                              //                       filePath: controller
+                              //                           .borrowerAddressDocPath
+                              //                           .value,
+                              //                     )),
+                              //           ),
+                              //           const Spacer(),
+                              //           GestureDetector(
+                              //             onTap: () {
+                              //               controller.borrowerAddressProofDoc
+                              //                   .value = "";
+                              //               controller.borrowerAddressDocPath
+                              //                   .value = "";
+                              //             },
+                              //             child: const Icon(
+                              //               Icons.delete,
+                              //               color: klightBlue,
+                              //               size: 20,
+                              //             ),
+                              //           )
+                              //         ],
+                              //       )
+                              //     : SizedBox()),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
                               Text(
-                                "KYC - Nominee",
+                                "KYC - Proof Nominee",
                                 style: CustomFonts.kBlack15Black.copyWith(
                                     fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w900,
                                     color: Colors.black),
                               ),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Id proof"),
+
+                              Row(
+                                children: [
+                                  smallText(text: "Id Proof"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
+                              ),
+                              smallText(text: "(atleast one  document is mandatory)"
+                              ),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -1329,8 +1494,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         'Passport',
                                         'Voter card',
                                         'Driving License',
-                                        'Bank Passbook',
-                                        'Any other Govt ID Card',
+                                        "Ration Card ",
+                                        'Pan Card',
+                                        'Any other Govt Id card ',
+                                        'Other',
                                       ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -1374,95 +1541,107 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     MaterialButton(
                                       elevation: 1.0,
                                       onPressed: () async {
-                                        Get.defaultDialog(
-                                            title: "Upload",
-                                            titleStyle: CustomFonts
-                                                .kBlack15Black
-                                                .copyWith(
-                                                    color: Colors.black,
-                                                    fontSize: 20.0,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Divider(),
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .imageFromCamera();
-                                                    print(file);
-                                                    controller.nomineeIdProofDoc
-                                                        .value = basename(file);
-                                                    controller.nomineeIdDocPath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Take Photo ...",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                Divider(),
-                                                GestureDetector(
-                                                  behavior:
-                                                      HitTestBehavior.opaque,
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .uploadFile();
-                                                    print(file);
-                                                    controller.nomineeIdProofDoc
-                                                        .value = basename(file);
-                                                    controller.nomineeIdDocPath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Choose Files from Phone",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                Divider(),
-                                              ],
-                                            ),
-                                            cancel: GestureDetector(
-                                              onTap: () {
-                                                log("**");
-                                                Get.back(closeOverlays: true);
-                                              },
-                                              behavior: HitTestBehavior.opaque,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Cancel",
-                                                  style: CustomFonts
-                                                      .kBlack15Black
-                                                      .copyWith(
-                                                          color: Colors.red,
-                                                          fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            onCancel: () => Get.back());
+    if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+    Fluttertoast.showToast(
+    msg: "Already Under Verification",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+    else {
+      Get.defaultDialog(
+          title: "Upload",
+          titleStyle: CustomFonts
+              .kBlack15Black
+              .copyWith(
+              color: Colors.black,
+              fontSize: 20.0,
+              fontWeight:
+              FontWeight.bold),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment:
+            CrossAxisAlignment.center,
+            mainAxisAlignment:
+            MainAxisAlignment.center,
+            children: [
+              Divider(),
+              GestureDetector(
+                onTap: () async {
+                  var file = await controller
+                      .imageFromCamera();
+                  print(file);
+                  controller.nomineeIdProofDoc
+                      .value = basename(file);
+                  controller.nomineeIdDocPath
+                      .value = file;
+                  Get.back(
+                      closeOverlays: true);
+                },
+                child: Text(
+                  "Take Photo ...",
+                  style: CustomFonts
+                      .kBlack15Black
+                      .copyWith(
+                      color: kdarkBlue,
+                      fontWeight:
+                      FontWeight.w600,
+                      fontSize: 16.0),
+                ),
+              ),
+              Divider(),
+              GestureDetector(
+                behavior:
+                HitTestBehavior.opaque,
+                onTap: () async {
+                  var file = await controller
+                      .uploadFile();
+                  print(file);
+                  controller.nomineeIdProofDoc
+                      .value = basename(file);
+                  controller.nomineeIdDocPath
+                      .value = file;
+                  Get.back(
+                      closeOverlays: true);
+                },
+                child: Text(
+                  "Choose Files from Phone",
+                  style: CustomFonts
+                      .kBlack15Black
+                      .copyWith(
+                      color: kdarkBlue,
+                      fontWeight:
+                      FontWeight.w600,
+                      fontSize: 16.0),
+                ),
+              ),
+              Divider(),
+            ],
+          ),
+          cancel: GestureDetector(
+            onTap: () {
+              log("**");
+              Get.back(closeOverlays: true);
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Padding(
+              padding:
+              const EdgeInsets.all(8.0),
+              child: Text(
+                "Cancel",
+                style: CustomFonts
+                    .kBlack15Black
+                    .copyWith(
+                    color: Colors.red,
+                    fontSize: 16),
+              ),
+            ),
+          ),
+          onCancel: () => Get.back());
+    }
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -1527,240 +1706,248 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Address Proof"),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(1.0),
-                                    border: Border.all(color: kGrey)),
-                                child: Obx(() => DropdownButton<String>(
-                                      isExpanded: true,
-                                      hint: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: controller.nomineeAddressProof
-                                                .value.isNotEmpty
-                                            ? Text(
-                                                controller
-                                                    .nomineeAddressProof.value,
-                                                style: CustomFonts.kBlack15Black
-                                                    .copyWith(fontSize: 14.0),
-                                              )
-                                            : Text(
-                                                "Select Document Type",
-                                                style: CustomFonts.kBlack15Black
-                                                    .copyWith(fontSize: 14.0),
-                                              ),
-                                      ),
-                                      underline: const SizedBox(),
-                                      items: <String>[
-                                        'Aadhar Card',
-                                        'Passport',
-                                        'Voter card',
-                                        'Driving License',
-                                        'Bank Passbook',
-                                        'Any other Govt ID Card',
-                                      ].map((String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        controller.nomineeAddressProof.value =
-                                            value!;
-                                      },
-                                    )),
-                              ),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              Container(
-                                height: 40.0.h,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade50,
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    border: Border.all(
-                                      color: kGrey,
-                                    )),
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                      fit: FlexFit.tight,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Obx(() => Text(
-                                              "${controller.nomineeAddressProofDoc.value}",
-                                              style: CustomFonts.kBlack15Black
-                                                  .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 14.0),
-                                            )),
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    MaterialButton(
-                                      elevation: 1.0,
-                                      onPressed: () async {
-                                        Get.defaultDialog(
-                                            title: "Upload",
-                                            titleStyle: CustomFonts
-                                                .kBlack15Black
-                                                .copyWith(
-                                                    color: Colors.black,
-                                                    fontSize: 20.0,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Divider(),
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .imageFromCamera();
-                                                    print(file);
+                              // smallText(text: "Address Proof"),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.grey.shade100,
+                              //       borderRadius: BorderRadius.circular(1.0),
+                              //       border: Border.all(color: kGrey)),
+                              //   child: Obx(() => DropdownButton<String>(
+                              //         isExpanded: true,
+                              //         hint: Padding(
+                              //           padding: const EdgeInsets.all(8.0),
+                              //           child: controller.nomineeAddressProof
+                              //                   .value.isNotEmpty
+                              //               ? Text(
+                              //                   controller
+                              //                       .nomineeAddressProof.value,
+                              //                   style: CustomFonts.kBlack15Black
+                              //                       .copyWith(fontSize: 14.0),
+                              //                 )
+                              //               : Text(
+                              //                   "Select Document Type",
+                              //                   style: CustomFonts.kBlack15Black
+                              //                       .copyWith(fontSize: 14.0),
+                              //                 ),
+                              //         ),
+                              //         underline: const SizedBox(),
+                              //         items: <String>[
+                              //           'Aadhar Card',
+                              //           'Passport',
+                              //           'Voter card',
+                              //           'Driving License',
+                              //           'Bank Passbook',
+                              //           'Any other Govt ID Card',
+                              //         ].map((String value) {
+                              //           return DropdownMenuItem<String>(
+                              //             value: value,
+                              //             child: Text(value),
+                              //           );
+                              //         }).toList(),
+                              //         onChanged: (value) {
+                              //           controller.nomineeAddressProof.value =
+                              //               value!;
+                              //         },
+                              //       )),
+                              // ),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              // Container(
+                              //   height: 40.0.h,
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.grey.shade50,
+                              //       borderRadius: BorderRadius.circular(5.0),
+                              //       border: Border.all(
+                              //         color: kGrey,
+                              //       )),
+                              //   child: Row(
+                              //     children: [
+                              //       Flexible(
+                              //         fit: FlexFit.tight,
+                              //         child: Padding(
+                              //           padding: const EdgeInsets.all(8.0),
+                              //           child: Obx(() => Text(
+                              //                 "${controller.nomineeAddressProofDoc.value}",
+                              //                 style: CustomFonts.kBlack15Black
+                              //                     .copyWith(
+                              //                         fontWeight:
+                              //                             FontWeight.w600,
+                              //                         fontSize: 14.0),
+                              //               )),
+                              //         ),
+                              //       ),
+                              //       const Spacer(),
+                              //       MaterialButton(
+                              //         elevation: 1.0,
+                              //         onPressed: () async {
+                              //           Get.defaultDialog(
+                              //               title: "Upload",
+                              //               titleStyle: CustomFonts
+                              //                   .kBlack15Black
+                              //                   .copyWith(
+                              //                       color: Colors.black,
+                              //                       fontSize: 20.0,
+                              //                       fontWeight:
+                              //                           FontWeight.bold),
+                              //               content: Column(
+                              //                 mainAxisSize: MainAxisSize.min,
+                              //                 crossAxisAlignment:
+                              //                     CrossAxisAlignment.center,
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment.center,
+                              //                 children: [
+                              //                   Divider(),
+                              //                   GestureDetector(
+                              //                     onTap: () async {
+                              //                       var file = await controller
+                              //                           .imageFromCamera();
+                              //                       print(file);
+                              //
+                              //                       controller
+                              //                           .nomineeAddressProofDoc
+                              //                           .value = basename(file);
+                              //                       controller
+                              //                           .nomineeAddressDocPath
+                              //                           .value = file;
+                              //                       Get.back(
+                              //                           closeOverlays: true);
+                              //                     },
+                              //                     child: Text(
+                              //                       "Take Photo ...",
+                              //                       style: CustomFonts
+                              //                           .kBlack15Black
+                              //                           .copyWith(
+                              //                               color: kdarkBlue,
+                              //                               fontWeight:
+                              //                                   FontWeight.w600,
+                              //                               fontSize: 16.0),
+                              //                     ),
+                              //                   ),
+                              //                   Divider(),
+                              //                   GestureDetector(
+                              //                     behavior:
+                              //                         HitTestBehavior.opaque,
+                              //                     onTap: () async {
+                              //                       var file = await controller
+                              //                           .uploadFile();
+                              //                       controller
+                              //                           .nomineeAddressProofDoc
+                              //                           .value = basename(file);
+                              //                       controller
+                              //                           .nomineeAddressDocPath
+                              //                           .value = file;
+                              //                       Get.back(
+                              //                           closeOverlays: true);
+                              //                     },
+                              //                     child: Text(
+                              //                       "Choose Files from Phone",
+                              //                       style: CustomFonts
+                              //                           .kBlack15Black
+                              //                           .copyWith(
+                              //                               color: kdarkBlue,
+                              //                               fontWeight:
+                              //                                   FontWeight.w600,
+                              //                               fontSize: 16.0),
+                              //                     ),
+                              //                   ),
+                              //                   Divider(),
+                              //                 ],
+                              //               ),
+                              //               cancel: GestureDetector(
+                              //                 onTap: () {
+                              //                   log("**");
+                              //                   Get.back(closeOverlays: true);
+                              //                 },
+                              //                 behavior: HitTestBehavior.opaque,
+                              //                 child: Padding(
+                              //                   padding:
+                              //                       const EdgeInsets.all(8.0),
+                              //                   child: Text(
+                              //                     "Cancel",
+                              //                     style: CustomFonts
+                              //                         .kBlack15Black
+                              //                         .copyWith(
+                              //                             color: Colors.red,
+                              //                             fontSize: 16),
+                              //                   ),
+                              //                 ),
+                              //               ),
+                              //               onCancel: () => Get.back());
+                              //         },
+                              //         shape: RoundedRectangleBorder(
+                              //             side: const BorderSide(color: kGrey),
+                              //             borderRadius:
+                              //                 BorderRadius.circular(5.0)),
+                              //         color: Colors.white,
+                              //         child: Text("Upload",
+                              //             style: CustomFonts.kBlack15Black
+                              //                 .copyWith(
+                              //                     fontSize: 15.0,
+                              //                     fontWeight: FontWeight.w400)),
+                              //       ),
+                              //       const SizedBox(
+                              //         width: 10,
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              // Obx(() => controller
+                              //         .nomineeAddressDocPath.value.isNotEmpty
+                              //     ? Row(
+                              //         children: [
+                              //           GestureDetector(
+                              //             child: Text(
+                              //               "Preview",
+                              //               style: CustomFonts.kBlack15Black
+                              //                   .copyWith(
+                              //                       fontSize: 14.0,
+                              //                       color: kdarkBlue,
+                              //                       fontWeight:
+                              //                           FontWeight.w700),
+                              //             ),
+                              //             onTap: () =>
+                              //                 Get.to(() => PreviewScreen(
+                              //                       filePath: controller
+                              //                           .nomineeAddressDocPath
+                              //                           .value,
+                              //                     )),
+                              //           ),
+                              //           const Spacer(),
+                              //           GestureDetector(
+                              //             onTap: () {
+                              //               controller.nomineeAddressProofDoc
+                              //                   .value = "";
+                              //               controller.nomineeAddressDocPath
+                              //                   .value = "";
+                              //             },
+                              //             child: const Icon(
+                              //               Icons.delete,
+                              //               color: klightBlue,
+                              //               size: 20,
+                              //             ),
+                              //           )
+                              //         ],
+                              //       )
+                              //     : SizedBox()),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
 
-                                                    controller
-                                                        .nomineeAddressProofDoc
-                                                        .value = basename(file);
-                                                    controller
-                                                        .nomineeAddressDocPath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Take Photo ...",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                Divider(),
-                                                GestureDetector(
-                                                  behavior:
-                                                      HitTestBehavior.opaque,
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .uploadFile();
-                                                    controller
-                                                        .nomineeAddressProofDoc
-                                                        .value = basename(file);
-                                                    controller
-                                                        .nomineeAddressDocPath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Choose Files from Phone",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                Divider(),
-                                              ],
-                                            ),
-                                            cancel: GestureDetector(
-                                              onTap: () {
-                                                log("**");
-                                                Get.back(closeOverlays: true);
-                                              },
-                                              behavior: HitTestBehavior.opaque,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Cancel",
-                                                  style: CustomFonts
-                                                      .kBlack15Black
-                                                      .copyWith(
-                                                          color: Colors.red,
-                                                          fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            onCancel: () => Get.back());
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                          side: const BorderSide(color: kGrey),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0)),
-                                      color: Colors.white,
-                                      child: Text("Upload",
-                                          style: CustomFonts.kBlack15Black
-                                              .copyWith(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400)),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    )
-                                  ],
-                                ),
+                              Row(
+                                children: [
+                                  smallText(text: "Bank A/C Proof"),
+                                  Text(" * ",style: TextStyle(color: Colors.red),)
+                                ],
                               ),
-                              const SizedBox(
-                                height: 10.0,
+                              smallText(text: "(atleast one  document is mandatory)"
                               ),
-                              Obx(() => controller
-                                      .nomineeAddressDocPath.value.isNotEmpty
-                                  ? Row(
-                                      children: [
-                                        GestureDetector(
-                                          child: Text(
-                                            "Preview",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(
-                                                    fontSize: 14.0,
-                                                    color: kdarkBlue,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                          ),
-                                          onTap: () =>
-                                              Get.to(() => PreviewScreen(
-                                                    filePath: controller
-                                                        .nomineeAddressDocPath
-                                                        .value,
-                                                  )),
-                                        ),
-                                        const Spacer(),
-                                        GestureDetector(
-                                          onTap: () {
-                                            controller.nomineeAddressProofDoc
-                                                .value = "";
-                                            controller.nomineeAddressDocPath
-                                                .value = "";
-                                          },
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: klightBlue,
-                                            size: 20,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  : SizedBox()),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              smallText(text: "Bank A/C proof"),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -1788,11 +1975,16 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       ),
                                       underline: const SizedBox(),
                                       items: <String>[
-                                        'Bank passbook',
-                                        'Bank statement',
-                                        'Cheque',
-                                        'Neft form',
-                                        'Other',
+                                       'Bank account cheque leaf',
+                                        'NEFT Form',
+                                        'Bank pass book',
+                                        'Bank account statement',
+                                        'Other Document',
+                                        // 'Bank passbook',
+                                        // 'Bank statement',
+                                        // 'Cheque',
+                                        // 'Neft form',
+                                        // 'Other',
                                       ].map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
@@ -1835,13 +2027,24 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     MaterialButton(
                                       elevation: 1.0,
                                       onPressed: () async {
+    if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+    Fluttertoast.showToast(
+    msg: "Already Under Verification",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+    else{
                                         var file =
                                             await controller.uploadFile();
                                         print(file);
                                         controller.bankProofDoc.value =
                                             basename(file);
                                         controller.bankAccountDocPath.value =
-                                            file;
+                                            file;}
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -1904,245 +2107,257 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Obx(() => controller.causeofDealth.value ==
-                                      "Accident"
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        smallText(
-                                            text: "FIR / postmortem report"),
-                                        const SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Container(
-                                          height: 40.0.h,
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey.shade50,
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                              border: Border.all(
-                                                color: kGrey,
-                                              )),
-                                          child: Row(
-                                            children: [
-                                              Flexible(
-                                                fit: FlexFit.tight,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Obx(() => Text(
-                                                        "${controller.firProof.value}",
-                                                        style: CustomFonts
-                                                            .kBlack15Black
-                                                            .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontSize: 14.0),
-                                                      )),
-                                                ),
-                                              ),
-                                              const Spacer(),
-                                              MaterialButton(
-                                                elevation: 1.0,
-                                                onPressed: () async {
-                                                  Get.defaultDialog(
-                                                      title: "Upload",
-                                                      titleStyle: CustomFonts
-                                                          .kBlack15Black
-                                                          .copyWith(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 20.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                      content: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Divider(),
-                                                          GestureDetector(
-                                                            onTap: () async {
-                                                              var file =
-                                                                  await controller
-                                                                      .imageFromCamera();
-                                                              print(file);
-                                                              controller
-                                                                      .firProof
-                                                                      .value =
-                                                                  basename(
-                                                                      file);
-                                                              controller
-                                                                  .firOrPostmortemReportPath
-                                                                  .value = file;
-                                                              Get.back(
-                                                                  closeOverlays:
-                                                                      true);
-                                                            },
-                                                            child: Text(
-                                                              "Take Photo ...",
-                                                              style: CustomFonts
-                                                                  .kBlack15Black
-                                                                  .copyWith(
-                                                                      color:
-                                                                          kdarkBlue,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontSize:
-                                                                          16.0),
-                                                            ),
-                                                          ),
-                                                          Divider(),
-                                                          GestureDetector(
-                                                            behavior:
-                                                                HitTestBehavior
-                                                                    .opaque,
-                                                            onTap: () async {
-                                                              var file =
-                                                                  await controller
-                                                                      .uploadFile();
-
-                                                              controller
-                                                                      .firProof
-                                                                      .value =
-                                                                  basename(
-                                                                      file);
-                                                              controller
-                                                                  .firOrPostmortemReportPath
-                                                                  .value = file;
-                                                              Get.back(
-                                                                  closeOverlays:
-                                                                      true);
-                                                            },
-                                                            child: Text(
-                                                              "Choose Files from Phone",
-                                                              style: CustomFonts
-                                                                  .kBlack15Black
-                                                                  .copyWith(
-                                                                      color:
-                                                                          kdarkBlue,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontSize:
-                                                                          16.0),
-                                                            ),
-                                                          ),
-                                                          Divider(),
-                                                        ],
-                                                      ),
-                                                      cancel: GestureDetector(
-                                                        onTap: () {
-                                                          log("**");
-                                                          Get.back(
-                                                              closeOverlays:
-                                                                  true);
-                                                        },
-                                                        behavior:
-                                                            HitTestBehavior
-                                                                .opaque,
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Text(
-                                                            "Cancel",
-                                                            style: CustomFonts
-                                                                .kBlack15Black
-                                                                .copyWith(
-                                                                    color: Colors
-                                                                        .red,
-                                                                    fontSize:
-                                                                        16),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      onCancel: () =>
-                                                          Get.back());
-                                                },
-                                                shape: RoundedRectangleBorder(
-                                                    side: const BorderSide(
-                                                        color: kGrey),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0)),
-                                                color: Colors.white,
-                                                child: Text("Upload",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            fontSize: 15.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400)),
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  : const SizedBox()),
+                              // Obx(() => controller.causeofDeath.value ==
+                              //         "Accident"
+                              //     ? Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.start,
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.start,
+                              //         children: [
+                              //           smallText(
+                              //               text: "FIR / postmortem report"),
+                              //           const SizedBox(
+                              //             height: 10.0,
+                              //           ),
+                              //           Container(
+                              //             height: 40.0.h,
+                              //             decoration: BoxDecoration(
+                              //                 color: Colors.grey.shade50,
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(5.0),
+                              //                 border: Border.all(
+                              //                   color: kGrey,
+                              //                 )),
+                              //             child: Row(
+                              //               children: [
+                              //                 Flexible(
+                              //                   fit: FlexFit.tight,
+                              //                   child: Padding(
+                              //                     padding:
+                              //                         const EdgeInsets.all(8.0),
+                              //                     child: Obx(() => Text(
+                              //                           "${controller.firProof.value}",
+                              //                           style: CustomFonts
+                              //                               .kBlack15Black
+                              //                               .copyWith(
+                              //                                   fontWeight:
+                              //                                       FontWeight
+                              //                                           .w600,
+                              //                                   fontSize: 14.0),
+                              //                         )),
+                              //                   ),
+                              //                 ),
+                              //                 const Spacer(),
+                              //                 MaterialButton(
+                              //                   elevation: 1.0,
+                              //                   onPressed: () async {
+                              //                     if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+                              //                       Fluttertoast.showToast(
+                              //                           msg: "Already Under Verification",
+                              //                           toastLength: Toast.LENGTH_SHORT,
+                              //                           gravity: ToastGravity.BOTTOM,
+                              //                           timeInSecForIosWeb: 1,
+                              //                           backgroundColor: Colors.red,
+                              //                           textColor: Colors.white,
+                              //                           fontSize: 16.0);
+                              //                     }
+                              //                     else{
+                              //                     Get.defaultDialog(
+                              //                         title: "Upload",
+                              //                         titleStyle: CustomFonts
+                              //                             .kBlack15Black
+                              //                             .copyWith(
+                              //                                 color:
+                              //                                     Colors.black,
+                              //                                 fontSize: 20.0,
+                              //                                 fontWeight:
+                              //                                     FontWeight
+                              //                                         .bold),
+                              //                         content: Column(
+                              //                           mainAxisSize:
+                              //                               MainAxisSize.min,
+                              //                           crossAxisAlignment:
+                              //                               CrossAxisAlignment
+                              //                                   .center,
+                              //                           mainAxisAlignment:
+                              //                               MainAxisAlignment
+                              //                                   .center,
+                              //                           children: [
+                              //                             Divider(),
+                              //                             GestureDetector(
+                              //                               onTap: () async {
+                              //                                 var file =
+                              //                                     await controller
+                              //                                         .imageFromCamera();
+                              //                                 print(file);
+                              //                                 controller
+                              //                                         .firProof
+                              //                                         .value =
+                              //                                     basename(
+                              //                                         file);
+                              //                                 controller
+                              //                                     .firOrPostmortemReportPath
+                              //                                     .value = file;
+                              //                                 Get.back(
+                              //                                     closeOverlays:
+                              //                                         true);
+                              //                               },
+                              //                               child: Text(
+                              //                                 "Take Photo ...",
+                              //                                 style: CustomFonts
+                              //                                     .kBlack15Black
+                              //                                     .copyWith(
+                              //                                         color:
+                              //                                             kdarkBlue,
+                              //                                         fontWeight:
+                              //                                             FontWeight
+                              //                                                 .w600,
+                              //                                         fontSize:
+                              //                                             16.0),
+                              //                               ),
+                              //                             ),
+                              //                             Divider(),
+                              //                             GestureDetector(
+                              //                               behavior:
+                              //                                   HitTestBehavior
+                              //                                       .opaque,
+                              //                               onTap: () async {
+                              //                                 var file =
+                              //                                     await controller
+                              //                                         .uploadFile();
+                              //
+                              //                                 controller
+                              //                                         .firProof
+                              //                                         .value =
+                              //                                     basename(
+                              //                                         file);
+                              //                                 controller
+                              //                                     .firOrPostmortemReportPath
+                              //                                     .value = file;
+                              //                                 Get.back(
+                              //                                     closeOverlays:
+                              //                                         true);
+                              //                               },
+                              //                               child: Text(
+                              //                                 "Choose Files from Phone",
+                              //                                 style: CustomFonts
+                              //                                     .kBlack15Black
+                              //                                     .copyWith(
+                              //                                         color:
+                              //                                             kdarkBlue,
+                              //                                         fontWeight:
+                              //                                             FontWeight
+                              //                                                 .w600,
+                              //                                         fontSize:
+                              //                                             16.0),
+                              //                               ),
+                              //                             ),
+                              //                             Divider(),
+                              //                           ],
+                              //                         ),
+                              //                         cancel: GestureDetector(
+                              //                           onTap: () {
+                              //                             log("**");
+                              //                             Get.back(
+                              //                                 closeOverlays:
+                              //                                     true);
+                              //                           },
+                              //                           behavior:
+                              //                               HitTestBehavior
+                              //                                   .opaque,
+                              //                           child: Padding(
+                              //                             padding:
+                              //                                 const EdgeInsets
+                              //                                     .all(8.0),
+                              //                             child: Text(
+                              //                               "Cancel",
+                              //                               style: CustomFonts
+                              //                                   .kBlack15Black
+                              //                                   .copyWith(
+                              //                                       color: Colors
+                              //                                           .red,
+                              //                                       fontSize:
+                              //                                           16),
+                              //                             ),
+                              //                           ),
+                              //                         ),
+                              //                         onCancel: () =>
+                              //                             Get.back());}
+                              //                   },
+                              //                   shape: RoundedRectangleBorder(
+                              //                       side: const BorderSide(
+                              //                           color: kGrey),
+                              //                       borderRadius:
+                              //                           BorderRadius.circular(
+                              //                               5.0)),
+                              //                   color: Colors.white,
+                              //                   child: Text("Upload",
+                              //                       style: CustomFonts
+                              //                           .kBlack15Black
+                              //                           .copyWith(
+                              //                               fontSize: 15.0,
+                              //                               fontWeight:
+                              //                                   FontWeight
+                              //                                       .w400)),
+                              //                 ),
+                              //                 const SizedBox(
+                              //                   width: 10,
+                              //                 )
+                              //               ],
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       )
+                              //     : const SizedBox()),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              // Obx(() => controller.firOrPostmortemReportPath
+                              //         .value.isNotEmpty
+                              //     ? Row(
+                              //         children: [
+                              //           GestureDetector(
+                              //             child: Text(
+                              //               "Preview",
+                              //               style: CustomFonts.kBlack15Black
+                              //                   .copyWith(
+                              //                       fontSize: 14.0,
+                              //                       color: kdarkBlue,
+                              //                       fontWeight:
+                              //                           FontWeight.w700),
+                              //             ),
+                              //             onTap: () =>
+                              //                 Get.to(() => PreviewScreen(
+                              //                       filePath: controller
+                              //                           .firOrPostmortemReportPath
+                              //                           .value,
+                              //                     )),
+                              //           ),
+                              //           const Spacer(),
+                              //           GestureDetector(
+                              //             onTap: () {
+                              //               controller.firProof.value = "";
+                              //               controller.firOrPostmortemReportPath
+                              //                   .value = "";
+                              //             },
+                              //             child: const Icon(
+                              //               Icons.delete,
+                              //               color: klightBlue,
+                              //               size: 20,
+                              //             ),
+                              //           )
+                              //         ],
+                              //       )
+                              //     : SizedBox()),
+                              // const SizedBox(
+                              //   height: 10.0,
+                              // ),
+                              smallText(text: "Additional Document"),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Obx(() => controller.firOrPostmortemReportPath
-                                      .value.isNotEmpty
-                                  ? Row(
-                                      children: [
-                                        GestureDetector(
-                                          child: Text(
-                                            "Preview",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(
-                                                    fontSize: 14.0,
-                                                    color: kdarkBlue,
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                          ),
-                                          onTap: () =>
-                                              Get.to(() => PreviewScreen(
-                                                    filePath: controller
-                                                        .firOrPostmortemReportPath
-                                                        .value,
-                                                  )),
-                                        ),
-                                        const Spacer(),
-                                        GestureDetector(
-                                          onTap: () {
-                                            controller.firProof.value = "";
-                                            controller.firOrPostmortemReportPath
-                                                .value = "";
-                                          },
-                                          child: const Icon(
-                                            Icons.delete,
-                                            color: klightBlue,
-                                            size: 20,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  : SizedBox()),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              smallText(text: "Additional document"),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
+                              if(controller.nominee.value=="Minor")
                               Container(
                                 decoration: BoxDecoration(
                                     color: Colors.grey.shade100,
@@ -2167,13 +2382,30 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               ),
                                       ),
                                       underline: const SizedBox(),
-                                      items: <String>[
-                                        'Income Tax Return',
-                                        'Medical Records',
-                                        'Legal Heir Certificate',
-                                        'Police Investigation Report',
-                                        'Other',
-                                      ].map((String value) {
+                                      items:
+
+                                      minorList
+                                      // <String>[
+                                      //   'Police FIR Copy',
+                                      //   'Postmortem Report',
+                                      //   'Income Tax Returns',
+                                      //   'Medical Records',
+                                      //   'Legal Heir Certificate',
+                                      //   'Police Investigation Report',
+                                      //   'Relationship Proof',
+                                      //   'Stamped Affidavit',
+                                      //   'Medical Attendant Certificate',
+                                      //   'Guardian - Id proof',
+                                      //   'Guardian - Add proof',
+                                      //   'Any utility bill (gas / electricity / rental agreement)',
+                                      //   'Other Document',
+                                      //   // 'Income Tax Return',
+                                      //   // 'Medical Records',
+                                      //   // 'Legal Heir Certificate',
+                                      //   // 'Police Investigation Report',
+                                      //   // 'Other',
+                                      // ]
+                                          .map((String value) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
@@ -2185,6 +2417,309 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       },
                                     )),
                               ),
+                              if(controller.causeofDeath.value=="Accident")
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: controller.additionalProof.value
+                                          .isNotEmpty
+                                          ? Text(
+                                        controller
+                                            .additionalProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                          : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                                    ),
+                                    underline: const SizedBox(),
+                                    items:
+
+                                    accientList
+                                    // <String>[
+                                    //   'Police FIR Copy',
+                                    //   'Postmortem Report',
+                                    //   'Income Tax Returns',
+                                    //   'Medical Records',
+                                    //   'Legal Heir Certificate',
+                                    //   'Police Investigation Report',
+                                    //   'Relationship Proof',
+                                    //   'Stamped Affidavit',
+                                    //   'Medical Attendant Certificate',
+                                    //   'Guardian - Id proof',
+                                    //   'Guardian - Add proof',
+                                    //   'Any utility bill (gas / electricity / rental agreement)',
+                                    //   'Other Document',
+                                    //   // 'Income Tax Return',
+                                    //   // 'Medical Records',
+                                    //   // 'Legal Heir Certificate',
+                                    //   // 'Police Investigation Report',
+                                    //   // 'Other',
+                                    // ]
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.additionalProof.value =
+                                      value!;
+                                    },
+                                  )),
+                                ),
+                              if(controller.causeofDeath.value=="Illness &  Medical Reason")
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: controller.additionalProof.value
+                                          .isNotEmpty
+                                          ? Text(
+                                        controller
+                                            .additionalProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                          : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                                    ),
+                                    underline: const SizedBox(),
+                                    items:
+
+                                    sickList
+                                    // <String>[
+                                    //   'Police FIR Copy',
+                                    //   'Postmortem Report',
+                                    //   'Income Tax Returns',
+                                    //   'Medical Records',
+                                    //   'Legal Heir Certificate',
+                                    //   'Police Investigation Report',
+                                    //   'Relationship Proof',
+                                    //   'Stamped Affidavit',
+                                    //   'Medical Attendant Certificate',
+                                    //   'Guardian - Id proof',
+                                    //   'Guardian - Add proof',
+                                    //   'Any utility bill (gas / electricity / rental agreement)',
+                                    //   'Other Document',
+                                    //   // 'Income Tax Return',
+                                    //   // 'Medical Records',
+                                    //   // 'Legal Heir Certificate',
+                                    //   // 'Police Investigation Report',
+                                    //   // 'Other',
+                                    // ]
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.additionalProof.value =
+                                      value!;
+                                    },
+                                  )),
+                                ),
+
+                              if(controller.causeofDeath.value=="Major" && (controller.causeofDeath.value!="Accident" ||controller.causeofDeath.value!="Natural Death" ||
+                                  controller.causeofDeath.value!="Dealth due to Natural Calamity" ||controller.causeofDeath.value!="Suicide" || controller.causeofDeath.value!="Illness &  Medical Reason"))
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: controller.additionalProof.value
+                                          .isNotEmpty
+                                          ? Text(
+                                        controller
+                                            .additionalProof.value,
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      )
+                                          : Text(
+                                        "Select Document Type",
+                                        style: CustomFonts.kBlack15Black
+                                            .copyWith(fontSize: 14.0),
+                                      ),
+                                    ),
+                                    underline: const SizedBox(),
+                                    items:
+
+
+                                    <String>[
+                                      'Police FIR Copy',
+                                      'Postmortem Report',
+                                      'Income Tax Returns',
+                                      'Medical Records',
+                                      'Legal Heir Certificate',
+                                      'Police Investigation Report',
+                                      'Relationship Proof',
+                                      'Stamped Affidavit',
+                                      'Medical Attendant Certificate',
+                                      'Guardian - Id proof',
+                                      'Guardian - Add proof',
+                                      'Any utility bill (gas / electricity / rental agreement)',
+                                      'Other Document',
+                                      // 'Income Tax Return',
+                                      // 'Medical Records',
+                                      // 'Legal Heir Certificate',
+                                      // 'Police Investigation Report',
+                                      // 'Other',
+                                    ]
+                                        .map((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      controller.additionalProof.value =
+                                      value!;
+                                    },
+                                  )),
+                                ),
+                              // if(controller.nominee.value=="Minor")
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.grey.shade100,
+                              //         borderRadius: BorderRadius.circular(1.0),
+                              //         border: Border.all(color: kGrey)),
+                              //     child: Obx(() => DropdownButton<String>(
+                              //       isExpanded: true,
+                              //       hint: Padding(
+                              //         padding: const EdgeInsets.all(8.0),
+                              //         child: controller.additionalProof.value
+                              //             .isNotEmpty
+                              //             ? Text(
+                              //           controller
+                              //               .additionalProof.value,
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         )
+                              //             : Text(
+                              //           "Select Document Type",
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         ),
+                              //       ),
+                              //       underline: const SizedBox(),
+                              //       items:
+                              //
+                              //       minorList
+                              //       // <String>[
+                              //       //   'Police FIR Copy',
+                              //       //   'Postmortem Report',
+                              //       //   'Income Tax Returns',
+                              //       //   'Medical Records',
+                              //       //   'Legal Heir Certificate',
+                              //       //   'Police Investigation Report',
+                              //       //   'Relationship Proof',
+                              //       //   'Stamped Affidavit',
+                              //       //   'Medical Attendant Certificate',
+                              //       //   'Guardian - Id proof',
+                              //       //   'Guardian - Add proof',
+                              //       //   'Any utility bill (gas / electricity / rental agreement)',
+                              //       //   'Other Document',
+                              //       //   // 'Income Tax Return',
+                              //       //   // 'Medical Records',
+                              //       //   // 'Legal Heir Certificate',
+                              //       //   // 'Police Investigation Report',
+                              //       //   // 'Other',
+                              //       // ]
+                              //           .map((String value) {
+                              //         return DropdownMenuItem<String>(
+                              //           value: value,
+                              //           child: Text(value),
+                              //         );
+                              //       }).toList(),
+                              //       onChanged: (value) {
+                              //         controller.additionalProof.value =
+                              //         value!;
+                              //       },
+                              //     )),
+                              //   ),
+                              // if(controller.nominee.value=="Minor")
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.grey.shade100,
+                              //         borderRadius: BorderRadius.circular(1.0),
+                              //         border: Border.all(color: kGrey)),
+                              //     child: Obx(() => DropdownButton<String>(
+                              //       isExpanded: true,
+                              //       hint: Padding(
+                              //         padding: const EdgeInsets.all(8.0),
+                              //         child: controller.additionalProof.value
+                              //             .isNotEmpty
+                              //             ? Text(
+                              //           controller
+                              //               .additionalProof.value,
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         )
+                              //             : Text(
+                              //           "Select Document Type",
+                              //           style: CustomFonts.kBlack15Black
+                              //               .copyWith(fontSize: 14.0),
+                              //         ),
+                              //       ),
+                              //       underline: const SizedBox(),
+                              //       items:
+                              //
+                              //       minorList
+                              //       // <String>[
+                              //       //   'Police FIR Copy',
+                              //       //   'Postmortem Report',
+                              //       //   'Income Tax Returns',
+                              //       //   'Medical Records',
+                              //       //   'Legal Heir Certificate',
+                              //       //   'Police Investigation Report',
+                              //       //   'Relationship Proof',
+                              //       //   'Stamped Affidavit',
+                              //       //   'Medical Attendant Certificate',
+                              //       //   'Guardian - Id proof',
+                              //       //   'Guardian - Add proof',
+                              //       //   'Any utility bill (gas / electricity / rental agreement)',
+                              //       //   'Other Document',
+                              //       //   // 'Income Tax Return',
+                              //       //   // 'Medical Records',
+                              //       //   // 'Legal Heir Certificate',
+                              //       //   // 'Police Investigation Report',
+                              //       //   // 'Other',
+                              //       // ]
+                              //           .map((String value) {
+                              //         return DropdownMenuItem<String>(
+                              //           value: value,
+                              //           child: Text(value),
+                              //         );
+                              //       }).toList(),
+                              //       onChanged: (value) {
+                              //         controller.additionalProof.value =
+                              //         value!;
+                              //       },
+                              //     )),
+                              //   ),
+
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -2217,96 +2752,108 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     MaterialButton(
                                       elevation: 1.0,
                                       onPressed: () async {
-                                        Get.defaultDialog(
-                                            title: "Upload",
-                                            titleStyle: CustomFonts
-                                                .kBlack15Black
-                                                .copyWith(
-                                                    color: Colors.black,
-                                                    fontSize: 20.0,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                            content: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Divider(),
-                                                GestureDetector(
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .imageFromCamera();
+                                      if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+    Fluttertoast.showToast(
+    msg: "Already Under Verification",
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+    }
+                                      else{
+    Get.defaultDialog(
+    title: "Upload",
+    titleStyle: CustomFonts
+        .kBlack15Black
+        .copyWith(
+    color: Colors.black,
+    fontSize: 20.0,
+    fontWeight:
+    FontWeight.bold),
+    content: Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment:
+    CrossAxisAlignment.center,
+    mainAxisAlignment:
+    MainAxisAlignment.center,
+    children: [
+    Divider(),
+    GestureDetector(
+    onTap: () async {
+    var file = await controller
+        .imageFromCamera();
 
-                                                    controller
-                                                        .additionalProofDoc
-                                                        .value = basename(file);
-                                                    controller.additionalDocpath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Take Photo ...",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                const Divider(),
-                                                GestureDetector(
-                                                  behavior:
-                                                      HitTestBehavior.opaque,
-                                                  onTap: () async {
-                                                    var file = await controller
-                                                        .uploadFile();
+    controller
+        .additionalProofDoc
+        .value = basename(file);
+    controller.additionalDocpath
+        .value = file;
+    Get.back(
+    closeOverlays: true);
+    },
+    child: Text(
+    "Take Photo ...",
+    style: CustomFonts
+        .kBlack15Black
+        .copyWith(
+    color: kdarkBlue,
+    fontWeight:
+    FontWeight.w600,
+    fontSize: 16.0),
+    ),
+    ),
+    const Divider(),
+    GestureDetector(
+    behavior:
+    HitTestBehavior.opaque,
+    onTap: () async {
+    var file = await controller
+        .uploadFile();
 
-                                                    controller
-                                                        .additionalProofDoc
-                                                        .value = basename(file);
-                                                    controller.additionalDocpath
-                                                        .value = file;
-                                                    Get.back(
-                                                        closeOverlays: true);
-                                                  },
-                                                  child: Text(
-                                                    "Choose Files from Phone",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: kdarkBlue,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 16.0),
-                                                  ),
-                                                ),
-                                                const Divider(),
-                                              ],
-                                            ),
-                                            cancel: GestureDetector(
-                                              onTap: () {
-                                                Get.back(closeOverlays: true);
-                                              },
-                                              behavior: HitTestBehavior.opaque,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Text(
-                                                  "Cancel",
-                                                  style: CustomFonts
-                                                      .kBlack15Black
-                                                      .copyWith(
-                                                          color: Colors.red,
-                                                          fontSize: 16),
-                                                ),
-                                              ),
-                                            ),
-                                            onCancel: () => Get.back());
+    controller
+        .additionalProofDoc
+        .value = basename(file);
+    controller.additionalDocpath
+        .value = file;
+    Get.back(
+    closeOverlays: true);
+    },
+    child: Text(
+    "Choose Files from Phone",
+    style: CustomFonts
+        .kBlack15Black
+        .copyWith(
+    color: kdarkBlue,
+    fontWeight:
+    FontWeight.w600,
+    fontSize: 16.0),
+    ),
+    ),
+    const Divider(),
+    ],
+    ),
+    cancel: GestureDetector(
+    onTap: () {
+    Get.back(closeOverlays: true);
+    },
+    behavior: HitTestBehavior.opaque,
+    child: Padding(
+    padding:
+    const EdgeInsets.all(8.0),
+    child: Text(
+    "Cancel",
+    style: CustomFonts
+        .kBlack15Black
+        .copyWith(
+    color: Colors.red,
+    fontSize: 16),
+    ),
+    ),
+    ),
+    onCancel: () => Get.back());
+    }
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -2433,46 +2980,78 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 if (controller.currentIndex.value < 3) {
                                   controller.pageController.animateToPage(
                                       controller.currentIndex.value + 1,
-                                      duration:
-                                          const Duration(milliseconds: 100),
+                                      duration: const Duration(milliseconds: 100),
                                       curve: Curves.ease);
-                                  controller.currentIndex.value =
-                                      controller.currentIndex.value + 1;
+                                  controller.currentIndex.value = controller.currentIndex.value + 1;
                                 } else {
                                   log("--");
-                                  if (controller
-                                      .causeofDealth.value.isNotEmpty) {
-                                    if (controller.borroweridProof.value.isNotEmpty ||
-                                        controller.borrowerAddressProof.value
-                                            .isNotEmpty ||
-                                        controller
-                                            .nomineeIdProof.value.isNotEmpty ||
-                                        controller.nomineeAddressProof.value
-                                            .isNotEmpty ||
-                                        controller.bankProof.value.isNotEmpty ||
-                                        controller
-                                            .additionalProof.value.isNotEmpty) {
-                                      log("87");
-                                    } else if (controller
-                                            .borrowerIdDocPath.isNotEmpty ||
-                                        controller.borrowerAddressDocPath
-                                            .isNotEmpty ||
-                                        controller
-                                            .nomineeIdDocPath.isNotEmpty ||
-                                        controller
-                                            .nomineeAddressDocPath.isNotEmpty ||
-                                        controller.borrowerAddressDocPath
-                                            .isNotEmpty ||
-                                        controller
-                                            .additionalDocpath.isNotEmpty) {
-                                      log("88");
-                                    } else {
-                                      controller.uploadFormData();
-                                    }
-                                  } else {
+                                  if (controller.causeofDeath.value.isEmpty) {
+                                    Fluttertoast.showToast(
+                                        msg: "Cause of Death Cannot be blank",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                    //controller.uploadFormData();
+                                    // if (controller.borroweridProof.value.isNotEmpty
+                                    //     // || controller.borrowerAddressProof.value.isNotEmpty
+                                    //     ||
+                                    //     controller
+                                    //         .nomineeIdProof.value.isNotEmpty ||
+                                    //     // controller.nomineeAddressProof.value.isNotEmpty ||
+                                    //     controller.bankProof.value.isNotEmpty ||
+                                    //     controller
+                                    //         .additionalProof.value.isNotEmpty) {
+                                    //   log("87");
+                                    // } else if (controller.borrowerIdDocPath.isNotEmpty ||
+                                    //     // controller.borrowerAddressDocPath.isNotEmpty ||
+                                    //     controller.nomineeIdDocPath.isNotEmpty ||
+                                    //     // controller.nomineeAddressDocPath.isNotEmpty ||
+                                    //     // controller.borrowerAddressDocPath.isNotEmpty ||
+                                    //     controller.additionalDocpath.isNotEmpty) {
+                                    //   log("88");
+                                    // } else {
+                                    //   controller.uploadFormData();
+                                    // }
+                                  }
+                                  else if(controller.filled.value=='' || controller.filledPath.value == null){
+                                    Fluttertoast.showToast(
+                                        msg: "Filled & Signed Claim form Cannot be blank",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }
+                                  else if(controller.dealthCertificate.value == ""|| controller.deathCertificatePath.value == null){
+                                    Fluttertoast.showToast(
+                                        msg: "Death Certificate Cannot be blank",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }
+                                  else if(controller
+                                      .claimDetail.value["claimStatus"]
+                                      .toString() =="UNDER_VERIFICATION"){
+                                    Fluttertoast.showToast(
+                                        msg: "Already Under Verification",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }
+                                  else {
                                     log("rrr");
                                     Fluttertoast.showToast(
-                                        msg: "Cause of Dealth Cannot be blank",
+                                        msg: "Cause of Death Cannot be blank",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
@@ -2482,20 +3061,61 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   }
                                 }
                               },
-                              child: Container(
+                              child: Obx(()=>controller.currentIndex.value < 3 ?Container(
                                 height: 50,
                                 decoration: BoxDecoration(
                                     color: const Color(0xff134E85),
                                     border: Border.all(
                                         color: const Color(0xff134E85)),
                                     borderRadius: BorderRadius.circular(5.0)),
-                                child: const Center(
+                                child: Center(
                                     child: Text(
-                                  "Next",
-                                  style: TextStyle(color: Colors.white),
-                                )),
+                                      "Next",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                ),
+
+                              ):
+                              controller.causeofDeath.value.isEmpty ?
+                              Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromRGBO(19, 78, 133, 0.6),
+                                    border: Border.all(
+                                        color: const Color(0xff134E85)),
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                child: Center(
+                                  child: Obx(()=>controller.currentIndex.value < 3 ?Text(
+                                    "Next",
+                                    style: TextStyle(color: Colors.white),
+                                  ):Text(
+                                    "Submit",
+                                    style: TextStyle(color: Colors.white),
+                                  ),),
+                                ),
+
+                              ):
+                               Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff134E85),
+                                    border: Border.all(
+                                        color: const Color(0xff134E85)),
+                                    borderRadius: BorderRadius.circular(5.0)),
+                                child: Center(
+                                  child: Obx(()=>controller.currentIndex.value < 3 ?Text(
+                                    "Next",
+                                    style: TextStyle(color: Colors.white),
+                                  ):Text(
+                                    "Submit",
+                                    style: TextStyle(color: Colors.white),
+                                  ),),
+                                ),
+
                               ),
-                            )),
+
+
+                            )),)
                       ],
                     ),
                   )
@@ -2695,27 +3315,36 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   String dateChange(date) {
     var temp = DateTime.fromMillisecondsSinceEpoch(date);
-    return temp.toString();
+    var currentDate= "${temp.day}/ ${temp.month}/ ${temp.year}";
+    return currentDate.toString();
   }
 
   validation() {
     // Condition for non-empty documents if type is selected
 
+
+    if (controller.dealthCertificate.value.isNotEmpty) {
+      if (controller.deathCertificatePath.value.isNotEmpty) {
+        ///Api call krni h yha se
+      } else {
+        showMessage(message: "Please Select Death Certificate");
+      }
+    }
+
     if (controller.borroweridProof.value.isNotEmpty) {
       if (controller.borrowerIdDocPath.isNotEmpty) {
         ///Api call krni h yha se
-
       } else {
         showMessage(message: "Please Select KYC ID Proof");
       }
     }
-    if (controller.borrowerAddressProof.value.isNotEmpty) {
-      if (controller.borrowerAddressDocPath.isNotEmpty) {
-        ///Api call krni h yha se
-      } else {
-        showMessage(message: "Please Select KYC Address Proof");
-      }
-    }
+    // if (controller.borrowerAddressProof.value.isNotEmpty) {
+    //   if (controller.borrowerAddressDocPath.isNotEmpty) {
+    //     ///Api call krni h yha se
+    //   } else {
+    //     showMessage(message: "Please Select KYC Address Proof");
+    //   }
+    // }
     if (controller.nomineeIdProof.value.isNotEmpty) {
       if (controller.nomineeIdDocPath.isNotEmpty) {
         ///Api call krni h yha se
@@ -2723,13 +3352,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select Nominee ID Proof");
       }
     }
-    if (controller.nomineeAddressProof.value.isNotEmpty) {
-      if (controller.nomineeAddressDocPath.isNotEmpty) {
-        ///Api call krni h yha se
-      } else {
-        showMessage(message: "Please Select Nominee Address Proof");
-      }
-    }
+    // if (controller.nomineeAddressProof.value.isNotEmpty) {
+    //   if (controller.nomineeIdDocPath.isNotEmpty) {
+    //     ///Api call krni h yha se
+    //   } else {
+    //     showMessage(message: "Please Select Nominee Address Proof");
+    //   }
+    // }
     if (controller.bankProof.value.isNotEmpty) {
       if (controller.bankAccountDocPath.isNotEmpty) {
         ///Api call krni h yha se
@@ -2744,7 +3373,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select Additional Proof");
       }
     }
-    if (controller.causeofDealth.value != "Natural Dealth") {
+    if (controller.causeofDeath.value != "Natural Death") {
       if (controller.firOrPostmortemReportPath.isNotEmpty) {
         ///Api call krni h yha se
       } else {
@@ -2761,13 +3390,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select KYC ID Proof Type");
       }
     }
-    if (controller.borrowerAddressDocPath.value.isNotEmpty) {
-      if (controller.borrowerAddressProof.isNotEmpty) {
-        ///Api call krni h yha se
-      } else {
-        showMessage(message: "Please Select KYC Address Proof");
-      }
-    }
+    // if (controller.borrowerAddressDocPath.value.isNotEmpty) {
+    //   if (controller.borrowerAddressProof.isNotEmpty) {
+    //     ///Api call krni h yha se
+    //   } else {
+    //     showMessage(message: "Please Select KYC Address Proof");
+    //   }
+    // }
     if (controller.nomineeIdDocPath.value.isNotEmpty) {
       if (controller.nomineeIdProof.isNotEmpty) {
         ///Api call krni h yha se
@@ -2775,13 +3404,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select Nominee ID Proof");
       }
     }
-    if (controller.nomineeAddressProof.value.isNotEmpty) {
-      if (controller.nomineeAddressProofDoc.isNotEmpty) {
-        ///Api call krni h yha se
-      } else {
-        showMessage(message: "Please Select Nominee Address Proof");
-      }
-    }
+    // if (controller.nomineeAddressProof.value.isNotEmpty) {
+    //   if (controller.nomineeAddressProofDoc.isNotEmpty) {
+    //     ///Api call krni h yha se
+    //   } else {
+    //     showMessage(message: "Please Select Nominee Address Proof");
+    //   }
+    // }
     if (controller.bankAccountDocPath.value.isNotEmpty) {
       if (controller.bankProof.isNotEmpty) {
         ///Api call krni h yha se
@@ -2808,4 +3437,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         textColor: Colors.white,
         fontSize: 16.0);
   }
+
+
 }

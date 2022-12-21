@@ -18,3 +18,7 @@ var multipartApi = baseUrl + "banker/claim/0/uploadDocument";
 var claimDetails = baseUrl + "agent/claim/";
 var formUpload = baseUrl + "agent/claim/";
 var ClaimDiscrepeancyApi = baseUrl + "agent/claim/";
+
+
+/// search
+var SearchApi =baseUrl+"agent/claim/search?caseType=";
