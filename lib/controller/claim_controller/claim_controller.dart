@@ -89,7 +89,7 @@ class ClaimController extends GetxController {
       };
       jsonEncode(trendColorMap);
       minor.addAll({jsonEncode(trendColorMap)});
-      minorNominee.addAll(dropDownValue);
+      minorNominee.add(dropDownValue);
       minorImage.add(imagePath);
       log("$minor");
       log("$minorImage");

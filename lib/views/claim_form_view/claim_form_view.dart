@@ -620,7 +620,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     "Additional Document for Minor"),
                                             Text(controller.minor.value.length
                                                 .toString()),
-                                            Text(controller.minor.value
+                                            Text(controller.minorNominee.value
+                                                .toString()),
+                                            Text(controller.minorImage.value
                                                 .toString()),
                                             const SizedBox(
                                               height: 10.0,
@@ -662,7 +664,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     onPressed: () async {
                                                       if (controller.minor.value
                                                           .contains(controller
-                                                              .minorProof
+                                                              .minorNominee
                                                               .value)) {
                                                         Fluttertoast.showToast(
                                                             msg:
@@ -752,32 +754,55 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                 GestureDetector(
                                                                   onTap:
                                                                       () async {
-                                                                    var file =
-                                                                        await controller
-                                                                            .imageFromCamera();
-
-                                                                    print(file);
-                                                                    controller
-                                                                            .minorProof
-                                                                            .value =
-                                                                        basename(
-                                                                            file);
-                                                                    controller
-                                                                        .minorProofPath
-                                                                        .value = file;
-                                                                    Get.back(
-                                                                        closeOverlays:
-                                                                            true);
-                                                                    controller.addProductLot(
-                                                                        selectedValue: controller
-                                                                            .minorProof
-                                                                            .value,
-                                                                        imagePath: controller
-                                                                            .minorProofPath
-                                                                            .value,
-                                                                        dropDownValue: controller
+                                                                    if (controller
+                                                                        .minorNominee
+                                                                        .contains(controller
                                                                             .minorDropdown
-                                                                            .value);
+                                                                            .value)) {
+                                                                      Fluttertoast.showToast(
+                                                                          msg:
+                                                                              "Already Exit Record for Selected Dropdown",
+                                                                          toastLength: Toast
+                                                                              .LENGTH_SHORT,
+                                                                          gravity: ToastGravity
+                                                                              .BOTTOM,
+                                                                          timeInSecForIosWeb:
+                                                                              1,
+                                                                          backgroundColor: Colors
+                                                                              .red,
+                                                                          textColor: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              16.0);
+                                                                    } else {
+                                                                      var file =
+                                                                          await controller
+                                                                              .imageFromCamera();
+
+                                                                      print(
+                                                                          file);
+                                                                      controller
+                                                                              .minorProof
+                                                                              .value =
+                                                                          basename(
+                                                                              file);
+                                                                      controller
+                                                                          .minorProofPath
+                                                                          .value = file;
+                                                                      Get.back(
+                                                                          closeOverlays:
+                                                                              true);
+                                                                      controller.addProductLot(
+                                                                          selectedValue: controller
+                                                                              .minorProof
+                                                                              .value,
+                                                                          imagePath: controller
+                                                                              .minorProofPath
+                                                                              .value,
+                                                                          dropDownValue: controller
+                                                                              .minorDropdown
+                                                                              .value);
+                                                                    }
                                                                   },
                                                                   child: Text(
                                                                     "Take Photo ...",
@@ -798,32 +823,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                           .opaque,
                                                                   onTap:
                                                                       () async {
-                                                                    var file =
-                                                                        await controller
-                                                                            .uploadFile();
-
-                                                                    controller
-                                                                            .minorProof
-                                                                            .value =
-                                                                        basename(
-                                                                            file);
-                                                                    controller
-                                                                        .minorProofPath
-                                                                        .value = file;
-
-                                                                    Get.back(
-                                                                        closeOverlays:
-                                                                            true);
-                                                                    controller.addProductLot(
-                                                                        imagePath: controller
-                                                                            .minorProofPath
-                                                                            .value,
-                                                                        selectedValue: controller
-                                                                            .minorProof
-                                                                            .value,
-                                                                        dropDownValue: controller
+                                                                    if (controller
+                                                                        .minorNominee
+                                                                        .contains(controller
                                                                             .minorDropdown
-                                                                            .value);
+                                                                            .value)) {
+                                                                      Fluttertoast.showToast(
+                                                                          msg:
+                                                                              "Already Exit Record for Selected Dropdown",
+                                                                          toastLength: Toast
+                                                                              .LENGTH_SHORT,
+                                                                          gravity: ToastGravity
+                                                                              .BOTTOM,
+                                                                          timeInSecForIosWeb:
+                                                                              1,
+                                                                          backgroundColor: Colors
+                                                                              .red,
+                                                                          textColor: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              16.0);
+                                                                    } else {
+                                                                      var file =
+                                                                          await controller
+                                                                              .uploadFile();
+
+                                                                      controller
+                                                                              .minorProof
+                                                                              .value =
+                                                                          basename(
+                                                                              file);
+                                                                      controller
+                                                                          .minorProofPath
+                                                                          .value = file;
+
+                                                                      Get.back(
+                                                                          closeOverlays:
+                                                                              true);
+                                                                      controller.addProductLot(
+                                                                          imagePath: controller
+                                                                              .minorProofPath
+                                                                              .value,
+                                                                          selectedValue: controller
+                                                                              .minorProof
+                                                                              .value,
+                                                                          dropDownValue: controller
+                                                                              .minorDropdown
+                                                                              .value);
+                                                                    }
                                                                   },
                                                                   child: Text(
                                                                     "Choose Files from Phone",
@@ -904,44 +951,55 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   const SizedBox(
                                     height: 10.0,
                                   ),
-                                  Obx(() => controller.firOrPostmortemReportPath
-                                          .value.isNotEmpty
-                                      ? Row(
-                                          children: [
-                                            GestureDetector(
-                                              child: Text(
-                                                "Preview",
-                                                style: CustomFonts.kBlack15Black
-                                                    .copyWith(
-                                                        fontSize: 14.0,
-                                                        color: kdarkBlue,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                              ),
-                                              onTap: () =>
-                                                  Get.to(() => PreviewScreen(
-                                                        filePath: controller
-                                                            .firOrPostmortemReportPath
-                                                            .value,
-                                                      )),
-                                            ),
-                                            const Spacer(),
-                                            GestureDetector(
-                                              onTap: () {
-                                                controller.firProof.value = "";
-                                                controller
-                                                    .firOrPostmortemReportPath
-                                                    .value = "";
-                                              },
-                                              child: const Icon(
-                                                Icons.delete,
-                                                color: klightBlue,
-                                                size: 20,
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      : SizedBox()),
+                                  ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: controller.minorImage.length,
+                                      itemBuilder: (context, int index) {
+                                        return Obx(() => controller
+                                                    .nominee.value.isNotEmpty ||
+                                                controller.nominee.value ==
+                                                    "Minor"
+                                            ? Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    child: Text(
+                                                      "Preview",
+                                                      style: CustomFonts
+                                                          .kBlack15Black
+                                                          .copyWith(
+                                                              fontSize: 14.0,
+                                                              color: kdarkBlue,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700),
+                                                    ),
+                                                    onTap: () => Get.to(
+                                                        () => PreviewScreen(
+                                                              filePath: controller
+                                                                  .minorImage
+                                                                  .value[index],
+                                                            )),
+                                                  ),
+                                                  const Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      controller
+                                                          .firProof.value = "";
+                                                      controller
+                                                          .firOrPostmortemReportPath
+                                                          .value = "";
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.delete,
+                                                      color: klightBlue,
+                                                      size: 20,
+                                                    ),
+                                                  )
+                                                ],
+                                              )
+                                            : SizedBox());
+                                      }),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
