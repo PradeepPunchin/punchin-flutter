@@ -15,7 +15,6 @@ import 'package:punchin/model/claim_model/claim_discrepancy_model.dart';
 import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
 import 'package:punchin/views/claim_details/details.dart';
-
 import 'package:punchin/views/login/login_screen.dart';
 
 import '../../model/claim_model/claim_details.dart';
@@ -62,6 +61,12 @@ class ClaimController extends GetxController {
   RxString minorProofPath = "".obs;
   RxList minorNominee = [].obs;
 
+  /// Additional
+
+  RxList additionalList = [].obs;
+  RxList additionalImage = [].obs;
+  RxList additionalDropDownList = [].obs;
+
   addProductLot({selectedValue, imagePath, dropDownValue}) {
     log(dropDownValue.toString());
 
@@ -94,6 +99,31 @@ class ClaimController extends GetxController {
       minorImage.add(imagePath);
       log("$minor");
       log("$minorImage");
+    }
+  }
+
+  additionalDocumentList({selectedValue, imagePath, dropDownValue}) {
+    if (additionalDropDownList.value.contains(dropDownValue.toString())) {
+      Fluttertoast.showToast(
+          msg: "File Already Exists for $selectedValue",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Map<String, dynamic> trendColorMap = {
+        "value": selectedValue,
+        'image_path': imagePath,
+        'dropDownValue': dropDownValue
+      };
+      jsonEncode(trendColorMap);
+      additionalList.addAll({jsonEncode(trendColorMap)});
+      additionalDropDownList.add(dropDownValue);
+      additionalImage.add(imagePath);
+      log("$additionalList");
+      log("$additionalImage");
     }
   }
 
@@ -204,11 +234,13 @@ class ClaimController extends GetxController {
     }
   }
 
-  getClaimSearch({status,searchKey}) async {
+  getClaimSearch({status, searchKey}) async {
     try {
-
-      if(status != null && (searchController.value.text=='' ||searchController.value.text==null||searchController.value.text=="null")) {
-        var Url=getAgentClaimApi + "ALLOCATED&page=0&limit=10";
+      if (status != null &&
+          (searchController.value.text == '' ||
+              searchController.value.text == null ||
+              searchController.value.text == "null")) {
+        var Url = getAgentClaimApi + "ALLOCATED&page=0&limit=10";
         var response = await http.get(
           Uri.parse(Url),
           headers: {
@@ -221,21 +253,19 @@ class ClaimController extends GetxController {
         }
         if (response.statusCode == 404) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
-        }
-        else if (response.statusCode == 401) {
+        } else if (response.statusCode == 401) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
-        }
-        else if (response.statusCode == 400) {
+        } else if (response.statusCode == 400) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         } else if (response.statusCode == 405) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         }
-      }
-      else{
-        var Url= SearchApi + "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=10";
+      } else {
+        var Url = SearchApi +
+            "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=10";
         print(Url);
 
         var response = await http.get(
@@ -254,13 +284,10 @@ class ClaimController extends GetxController {
         }
         if (response.statusCode == 404) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
-        }
-        else if (response.statusCode == 401)
-        {
+        } else if (response.statusCode == 401) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
-        }
-        else if (response.statusCode == 400) {
+        } else if (response.statusCode == 400) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         } else if (response.statusCode == 405) {
@@ -268,8 +295,6 @@ class ClaimController extends GetxController {
           //getErrorToaster(details["message"]);
         }
       }
-
-
     }
     // on SocketException {
     //   Get.rawSnackbar(
@@ -280,7 +305,7 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("12345"+e.toString());
+      print("12345" + e.toString());
       print(e);
       Get.rawSnackbar(
           message: " $e Error Occured",
@@ -293,12 +318,10 @@ class ClaimController extends GetxController {
     }
   }
 
-
-
   /// claim draft
   getClaimSubmitted({status}) async {
     try {
-      if(status == null) {
+      if (status == null) {
         var response = await http.get(
           Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
           headers: {
@@ -319,26 +342,23 @@ class ClaimController extends GetxController {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         }
-      }
-      else{
+      } else {
         var response = await http.get(
-          Uri.parse(SearchApi + "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=10"),
+          Uri.parse(SearchApi +
+              "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=10"),
           headers: {
             "Content-Type": "application/json",
             "X-Xsrf-Token": box.read("authToken"),
           },
         );
 
-        log("search message"+ response.body);
+        log("search message" + response.body);
         if (response.statusCode == 200) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
-        }
-        else if (response.statusCode == 401)
-        {
+        } else if (response.statusCode == 401) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
-        }
-        else if (response.statusCode == 400) {
+        } else if (response.statusCode == 400) {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         } else if (response.statusCode == 405) {
@@ -346,8 +366,6 @@ class ClaimController extends GetxController {
           //getErrorToaster(details["message"]);
         }
       }
-
-
     }
     // on SocketException {
     //   Get.rawSnackbar(
@@ -371,7 +389,6 @@ class ClaimController extends GetxController {
     }
   }
 
-
   /// claim  discrepeancy document
   getClaimDiscrepeancy({id}) async {
     try {
@@ -383,18 +400,17 @@ class ClaimController extends GetxController {
         },
       );
 
-;      if (response.statusCode == 200) {
+      ;
+      if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
         Map data = jsonDecode(response.body);
-
 
         if (data != null && data["isSuccess"]) {
           loading.value = false;
           discrepancyData.value = data["data"];
         }
 
-
-       return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
+        return ClaimDiscrepancyModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
       } else if (response.statusCode == 400) {
@@ -424,7 +440,6 @@ class ClaimController extends GetxController {
       //btnController.value.stop();
     }
   }
-
 
   getClaimSubmittedOne() async {
     try {
@@ -484,19 +499,17 @@ class ClaimController extends GetxController {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
         Map data = jsonDecode(response.body);
 
-
         if (data != null && data["isSuccess"]) {
           loading.value = false;
 
           claimDetail.value = data["data"];
 
           claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]);
-
         }
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
-        Get.off(()=>LoginScreen());
+        Get.off(() => LoginScreen());
       } else if (response.statusCode == 400) {
         final details = jsonDecode(response.body);
         //getErrorToaster(details["message"]);
@@ -614,7 +627,7 @@ class ClaimController extends GetxController {
       );
     }
 
-    if (borrowerAddressDocPath.value.isNotEmpty) {
+    /* if (borrowerAddressDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
           'borrowerAddressDoc',
@@ -622,7 +635,7 @@ class ClaimController extends GetxController {
           contentType: MediaType('file', 'pdf'),
         ),
       );
-    }
+    }*/
 
     if (nomineeAddressDocPath.value.isNotEmpty) {
       request.files.add(
@@ -634,10 +647,208 @@ class ClaimController extends GetxController {
       );
     }
 
-    if (nomineeAddressDocPath.value.isNotEmpty) {
+    /* if (nomineeAddressDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
           'nomineeAddressDoc',
+          nomineeAddressDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }*/
+
+    if (bankAccountDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'bankAccountDoc',
+          bankAccountDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (firOrPostmortemReportPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'FirOrPostmortemReport',
+          firOrPostmortemReportPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (additionalDocpath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'additionalDoc',
+          additionalDocpath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+    log("Request $request");
+    var response = await request.send();
+    var responsed = await http.Response.fromStream(response);
+    log("${responsed.statusCode}");
+
+    //final responseData = json.decode(responsed.body);
+    // log("$responseData");
+    if (response.statusCode == 200) {
+      loadUpload.value = false;
+      Get.rawSnackbar(
+          message: "Form Submitted Successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.green);
+
+      Get.offAll(() => Details(
+            title: 'Allocated',
+          ));
+      log("Success");
+    } else {
+      loadUpload.value = false;
+      log("errorCode ${response.statusCode}");
+      Get.rawSnackbar(
+          message: "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    }
+  }
+
+  uploadFormData1() async {
+    loadUpload.value = true;
+    var postUri = Uri.parse(
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
+    // var postUri = Uri.parse(
+    //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+    log(postUri.toString());
+    var request = http.MultipartRequest("Put", postUri);
+    Map<String, String> headers = {
+      // "Content-Type": "multipart/form-data",
+      "X-Xsrf-Token": box.read("authToken"),
+    };
+    request.headers.addAll(headers);
+
+    ///code for adding keys
+    log(Get.arguments[1].id.toString());
+    request.fields["claimId"] = Get.arguments[1].id.toString();
+    log(documentReturn(causeofDeath.value));
+    request.fields["causeOfDeath"] = documentReturn(causeofDeath.value);
+    log(isMinor().toString());
+    request.fields["isMinor"] = isMinor().toString();
+    request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);
+
+    /// code for adding file image
+    log("Path is ${filledPath.value}");
+
+    if (filledPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'signedForm',
+          filledPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    if (deathCertificatePath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'deathCertificate',
+          deathCertificatePath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+    if (borrowerIdDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'borrowerIdDoc',
+          borrowerIdDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    /* if (borrowerAddressDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'borrowerAddressDoc',
+          borrowerAddressDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }*/
+
+    log("Request $request");
+    var response = await request.send();
+    var responsed = await http.Response.fromStream(response);
+    log("${responsed.statusCode}");
+
+    //final responseData = json.decode(responsed.body);
+    // log("$responseData");
+    if (response.statusCode == 200) {
+      loadUpload.value = false;
+      Get.rawSnackbar(
+          message: "Form Submitted Successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.green);
+
+      Get.offAll(() => Details(
+            title: 'Allocated',
+          ));
+      log("Success");
+    } else {
+      loadUpload.value = false;
+      log("errorCode ${response.statusCode}");
+      Get.rawSnackbar(
+          message: "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    }
+  }
+
+  uploadFormData2() async {
+    loadUpload.value = true;
+    var postUri = Uri.parse(
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
+    // var postUri = Uri.parse(
+    //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+    log(postUri.toString());
+    var request = http.MultipartRequest("Put", postUri);
+    Map<String, String> headers = {
+      // "Content-Type": "multipart/form-data",
+      "X-Xsrf-Token": box.read("authToken"),
+    };
+    request.headers.addAll(headers);
+
+    ///code for adding keys
+    log(Get.arguments[1].id.toString());
+    request.fields["claimId"] = Get.arguments[1].id.toString();
+    log(documentReturn(causeofDeath.value));
+
+    log(isMinor().toString());
+
+    request.fields["nomineeIdDocType"] =
+        documentReturn(borrowerAddressProof.value);
+
+    request.fields["bankAccountDocType"] = documentReturn(bankProof.value);
+    request.fields["additionalDocType"] = documentReturn(additionalProof.value);
+
+    /// code for adding file image
+    log("Path is ${filledPath.value}");
+
+    if (nomineeAddressDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'nomineeIdDoc',
           nomineeAddressDocPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -705,170 +916,6 @@ class ClaimController extends GetxController {
     }
   }
 
-
-  uploadFormData1() async {
-    loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
-    // var postUri = Uri.parse(
-    //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
-    log(postUri.toString());
-    var request = http.MultipartRequest("Put", postUri);
-    Map<String, String> headers = {
-      // "Content-Type": "multipart/form-data",
-      "X-Xsrf-Token": box.read("authToken"),
-    };
-    request.headers.addAll(headers);
-
-    ///code for adding keys
-    log(Get.arguments[1].id.toString());
-    request.fields["claimId"] = Get.arguments[1].id.toString();
-    log(documentReturn(causeofDeath.value));
-    request.fields["causeOfDeath"] = documentReturn(causeofDeath.value);
-    log(isMinor().toString());
-    request.fields["isMinor"] = isMinor().toString();
-    request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);
-    request.fields["borrowerAddressDocType"] =
-        documentReturn(borrowerAddressProof.value);
-    request.fields["nomineeIdDocType"] =
-        documentReturn(borrowerAddressProof.value);
-    request.fields["nomineeAddressDocType"] =
-        documentReturn(nomineeAddressProof.value);
-    request.fields["bankAccountDocType"] = documentReturn(bankProof.value);
-    request.fields["additionalDocType"] = documentReturn(additionalProof.value);
-
-    /// code for adding file image
-    log("Path is ${filledPath.value}");
-    if (minor.value.isNotEmpty && minor.value.length >= 3) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'minor',
-          minor.value.toString(),
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (filledPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'signedForm',
-          filledPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (deathCertificatePath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'deathCertificate',
-          deathCertificatePath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-    if (borrowerIdDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerIdDoc',
-          borrowerIdDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (borrowerAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerAddressDoc',
-          borrowerAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeIdDoc',
-          nomineeAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeAddressDoc',
-          nomineeAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (bankAccountDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'bankAccountDoc',
-          bankAccountDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (firOrPostmortemReportPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'FirOrPostmortemReport',
-          firOrPostmortemReportPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (additionalDocpath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'additionalDoc',
-          additionalDocpath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-    log("Request $request");
-    var response = await request.send();
-    var responsed = await http.Response.fromStream(response);
-    log("${responsed.statusCode}");
-
-    //final responseData = json.decode(responsed.body);
-    // log("$responseData");
-    if (response.statusCode == 200) {
-      loadUpload.value = false;
-      Get.rawSnackbar(
-          message: "Form Submitted Successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.green);
-
-      Get.offAll(() => Details(
-        title: 'Allocated',
-      ));
-      log("Success");
-    } else {
-      loadUpload.value = false;
-      log("errorCode ${response.statusCode}");
-      Get.rawSnackbar(
-          message: "Something went wrong",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    }
-  }
-
   @override
   void onInit() {
     // TODO: implement onInit
@@ -917,8 +964,6 @@ class ClaimController extends GetxController {
     return temp.value.toString();
   }
 
-
-
   /// claim discrepancy file
   /// upload file
   Future<String> discrepancyFile() async {
@@ -930,18 +975,18 @@ class ClaimController extends GetxController {
       File file = File(result.files.single.path!);
       // path.value = basename(file.path);
       path.value = file.path;
-      print("file part "+path.value.toString());
+      print("file part " + path.value.toString());
     } else {
       // User canceled the picker
     }
-    print("file part "+ path.value.toString());
+    print("file part " + path.value.toString());
     return path.value;
   }
 
-  uploadDiscrepancyData({id,docType}) async {
+  uploadDiscrepancyData({id, docType}) async {
     loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload$id/discrepancy-document-upload/$docType");
+    var postUri =
+        Uri.parse("$formUpload$id/discrepancy-document-upload/$docType");
     log(postUri.toString());
     var request = http.MultipartRequest("Post", postUri);
     Map<String, String> headers = {
@@ -950,15 +995,15 @@ class ClaimController extends GetxController {
     };
     request.headers.addAll(headers);
 
-
     /// code for adding file image
     log("Path is 1 ${additionalDocpath.value}");
 
-
     if (additionalDocpath.value.isNotEmpty) {
-      print("1"+additionalDocpath.value);
-      request.files
-          .add(await http.MultipartFile.fromPath('multipartFile', additionalDocpath.value,));
+      print("1" + additionalDocpath.value);
+      request.files.add(await http.MultipartFile.fromPath(
+        'multipartFile',
+        additionalDocpath.value,
+      ));
       // request.files.add(
       //   await http.MultipartFile.fromPath(
       //     '$docType',
@@ -984,9 +1029,8 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.green);
 
       Get.offAll(() => Details(
-        title: 'WIP',
-      ));
-
+            title: 'WIP',
+          ));
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");
@@ -999,25 +1043,21 @@ class ClaimController extends GetxController {
     }
   }
 
-
   /// get verify
- moveToVerify({id}) async {
+  moveToVerify({id}) async {
     loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload$id/forward-to-verifier");
-    Map<String,dynamic> data={
-      "id":id,
+    var postUri = Uri.parse("$formUpload$id/forward-to-verifier");
+    Map<String, dynamic> data = {
+      "id": id,
     };
     log(postUri.toString());
-    var response= await http.post(postUri,
-        headers :{
-
-          "X-Xsrf-Token": box.read("authToken"),
-        },
-    body: jsonEncode(data),
+    var response = await http.post(
+      postUri,
+      headers: {
+        "X-Xsrf-Token": box.read("authToken"),
+      },
+      body: jsonEncode(data),
     );
-
-
 
     if (response.statusCode == 200) {
       loadUpload.value = false;

@@ -1771,28 +1771,55 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   Center(
                                     child: MaterialButton(
                                       onPressed: () {
-                                        if (controller.filledPath.value.isNotEmpty &&
-                                            controller.deathCertificatePath
-                                                .value.isNotEmpty &&
-                                            controller.borroweridProofDoc.value
-                                                .isNotEmpty &&
+                                        if (controller.nominee.value ==
+                                            "Minor") {
+                                          if (controller.minor.length >= 3) {
+                                            if (controller.causeofDeath.value
+                                                    .isNotEmpty &&
+                                                controller
+                                                    .filledPath.value.isNotEmpty &&
+                                                controller.dealthCertificate
+                                                    .value.isNotEmpty &&
+                                                controller.borroweridProofDoc
+                                                    .value.isNotEmpty &&
+                                                controller.borrowerIdDocPath
+                                                    .value.isNotEmpty) {
+                                              controller.uploadFormData1();
+                                            } else {
+                                              log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Please update all mandatory fields",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.BOTTOM,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.red,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
+                                            }
+                                          } else {
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Please update atleast 3 documents for minor",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          }
+                                        } else if (controller.causeofDeath.value
+                                                .isNotEmpty ||
+                                            controller
+                                                .filledPath.value.isNotEmpty ||
+                                            controller.dealthCertificate.value
+                                                .isNotEmpty ||
+                                            controller.borroweridProof.value
+                                                .isNotEmpty ||
                                             controller.borrowerIdDocPath.value
-                                                .isNotEmpty &&
-                                            controller.causeofDeath.value
-                                                .isNotEmpty &&
-                                            controller.minor.value.isNotEmpty &&
-                                            controller.minor.value.length ==
-                                                3) {
-                                          controller.uploadFormData();
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg: "All Fields are mandatory",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
+                                                .isNotEmpty) {
+                                          controller.uploadFormData1();
                                         }
                                       },
                                       color: kdarkBlue,
@@ -2043,6 +2070,15 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               // const SizedBox(
                               //   height: 10.0,
                               // ),
+                            ],
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Text(
                                 "KYC - Proof Nominee",
                                 style: CustomFonts.kBlack15Black.copyWith(
@@ -3418,18 +3454,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Divider(),
                                                   GestureDetector(
                                                     onTap: () async {
-                                                      var file = await controller
-                                                          .imageFromCamera();
-
-                                                      controller
+                                                      if (controller
+                                                          .additionalDropDownList
+                                                          .contains(controller
                                                               .additionalProofDoc
-                                                              .value =
-                                                          basename(file);
-                                                      controller
-                                                          .additionalDocpath
-                                                          .value = file;
-                                                      Get.back(
-                                                          closeOverlays: true);
+                                                              .value)) {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Already Exit Record for Selected Dropdown",
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .BOTTOM,
+                                                            timeInSecForIosWeb:
+                                                                1,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 16.0);
+                                                      } else {
+                                                        var file = await controller
+                                                            .imageFromCamera();
+
+                                                        controller
+                                                                .additionalProofDoc
+                                                                .value =
+                                                            basename(file);
+                                                        controller
+                                                            .additionalDocpath
+                                                            .value = file;
+
+                                                        Get.back(
+                                                            closeOverlays:
+                                                                true);
+                                                        controller.additionalDocumentList(
+                                                            dropDownValue:
+                                                                controller
+                                                                    .additionalProof
+                                                                    .value,
+                                                            imagePath: controller
+                                                                .additionalDocpath
+                                                                .value,
+                                                            selectedValue:
+                                                                controller
+                                                                    .additionalProof
+                                                                    .value);
+                                                      }
                                                     },
                                                     child: Text(
                                                       "Take Photo ...",
@@ -3448,19 +3520,54 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     behavior:
                                                         HitTestBehavior.opaque,
                                                     onTap: () async {
-                                                      var file =
-                                                          await controller
-                                                              .uploadFile();
-
-                                                      controller
+                                                      if (controller
+                                                          .additionalDropDownList
+                                                          .contains(controller
                                                               .additionalProofDoc
-                                                              .value =
-                                                          basename(file);
-                                                      controller
-                                                          .additionalDocpath
-                                                          .value = file;
-                                                      Get.back(
-                                                          closeOverlays: true);
+                                                              .value)) {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Already Exit Record for Selected Dropdown",
+                                                            toastLength: Toast
+                                                                .LENGTH_SHORT,
+                                                            gravity:
+                                                                ToastGravity
+                                                                    .BOTTOM,
+                                                            timeInSecForIosWeb:
+                                                                1,
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                            textColor:
+                                                                Colors.white,
+                                                            fontSize: 16.0);
+                                                      } else {
+                                                        var file =
+                                                            await controller
+                                                                .uploadFile();
+
+                                                        controller
+                                                                .additionalProofDoc
+                                                                .value =
+                                                            basename(file);
+                                                        controller
+                                                            .additionalDocpath
+                                                            .value = file;
+                                                        Get.back(
+                                                            closeOverlays:
+                                                                true);
+                                                        controller.additionalDocumentList(
+                                                            dropDownValue:
+                                                                controller
+                                                                    .additionalProof
+                                                                    .value,
+                                                            imagePath: controller
+                                                                .additionalDocpath
+                                                                .value,
+                                                            selectedValue:
+                                                                controller
+                                                                    .additionalProof
+                                                                    .value);
+                                                      }
                                                     },
                                                     child: Text(
                                                       "Choose Files from Phone",
@@ -3519,6 +3626,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
+
+                              Text(controller.additionalList.value.toString()),
+                              Text(controller.additionalList.value.length
+                                  .toString()),
+
                               Obx(() =>
                                   controller.additionalDocpath.value.isNotEmpty
                                       ? Row(
@@ -3560,9 +3672,90 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
+                              Center(
+                                child: MaterialButton(
+                                  onPressed: () {
+                                    if (controller.nominee.value == "Minor") {
+                                      if (controller.minor.length >= 3) {
+                                        if (controller.causeofDeath.value
+                                                .isNotEmpty &&
+                                            controller
+                                                .filledPath.value.isNotEmpty &&
+                                            controller
+                                                .dealthCertificate.value.isNotEmpty &&
+                                            controller.borroweridProofDoc.value
+                                                .isNotEmpty &&
+                                            controller.borrowerIdDocPath.value
+                                                .isNotEmpty) {
+                                          controller.uploadFormData1();
+                                        } else {
+                                          log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Please update all mandatory fields",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        }
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Please update atleast 3 documents for minor",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      }
+                                    } else if (controller
+                                            .causeofDeath.value.isNotEmpty ||
+                                        controller
+                                            .filledPath.value.isNotEmpty ||
+                                        controller.dealthCertificate.value
+                                            .isNotEmpty ||
+                                        controller
+                                            .borroweridProof.value.isNotEmpty ||
+                                        controller.borrowerIdDocPath.value
+                                            .isNotEmpty) {
+                                      controller.uploadFormData1();
+                                    }
+                                    if (controller.additionalDropDownList
+                                        .contains(controller
+                                            .additionalProofDoc.value)) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Already Exit Record for Selected Dropdown",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    } else {
+                                      controller.additionalDocumentList(
+                                          dropDownValue:
+                                              controller.additionalProof.value,
+                                          imagePath: controller
+                                              .additionalDocpath.value,
+                                          selectedValue:
+                                              controller.additionalProof.value);
+                                    }
+                                  },
+                                  child: Text(
+                                    "Save",
+                                    style: CustomFonts.kBlack15Black
+                                        .copyWith(color: Colors.white),
+                                  ),
+                                  color: kdarkBlue,
+                                ),
+                              )
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -3621,7 +3814,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                           child: InkWell(
                               onTap: () {
                                 log(controller.currentIndex.value.toString());
-                                if (controller.currentIndex.value < 3) {
+                                if (controller.currentIndex.value < 4) {
                                   controller.pageController.animateToPage(
                                       controller.currentIndex.value + 1,
                                       duration:
@@ -3752,7 +3945,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 }
                               },
                               child: Obx(
-                                () => controller.currentIndex.value < 3
+                                () => controller.currentIndex.value < 4
                                     ? Container(
                                         height: 50,
                                         decoration: BoxDecoration(
@@ -3813,7 +4006,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               child: Obx(
                                                 () => controller.currentIndex
                                                             .value <
-                                                        3
+                                                        4
                                                     ? Text(
                                                         "Next",
                                                         style: TextStyle(
@@ -3858,7 +4051,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              for (int i = 0; i < 4; i++)
+              for (int i = 0; i < 5; i++)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -3878,7 +4071,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                       height: 15.0.h,
                       width: 15.0.w,
                     ),
-                    i != 3
+                    i != 4
                         ? Container(
                             width: Get.width * 0.15,
                             height: 2.0,
