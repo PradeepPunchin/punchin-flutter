@@ -1779,7 +1779,11 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                             controller.borrowerIdDocPath.value
                                                 .isNotEmpty &&
                                             controller.causeofDeath.value
-                                                .isNotEmpty) {
+                                                .isNotEmpty &&
+                                            controller.minor.value.isNotEmpty &&
+                                            controller.minor.value.length ==
+                                                3) {
+                                          controller.uploadFormData();
                                         } else {
                                           Fluttertoast.showToast(
                                               msg: "All Fields are mandatory",

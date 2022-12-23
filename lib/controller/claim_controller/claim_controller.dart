@@ -560,6 +560,15 @@ class ClaimController extends GetxController {
 
     /// code for adding file image
     log("Path is ${filledPath.value}");
+    if (minor.value.isNotEmpty && minor.value.length >= 3) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'minor',
+          minor.value.toString(),
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
 
     if (filledPath.value.isNotEmpty) {
       request.files.add(
