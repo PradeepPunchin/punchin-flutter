@@ -154,9 +154,9 @@ class _DetailsState extends State<Details> {
                             ),
                             underline: const SizedBox(),
                             items: <String>[
-                              'Claim Data Id',
-                              'Loan Account Number',
-                              'Name',
+                              'CLAIM_DATA_ID',
+                              'LOAN_ACCOUNT_NUMBER',
+                              'NAME',
                             ].map((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -189,7 +189,6 @@ class _DetailsState extends State<Details> {
                         ),
                         OutlinedButton(
                           style:OutlinedButton.styleFrom(
-
                             backgroundColor: kBlue,
                             side: BorderSide(width: 2, color: Colors.white),
                           ),
@@ -230,7 +229,7 @@ class _DetailsState extends State<Details> {
               // Allocated
               widget.title.toString() == "Allocated"
                   ? FutureBuilder(
-                      future: controller.getClaimSearch(status:widget.title.toString(),searchKey:controller.searchController.value.text ),//getClaimSubmitted(status: "ALLOCATED"),
+                      future: controller.getClaimSearch(status:widget.title.toString().toUpperCase(),searchKey:controller.searchController.value.text ),//getClaimSubmitted(status: "ALLOCATED"),
                       builder: (context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           // If we got an error
@@ -439,7 +438,7 @@ class _DetailsState extends State<Details> {
 
               widget.title.toString() == "Action Pending Cases"
                   ? FutureBuilder(
-                      future: controller.getClaimSearch(status:widget.title.toString(),searchKey:controller.searchController.value.text ),//getClaimSubmitted(status: "ACTION_PENDING"),
+                      future: controller.getClaimSearch(status:"ACTION_PENDING",searchKey:controller.searchController.value.text ),//getClaimSubmitted(status: "ACTION_PENDING"),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       // If we got an error

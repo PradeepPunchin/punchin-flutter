@@ -4,10 +4,10 @@ import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/claim_controller/claim_controller.dart';
 import 'package:punchin/model/claim_model/claim_discrepancy_model.dart';
+import 'package:punchin/views/claim_details/details.dart';
 import 'package:punchin/views/claim_form_view/preview_screen.dart';
 import 'package:path/path.dart';
 
-import 'details.dart';
 
 class ClaimDiscrepancy extends StatefulWidget {
   const ClaimDiscrepancy({Key? key}) : super(key: key);

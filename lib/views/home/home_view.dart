@@ -14,6 +14,7 @@ import 'package:punchin/controller/authentication_controller/login_controller.da
 import 'package:punchin/controller/home_controller/home_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
 import 'package:punchin/views/claim_details/details.dart';
+
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 
 class HomeView extends StatefulWidget {

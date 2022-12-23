@@ -21,4 +21,4 @@ var ClaimDiscrepeancyApi = baseUrl + "agent/claim/";
 
 
 /// search
-var SearchApi =baseUrl+"agent/claim/search?caseType=";
+var SearchApi =baseUrl+"agent/claim/search?searchCaseEnum=";
