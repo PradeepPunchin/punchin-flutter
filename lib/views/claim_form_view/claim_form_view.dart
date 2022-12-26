@@ -1784,7 +1784,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     .value.isNotEmpty &&
                                                 controller.borrowerIdDocPath
                                                     .value.isNotEmpty) {
-                                              controller.uploadFormData1();
+                                              controller.uploadFormData();
                                             } else {
                                               log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
                                               Fluttertoast.showToast(
@@ -1819,7 +1819,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 .isNotEmpty ||
                                             controller.borrowerIdDocPath.value
                                                 .isNotEmpty) {
-                                          controller.uploadFormData1();
+                                          controller.uploadFormData();
                                         }
                                       },
                                       color: kdarkBlue,
@@ -3201,7 +3201,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       controller.causeofDeath.value !=
                                           "Natural Death" ||
                                       controller.causeofDeath.value !=
-                                          "Dealth due to Natural Calamity" ||
+                                          "Death due to Natural Calamity" ||
                                       controller.causeofDeath.value !=
                                           "Suicide" ||
                                       controller.causeofDeath.value !=

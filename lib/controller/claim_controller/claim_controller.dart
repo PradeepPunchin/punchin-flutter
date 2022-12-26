@@ -566,8 +566,7 @@ class ClaimController extends GetxController {
 
   uploadFormData() async {
     loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
+    var postUri = Uri.parse("$formUploadNew");
     // var postUri = Uri.parse(
     //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
@@ -579,21 +578,23 @@ class ClaimController extends GetxController {
     request.headers.addAll(headers);
 
     ///code for adding keys
-    log(Get.arguments[1].id.toString());
-    request.fields["claimId"] = Get.arguments[1].id.toString();
-    log(documentReturn(causeofDeath.value));
-    request.fields["causeOfDeath"] = documentReturn(causeofDeath.value);
-    log(isMinor().toString());
-    request.fields["isMinor"] = isMinor().toString();
+
+    request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
+    log("Key 1: ${Get.arguments[1].id.toString()}");
+    request.fields["nomineeStatus"] = nominee.value.toString(); //c
+    log("Key 1: ${nominee.value.toString()}"); // ompulsory
+    request.fields["signedClaim"] = "SIGNED_FORM"; //compulsory
+
+    request.fields["deathCertificate"] = "DEATH_CERTIFICATE"; //compulsory
+
+    request.fields["causeOfDeath"] =
+        causeofDeathReturn(causeofDeath.value); //compulsory
+
+    log("key cause : ${causeofDeathReturn(causeofDeath.value)}");
+
     request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);
-    request.fields["borrowerAddressDocType"] =
-        documentReturn(borrowerAddressProof.value);
-    request.fields["nomineeIdDocType"] =
-        documentReturn(borrowerAddressProof.value);
-    request.fields["nomineeAddressDocType"] =
-        documentReturn(nomineeAddressProof.value);
-    request.fields["bankAccountDocType"] = documentReturn(bankProof.value);
-    request.fields["additionalDocType"] = documentReturn(additionalProof.value);
+    log("key ${documentReturn(borroweridProof.value)}");
+    request.fields["borowerProof"] = "BORROWER_ID_PROOF";
 
     /// code for adding file image
     log("Path is ${filledPath.value}");
@@ -601,7 +602,7 @@ class ClaimController extends GetxController {
     if (filledPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'signedForm',
+          'signedClaimMultipart',
           filledPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -611,7 +612,7 @@ class ClaimController extends GetxController {
     if (deathCertificatePath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'deathCertificate',
+          'deathCertificateMultipart',
           deathCertificatePath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -620,7 +621,7 @@ class ClaimController extends GetxController {
     if (borrowerIdDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'borrowerIdDoc',
+          'borowerProofMultipart',
           borrowerIdDocPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -695,16 +696,15 @@ class ClaimController extends GetxController {
     // log("$responseData");
     if (response.statusCode == 200) {
       loadUpload.value = false;
-      Get.rawSnackbar(
-          message: "Form Submitted Successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.green);
 
-      Get.offAll(() => Details(
-            title: 'Allocated',
-          ));
+      Fluttertoast.showToast(
+          msg: "Form Submitted Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
       log("Success");
     } else {
       loadUpload.value = false;
@@ -720,8 +720,7 @@ class ClaimController extends GetxController {
 
   uploadFormData1() async {
     loadUpload.value = true;
-    var postUri = Uri.parse(
-        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
+    var postUri = Uri.parse("$formUploadNewOne");
     // var postUri = Uri.parse(
     //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
@@ -733,55 +732,37 @@ class ClaimController extends GetxController {
     request.headers.addAll(headers);
 
     ///code for adding keys
-    log(Get.arguments[1].id.toString());
-    request.fields["claimId"] = Get.arguments[1].id.toString();
-    log(documentReturn(causeofDeath.value));
-    request.fields["causeOfDeath"] = documentReturn(causeofDeath.value);
-    log(isMinor().toString());
-    request.fields["isMinor"] = isMinor().toString();
-    request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);
+
+    request.fields["id"] = Get.arguments[1].id.toString();
+    request.fields["nomineeProof"] = documentReturn(nomineeIdProofDoc.value);
+    log("Key 2 Nomiee id ${documentReturn(nomineeIdProofDoc.value)}");
+
+    request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
+    log("Key 3 bank id ${documentReturn(bankProofDoc.value)}");
+
+    request.fields["additionalDocs"] = additionalProof.value;
 
     /// code for adding file image
-    log("Path is ${filledPath.value}");
 
-    if (filledPath.value.isNotEmpty) {
+    if (nomineeAddressDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'signedForm',
-          filledPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (deathCertificatePath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'deathCertificate',
-          deathCertificatePath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-    if (borrowerIdDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerIdDoc',
-          borrowerIdDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    /* if (borrowerAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerAddressDoc',
+          'nomineeMultiparts',
           borrowerAddressDocPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
       );
-    }*/
+    }
+
+    if (bankAccountDocPath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'bankerPROOFMultipart',
+          borrowerAddressDocPath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
 
     log("Request $request");
     var response = await request.send();
@@ -962,6 +943,23 @@ class ClaimController extends GetxController {
     }
 
     return temp.value.toString();
+  }
+
+  String causeofDeathReturn(text) {
+    RxString temp = "".obs;
+    if (text == "Accident") {
+      temp.value = "ACCIDENT";
+    } else if (text == "Natural Death") {
+      temp.value = "NATURAL_DEATH";
+    } else if (text == "Suicide") {
+      temp.value = "SUICIDE";
+    } else if (text == "Illness &  Medical Reason") {
+      temp.value = "ILLNESS_MEDICAL_REASON";
+    } else if (text == "Death due to Natural Calamity") {
+      temp.value = "DUE_TO_NATURAL_CALAMITY";
+    }
+
+    return temp.value;
   }
 
   /// claim discrepancy file
