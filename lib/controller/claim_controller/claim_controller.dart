@@ -20,6 +20,10 @@ import 'package:punchin/views/login/login_screen.dart';
 import '../../model/claim_model/claim_details.dart';
 
 class ClaimController extends GetxController {
+  RxString RelationProof = ''.obs;
+  RxString GUARDIAN_ID_PROOF = ''.obs;
+  RxString GUARDIAN_ADD_PROOF = ''.obs;
+
   var box = GetStorage();
   late final PageController pageController;
   RxInt currentIndex = 0.obs;

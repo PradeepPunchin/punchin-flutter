@@ -779,29 +779,79 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                           await controller
                                                                               .imageFromCamera();
 
-                                                                      print(
-                                                                          file);
-                                                                      controller
-                                                                              .minorProof
-                                                                              .value =
-                                                                          basename(
-                                                                              file);
-                                                                      controller
-                                                                          .minorProofPath
-                                                                          .value = file;
-                                                                      Get.back(
-                                                                          closeOverlays:
-                                                                              true);
-                                                                      controller.addProductLot(
-                                                                          selectedValue: controller
-                                                                              .minorProof
-                                                                              .value,
-                                                                          imagePath: controller
-                                                                              .minorProofPath
-                                                                              .value,
-                                                                          dropDownValue: controller
+                                                                      if (controller
                                                                               .minorDropdown
-                                                                              .value);
+                                                                              .value ==
+                                                                          "Relationship Proof *") {
+                                                                        controller
+                                                                            .minorProof
+                                                                            .value = basename(file);
+                                                                        controller
+                                                                            .RelationProof
+                                                                            .value = file;
+                                                                        Get.back(
+                                                                            closeOverlays:
+                                                                                true);
+                                                                        controller.addProductLot(
+                                                                            selectedValue:
+                                                                                controller.minorProof.value,
+                                                                            imagePath: controller.RelationProof.value,
+                                                                            dropDownValue: controller.minorDropdown.value);
+                                                                      } else if (controller
+                                                                              .minorDropdown
+                                                                              .value ==
+                                                                          "Guardian - Id proof *") {
+                                                                        controller
+                                                                            .minorProof
+                                                                            .value = basename(file);
+                                                                        controller
+                                                                            .GUARDIAN_ID_PROOF
+                                                                            .value = file;
+                                                                        Get.back(
+                                                                            closeOverlays:
+                                                                                true);
+                                                                        controller.addProductLot(
+                                                                            selectedValue:
+                                                                                controller.minorProof.value,
+                                                                            imagePath: controller.GUARDIAN_ID_PROOF.value,
+                                                                            dropDownValue: controller.minorDropdown.value);
+                                                                      } else if (controller
+                                                                              .minorDropdown
+                                                                              .value ==
+                                                                          "Guardian - Add proof *") {
+                                                                        controller
+                                                                            .minorProof
+                                                                            .value = basename(file);
+                                                                        controller
+                                                                            .GUARDIAN_ADD_PROOF
+                                                                            .value = file;
+                                                                        Get.back(
+                                                                            closeOverlays:
+                                                                                true);
+                                                                        controller.addProductLot(
+                                                                            selectedValue:
+                                                                                controller.minorProof.value,
+                                                                            imagePath: controller.GUARDIAN_ADD_PROOF.value,
+                                                                            dropDownValue: controller.minorDropdown.value);
+                                                                      } else if (controller
+                                                                              .minorDropdown
+                                                                              .value ==
+                                                                          "Other Document") {
+                                                                        controller
+                                                                            .minorProof
+                                                                            .value = basename(file);
+                                                                        controller
+                                                                            .minorProofPath
+                                                                            .value = file;
+                                                                        Get.back(
+                                                                            closeOverlays:
+                                                                                true);
+                                                                        controller.addProductLot(
+                                                                            selectedValue:
+                                                                                controller.minorProof.value,
+                                                                            imagePath: controller.minorProofPath.value,
+                                                                            dropDownValue: controller.minorDropdown.value);
+                                                                      }
                                                                     }
                                                                   },
                                                                   child: Text(
