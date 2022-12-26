@@ -1,9 +1,10 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -16,6 +17,8 @@ import 'package:punchin/views/claim_details/claim_discrepancy_details.dart';
 import 'package:punchin/views/claim_form_view/claim_form_view.dart';
 import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:whatsapp_share2/whatsapp_share2.dart';
 
 class Details extends StatefulWidget {
   const Details({Key? key, required this.title}) : super(key: key);
@@ -63,6 +66,17 @@ class _DetailsState extends State<Details> {
     super.dispose();
   }
 
+  String _phone = '';
+
+  Future<void> share() async {
+
+    print(_phone);
+    await WhatsappShare.share(
+      text: 'WhatsaApp',
+      linkUrl: 'https://flutter.dev/',
+      phone: _phone,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,13 +122,14 @@ class _DetailsState extends State<Details> {
                           borderRadius: BorderRadius.circular(100),
                           border: Border.all(width: 2, color: Colors.black12),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
+                        child:const Padding(
+                          padding: EdgeInsets.all(4.0),
                           child: Icon(
-                            Icons.notifications_outlined,
-                            color: Colors.black,
-                          ),
-                        )),
+                           Icons.notifications_outlined,
+                           color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -278,9 +293,10 @@ class _DetailsState extends State<Details> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+
                                         Container(
                                           //width: Get.width,
-                                          decoration: BoxDecoration(
+                                          decoration:const BoxDecoration(
                                             borderRadius: BorderRadius.only(
                                               topLeft: Radius.circular(7),
                                               topRight: Radius.circular(7),
@@ -294,7 +310,28 @@ class _DetailsState extends State<Details> {
                                               children: [
                                                 Text(
                                                     "Case/Claim ID : ${singleData.punchinClaimId}",
-                                                    style: kBody14kWhite600)
+                                                    style: kBody14kWhite600),
+                                                Spacer(),
+                                                GestureDetector(
+
+                                                  onTap: ()async{
+                                                    //   await Share.share("text",
+                                                    //       subject: "subject",
+                                                    //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                                    //     );
+
+                                                    _phone="91${singleData.nomineeContactNumber.toString()}";
+
+
+                                                    share( );
+
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(right: 2),
+                                                    child: SvgPicture.asset("assets/icons/Share.svg",height: 28,
+                                                      width: 28,color: kWhite,),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -459,7 +496,7 @@ class _DetailsState extends State<Details> {
                         return claimSubmitted.statusCode == 404? Column(
                           children: [
 
-                            Text(" No Data Found"),
+                          const  Text(" No Data Found"),
                           ],
                         ) :ListView.separated(
                           shrinkWrap: true,
@@ -482,7 +519,7 @@ class _DetailsState extends State<Details> {
                                 children: [
                                   Container(
                                     //width: Get.width,
-                                    decoration: BoxDecoration(
+                                    decoration:const BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(7),
                                         topRight: Radius.circular(7),
@@ -496,7 +533,30 @@ class _DetailsState extends State<Details> {
                                         children: [
                                           Text(
                                               "Case/Claim ID : ${singleData.punchinClaimId}",
-                                              style: kBody14kWhite600)
+                                              style: kBody14kWhite600),
+
+                                          Spacer(),
+                                          GestureDetector(
+
+                                            onTap: ()async{
+                                              //   await Share.share("text",
+                                              //       subject: "subject",
+                                              //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                              //     );
+                                              _phone="91${singleData.nomineeContactNumber.toString()}";
+
+
+                                              share( );
+
+                                              // share(phone: singleData.nomineeContactNumber.toString() );
+
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 2),
+                                              child: SvgPicture.asset("assets/icons/Share.svg",height: 28,
+                                                width: 28,color: kWhite,),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -630,6 +690,8 @@ class _DetailsState extends State<Details> {
                                       children: [
                                         GestureDetector(
                                             onTap: () {
+
+                                              log("message value for ${claimSubmitted.data!.content![index].toJson()}");
                                               Get.off(() => ClaimFormView(), arguments: [
                                                 widget.title,
                                                 claimSubmitted.data!.content![index]
@@ -731,7 +793,31 @@ class _DetailsState extends State<Details> {
                                         children: [
                                           Text(
                                               "Case/Claim ID : ${singleData.claimId}",
-                                              style: kBody14kWhite600)
+                                              style: kBody14kWhite600),
+                                          Spacer(),
+                                          GestureDetector(
+
+                                            onTap: ()async{
+                                              //   await Share.share("text",
+                                              //       subject: "subject",
+                                              //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                              //     );
+
+
+                                              // share(phone: singleData.nomineeContactNumber.toString() );
+                                              _phone="91${singleData.nomineeContactNumber.toString()}";
+
+
+
+                                              share( );
+
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(right: 2),
+                                              child: SvgPicture.asset("assets/icons/Share.svg",height: 28,
+                                                width: 28,color: kWhite,),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

@@ -32,9 +32,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   bool isAlertSet = false;
 
   List<String> minorList = [
-    'Relationship Proof *',
-    'Guardian - Id proof *',
-    'Guardian - Add proof *',
+    'RELATIONSHIP_PROOF',
+    'GUARDIAN_ID_PROOF',
+    'GUARDIAN_ADD_PROOF',
     'Other Document',
   ];
 
@@ -69,6 +69,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getStepperFormData();
+    controller.loadUpload.value = false;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -95,7 +97,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
             ),
             child: Obx(
               () => Text(
-                "Case/Claim ID : ${controller.claimDetail.value["punchinClaimId"]} ",
+                "Case/Claim ID : ${controller.claimDetail.value["claimData"]["punchinClaimId"]}",
                 style: CustomFonts.kBlack15Black.copyWith(
                     color: Colors.white,
                     fontSize: 8.0,
@@ -199,7 +201,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["borrowerName"]
+                                      .claimDetail.value["claimData"]["borrowerName"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -210,7 +212,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                              .value["borrowerDob"] !=
+                                              .value["claimData"]["borrowerDob"] !=
                                           null
                                       ? dateChange(controller
                                           .claimDetail.value["borrowerDob"])
@@ -224,7 +226,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                      .value["borrowerContactNumber"]),
+                                      .value["claimData"]["borrowerContactNumber"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -234,7 +236,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["borrowerEmailId"]),
+                                      .claimDetail.value["claimData"]["borrowerEmailId"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -244,7 +246,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               addressField(
                                   text: controller
-                                      .claimDetail.value["borrowerAddress"])
+                                      .claimDetail.value["claimData"]["borrowerAddress"])
                             ],
                           ),
                         ),
@@ -269,7 +271,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["loanAccountNumber"]),
+                                      .claimDetail.value["claimData"]["loanAccountNumber"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -279,7 +281,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text:
-                                      controller.claimDetail.value["loanType"]),
+                                      controller.claimDetail.value["claimData"]["loanType"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -289,7 +291,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["loanAmount"]
+                                      .claimDetail.value["claimData"]["loanAmount"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -300,7 +302,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                      .value["loanAccountManagerName"]
+                                      .value["claimData"]["loanAccountManagerName"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -311,7 +313,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                      .value["loanAccountManagerName"]
+                                      .value["claimData"]["loanAccountManagerName"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -322,7 +324,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                      .value["accountManagerContactNumber"]
+                                      .value["claimData"]["accountManagerContactNumber"]
                                       .toString())
                             ],
                           ),
@@ -348,7 +350,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["insurerName"]),
+                                      .claimDetail.value["claimData"]["insurerName"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -358,7 +360,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["policyNumber"]),
+                                      .claimDetail.value["claimData"]["policyNumber"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -368,7 +370,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["masterPolNumber"]),
+                                      .claimDetail.value["claimData"]["masterPolNumber"]),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -378,10 +380,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                              .value["policyStartDate"] !=
+                                              .value["claimData"]["policyStartDate"] !=
                                           null
                                       ? dateChange(controller
-                                          .claimDetail.value["policyStartDate"])
+                                          .claimDetail.value["claimData"]["policyStartDate"])
                                       : ""),
                               const SizedBox(
                                 height: 10.0,
@@ -393,7 +395,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                      .value["policyCoverageDuration"]
+                                      .value["claimData"]["policyCoverageDuration"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -404,7 +406,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["policySumAssured"]
+                                      .claimDetail.value["claimData"]["policySumAssured"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -415,7 +417,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["nomineeName"]
+                                      .claimDetail.value["claimData"]["nomineeName"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -426,7 +428,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["nomineeRelationShip"]
+                                      .claimDetail.value["claimData"]["nomineeRelationShip"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -437,7 +439,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["nomineeContactNumber"]
+                                      .claimDetail.value["claimData"]["nomineeContactNumber"]
                                       .toString()),
                               const SizedBox(
                                 height: 10.0,
@@ -448,7 +450,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller
-                                      .claimDetail.value["nomineeEmailId"])
+                                      .claimDetail.value["claimData"]["nomineeEmailId"])
                             ],
                           ),
                         ),
@@ -615,15 +617,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            smallText(
-                                                text:
-                                                    "Additional Document for Minor"),
-                                            Text(controller.minor.value.length
-                                                .toString()),
-                                            Text(controller.minorNominee.value
-                                                .toString()),
-                                            Text(controller.minorImage.value
-                                                .toString()),
+                                            smallText(text: "Additional Document for Minor"),
+
                                             const SizedBox(
                                               height: 10.0,
                                             ),
@@ -662,71 +657,71 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   MaterialButton(
                                                     elevation: 1.0,
                                                     onPressed: () async {
-                                                      if (controller.minor.value
-                                                          .contains(controller
-                                                              .minorNominee
-                                                              .value)) {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                "File Already Exists ! Please Choose Another",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .BOTTOM,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0);
-                                                      } else if (controller
-                                                              .minor.value
-                                                              .contains(
-                                                                  controller
-                                                                      .minorProof
-                                                                      .value) &&
-                                                          controller.minor.value
-                                                                  .length <
-                                                              3) {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                "Add Mandatory Documents",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .BOTTOM,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0);
-                                                      } else if (controller
-                                                              .claimDetail
-                                                              .value[
-                                                                  "claimStatus"]
-                                                              .toString() ==
-                                                          "UNDER_VERIFICATION") {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                "Already Under Verification",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .BOTTOM,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0);
-                                                      } else {
+                                                      // if (controller.minor.value
+                                                      //     .contains(controller
+                                                      //         .minorNominee
+                                                      //         .value)) {
+                                                      //   Fluttertoast.showToast(
+                                                      //       msg:
+                                                      //           "File Already Exists ! Please Choose Another",
+                                                      //       toastLength: Toast
+                                                      //           .LENGTH_SHORT,
+                                                      //       gravity:
+                                                      //           ToastGravity
+                                                      //               .BOTTOM,
+                                                      //       timeInSecForIosWeb:
+                                                      //           1,
+                                                      //       backgroundColor:
+                                                      //           Colors.red,
+                                                      //       textColor:
+                                                      //           Colors.white,
+                                                      //       fontSize: 16.0);
+                                                      // } else if (controller
+                                                      //         .minor.value
+                                                      //         .contains(
+                                                      //             controller
+                                                      //                 .minorProof
+                                                      //                 .value) &&
+                                                      //     controller.minor.value
+                                                      //             .length <
+                                                      //         3) {
+                                                      //   Fluttertoast.showToast(
+                                                      //       msg:
+                                                      //           "Add Mandatory Documents",
+                                                      //       toastLength: Toast
+                                                      //           .LENGTH_SHORT,
+                                                      //       gravity:
+                                                      //           ToastGravity
+                                                      //               .BOTTOM,
+                                                      //       timeInSecForIosWeb:
+                                                      //           1,
+                                                      //       backgroundColor:
+                                                      //           Colors.red,
+                                                      //       textColor:
+                                                      //           Colors.white,
+                                                      //       fontSize: 16.0);
+                                                      // } else if (controller
+                                                      //         .claimDetail
+                                                      //         .value["claimDocuments"][
+                                                      //             "claimStatus"]
+                                                      //         .toString() ==
+                                                      //     "UNDER_VERIFICATION1") {
+                                                      //   Fluttertoast.showToast(
+                                                      //       msg:
+                                                      //           "Already Under Verification",
+                                                      //       toastLength: Toast
+                                                      //           .LENGTH_SHORT,
+                                                      //       gravity:
+                                                      //           ToastGravity
+                                                      //               .BOTTOM,
+                                                      //       timeInSecForIosWeb:
+                                                      //           1,
+                                                      //       backgroundColor:
+                                                      //           Colors.red,
+                                                      //       textColor:
+                                                      //           Colors.white,
+                                                      //       fontSize: 16.0);
+                                                      // } else {
                                                         Get.defaultDialog(
                                                             title: "Upload",
                                                             titleStyle: CustomFonts
@@ -779,10 +774,12 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                           await controller
                                                                               .imageFromCamera();
 
+
+
                                                                       if (controller
                                                                               .minorDropdown
                                                                               .value ==
-                                                                          "Relationship Proof *") {
+                                                                          "RELATIONSHIP_PROOF") {
                                                                         controller
                                                                             .minorProof
                                                                             .value = basename(file);
@@ -800,7 +797,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                       } else if (controller
                                                                               .minorDropdown
                                                                               .value ==
-                                                                          "Guardian - Id proof *") {
+                                                                          "GUARDIAN_ID_PROOF") {
                                                                         controller
                                                                             .minorProof
                                                                             .value = basename(file);
@@ -818,7 +815,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                       } else if (controller
                                                                               .minorDropdown
                                                                               .value ==
-                                                                          "Guardian - Add proof *") {
+                                                                          "GUARDIAN_ADD_PROOF") {
                                                                         controller
                                                                             .minorProof
                                                                             .value = basename(file);
@@ -967,7 +964,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                             ),
                                                             onCancel: () =>
                                                                 Get.back());
-                                                      }
+                                                     // }
                                                     },
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -1069,6 +1066,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   const SizedBox(
                                     height: 5.0,
                                   ),
+                                  Text("${controller.claimDetail.value["claimDocuments"][0]["singnedClaimDocument"].toString()}"),
                                   Container(
                                     height: 40.0.h,
                                     decoration: BoxDecoration(
@@ -1101,9 +1099,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           elevation: 1.0,
                                           onPressed: () async {
                                             if (controller.claimDetail
-                                                    .value["claimStatus"]
+                                                    .value["claimDocuments"][0]["singnedClaimDocument"]
                                                     .toString() ==
-                                                "UNDER_VERIFICATION") {
+                                                "NOT_UPLOADED1") {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Already Under Verification",
@@ -1335,9 +1333,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           elevation: 1.0,
                                           onPressed: () async {
                                             if (controller.claimDetail
-                                                    .value["claimStatus"]
+                                                    .value["claimDocuments"][0]["deathCertificate"]
                                                     .toString() ==
-                                                "UNDER_VERIFICATION") {
+                                                "NOT_UPLOADED1") {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Already Under Verification",
@@ -1630,9 +1628,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           elevation: 1.0,
                                           onPressed: () async {
                                             if (controller.claimDetail
-                                                    .value["claimStatus"]
+                                                    .value["claimDocuments"][0]["borrowerIdProof"]
                                                     .toString() ==
-                                                "UNDER_VERIFICATION") {
+                                                "NOT_UPLOADED1") {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Already Under Verification",
@@ -1821,56 +1819,56 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   Center(
                                     child: MaterialButton(
                                       onPressed: () {
-                                        if (controller.nominee.value ==
-                                            "Minor") {
-                                          if (controller.minor.length >= 3) {
-                                            if (controller.causeofDeath.value
-                                                    .isNotEmpty &&
-                                                controller
-                                                    .filledPath.value.isNotEmpty &&
-                                                controller.dealthCertificate
-                                                    .value.isNotEmpty &&
-                                                controller.borroweridProofDoc
-                                                    .value.isNotEmpty &&
-                                                controller.borrowerIdDocPath
-                                                    .value.isNotEmpty) {
-                                              controller.uploadFormData();
-                                            } else {
-                                              log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "Please update all mandatory fields",
-                                                  toastLength:
-                                                      Toast.LENGTH_SHORT,
-                                                  gravity: ToastGravity.BOTTOM,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.red,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0);
-                                            }
-                                          } else {
-                                            Fluttertoast.showToast(
-                                                msg:
-                                                    "Please update atleast 3 documents for minor",
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.BOTTOM,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.red,
-                                                textColor: Colors.white,
-                                                fontSize: 16.0);
-                                          }
-                                        } else if (controller.causeofDeath.value
-                                                .isNotEmpty ||
-                                            controller
-                                                .filledPath.value.isNotEmpty ||
-                                            controller.dealthCertificate.value
-                                                .isNotEmpty ||
-                                            controller.borroweridProof.value
-                                                .isNotEmpty ||
-                                            controller.borrowerIdDocPath.value
-                                                .isNotEmpty) {
+                                        //if (controller.nominee.value ==
+                                        //     "Minor") {
+                                        //   if (controller.minor.length >= 3) {
+                                        //     if (controller.causeofDeath.value
+                                        //             .isNotEmpty &&
+                                        //         controller
+                                        //             .filledPath.value.isNotEmpty &&
+                                        //         controller.dealthCertificate
+                                        //             .value.isNotEmpty &&
+                                        //         controller.borroweridProofDoc
+                                        //             .value.isNotEmpty &&
+                                        //         controller.borrowerIdDocPath
+                                        //             .value.isNotEmpty) {
+                                        //       controller.uploadFormData();
+                                        //     } else {
+                                        //       log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
+                                        //       Fluttertoast.showToast(
+                                        //           msg:
+                                        //               "Please update all mandatory fields",
+                                        //           toastLength:
+                                        //               Toast.LENGTH_SHORT,
+                                        //           gravity: ToastGravity.BOTTOM,
+                                        //           timeInSecForIosWeb: 1,
+                                        //           backgroundColor: Colors.red,
+                                        //           textColor: Colors.white,
+                                        //           fontSize: 16.0);
+                                        //     }
+                                        //   } else {
+                                        //     Fluttertoast.showToast(
+                                        //         msg:
+                                        //             "Please update atleast 3 documents for minor",
+                                        //         toastLength: Toast.LENGTH_SHORT,
+                                        //         gravity: ToastGravity.BOTTOM,
+                                        //         timeInSecForIosWeb: 1,
+                                        //         backgroundColor: Colors.red,
+                                        //         textColor: Colors.white,
+                                        //         fontSize: 16.0);
+                                        //   }
+                                        // } else if (controller.causeofDeath.value
+                                        //         .isNotEmpty ||
+                                        //     controller
+                                        //         .filledPath.value.isNotEmpty ||
+                                        //     controller.dealthCertificate.value
+                                        //         .isNotEmpty ||
+                                        //     controller.borroweridProof.value
+                                        //         .isNotEmpty ||
+                                        //     controller.borrowerIdDocPath.value
+                                        //         .isNotEmpty) {
                                           controller.uploadFormData();
-                                        }
+                                      //  }
                                       },
                                       color: kdarkBlue,
                                       child: Text(
@@ -1889,237 +1887,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              // smallText(text: "Address Proof"),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.grey.shade100,
-                              //       borderRadius: BorderRadius.circular(1.0),
-                              //       border: Border.all(color: kGrey)),
-                              //   child: Obx(() => DropdownButton<String>(
-                              //         isExpanded: true,
-                              //         hint: Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: controller.borrowerAddressProof
-                              //                   .value.isNotEmpty
-                              //               ? Text(
-                              //                   controller
-                              //                       .borrowerAddressProof.value,
-                              //                   style: CustomFonts.kBlack15Black
-                              //                       .copyWith(fontSize: 14.0),
-                              //                 )
-                              //               : Text(
-                              //                   "Select Document Type",
-                              //                   style: CustomFonts.kBlack15Black
-                              //                       .copyWith(fontSize: 14.0),
-                              //                 ),
-                              //         ),
-                              //         underline: const SizedBox(),
-                              //         items: <String>[
-                              //           'Aadhar Card',
-                              //           'Passport',
-                              //           'Voter card',
-                              //           'Driving License',
-                              //           'Bank Passbook',
-                              //           'Any other Govt ID Card',
-                              //         ].map((String value) {
-                              //           return DropdownMenuItem<String>(
-                              //             value: value,
-                              //             child: Text(value),
-                              //           );
-                              //         }).toList(),
-                              //         onChanged: (value) {
-                              //           controller.borrowerAddressProof.value =
-                              //               value!;
-                              //         },
-                              //       )),
-                              // ),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
-                              // Container(
-                              //   height: 40.0.h,
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.grey.shade50,
-                              //       borderRadius: BorderRadius.circular(5.0),
-                              //       border: Border.all(
-                              //         color: kGrey,
-                              //       )),
-                              //   child: Row(
-                              //     children: [
-                              //       Flexible(
-                              //         child: Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: Obx(() => Text(
-                              //                 "${controller.borrowerAddressProofDoc.value}",
-                              //                 style: CustomFonts.kBlack15Black
-                              //                     .copyWith(
-                              //                         fontWeight:
-                              //                             FontWeight.w600,
-                              //                         fontSize: 14.0),
-                              //               )),
-                              //         ),
-                              //         fit: FlexFit.tight,
-                              //       ),
-                              //       const Spacer(),
-                              //       MaterialButton(
-                              //         elevation: 1.0,
-                              //         onPressed: () async {
-                              //           Get.defaultDialog(
-                              //               title: "Upload",
-                              //               titleStyle: CustomFonts
-                              //                   .kBlack15Black
-                              //                   .copyWith(
-                              //                       color: Colors.black,
-                              //                       fontSize: 20.0,
-                              //                       fontWeight:
-                              //                           FontWeight.bold),
-                              //               content: Column(
-                              //                 mainAxisSize: MainAxisSize.min,
-                              //                 crossAxisAlignment:
-                              //                     CrossAxisAlignment.center,
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment.center,
-                              //                 children: [
-                              //                   const Divider(),
-                              //                   GestureDetector(
-                              //                     onTap: () async {
-                              //                       var file = await controller
-                              //                           .imageFromCamera();
-                              //                       print(file);
-                              //                       controller
-                              //                           .borrowerAddressProofDoc
-                              //                           .value = basename(file);
-                              //                       controller
-                              //                           .borrowerAddressDocPath
-                              //                           .value = file;
-                              //                       Get.back(
-                              //                           closeOverlays: true);
-                              //                     },
-                              //                     child: Text(
-                              //                       "Take Photo ...",
-                              //                       style: CustomFonts
-                              //                           .kBlack15Black
-                              //                           .copyWith(
-                              //                               color: kdarkBlue,
-                              //                               fontWeight:
-                              //                                   FontWeight.w600,
-                              //                               fontSize: 16.0),
-                              //                     ),
-                              //                   ),
-                              //                   Divider(),
-                              //                   GestureDetector(
-                              //                     behavior:
-                              //                         HitTestBehavior.opaque,
-                              //                     onTap: () async {
-                              //                       var file = await controller
-                              //                           .uploadFile();
-                              //
-                              //                       controller
-                              //                           .borrowerAddressProofDoc
-                              //                           .value = basename(file);
-                              //                       controller
-                              //                           .borrowerAddressDocPath
-                              //                           .value = file;
-                              //                       Get.back(
-                              //                           closeOverlays: true);
-                              //                     },
-                              //                     child: Text(
-                              //                       "Choose Files from Phone",
-                              //                       style: CustomFonts
-                              //                           .kBlack15Black
-                              //                           .copyWith(
-                              //                               color: kdarkBlue,
-                              //                               fontWeight:
-                              //                                   FontWeight.w600,
-                              //                               fontSize: 16.0),
-                              //                     ),
-                              //                   ),
-                              //                   Divider(),
-                              //                 ],
-                              //               ),
-                              //               cancel: GestureDetector(
-                              //                 onTap: () {
-                              //                   log("**");
-                              //                   Get.back(closeOverlays: true);
-                              //                 },
-                              //                 behavior: HitTestBehavior.opaque,
-                              //                 child: Padding(
-                              //                   padding:
-                              //                       const EdgeInsets.all(8.0),
-                              //                   child: Text(
-                              //                     "Cancel",
-                              //                     style: CustomFonts
-                              //                         .kBlack15Black
-                              //                         .copyWith(
-                              //                             color: Colors.red,
-                              //                             fontSize: 16),
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               onCancel: () => Get.back());
-                              //         },
-                              //         shape: RoundedRectangleBorder(
-                              //             side: const BorderSide(color: kGrey),
-                              //             borderRadius:
-                              //                 BorderRadius.circular(5.0)),
-                              //         color: Colors.white,
-                              //         child: Text("Upload",
-                              //             style: CustomFonts.kBlack15Black
-                              //                 .copyWith(
-                              //                     fontSize: 15.0,
-                              //                     fontWeight: FontWeight.w400)),
-                              //       ),
-                              //       const SizedBox(
-                              //         width: 10,
-                              //       )
-                              //     ],
-                              //   ),
-                              // ),
-                              // const SizedBox(height: 10.0),
-                              // Obx(() => controller
-                              //         .borrowerAddressDocPath.value.isNotEmpty
-                              //     ? Row(
-                              //         children: [
-                              //           GestureDetector(
-                              //             child: Text(
-                              //               "Preview",
-                              //               style: CustomFonts.kBlack15Black
-                              //                   .copyWith(
-                              //                       fontSize: 14.0,
-                              //                       color: kdarkBlue,
-                              //                       fontWeight:
-                              //                           FontWeight.w700),
-                              //             ),
-                              //             onTap: () =>
-                              //                 Get.to(() => PreviewScreen(
-                              //                       filePath: controller
-                              //                           .borrowerAddressDocPath
-                              //                           .value,
-                              //                     )),
-                              //           ),
-                              //           const Spacer(),
-                              //           GestureDetector(
-                              //             onTap: () {
-                              //               controller.borrowerAddressProofDoc
-                              //                   .value = "";
-                              //               controller.borrowerAddressDocPath
-                              //                   .value = "";
-                              //             },
-                              //             child: const Icon(
-                              //               Icons.delete,
-                              //               color: klightBlue,
-                              //               size: 20,
-                              //             ),
-                              //           )
-                              //         ],
-                              //       )
-                              //     : SizedBox()),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
                             ],
                           ),
                         ),
@@ -2232,7 +1999,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         if (controller.claimDetail
                                                 .value["claimStatus"]
                                                 .toString() ==
-                                            "UNDER_VERIFICATION") {
+                                            "UNDER_VERIFICATION1") {
                                           Fluttertoast.showToast(
                                               msg: "Already Under Verification",
                                               toastLength: Toast.LENGTH_SHORT,
@@ -2406,244 +2173,12 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              // smallText(text: "Address Proof"),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.grey.shade100,
-                              //       borderRadius: BorderRadius.circular(1.0),
-                              //       border: Border.all(color: kGrey)),
-                              //   child: Obx(() => DropdownButton<String>(
-                              //         isExpanded: true,
-                              //         hint: Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: controller.nomineeAddressProof
-                              //                   .value.isNotEmpty
-                              //               ? Text(
-                              //                   controller
-                              //                       .nomineeAddressProof.value,
-                              //                   style: CustomFonts.kBlack15Black
-                              //                       .copyWith(fontSize: 14.0),
-                              //                 )
-                              //               : Text(
-                              //                   "Select Document Type",
-                              //                   style: CustomFonts.kBlack15Black
-                              //                       .copyWith(fontSize: 14.0),
-                              //                 ),
-                              //         ),
-                              //         underline: const SizedBox(),
-                              //         items: <String>[
-                              //           'Aadhar Card',
-                              //           'Passport',
-                              //           'Voter card',
-                              //           'Driving License',
-                              //           'Bank Passbook',
-                              //           'Any other Govt ID Card',
-                              //         ].map((String value) {
-                              //           return DropdownMenuItem<String>(
-                              //             value: value,
-                              //             child: Text(value),
-                              //           );
-                              //         }).toList(),
-                              //         onChanged: (value) {
-                              //           controller.nomineeAddressProof.value =
-                              //               value!;
-                              //         },
-                              //       )),
-                              // ),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
-                              // Container(
-                              //   height: 40.0.h,
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.grey.shade50,
-                              //       borderRadius: BorderRadius.circular(5.0),
-                              //       border: Border.all(
-                              //         color: kGrey,
-                              //       )),
-                              //   child: Row(
-                              //     children: [
-                              //       Flexible(
-                              //         fit: FlexFit.tight,
-                              //         child: Padding(
-                              //           padding: const EdgeInsets.all(8.0),
-                              //           child: Obx(() => Text(
-                              //                 "${controller.nomineeAddressProofDoc.value}",
-                              //                 style: CustomFonts.kBlack15Black
-                              //                     .copyWith(
-                              //                         fontWeight:
-                              //                             FontWeight.w600,
-                              //                         fontSize: 14.0),
-                              //               )),
-                              //         ),
-                              //       ),
-                              //       const Spacer(),
-                              //       MaterialButton(
-                              //         elevation: 1.0,
-                              //         onPressed: () async {
-                              //           Get.defaultDialog(
-                              //               title: "Upload",
-                              //               titleStyle: CustomFonts
-                              //                   .kBlack15Black
-                              //                   .copyWith(
-                              //                       color: Colors.black,
-                              //                       fontSize: 20.0,
-                              //                       fontWeight:
-                              //                           FontWeight.bold),
-                              //               content: Column(
-                              //                 mainAxisSize: MainAxisSize.min,
-                              //                 crossAxisAlignment:
-                              //                     CrossAxisAlignment.center,
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment.center,
-                              //                 children: [
-                              //                   Divider(),
-                              //                   GestureDetector(
-                              //                     onTap: () async {
-                              //                       var file = await controller
-                              //                           .imageFromCamera();
-                              //                       print(file);
-                              //
-                              //                       controller
-                              //                           .nomineeAddressProofDoc
-                              //                           .value = basename(file);
-                              //                       controller
-                              //                           .nomineeAddressDocPath
-                              //                           .value = file;
-                              //                       Get.back(
-                              //                           closeOverlays: true);
-                              //                     },
-                              //                     child: Text(
-                              //                       "Take Photo ...",
-                              //                       style: CustomFonts
-                              //                           .kBlack15Black
-                              //                           .copyWith(
-                              //                               color: kdarkBlue,
-                              //                               fontWeight:
-                              //                                   FontWeight.w600,
-                              //                               fontSize: 16.0),
-                              //                     ),
-                              //                   ),
-                              //                   Divider(),
-                              //                   GestureDetector(
-                              //                     behavior:
-                              //                         HitTestBehavior.opaque,
-                              //                     onTap: () async {
-                              //                       var file = await controller
-                              //                           .uploadFile();
-                              //                       controller
-                              //                           .nomineeAddressProofDoc
-                              //                           .value = basename(file);
-                              //                       controller
-                              //                           .nomineeAddressDocPath
-                              //                           .value = file;
-                              //                       Get.back(
-                              //                           closeOverlays: true);
-                              //                     },
-                              //                     child: Text(
-                              //                       "Choose Files from Phone",
-                              //                       style: CustomFonts
-                              //                           .kBlack15Black
-                              //                           .copyWith(
-                              //                               color: kdarkBlue,
-                              //                               fontWeight:
-                              //                                   FontWeight.w600,
-                              //                               fontSize: 16.0),
-                              //                     ),
-                              //                   ),
-                              //                   Divider(),
-                              //                 ],
-                              //               ),
-                              //               cancel: GestureDetector(
-                              //                 onTap: () {
-                              //                   log("**");
-                              //                   Get.back(closeOverlays: true);
-                              //                 },
-                              //                 behavior: HitTestBehavior.opaque,
-                              //                 child: Padding(
-                              //                   padding:
-                              //                       const EdgeInsets.all(8.0),
-                              //                   child: Text(
-                              //                     "Cancel",
-                              //                     style: CustomFonts
-                              //                         .kBlack15Black
-                              //                         .copyWith(
-                              //                             color: Colors.red,
-                              //                             fontSize: 16),
-                              //                   ),
-                              //                 ),
-                              //               ),
-                              //               onCancel: () => Get.back());
-                              //         },
-                              //         shape: RoundedRectangleBorder(
-                              //             side: const BorderSide(color: kGrey),
-                              //             borderRadius:
-                              //                 BorderRadius.circular(5.0)),
-                              //         color: Colors.white,
-                              //         child: Text("Upload",
-                              //             style: CustomFonts.kBlack15Black
-                              //                 .copyWith(
-                              //                     fontSize: 15.0,
-                              //                     fontWeight: FontWeight.w400)),
-                              //       ),
-                              //       const SizedBox(
-                              //         width: 10,
-                              //       )
-                              //     ],
-                              //   ),
-                              // ),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
-                              // Obx(() => controller
-                              //         .nomineeAddressDocPath.value.isNotEmpty
-                              //     ? Row(
-                              //         children: [
-                              //           GestureDetector(
-                              //             child: Text(
-                              //               "Preview",
-                              //               style: CustomFonts.kBlack15Black
-                              //                   .copyWith(
-                              //                       fontSize: 14.0,
-                              //                       color: kdarkBlue,
-                              //                       fontWeight:
-                              //                           FontWeight.w700),
-                              //             ),
-                              //             onTap: () =>
-                              //                 Get.to(() => PreviewScreen(
-                              //                       filePath: controller
-                              //                           .nomineeAddressDocPath
-                              //                           .value,
-                              //                     )),
-                              //           ),
-                              //           const Spacer(),
-                              //           GestureDetector(
-                              //             onTap: () {
-                              //               controller.nomineeAddressProofDoc
-                              //                   .value = "";
-                              //               controller.nomineeAddressDocPath
-                              //                   .value = "";
-                              //             },
-                              //             child: const Icon(
-                              //               Icons.delete,
-                              //               color: klightBlue,
-                              //               size: 20,
-                              //             ),
-                              //           )
-                              //         ],
-                              //       )
-                              //     : SizedBox()),
-                              // const SizedBox(
-                              //   height: 10.0,
-                              // ),
+
 
                               Row(
                                 children: [
                                   smallText(text: "Bank A/C Proof"),
-                                  Text(
+                                 const Text(
                                     " * ",
                                     style: TextStyle(color: Colors.red),
                                   )
@@ -2733,7 +2268,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         if (controller.claimDetail
                                                 .value["claimStatus"]
                                                 .toString() ==
-                                            "UNDER_VERIFICATION") {
+                                            "UNDER_VERIFICATION1") {
                                           Fluttertoast.showToast(
                                               msg: "Already Under Verification",
                                               toastLength: Toast.LENGTH_SHORT,
@@ -2858,7 +2393,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               //                 MaterialButton(
                               //                   elevation: 1.0,
                               //                   onPressed: () async {
-                              //                     if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION"){
+                              //                     if(controller.claimDetail.value["claimStatus"].toString() =="UNDER_VERIFICATION1"){
                               //                       Fluttertoast.showToast(
                               //                           msg: "Already Under Verification",
                               //                           toastLength: Toast.LENGTH_SHORT,
@@ -3150,28 +2685,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 ),
                                         ),
                                         underline: const SizedBox(),
-                                        items: accientList
-                                            // <String>[
-                                            //   'Police FIR Copy',
-                                            //   'Postmortem Report',
-                                            //   'Income Tax Returns',
-                                            //   'Medical Records',
-                                            //   'Legal Heir Certificate',
-                                            //   'Police Investigation Report',
-                                            //   'Relationship Proof',
-                                            //   'Stamped Affidavit',
-                                            //   'Medical Attendant Certificate',
-                                            //   'Guardian - Id proof',
-                                            //   'Guardian - Add proof',
-                                            //   'Any utility bill (gas / electricity / rental agreement)',
-                                            //   'Other Document',
-                                            //   // 'Income Tax Return',
-                                            //   // 'Medical Records',
-                                            //   // 'Legal Heir Certificate',
-                                            //   // 'Police Investigation Report',
-                                            //   // 'Other',
-                                            // ]
-                                            .map((String value) {
+                                        items: accientList.map((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -3211,28 +2725,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 ),
                                         ),
                                         underline: const SizedBox(),
-                                        items: sickList
-                                            // <String>[
-                                            //   'Police FIR Copy',
-                                            //   'Postmortem Report',
-                                            //   'Income Tax Returns',
-                                            //   'Medical Records',
-                                            //   'Legal Heir Certificate',
-                                            //   'Police Investigation Report',
-                                            //   'Relationship Proof',
-                                            //   'Stamped Affidavit',
-                                            //   'Medical Attendant Certificate',
-                                            //   'Guardian - Id proof',
-                                            //   'Guardian - Add proof',
-                                            //   'Any utility bill (gas / electricity / rental agreement)',
-                                            //   'Other Document',
-                                            //   // 'Income Tax Return',
-                                            //   // 'Medical Records',
-                                            //   // 'Legal Heir Certificate',
-                                            //   // 'Police Investigation Report',
-                                            //   // 'Other',
-                                            // ]
-                                            .map((String value) {
+                                        items: sickList.map((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -3296,11 +2789,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           'Guardian - Add proof',
                                           'Any utility bill (gas / electricity / rental agreement)',
                                           'Other Document',
-                                          // 'Income Tax Return',
-                                          // 'Medical Records',
-                                          // 'Legal Heir Certificate',
-                                          // 'Police Investigation Report',
-                                          // 'Other',
                                         ].map((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
@@ -3340,28 +2828,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 ),
                                         ),
                                         underline: const SizedBox(),
-                                        items: minorList
-                                            // <String>[
-                                            //   'Police FIR Copy',
-                                            //   'Postmortem Report',
-                                            //   'Income Tax Returns',
-                                            //   'Medical Records',
-                                            //   'Legal Heir Certificate',
-                                            //   'Police Investigation Report',
-                                            //   'Relationship Proof',
-                                            //   'Stamped Affidavit',
-                                            //   'Medical Attendant Certificate',
-                                            //   'Guardian - Id proof',
-                                            //   'Guardian - Add proof',
-                                            //   'Any utility bill (gas / electricity / rental agreement)',
-                                            //   'Other Document',
-                                            //   // 'Income Tax Return',
-                                            //   // 'Medical Records',
-                                            //   // 'Legal Heir Certificate',
-                                            //   // 'Police Investigation Report',
-                                            //   // 'Other',
-                                            // ]
-                                            .map((String value) {
+                                        items: minorList.map((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -3405,28 +2872,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     ),
                                             ),
                                             underline: const SizedBox(),
-                                            items: minorList
-                                                // <String>[
-                                                //   'Police FIR Copy',
-                                                //   'Postmortem Report',
-                                                //   'Income Tax Returns',
-                                                //   'Medical Records',
-                                                //   'Legal Heir Certificate',
-                                                //   'Police Investigation Report',
-                                                //   'Relationship Proof',
-                                                //   'Stamped Affidavit',
-                                                //   'Medical Attendant Certificate',
-                                                //   'Guardian - Id proof',
-                                                //   'Guardian - Add proof',
-                                                //   'Any utility bill (gas / electricity / rental agreement)',
-                                                //   'Other Document',
-                                                //   // 'Income Tax Return',
-                                                //   // 'Medical Records',
-                                                //   // 'Legal Heir Certificate',
-                                                //   // 'Police Investigation Report',
-                                                //   // 'Other',
-                                                // ]
-                                                .map((String value) {
+                                            items: minorList.map((String value) {
                                               return DropdownMenuItem<String>(
                                                 value: value,
                                                 child: Text(value),
@@ -3475,7 +2921,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         if (controller.claimDetail
                                                 .value["claimStatus"]
                                                 .toString() ==
-                                            "UNDER_VERIFICATION") {
+                                            "UNDER_VERIFICATION1") {
                                           Fluttertoast.showToast(
                                               msg: "Already Under Verification",
                                               toastLength: Toast.LENGTH_SHORT,
@@ -3504,27 +2950,27 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   Divider(),
                                                   GestureDetector(
                                                     onTap: () async {
-                                                      if (controller
-                                                          .additionalDropDownList
-                                                          .contains(controller
-                                                              .additionalProofDoc
-                                                              .value)) {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                "Already Exit Record for Selected Dropdown",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .BOTTOM,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0);
-                                                      } else {
+                                                      // if (controller
+                                                      //     .additionalDropDownList
+                                                      //     .contains(controller
+                                                      //         .additionalProofDoc
+                                                      //         .value)) {
+                                                      //   Fluttertoast.showToast(
+                                                      //       msg:
+                                                      //           "Already Exit Record for Selected Dropdown",
+                                                      //       toastLength: Toast
+                                                      //           .LENGTH_SHORT,
+                                                      //       gravity:
+                                                      //           ToastGravity
+                                                      //               .BOTTOM,
+                                                      //       timeInSecForIosWeb:
+                                                      //           1,
+                                                      //       backgroundColor:
+                                                      //           Colors.red,
+                                                      //       textColor:
+                                                      //           Colors.white,
+                                                      //       fontSize: 16.0);
+                                                      // } else {
                                                         var file = await controller
                                                             .imageFromCamera();
 
@@ -3551,7 +2997,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                 controller
                                                                     .additionalProof
                                                                     .value);
-                                                      }
+                                                     // }
                                                     },
                                                     child: Text(
                                                       "Take Photo ...",
@@ -3677,9 +3123,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 height: 10.0,
                               ),
 
-                              Text(controller.additionalList.value.toString()),
-                              Text(controller.additionalList.value.length
-                                  .toString()),
+
 
                               Obx(() =>
                                   controller.additionalDocpath.value.isNotEmpty
@@ -3723,77 +3167,96 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 height: 10.0,
                               ),
                               Center(
+
+                                child: Container(
+                                   width:Get.width,
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      controller.uploadFormData2();
+                                    },
+                                    child: Text(
+                                      "Upload Addition Document",
+                                      style: CustomFonts.kBlack15Black
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                    color: kdarkBlue,
+                                  ),
+                                ),
+                              ),
+
+                              Center(
                                 child: MaterialButton(
                                   onPressed: () {
-                                    if (controller.nominee.value == "Minor") {
-                                      if (controller.minor.length >= 3) {
-                                        if (controller.causeofDeath.value
-                                                .isNotEmpty &&
-                                            controller
-                                                .filledPath.value.isNotEmpty &&
-                                            controller
-                                                .dealthCertificate.value.isNotEmpty &&
-                                            controller.borroweridProofDoc.value
-                                                .isNotEmpty &&
-                                            controller.borrowerIdDocPath.value
-                                                .isNotEmpty) {
-                                          controller.uploadFormData1();
-                                        } else {
-                                          log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Please update all mandatory fields",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        }
-                                      } else {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Please update atleast 3 documents for minor",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      }
-                                    } else if (controller
-                                            .causeofDeath.value.isNotEmpty ||
-                                        controller
-                                            .filledPath.value.isNotEmpty ||
-                                        controller.dealthCertificate.value
-                                            .isNotEmpty ||
-                                        controller
-                                            .borroweridProof.value.isNotEmpty ||
-                                        controller.borrowerIdDocPath.value
-                                            .isNotEmpty) {
-                                      controller.uploadFormData1();
-                                    }
-                                    if (controller.additionalDropDownList
-                                        .contains(controller
-                                            .additionalProofDoc.value)) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "Already Exit Record for Selected Dropdown",
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.red,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
-                                    } else {
-                                      controller.additionalDocumentList(
-                                          dropDownValue:
-                                              controller.additionalProof.value,
-                                          imagePath: controller
-                                              .additionalDocpath.value,
-                                          selectedValue:
-                                              controller.additionalProof.value);
-                                    }
+                                    // if (controller.nominee.value == "Minor") {
+                                    //   if (controller.minor.length >= 3) {
+                                    //     if (controller.causeofDeath.value
+                                    //             .isNotEmpty &&
+                                    //         controller
+                                    //             .filledPath.value.isNotEmpty &&
+                                    //         controller
+                                    //             .dealthCertificate.value.isNotEmpty &&
+                                    //         controller.borroweridProofDoc.value
+                                    //             .isNotEmpty &&
+                                    //         controller.borrowerIdDocPath.value
+                                    //             .isNotEmpty) {
+                                    //       controller.uploadFormData1();
+                                    //     } else {
+                                    //       log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
+                                    //       Fluttertoast.showToast(
+                                    //           msg:
+                                    //               "Please update all mandatory fields",
+                                    //           toastLength: Toast.LENGTH_SHORT,
+                                    //           gravity: ToastGravity.BOTTOM,
+                                    //           timeInSecForIosWeb: 1,
+                                    //           backgroundColor: Colors.red,
+                                    //           textColor: Colors.white,
+                                    //           fontSize: 16.0);
+                                    //     }
+                                    //   } else {
+                                    //     Fluttertoast.showToast(
+                                    //         msg:
+                                    //             "Please update atleast 3 documents for minor",
+                                    //         toastLength: Toast.LENGTH_SHORT,
+                                    //         gravity: ToastGravity.BOTTOM,
+                                    //         timeInSecForIosWeb: 1,
+                                    //         backgroundColor: Colors.red,
+                                    //         textColor: Colors.white,
+                                    //         fontSize: 16.0);
+                                    //   }
+                                    // } else if (controller
+                                    //         .causeofDeath.value.isNotEmpty ||
+                                    //     controller
+                                    //         .filledPath.value.isNotEmpty ||
+                                    //     controller.dealthCertificate.value
+                                    //         .isNotEmpty ||
+                                    //     controller
+                                    //         .borroweridProof.value.isNotEmpty ||
+                                    //     controller.borrowerIdDocPath.value
+                                    //         .isNotEmpty) {
+                                    //   controller.uploadFormData1();
+                                    // }
+                                    // if (controller.additionalDropDownList
+                                    //     .contains(controller
+                                    //         .additionalProofDoc.value)) {
+                                    //   Fluttertoast.showToast(
+                                    //       msg:
+                                    //           "Already Exit Record for Selected Dropdown",
+                                    //       toastLength: Toast.LENGTH_SHORT,
+                                    //       gravity: ToastGravity.BOTTOM,
+                                    //       timeInSecForIosWeb: 1,
+                                    //       backgroundColor: Colors.red,
+                                    //       textColor: Colors.white,
+                                    //       fontSize: 16.0);
+                                    // } else {
+                                    //   controller.additionalDocumentList(
+                                    //       dropDownValue:
+                                    //           controller.additionalProof.value,
+                                    //       imagePath: controller
+                                    //           .additionalDocpath.value,
+                                    //       selectedValue:
+                                    //           controller.additionalProof.value);
+                                    // }
+                                    controller.uploadFormData2();
                                   },
                                   child: Text(
                                     "Save",
@@ -3972,7 +3435,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   } else if (controller
                                           .claimDetail.value["claimStatus"]
                                           .toString() ==
-                                      "UNDER_VERIFICATION") {
+                                      "UNDER_VERIFICATION1") {
                                     Fluttertoast.showToast(
                                         msg: "Already Under Verification",
                                         toastLength: Toast.LENGTH_SHORT,
@@ -4201,6 +3664,12 @@ class _ClaimFormViewState extends State<ClaimFormView> {
               log(value.toString());
               setState(() {
                 controller.nominee.value = value.toString();
+                controller.RelationProof.value ='';
+                controller.GUARDIAN_ID_PROOF.value='';
+                controller.GUARDIAN_ADD_PROOF.value='';
+                controller.minor.clear();
+                controller.minorImage.clear();
+                controller.minorNominee.clear();
               });
             },
           ),
