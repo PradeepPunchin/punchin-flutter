@@ -10,34 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03aed0f3-b88b-40d1-b417-e537cb72adef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/res/xml/provider_paths.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/icons/Share.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/version" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/icons/whatsapp.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/punchin-flutter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/punchin-flutter.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/FMDB.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/FMDB.build/dgph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/Flutter.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/Flutter.build/dgph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/Pods-Runner.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/Pods-Runner.build/dgph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/path_provider_ios.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/path_provider_ios.build/dgph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/sqflite.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/sqflite.build/dgph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/constant/api_url.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constant/api_url.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/claim_model/claim_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/claim_model/claim_details.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/claim_details/details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_details/details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,10 +60,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="AnalyzeApkAction.lastApkPath" value="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-release.apk" />
+    <property name="DEBUGGABLE_DEVICE" value="xiaomi-22041216i-MZSSS89D65S8HQLF" />
+    <property name="DEBUGGABLE_PROCESS" value="com.punchin.punchin" />
+    <property name="DEBUGGER_ID" value="Java" />
     <property name="GitStage.ChangesTree.GroupingKeys" value="directory&#10;module&#10;repository" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="SHOW_ALL_PROCESSES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
@@ -133,60 +118,95 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>1232</line>
+          <line>1246</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>3274</line>
+          <line>2892</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/home/home_view.dart</url>
           <line>62</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>1450</line>
+          <line>1466</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>3339</line>
+          <line>2957</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>3459</line>
+          <line>3077</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>2660</line>
+          <line>2382</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+        <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>138</line>
+          <line>145</line>
           <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
+          <line>548</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
+          <line>259</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
+          <line>795</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
+          <line>2461</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
+          <line>2374</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
-          <line>545</line>
-          <option name="timeStamp" value="11" />
+          <line>246</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>252</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart</url>
+          <line>15</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>781</line>
-          <option name="timeStamp" value="14" />
+          <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
+          <line>278</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart</url>
+          <line>83</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_details/details.dart</url>
+          <line>1237</line>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

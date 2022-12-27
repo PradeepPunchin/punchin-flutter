@@ -10,7 +10,8 @@ class ClaimSubmitted {
       this.data,
       this.message,
       this.isSuccess,
-      this.statusCode});
+      this.statusCode,
+      });
 
   ClaimSubmitted.fromJson(Map<String, dynamic> json) {
     timeStamp = json['timeStamp'];
@@ -57,13 +58,13 @@ class Data {
       this.first,
       this.size,
       this.number,
-      this.empty});
+      this.empty,});
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['content'] != null) {
       content = <Content>[];
       json['content'].forEach((v) {
-        content?.add(new Content.fromJson(v));
+        content?.add( Content.fromJson(v));
       });
     }
     pageable = json['pageable'] != null
@@ -185,7 +186,7 @@ class Content {
       this.submittedAt,
       this.isForwardToVerifier,
       this.createdDate,
-      this.allocationDate});
+      this.allocationDate,});
 
   Content.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -290,7 +291,7 @@ class Pageable {
       this.pageSize,
       this.offset,
       this.unpaged,
-      this.paged});
+      this.paged,});
 
   Pageable.fromJson(Map<String, dynamic> json) {
     sort = json['sort'] != null ? new Sort.fromJson(json['sort']) : null;

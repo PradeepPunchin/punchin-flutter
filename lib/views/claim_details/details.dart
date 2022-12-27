@@ -448,6 +448,53 @@ class _DetailsState extends State<Details> {
                                             ],
                                           ),
                                         ),
+
+                                        Divider(height: 2,color: kTextFieldBorder,),
+                                        Padding(
+                                          padding: const EdgeInsets.all(12),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap:()async{
+                                                    await Share.share("text",
+                                                        subject: "subject",
+                                                        //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                                      );
+
+
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset("assets/icons/Share.svg"),
+                                                    Text("Share With Option"),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(width: 10,),
+                                              GestureDetector(
+                                                onTap:(){
+                                                  //   await Share.share("text",
+                                                  //       subject: "subject",
+                                                  //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                                  //     );
+
+                                                  _phone="91${singleData.nomineeContactNumber.toString()}";
+
+
+                                                  share( );
+                                                },
+                                                child:Row(
+                                                  children: [
+                                                    SvgPicture.asset("assets/icons/Share.svg"),
+                                                    Text("Share With WhatsApp"),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        )
+
                                       ],
                                     ),
                                   ),
@@ -708,6 +755,60 @@ class _DetailsState extends State<Details> {
                                       ],
                                     ),
                                   ),
+
+
+                                  const  Padding(
+                                    padding:
+                                    EdgeInsets.only(top: 16, left: 22, right: 22),
+                                    child: Divider(
+                                      thickness: 2,
+                                      height: 2,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap:()async{
+                                            await Share.share("text",
+                                              subject: "subject",
+                                              //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                            );
+
+
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset("assets/icons/Share.svg"),
+                                              Text("Share With Option"),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(width: 10,),
+                                        GestureDetector(
+                                          onTap:(){
+                                            //   await Share.share("text",
+                                            //       subject: "subject",
+                                            //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                            //     );
+
+                                            _phone="91${singleData.nomineeContactNumber.toString()}";
+
+
+                                            share( );
+                                          },
+                                          child:Row(
+                                            children: [
+                                              SvgPicture.asset("assets/icons/Share.svg"),
+                                              Text("Share With WhatsApp"),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             );
@@ -1131,6 +1232,59 @@ class _DetailsState extends State<Details> {
                                         SizedBox(
                                           height: 4,
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  const  Padding(
+                                    padding:
+                                    EdgeInsets.only(top: 16, left: 22, right: 22),
+                                    child: Divider(
+                                      thickness: 2,
+                                      height: 2,
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        GestureDetector(
+                                          onTap:()async{
+                                            await Share.share("text",
+                                              subject: "subject",
+                                              //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                            );
+
+
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset("assets/icons/Share.svg"),
+                                              Text("Share With Option"),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(width: 10,),
+                                        GestureDetector(
+                                          onTap:(){
+                                            //   await Share.share("text",
+                                            //       subject: "subject",
+                                            //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                            //     );
+
+                                            _phone="91${singleData.nomineeContactNumber.toString()}";
+
+
+                                            share( );
+                                          },
+                                          child:Row(
+                                            children: [
+                                              SvgPicture.asset("assets/icons/Share.svg"),
+                                              Text("Share With WhatsApp"),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),

@@ -186,7 +186,7 @@ class ClaimController extends GetxController {
   getClaimUnderVerification({status}) async {
     try {
       var response = await http.get(
-        Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+        Uri.parse(getAgentClaimApi + "$status&page=0&limit=200"),
         headers: {
           "Content-Type": "application/json",
           "X-Xsrf-Token": box.read("authToken"),
@@ -234,7 +234,7 @@ class ClaimController extends GetxController {
           (searchController.value.text == '' ||
               searchController.value.text == null ||
               searchController.value.text == "null")) {
-        var Url = getAgentClaimApi + "ALLOCATED&page=0&limit=10";
+        var Url = getAgentClaimApi + "ALLOCATED&page=0&limit=200";
         var response = await http.get(
           Uri.parse(Url),
           headers: {
@@ -243,6 +243,7 @@ class ClaimController extends GetxController {
           },
         );
         if (response.statusCode == 200) {
+          log(response.body);
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
         }
         if (response.statusCode == 404) {
@@ -259,7 +260,7 @@ class ClaimController extends GetxController {
         }
       } else {
         var Url = SearchApi +
-            "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=10";
+            "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=200";
         print(Url);
 
         var response = await http.get(
@@ -274,7 +275,9 @@ class ClaimController extends GetxController {
         print(response.body);
 
         if (response.statusCode == 200) {
-          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+         //return ClaimSubmitted.fromJson(jsonDecode(response.body));
+          var body= ClaimSubmitted.fromJson(jsonDecode(response.body));
+          log("claim body"+body.toString());
         }
         if (response.statusCode == 404) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
@@ -299,14 +302,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("12345" + e.toString());
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("12345" + e.toString());
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -317,7 +320,7 @@ class ClaimController extends GetxController {
     try {
       if (status == null) {
         var response = await http.get(
-          Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+          Uri.parse(getAgentClaimApi + "$status&page=0&limit=200"),
           headers: {
             "Content-Type": "application/json",
             "X-Xsrf-Token": box.read("authToken"),
@@ -339,7 +342,7 @@ class ClaimController extends GetxController {
       } else {
         var response = await http.get(
           Uri.parse(SearchApi +
-              "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=10"),
+              "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=200"),
           headers: {
             "Content-Type": "application/json",
             "X-Xsrf-Token": box.read("authToken"),
@@ -370,14 +373,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("6");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("6");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -422,14 +425,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("5");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("5");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -467,14 +470,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("4");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("4");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -523,14 +526,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("3");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("3");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -564,7 +567,7 @@ class ClaimController extends GetxController {
     loadUpload.value = true;
    // var postUri = Uri.parse("$formUploadNew");
      var postUri = Uri.parse(
-        "http://13.235.28.49:7002/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
     var request = http.MultipartRequest("Put", postUri);
     Map<String, String> headers = {
@@ -579,9 +582,11 @@ class ClaimController extends GetxController {
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
     request.fields["isMinor"] = nominee.value=="Minor"?"true":"false";
-    request.fields["causeOfDeath"] = causeofDeathReturn(causeofDeath.value); //compulsory
-
-    request.fields["borowerProof"] = "BORROWER_ID_PROOF";
+    log("Key 1234: ${nominee.value=="Minor"?"true":"false"}");
+    request.fields["causeOfDeath"] = causeofDeathReturn(causeofDeath.value)==""||causeofDeathReturn(causeofDeath.value)==null ||causeofDeathReturn(causeofDeath.value).isEmpty?causeofDeath.value:causeofDeathReturn(causeofDeath.value); //compulsory
+    log("Key 1234: ${causeofDeathReturn(causeofDeath.value)}");
+    log("Key 1234: ${causeofDeath.value}");
+    //request.fields["borowerProof"] = "BORROWER_ID_PROOF";
 
     /// code for adding file image
     if(nominee.value=="Minor") {
@@ -668,7 +673,7 @@ class ClaimController extends GetxController {
     log("${responsed.statusCode}");
 
     //final responseData = json.decode(responsed.body);
-    // log("$responseData");
+     log("$response");
     if (response.statusCode == 200) {
       loadUpload.value = false;
 
@@ -683,7 +688,8 @@ class ClaimController extends GetxController {
       log("Success");
     } else {
       loadUpload.value = false;
-      log("errorCode ${response.statusCode}");
+
+      log("errorCode ${responsed.body}");
       Get.rawSnackbar(
           message: "Something went wrong",
           snackPosition: SnackPosition.BOTTOM,
@@ -777,7 +783,7 @@ class ClaimController extends GetxController {
     loadUpload.value = true;
     // var postUri = Uri.parse("$formUploadNew");
     var postUri = Uri.parse(
-        "http://13.235.28.49:7002/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
     var request = http.MultipartRequest("Put", postUri);
     Map<String, String> headers = {
       // "Content-Type": "multipart/form-data",
@@ -889,7 +895,7 @@ class ClaimController extends GetxController {
     loadUpload.value = true;
     // var postUri = Uri.parse("$formUploadNew");
     var postUri = Uri.parse(
-        "http://13.235.28.49:7002/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
     var request = http.MultipartRequest("Put", postUri);
     Map<String, String> headers = {
       // "Content-Type": "multipart/form-data",
