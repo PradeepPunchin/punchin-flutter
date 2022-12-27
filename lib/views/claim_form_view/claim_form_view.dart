@@ -41,6 +41,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   List<String> medicialList = <String>[
     'Police FIR Copy *',
     'Medical Records *',
+    "Medical Records"
     'Other Document',
   ];
 
@@ -53,6 +54,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   List<String> sickList = <String>[
     'Police FIR Copy *',
     'Medical Attendant Certificate *',
+    "Medical Records",
     'Other Document',
   ];
 
@@ -72,8 +74,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   @override
   Widget build(BuildContext context) {
-    controller.getStepperFormData();
-    controller.loadUpload.value = false;
+
+
     return Obx(()=>controller.loading.value==true?Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
@@ -309,9 +311,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               ),
                               field(
                                   text: controller.claimDetail
-                                      .value["claimData"]["branchName"]
+                                      .value["claimData"]["lenderName"]
                                       .toString()!=null?controller.claimDetail
-                                      .value["claimData"]["branchName"]
+                                      .value["claimData"]["lenderName"]
                                       .toString():""),
                               const SizedBox(
                                 height: 10.0,
@@ -2376,7 +2378,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              smallText(text: "Document Required for ${controller.claimDetail.value["claimData"]["causeOfDeath"]}"),
+                              smallText(text: "Document Required for ${controller.claimDetail.value["claimData"]["causeOfDeath"]!=null?controller.claimDetail.value["claimData"]["causeOfDeath"]:""}"),
                               const SizedBox(
                                 height: 10.0,
                               ),

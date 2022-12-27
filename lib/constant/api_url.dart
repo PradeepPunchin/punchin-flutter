@@ -1,7 +1,11 @@
 /// base Url api
+/// developement
  var baseUrl = "http://13.235.28.49:7002/api/v1/";
-//var baseUrl = "https://edbe-2401-4900-2e8b-7013-2b-a1e3-5d34-f7d4.in.ngrok.io/api/v1/";
-//"https://81ac-223-190-86-159.in.ngrok.io/api/v1/";
+
+/// staging
+//var baseUrl = "http://3.110.250.144/api/v1/";
+
+
 /// authentication api
 var loginApi = Uri.parse("${baseUrl}auth/login");
 var logoutApi = baseUrl + "auth/logout";

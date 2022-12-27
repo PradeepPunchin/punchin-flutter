@@ -398,10 +398,10 @@ class _DetailsState extends State<Details> {
                                                   SizedBox(
                                                     height: 4,
                                                   ),
-                                                  // Text(
-                                                  //   "${dateChange(singleData.allocationDate.toString()==null?DateTime.now().toString():singleData.allocationDate.toString())}",
-                                                  //   style: kBody14black600,
-                                                  // ),
+                                                  Text(
+                                                    "${dateChange(singleData.allocationDate==null?"":singleData.allocationDate)}",
+                                                    style: kBody14black600,
+                                                  ),
                                                 ],
                                               ),
                                               const Spacer(),
@@ -670,10 +670,10 @@ class _DetailsState extends State<Details> {
                                             SizedBox(
                                               height: 4,
                                             ),
-                                            // Text(
-                                            //   "${dateChange(singleData.allocationDate)}",
-                                            //   style: kBody14black600,
-                                            // ),
+                                            Text(
+                                              "${dateChange(singleData.allocationDate)}",
+                                              style: kBody14black600,
+                                            ),
                                           ],
                                         ),
                                         const Spacer(),

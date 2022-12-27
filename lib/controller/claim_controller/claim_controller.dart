@@ -258,7 +258,8 @@ class ClaimController extends GetxController {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         }
-      } else {
+      }
+      else {
         var Url = SearchApi +
             "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=200";
         print(Url);
@@ -275,7 +276,7 @@ class ClaimController extends GetxController {
         print(response.body);
 
         if (response.statusCode == 200) {
-         //return ClaimSubmitted.fromJson(jsonDecode(response.body));
+         return ClaimSubmitted.fromJson(jsonDecode(response.body));
           var body= ClaimSubmitted.fromJson(jsonDecode(response.body));
           log("claim body"+body.toString());
         }
@@ -675,6 +676,7 @@ class ClaimController extends GetxController {
     //final responseData = json.decode(responsed.body);
      log("$response");
     if (response.statusCode == 200) {
+      getStepperFormData();
       loadUpload.value = false;
 
       Fluttertoast.showToast(
@@ -780,6 +782,7 @@ class ClaimController extends GetxController {
   }
 
   uploadFormData2() async {
+    getStepperFormData();
     loadUpload.value = true;
     // var postUri = Uri.parse("$formUploadNew");
     var postUri = Uri.parse(
@@ -892,6 +895,7 @@ class ClaimController extends GetxController {
   }
 
   uploadFormData3() async {
+    getStepperFormData();
     loadUpload.value = true;
     // var postUri = Uri.parse("$formUploadNew");
     var postUri = Uri.parse(

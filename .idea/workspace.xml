@@ -10,15 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03aed0f3-b88b-40d1-b417-e537cb72adef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/icons/whatsapp.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/punchin-flutter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/punchin-flutter.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/constant/api_url.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constant/api_url.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/claim_details/details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_details/details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/home/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/home/home_view.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,12 +118,12 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>1246</line>
+          <line>1248</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>2892</line>
+          <line>2894</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
@@ -135,52 +133,52 @@
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>1466</line>
+          <line>1468</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>2957</line>
+          <line>2959</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>3077</line>
+          <line>3079</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>2382</line>
+          <line>2384</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>145</line>
+          <line>147</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
-          <line>548</line>
+          <line>549</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>259</line>
+          <line>261</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>795</line>
+          <line>797</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>2461</line>
+          <line>2463</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart</url>
-          <line>2374</line>
+          <line>2376</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
@@ -195,7 +193,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
-          <line>278</line>
+          <line>279</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
