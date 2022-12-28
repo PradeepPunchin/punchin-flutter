@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -54,6 +53,7 @@ class ClaimController extends GetxController {
   RxString additionalProof = "".obs;
   RxString additionalProofDoc = "".obs;
   var discrepancyData = {}.obs;
+  
 
   RxBool loading = true.obs;
   RxBool loadUpload = false.obs;
@@ -66,21 +66,13 @@ class ClaimController extends GetxController {
   RxList minorNominee = [].obs;
 
   /// Additional
-
-  RxList additionalList = [].obs;
-  RxList additionalImage = [].obs;
-  RxList additionalDropDownList = [].obs;
+  List additionalList = [].obs;
+  List additionalImage = [].obs;
+  List additionalDropDownList = [].obs;
 
   addProductLot({selectedValue, imagePath, dropDownValue}) {
     log(dropDownValue.toString());
 
-    log("Minor Data Type : ${minor.value.contains(dropDownValue)}");
-    var contain = minorNominee.where((element) => element == dropDownValue);
-    if (contain.isEmpty) {
-      log("Yes : ${dropDownValue.toString()}");
-    } else {
-      log("No : ${dropDownValue.toString()}");
-    }
 
     if (minorNominee.value.contains(dropDownValue.toString())) {
       Fluttertoast.showToast(
@@ -93,7 +85,6 @@ class ClaimController extends GetxController {
           fontSize: 16.0);
     } else {
       Map<String, dynamic> trendColorMap = {
-        "value": selectedValue,
         'image_path': imagePath,
         'dropDownValue': dropDownValue
       };
@@ -107,7 +98,7 @@ class ClaimController extends GetxController {
   }
 
   additionalDocumentList({selectedValue, imagePath, dropDownValue}) {
-    if (additionalDropDownList.value.contains(dropDownValue.toString())) {
+    if (additionalDropDownList.contains(dropDownValue.toString())) {
       Fluttertoast.showToast(
           msg: "File Already Exists for $selectedValue",
           toastLength: Toast.LENGTH_SHORT,
@@ -118,7 +109,6 @@ class ClaimController extends GetxController {
           fontSize: 16.0);
     } else {
       Map<String, dynamic> trendColorMap = {
-        "value": selectedValue,
         'image_path': imagePath,
         'dropDownValue': dropDownValue
       };
@@ -196,7 +186,7 @@ class ClaimController extends GetxController {
   getClaimUnderVerification({status}) async {
     try {
       var response = await http.get(
-        Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+        Uri.parse(getAgentClaimApi + "$status&page=0&limit=200"),
         headers: {
           "Content-Type": "application/json",
           "X-Xsrf-Token": box.read("authToken"),
@@ -244,7 +234,7 @@ class ClaimController extends GetxController {
           (searchController.value.text == '' ||
               searchController.value.text == null ||
               searchController.value.text == "null")) {
-        var Url = getAgentClaimApi + "ALLOCATED&page=0&limit=10";
+        var Url = getAgentClaimApi + "ALLOCATED&page=0&limit=200";
         var response = await http.get(
           Uri.parse(Url),
           headers: {
@@ -253,6 +243,7 @@ class ClaimController extends GetxController {
           },
         );
         if (response.statusCode == 200) {
+          log(response.body);
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
         }
         if (response.statusCode == 404) {
@@ -267,9 +258,10 @@ class ClaimController extends GetxController {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         }
-      } else {
+      }
+      else {
         var Url = SearchApi +
-            "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=10";
+            "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=200";
         print(Url);
 
         var response = await http.get(
@@ -284,7 +276,9 @@ class ClaimController extends GetxController {
         print(response.body);
 
         if (response.statusCode == 200) {
-          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+         return ClaimSubmitted.fromJson(jsonDecode(response.body));
+          var body= ClaimSubmitted.fromJson(jsonDecode(response.body));
+          log("claim body"+body.toString());
         }
         if (response.statusCode == 404) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
@@ -309,14 +303,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("12345" + e.toString());
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("12345" + e.toString());
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -327,7 +321,7 @@ class ClaimController extends GetxController {
     try {
       if (status == null) {
         var response = await http.get(
-          Uri.parse(getAgentClaimApi + "$status&page=0&limit=10"),
+          Uri.parse(getAgentClaimApi + "$status&page=0&limit=200"),
           headers: {
             "Content-Type": "application/json",
             "X-Xsrf-Token": box.read("authToken"),
@@ -349,7 +343,7 @@ class ClaimController extends GetxController {
       } else {
         var response = await http.get(
           Uri.parse(SearchApi +
-              "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=10"),
+              "${causeofDeath.value}&searchedKeyword=searchKey&pageNo=0&limit=200"),
           headers: {
             "Content-Type": "application/json",
             "X-Xsrf-Token": box.read("authToken"),
@@ -380,14 +374,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("6");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("6");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -432,14 +426,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("5");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("5");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -477,14 +471,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("4");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("4");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -499,6 +493,8 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
+
+      log(response.body);
       if (response.statusCode == 200) {
         // return ClaimSubmitted.fromJson(jsonDecode(response.body));
         Map data = jsonDecode(response.body);
@@ -506,9 +502,9 @@ class ClaimController extends GetxController {
         if (data != null && data["isSuccess"]) {
           loading.value = false;
 
-          claimDetail.value = data["data"];
+          claimDetail.value = data["data"];//["claimData"];
 
-          claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]);
+          //claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]["claimData"]);
         }
       } else if (response.statusCode == 401) {
         final details = jsonDecode(response.body);
@@ -531,14 +527,14 @@ class ClaimController extends GetxController {
     //       backgroundColor: Colors.red);
     // }
     catch (e) {
-      print("3");
-      print(e);
-      Get.rawSnackbar(
-          message: " $e Error Occured",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
+      // print("3");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
     } finally {
       //btnController.value.stop();
     }
@@ -570,9 +566,9 @@ class ClaimController extends GetxController {
 
   uploadFormData() async {
     loadUpload.value = true;
-    var postUri = Uri.parse("$formUploadNew");
-    // var postUri = Uri.parse(
-    //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+   // var postUri = Uri.parse("$formUploadNew");
+     var postUri = Uri.parse(
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
     var request = http.MultipartRequest("Put", postUri);
     Map<String, String> headers = {
@@ -585,28 +581,58 @@ class ClaimController extends GetxController {
 
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
-    request.fields["nomineeStatus"] = nominee.value.toString(); //c
-    log("Key 1: ${nominee.value.toString()}"); // ompulsory
-    request.fields["signedClaim"] = "SIGNED_FORM"; //compulsory
 
-    request.fields["deathCertificate"] = "DEATH_CERTIFICATE"; //compulsory
-
-    request.fields["causeOfDeath"] =
-        causeofDeathReturn(causeofDeath.value); //compulsory
-
-    log("key cause : ${causeofDeathReturn(causeofDeath.value)}");
-
-    request.fields["borrowerIdDocType"] = documentReturn(borroweridProof.value);
-    log("key ${documentReturn(borroweridProof.value)}");
-    request.fields["borowerProof"] = "BORROWER_ID_PROOF";
+    request.fields["isMinor"] = nominee.value=="Minor"?"true":"false";
+    log("Key 1234: ${nominee.value=="Minor"?"true":"false"}");
+    request.fields["causeOfDeath"] = causeofDeathReturn(causeofDeath.value)==""||causeofDeathReturn(causeofDeath.value)==null ||causeofDeathReturn(causeofDeath.value).isEmpty?causeofDeath.value:causeofDeathReturn(causeofDeath.value); //compulsory
+    log("Key 1234: ${causeofDeathReturn(causeofDeath.value)}");
+    log("Key 1234: ${causeofDeath.value}");
+    //request.fields["borowerProof"] = "BORROWER_ID_PROOF";
 
     /// code for adding file image
-    log("Path is ${filledPath.value}");
-
+    if(nominee.value=="Minor") {
+      log("true ${nominee.value=="Minor"}");
+      if (minorProofPath.value.isNotEmpty) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'OTHER',
+            minorProofPath.value,
+            contentType: MediaType('file', 'pdf'),
+          ),
+        );
+      }
+      if (RelationProof.value.isNotEmpty) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'RELATIONSHIP_PROOF',
+            RelationProof.value,
+            contentType: MediaType('file', 'pdf'),
+          ),
+        );
+      }
+      if (GUARDIAN_ID_PROOF.value.isNotEmpty) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'GUARDIAN_ID_PROOF',
+            GUARDIAN_ID_PROOF.value,
+            contentType: MediaType('file', 'pdf'),
+          ),
+        );
+      }
+      if (GUARDIAN_ADD_PROOF.value.isNotEmpty) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'GUARDIAN_ADD_PROOF',
+            GUARDIAN_ADD_PROOF.value,
+            contentType: MediaType('file', 'pdf'),
+          ),
+        );
+      }
+    }
     if (filledPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'signedClaimMultipart',
+          'SIGNED_FORM',
           filledPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -616,7 +642,7 @@ class ClaimController extends GetxController {
     if (deathCertificatePath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'deathCertificateMultipart',
+          'DEATH_CERTIFICATE',
           deathCertificatePath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -625,80 +651,32 @@ class ClaimController extends GetxController {
     if (borrowerIdDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'borowerProofMultipart',
+          'BORROWER_KYC_PROOF :${borroweridProof.value}',
           borrowerIdDocPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
       );
     }
 
-    /* if (borrowerAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'borrowerAddressDoc',
-          borrowerAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }*/
 
-    if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeIdDoc',
-          nomineeAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
 
-    /* if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeAddressDoc',
-          nomineeAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }*/
 
-    if (bankAccountDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'bankAccountDoc',
-          bankAccountDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
 
-    if (firOrPostmortemReportPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'FirOrPostmortemReport',
-          firOrPostmortemReportPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
 
-    if (additionalDocpath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'additionalDoc',
-          additionalDocpath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
+
+
+
+
+
     log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
     log("${responsed.statusCode}");
 
     //final responseData = json.decode(responsed.body);
-    // log("$responseData");
+     log("$response");
     if (response.statusCode == 200) {
+      getStepperFormData();
       loadUpload.value = false;
 
       Fluttertoast.showToast(
@@ -712,7 +690,8 @@ class ClaimController extends GetxController {
       log("Success");
     } else {
       loadUpload.value = false;
-      log("errorCode ${response.statusCode}");
+
+      log("errorCode ${responsed.body}");
       Get.rawSnackbar(
           message: "Something went wrong",
           snackPosition: SnackPosition.BOTTOM,
@@ -724,7 +703,7 @@ class ClaimController extends GetxController {
 
   uploadFormData1() async {
     loadUpload.value = true;
-    var postUri = Uri.parse("$formUploadNewOne");
+    var postUri = Uri.parse("$formUpload/22/uploadDocument");
     // var postUri = Uri.parse(
     //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
@@ -741,10 +720,10 @@ class ClaimController extends GetxController {
     request.fields["nomineeProof"] = documentReturn(nomineeIdProofDoc.value);
     log("Key 2 Nomiee id ${documentReturn(nomineeIdProofDoc.value)}");
 
-    request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
+   // request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
     log("Key 3 bank id ${documentReturn(bankProofDoc.value)}");
 
-    request.fields["additionalDocs"] = additionalProof.value;
+    request.fields["isMinorDoc"] = jsonEncode(minor);
 
     /// code for adding file image
 
@@ -758,7 +737,7 @@ class ClaimController extends GetxController {
       );
     }
 
-    if (bankAccountDocPath.value.isNotEmpty) {
+    if (borrowerAddressDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
           'bankerPROOFMultipart',
@@ -767,6 +746,8 @@ class ClaimController extends GetxController {
         ),
       );
     }
+
+    
 
     log("Request $request");
     var response = await request.send();
@@ -801,12 +782,11 @@ class ClaimController extends GetxController {
   }
 
   uploadFormData2() async {
+    getStepperFormData();
     loadUpload.value = true;
+    // var postUri = Uri.parse("$formUploadNew");
     var postUri = Uri.parse(
         "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
-    // var postUri = Uri.parse(
-    //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
-    log(postUri.toString());
     var request = http.MultipartRequest("Put", postUri);
     Map<String, String> headers = {
       // "Content-Type": "multipart/form-data",
@@ -815,46 +795,26 @@ class ClaimController extends GetxController {
     request.headers.addAll(headers);
 
     ///code for adding keys
-    log(Get.arguments[1].id.toString());
-    request.fields["claimId"] = Get.arguments[1].id.toString();
-    log(documentReturn(causeofDeath.value));
 
-    log(isMinor().toString());
+    request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
+    log("Key 1: ${Get.arguments[1].id.toString()}");
 
-    request.fields["nomineeIdDocType"] =
-        documentReturn(borrowerAddressProof.value);
 
-    request.fields["bankAccountDocType"] = documentReturn(bankProof.value);
-    request.fields["additionalDocType"] = documentReturn(additionalProof.value);
 
-    /// code for adding file image
-    log("Path is ${filledPath.value}");
-
-    if (nomineeAddressDocPath.value.isNotEmpty) {
+    if (nomineeIdDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'nomineeIdDoc',
-          nomineeAddressDocPath.value,
+          'NOMINEE_KYC_PROOF : ${nomineeIdProof.value}',
+          nomineeIdDocPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
       );
     }
-
     if (bankAccountDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'bankAccountDoc',
+          'BANK_ACCOUNT_PROOF : ${bankProof.value}',
           bankAccountDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (firOrPostmortemReportPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'FirOrPostmortemReport',
-          firOrPostmortemReportPath.value,
           contentType: MediaType('file', 'pdf'),
         ),
       );
@@ -863,12 +823,46 @@ class ClaimController extends GetxController {
     if (additionalDocpath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          'additionalDoc',
+          "ADDITIONAL:${additionalProof.value}",
           additionalDocpath.value,
           contentType: MediaType('file', 'pdf'),
         ),
       );
     }
+
+    log("message${additionalList.isNotEmpty}");
+    // if (additionalList.value.isNotEmpty) {
+    //
+    //   for(int i=0;i<additionalList.length;i++){
+    //
+    //     request.files.add(
+    //       await http.MultipartFile.fromPath(
+    //         additionalList.value[i]["dropDownValue"],
+    //         additionalList.value[i]["image_path"],
+    //         contentType: MediaType('file', 'pdf'),
+    //       ),
+    //     );
+    //
+    //     print(additionalList.value[i]["dropDownValue"]);
+    //     print(additionalList.value[i]["image_path"]);
+    //
+    //     i++;
+    //   }
+    //
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
     log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
@@ -878,16 +872,15 @@ class ClaimController extends GetxController {
     // log("$responseData");
     if (response.statusCode == 200) {
       loadUpload.value = false;
-      Get.rawSnackbar(
-          message: "Form Submitted Successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.green);
 
-      Get.offAll(() => Details(
-            title: 'Allocated',
-          ));
+      Fluttertoast.showToast(
+          msg: "Form Submitted Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
       log("Success");
     } else {
       loadUpload.value = false;
@@ -900,6 +893,85 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+
+  uploadFormData3() async {
+    getStepperFormData();
+    loadUpload.value = true;
+    // var postUri = Uri.parse("$formUploadNew");
+    var postUri = Uri.parse(
+        "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
+    var request = http.MultipartRequest("Put", postUri);
+    Map<String, String> headers = {
+      // "Content-Type": "multipart/form-data",
+      "X-Xsrf-Token": box.read("authToken"),
+    };
+    request.headers.addAll(headers);
+
+    ///code for adding keys
+
+    request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
+    log("Key 1: ${Get.arguments[1].id.toString()}");
+
+
+
+
+
+
+    if (additionalDocpath.value.isNotEmpty) {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          "ADDITIONAL:${additionalProof.value}",
+          additionalDocpath.value,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    log("message${additionalList.isNotEmpty}");
+
+
+
+
+
+
+
+
+
+
+
+
+
+    log("Request $request");
+    var response = await request.send();
+    var responsed = await http.Response.fromStream(response);
+    log("${responsed.statusCode}");
+
+    //final responseData = json.decode(responsed.body);
+    // log("$responseData");
+    if (response.statusCode == 200) {
+      loadUpload.value = false;
+
+      Fluttertoast.showToast(
+          msg: "Form Submitted Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      log("Success");
+    } else {
+      loadUpload.value = false;
+      log("errorCode ${response.statusCode}");
+      Get.rawSnackbar(
+          message: "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.zero,
+          snackStyle: SnackStyle.GROUNDED,
+          backgroundColor: Colors.red);
+    }
+  }
+
 
   @override
   void onInit() {

@@ -272,7 +272,7 @@ class _HomeViewState extends State<HomeView> {
                                                 gradient: RadialGradient(
                                                   colors: totalCasseColor,
                                                 ),
-                                                color: kLightBlue,
+                                                color: Color(0xff1dafaf),//kLightBlue,
                                                 borderRadius:
                                                 BorderRadius.circular(7)),
                                             child: Row(
@@ -364,7 +364,7 @@ class _HomeViewState extends State<HomeView> {
                                             width: 170,
                                             height: 77,
                                             decoration: BoxDecoration(
-                                                color: kPurpul,
+                                                color:Color(0xff7cb5ec),// kPurpul,
                                                 borderRadius:
                                                     BorderRadius.circular(7)),
                                             child: Row(
@@ -457,7 +457,7 @@ class _HomeViewState extends State<HomeView> {
                                             width: 170,
                                             height: 77,
                                             decoration: BoxDecoration(
-                                                color: kLightBlue,
+                                                color: kPurpul,
                                                 borderRadius:
                                                 BorderRadius.circular(7)),
                                             child: Row(
