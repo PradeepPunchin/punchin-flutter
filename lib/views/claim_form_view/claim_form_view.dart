@@ -1271,9 +1271,13 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                           //
                                                           // controller.signForm.addAll(
                                                           //     {file});
+                                                          setState(() { });
                                                           Get.back(
                                                               closeOverlays:
                                                                   true);
+                                                          setState(() {
+
+                                                          });
                                                         },
                                                         child: Text(
                                                           "Choose Files from Phone",
@@ -1338,7 +1342,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                   ),
                                   const SizedBox(height: 10.0),
-                                  Obx(() => controller.files1!.isNotEmpty
+                                  controller.files1!=null
                                       ? ListView.builder(
                                           shrinkWrap: true,
                                           physics: NeverScrollableScrollPhysics(),
@@ -1363,11 +1367,14 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                         FontWeight
                                                                             .w700),
                                                           ),
-                                                          onTap: () => Get.to(
-                                                              () => PreviewScreen1(
-                                                                    filePath: controller
-                                                                        .files1![index],
-                                                                  )),
+                                                          onTap: () {
+                                                            controller.filled.value=controller.files1![index].toString();
+                                                            Get.to(
+                                                                    () =>
+                                                                    PreviewScreen1(
+                                                                      filePath:  controller.filled.value,
+                                                                    ));
+                                                                          }
                                                         ),
                                                       ),
                                                       const Spacer(),
@@ -1425,7 +1432,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       //           )
                                       //         ],
                                       //       )
-                                      : SizedBox()),
+                                      : SizedBox(),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -1523,6 +1530,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                           controller
                                                               .deathCertificatePath
                                                               .value = file;
+                                                          print("object ${controller
+                                                              .deathCertificatePath
+                                                              .value}");
                                                           Get.back(
                                                               closeOverlays:
                                                                   true);
@@ -1555,6 +1565,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                   .dealthCertificate
                                                                   .value =
                                                               basename(file);
+                                                          print("object ${controller
+                                                              .deathCertificatePath
+                                                              .value}");
                                                           controller
                                                               .deathCertificatePath
                                                               .value = file;
@@ -1687,7 +1700,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   ),
                                   smallText(
                                       text:
-                                          "(atleast one  document is mandatory)"),
+                                          "(atleast one document is mandatory)"),
                                   Text(
                                       "${controller.claimDetail.value["claimDocuments"][0]["borrowerKycProof"].toString() == "UPLOADED" ? controller.claimDetail.value["claimDocuments"][0]["borrowerKycProof"].toString() : ""}"),
                                   Container(
@@ -2075,7 +2088,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 ],
                               ),
                               smallText(
-                                  text: "(atleast one  document is mandatory)"),
+                                  text: "(atleast one document is mandatory)"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -2608,51 +2621,51 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         },
                                       )),
                                 ),
-                              Obx(() => controller.nominee.value == "Minor"
-                                  ? Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(1.0),
-                                          border: Border.all(color: kGrey)),
-                                      child: Obx(() => DropdownButton<String>(
-                                            isExpanded: true,
-                                            hint: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: controller.additionalProof
-                                                      .value.isNotEmpty
-                                                  ? Text(
-                                                      controller.additionalProof
-                                                          .value,
-                                                      style: CustomFonts
-                                                          .kBlack15Black
-                                                          .copyWith(
-                                                              fontSize: 14.0),
-                                                    )
-                                                  : Text(
-                                                      "Select Document Type",
-                                                      style: CustomFonts
-                                                          .kBlack15Black
-                                                          .copyWith(
-                                                              fontSize: 14.0),
-                                                    ),
-                                            ),
-                                            underline: const SizedBox(),
-                                            items:
-                                                minorList.map((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                            onChanged: (value) {
-                                              controller.additionalProof.value =
-                                                  value!;
-                                            },
-                                          )),
-                                    )
-                                  : SizedBox()),
+                              // Obx(() => controller.nominee.value == "Minor"
+                              //     ? Container(
+                              //         decoration: BoxDecoration(
+                              //             color: Colors.grey.shade100,
+                              //             borderRadius:
+                              //                 BorderRadius.circular(1.0),
+                              //             border: Border.all(color: kGrey)),
+                              //         child: Obx(() => DropdownButton<String>(
+                              //               isExpanded: true,
+                              //               hint: Padding(
+                              //                 padding:
+                              //                     const EdgeInsets.all(8.0),
+                              //                 child: controller.additionalProof
+                              //                         .value.isNotEmpty
+                              //                     ? Text(
+                              //                         controller.additionalProof
+                              //                             .value,
+                              //                         style: CustomFonts
+                              //                             .kBlack15Black
+                              //                             .copyWith(
+                              //                                 fontSize: 14.0),
+                              //                       )
+                              //                     : Text(
+                              //                         "Select Document Type",
+                              //                         style: CustomFonts
+                              //                             .kBlack15Black
+                              //                             .copyWith(
+                              //                                 fontSize: 14.0),
+                              //                       ),
+                              //               ),
+                              //               underline: const SizedBox(),
+                              //               items:
+                              //                   minorList.map((String value) {
+                              //                 return DropdownMenuItem<String>(
+                              //                   value: value,
+                              //                   child: Text(value),
+                              //                 );
+                              //               }).toList(),
+                              //               onChanged: (value) {
+                              //                 controller.additionalProof.value =
+                              //                     value!;
+                              //               },
+                              //             )),
+                              //       )
+                              //     : SizedBox()),
                               const SizedBox(
                                 height: 10.0,
                               ),

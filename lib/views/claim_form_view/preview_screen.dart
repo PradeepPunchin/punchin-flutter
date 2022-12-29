@@ -3,8 +3,11 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
+import 'package:punchin/controller/claim_controller/claim_controller.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../constant/const_text.dart';
 
 class PreviewScreen extends StatefulWidget {
@@ -86,11 +89,29 @@ class PreviewScreen1 extends StatefulWidget {
 class _PreviewScreen1State extends State<PreviewScreen1> {
 
   var filextension;
-  String getFileExtension(String fileName) {
+  var filePathinPdf;
+  String getFileExtension( fileName) {
+    String s = "$fileName";
+    int idx = fileName.indexOf(":");
+    List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+
+    var str = parts[1];
+
+    var find = "'";
+    var replaceWith = '';
+    var newString = str.replaceAll(find, replaceWith);
+
+    var parts1 = str.split( '${str[0]}');
+
+
+    filePathinPdf=newString;
+
+    //filePathinPdf=parts[1];
+
     print("." + fileName.split('.').last);
     filextension =fileName.split('.').last;
-    print("file type"+filextension);
-    print(fileName);
+    print("file type " + filextension);
+    print(filePathinPdf);
     final file = File('${fileName}');
 
     return "." + fileName.split('.').last;
@@ -102,8 +123,10 @@ class _PreviewScreen1State extends State<PreviewScreen1> {
 
   }
 
+
   @override
   Widget build(BuildContext context) {
+
     getFileExtension(widget.filePath.toString());
 
     return Scaffold(
@@ -126,14 +149,37 @@ class _PreviewScreen1State extends State<PreviewScreen1> {
         ),
       ),
       body: filextension == "jpg" || filextension == "jpeg"|| filextension == "png"?
-      Image.file(File(widget.filePath.toString()),
+      Image.file(File(filePathinPdf,),
       ):
       Container(
-        width: 400,//Get.width,
+        width: 400,
         height: Get.height,
-
-        child: PdfView(path: widget.filePath.toString()),
+        child:
+        SfPdfViewer.file(
+           // scrollDirection : PdfScrollDirection.vertical,
+          File('${filePathinPdf.toString()}'),
+        ),
       ),
+
+      // PdfView(path: "${widget.filePath}" ),
+      //   SingleChildScrollView(
+      //   physics: NeverScrollableScrollPhysics(),
+      //   child: Column(
+      //     children: [
+      //
+      //
+      //
+      //       filextension == ".pdf" ||filextension == "pdf" ?
+      //       Container(
+      //         width: 400,//Get.width,
+      //         height: 400,
+      //
+      //         child: PdfView(path: "${widget.filePath}" ),
+      //       ):PdfView(path: "${widget.filePath}" ),
+      //
+      //     ],
+      //   ),
+      // )
     );
   }
 }
