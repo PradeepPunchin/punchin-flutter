@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:async/async.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
 import 'package:punchin/views/claim_details/details.dart';
 import 'package:punchin/views/login/login_screen.dart';
-
 import '../../model/claim_model/claim_details.dart';
 
 class ClaimController extends GetxController {
@@ -555,6 +555,44 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
+  List<File>? files1 ;
+  List<http.MultipartFile> signForm=[];
+  Future<List<File>?> uploadFile1() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      //List<File> file = File(result.files.single.path!);
+      files1 = result.paths.map((path) => File(path!)).toList();//result.paths.map((path) => File(result.files.path.toString())).toList();
+      // path.value = basename(file.path);
+      //path.value = file.path;
+    } else {
+      // User canceled the picker
+    }
+   // return path.value;
+   return files1;
+  }
+
+
+  List<File>? imageFileList = [];
+
+  Future<void> selectDocuments() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc']);
+    if (result != null) {
+      List<File> files = result.paths.map((p) => File(p!)).toList();
+      imageFileList = result.paths.map((p) => File(p!)).toList();
+      print("file length ${files.length}   ${imageFileList!.length}");
+      List<String> title = files.map((e) => e.path.split('/').last).toList();
+      //fileTitle!.value = title;
+      //documentList.value = files;
+      //log(fileTitle.toString(), name: "document seletced");
+    }
+  }
+
   Future<String> imageFromCamera() async {
     ImagePicker picker = ImagePicker();
     XFile? imageXFile = await picker.pickImage(source: ImageSource.camera);
@@ -564,7 +602,12 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
-  uploadFormData() async {
+
+
+
+
+
+  Future<http.StreamedResponse?> uploadFormData() async {
     loadUpload.value = true;
    // var postUri = Uri.parse("$formUploadNew");
      var postUri = Uri.parse(
@@ -629,16 +672,51 @@ class ClaimController extends GetxController {
         );
       }
     }
-    if (filledPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'SIGNED_FORM',
-          filledPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
+    if (files1!.isNotEmpty) {
+      // request.files.add(
+      //   await http.MultipartFile.fromPath(
+      //     'SIGNED_FORM',
+      //     signForm.toList().toString(),
+      //     contentType: MediaType('file', 'pdf'),
+      //   ),
+      // );
+      List<http.MultipartFile> newList=[] ;
+      for (int i = 0; i < files1!.length; i++) {
+        File imageFile = File(files1![i].path);
+        var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        var length = await imageFile.length();
+        var multipartFile = http.MultipartFile("SIGNED_FORM :  : ${i}", stream, length,
+            filename: imageFile.path.split('/').last);
+        newList.add(multipartFile);
+      }
+
+      request.files.addAll(newList);
+
     }
 
+    // List<http.MultipartFile> newList=[];
+    // newList.addAll(files1);
+    // log(files1!.length.toString());
+    //
+    // for (int i = 0; i < files1!.length; i++) {
+    //   File imageFile = File(files1![i].path);
+    //   var stream =
+    //   new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    //
+    //   var length =  await imageFile.length();
+    //   var multipartFile = http.MultipartFile("SIGNED_FORM", stream, length,
+    //       filename: imageFile.path.split('/').last);
+    //   newList.addAll({multipartFile});
+    //
+    // }
+    // request.files.addAll(files1);
+
+
+    //Files
+    if (filledPath.value.isEmpty) {
+
+    }
     if (deathCertificatePath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -971,6 +1049,9 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+
+
+
 
 
   @override
