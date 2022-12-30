@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,6 +75,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   @override
   Widget build(BuildContext context) {
+    controller.loadUpload.value = false;
+
     return Obx(() => controller.loading.value == true
         ? Scaffold(
             body: Center(
@@ -1246,20 +1249,35 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                             HitTestBehavior
                                                                 .opaque,
                                                         onTap: () async {
-                                                          List file =
-                                                              await controller
-                                                                  .uploadFileMultiple();
-                                                          print(file);
+                                                          await controller
+                                                              .uploadFile1();
 
+                                                          // var file =
+                                                          // await controller
+                                                          //     .uploadFile();
+                                                          // print(file);
+                                                          // controller
+                                                          //     .filled
+                                                          //     .value =
+                                                          //     basename(file);
+                                                          // controller
+                                                          //     .filled
+                                                          //     .value = file;
+                                                          //print(file);
                                                           // controller.filled
                                                           //         .value =
                                                           //     basename(file);
-                                                          // controller
-                                                          //     .additionalListDocument
-                                                          //     .value = file;
+                                                          // controller.files = file;
+                                                          //
+                                                          // controller.signForm.addAll(
+                                                          //     {file});
+                                                          setState(() { });
                                                           Get.back(
                                                               closeOverlays:
                                                                   true);
+                                                          setState(() {
+
+                                                          });
                                                         },
                                                         child: Text(
                                                           "Choose Files from Phone",
@@ -1324,49 +1342,76 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                   ),
                                   const SizedBox(height: 10.0),
-                                  Obx(() => controller
-                                          .filledPath.value.isNotEmpty
-                                      ? Row(
-                                          children: [
-                                            GestureDetector(
-                                              child: Text(
-                                                "Preview",
-                                                style: CustomFonts.kBlack15Black
-                                                    .copyWith(
-                                                        fontSize: 14.0,
-                                                        color: kdarkBlue,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                              ),
-                                              onTap: () {
-                                                print("Resting " +
-                                                    controller
-                                                        .filledPath.value);
+                                  controller.files1!=null
+                                      ? ListView.builder(
+                                          shrinkWrap: true,
+                                          physics: NeverScrollableScrollPhysics(),
+                                          itemCount: controller.files1!.length,
+                                          itemBuilder: (context, int index) {
+                                          return controller.files1!.isNotEmpty
+                                                ? Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: GestureDetector(
+                                                          child: Text(
+                                                            "Preview",
+                                                            style: CustomFonts
+                                                                .kBlack15Black
+                                                                .copyWith(
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    color:
+                                                                        kdarkBlue,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700),
+                                                          ),
+                                                          onTap: () {
+                                                           var filePathinPdf;
 
-                                                Get.to(
-                                                  () => PreviewScreen(
-                                                    filePath: controller
-                                                        .filledPath.value,
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            Spacer(),
-                                            GestureDetector(
-                                              onTap: () {
-                                                controller.filled.value = "";
-                                                controller.filledPath.value =
-                                                    "";
-                                              },
-                                              child: const Icon(
-                                                Icons.delete,
-                                                color: klightBlue,
-                                                size: 20,
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      : SizedBox()),
+                                                           String s = "${controller.files1![index].toString()}";
+                                                           int idx = s.indexOf(":");
+                                                            List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+                                                            var str = parts[1];
+                                                            var find = "'";
+                                                            var replaceWith = '';
+                                                            var newString = str.replaceAll(find, replaceWith);
+                                                            var parts1 = str.split( '${str[0]}');
+                                                            filePathinPdf=newString;
+                                                            //controller.filled.value=controller.files1![index].toString();
+                                                            // print(controller.files1![index].toString());
+                                                            // print(controller.deathCertificatePath.value.toString());
+                                                            // print(filePathinPdf==controller.deathCertificatePath.value.toString());
+                                                             Get.to(
+                                                                    () =>
+                                                                  PreviewScreen(
+                                                                     filePath: filePathinPdf,
+                                                                      // filePath:  controller
+                                                                     //     .deathCertificatePath
+                                                                      //     .value,
+                                                                     ));
+                                                                          }
+                                                        ),
+                                                      ),
+                                                      const Spacer(),
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          controller.files1!.removeAt(index);
+
+                                                          setState(() {});
+                                                        },
+                                                        child: const Icon(
+                                                          Icons.delete,
+                                                          color: klightBlue,
+                                                          size: 20,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                : SizedBox();
+                                          })
+                                      : SizedBox(),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -1420,7 +1465,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     .value["claimDocuments"][0]
                                                         ["deathCertificate"]
                                                     .toString() ==
-                                                "UPLOADED") {
+                                                "UPLOADED1") {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Already Under Verification",
@@ -1464,6 +1509,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                           controller
                                                               .deathCertificatePath
                                                               .value = file;
+                                                          print("object ${controller
+                                                              .deathCertificatePath
+                                                              .value}");
                                                           Get.back(
                                                               closeOverlays:
                                                                   true);
@@ -1488,17 +1536,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                             HitTestBehavior
                                                                 .opaque,
                                                         onTap: () async {
-                                                          var file =
-                                                              await controller
-                                                                  .uploadFile();
-                                                          print(file);
-                                                          controller
-                                                                  .dealthCertificate
-                                                                  .value =
-                                                              basename(file);
-                                                          controller
-                                                              .deathCertificatePath
-                                                              .value = file;
+                                                          await controller
+                                                              .uploadCertificate();
+                                                          setState(() { });
                                                           Get.back(
                                                               closeOverlays:
                                                                   true);
@@ -1566,6 +1606,72 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                   ),
                                   const SizedBox(height: 10.0),
+                                  controller.deathCertificate!=null
+                                      ? ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: controller.deathCertificate!.length,
+                                      itemBuilder: (context, int index) {
+                                        return controller.deathCertificate!.isNotEmpty
+                                            ? Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: GestureDetector(
+                                                  child: Text(
+                                                    "Preview",
+                                                    style: CustomFonts
+                                                        .kBlack15Black
+                                                        .copyWith(
+                                                        fontSize:
+                                                        14.0,
+                                                        color:
+                                                        kdarkBlue,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .w700),
+                                                  ),
+                                                  onTap: () {
+                                                    var filePathinPdf;
+
+                                                    String s = "${controller.deathCertificate![index].toString()}";
+                                                    int idx = s.indexOf(":");
+                                                    List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+                                                    var str = parts[1];
+                                                    var find = "'";
+                                                    var replaceWith = '';
+                                                    var newString = str.replaceAll(find, replaceWith);
+                                                    var parts1 = str.split( '${str[0]}');
+                                                    filePathinPdf=newString;
+                                                    Get.to(
+                                                            () =>
+                                                            PreviewScreen(
+                                                              filePath: filePathinPdf,
+                                                              // filePath:  controller
+                                                              //     .deathCertificatePath
+                                                              //     .value,
+                                                            ));
+                                                  }
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                controller.deathCertificate!.removeAt(index);
+
+                                                setState(() {});
+                                              },
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: klightBlue,
+                                                size: 20,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                            : SizedBox();
+                                      })
+                                      : SizedBox(),
                                   Obx(() => controller
                                           .deathCertificatePath.value.isNotEmpty
                                       ? Row(
@@ -1628,7 +1734,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   ),
                                   smallText(
                                       text:
-                                          "(atleast one  document is mandatory)"),
+                                          "(atleast one document is mandatory)"),
                                   Text(
                                       "${controller.claimDetail.value["claimDocuments"][0]["borrowerKycProof"].toString() == "UPLOADED" ? controller.claimDetail.value["claimDocuments"][0]["borrowerKycProof"].toString() : ""}"),
                                   Container(
@@ -1788,16 +1894,20 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                             HitTestBehavior
                                                                 .opaque,
                                                         onTap: () async {
-                                                          var file =
-                                                              await controller
-                                                                  .uploadFile();
-                                                          controller
-                                                                  .borroweridProofDoc
-                                                                  .value =
-                                                              basename(file);
-                                                          controller
-                                                              .borrowerIdDocPath
-                                                              .value = file;
+                                                          // var file =
+                                                          //     await controller
+                                                          //         .uploadFile();
+                                                          // controller
+                                                          //         .borroweridProofDoc
+                                                          //         .value =
+                                                          //     basename(file);
+                                                          // controller
+                                                          //     .borrowerIdDocPath
+                                                          //     .value = file;
+
+                                                          await controller
+                                                              .uploadBorrowerProof();
+                                                          setState(() { });
                                                           Get.back(
                                                               closeOverlays:
                                                                   true);
@@ -1864,6 +1974,72 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     ),
                                   ),
                                   const SizedBox(height: 10.0),
+                                  controller.borrowerProof!=null
+                                      ? ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: controller.borrowerProof!.length,
+                                      itemBuilder: (context, int index) {
+                                        return controller.borrowerProof!.isNotEmpty
+                                            ? Row(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: GestureDetector(
+                                                  child: Text(
+                                                    "Preview",
+                                                    style: CustomFonts
+                                                        .kBlack15Black
+                                                        .copyWith(
+                                                        fontSize:
+                                                        14.0,
+                                                        color:
+                                                        kdarkBlue,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .w700),
+                                                  ),
+                                                  onTap: () {
+                                                    var filePathinPdf;
+
+                                                    String s = "${controller.borrowerProof![index].toString()}";
+                                                    int idx = s.indexOf(":");
+                                                    List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+                                                    var str = parts[1];
+                                                    var find = "'";
+                                                    var replaceWith = '';
+                                                    var newString = str.replaceAll(find, replaceWith);
+                                                    var parts1 = str.split( '${str[0]}');
+                                                    filePathinPdf=newString;
+                                                    Get.to(
+                                                            () =>
+                                                            PreviewScreen(
+                                                              filePath: filePathinPdf,
+                                                              // filePath:  controller
+                                                              //     .deathCertificatePath
+                                                              //     .value,
+                                                            ));
+                                                  }
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                controller.borrowerProof!.removeAt(index);
+
+                                                setState(() {});
+                                              },
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: klightBlue,
+                                                size: 20,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                            : SizedBox();
+                                      })
+                                      : SizedBox(),
                                   Obx(() => controller
                                           .borrowerIdDocPath.value.isNotEmpty
                                       ? Row(
@@ -1965,7 +2141,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                       .value["claimData"]
                                                   ["causeOfDeath"];
                                         }
+                                        // controller.uploadFormData();
                                         controller.uploadFormData();
+
                                         //  }
                                       },
                                       color: kdarkBlue,
@@ -2014,7 +2192,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                 ],
                               ),
                               smallText(
-                                  text: "(atleast one  document is mandatory)"),
+                                  text: "(atleast one document is mandatory)"),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -2159,17 +2337,20 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     behavior:
                                                         HitTestBehavior.opaque,
                                                     onTap: () async {
-                                                      var file =
-                                                          await controller
-                                                              .uploadFile();
-                                                      print(file);
-                                                      controller
-                                                              .nomineeIdProofDoc
-                                                              .value =
-                                                          basename(file);
-                                                      controller
-                                                          .nomineeIdDocPath
-                                                          .value = file;
+                                                      // var file =
+                                                      //     await controller
+                                                      //         .uploadFile();
+                                                      // print(file);
+                                                      // controller
+                                                      //         .nomineeIdProofDoc
+                                                      //         .value =
+                                                      //     basename(file);
+                                                      // controller
+                                                      //     .nomineeIdDocPath
+                                                      //     .value = file;
+
+                                                      await controller.uploadNomineeProof();
+                                                      setState(() { });
                                                       Get.back(
                                                           closeOverlays: true);
                                                     },
@@ -2231,6 +2412,74 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
+                              controller.nomineeProof!=null
+                                  ? ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controller.nomineeProof!.length,
+                                  itemBuilder: (context, int index) {
+                                    return controller.nomineeProof!.isNotEmpty
+                                        ? Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: GestureDetector(
+                                              child: Text(
+                                                "Preview",
+                                                style: CustomFonts
+                                                    .kBlack15Black
+                                                    .copyWith(
+                                                    fontSize:
+                                                    14.0,
+                                                    color:
+                                                    kdarkBlue,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w700),
+                                              ),
+                                              onTap: () {
+                                                var filePathinPdf;
+
+                                                String s = "${controller.nomineeProof![index].toString()}";
+                                                int idx = s.indexOf(":");
+                                                List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+                                                var str = parts[1];
+                                                var find = "'";
+                                                var replaceWith = '';
+                                                var newString = str.replaceAll(find, replaceWith);
+                                                var parts1 = str.split( '${str[0]}');
+                                                filePathinPdf=newString;
+                                                Get.to(
+                                                        () =>
+                                                        PreviewScreen(
+                                                          filePath: filePathinPdf,
+                                                          // filePath:  controller
+                                                          //     .deathCertificatePath
+                                                          //     .value,
+                                                        ));
+                                              }
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.deathCertificate!.removeAt(index);
+
+                                            setState(() {});
+                                          },
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: klightBlue,
+                                            size: 20,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                        : SizedBox();
+                                  })
+                                  : SizedBox(),
+
+
                               Obx(() => controller
                                       .nomineeIdDocPath.value.isNotEmpty
                                   ? Row(
@@ -2362,10 +2611,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       elevation: 1.0,
                                       onPressed: () async {
                                         if (controller
-                                                .claimDetail
-                                                .value["claimDocuments"][0]
-                                                    ["bankAccountProof"]
-                                                .toString() ==
+                                            .claimDetail
+                                            .value["claimDocuments"][0]
+                                        ["bankAccountProof"]
+                                            .toString() ==
                                             "UPLOADED") {
                                           Fluttertoast.showToast(
                                               msg: "Already Under Verification",
@@ -2376,14 +2625,112 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               textColor: Colors.white,
                                               fontSize: 16.0);
                                         } else {
-                                          var file =
-                                              await controller.uploadFile();
-                                          print(file);
-                                          controller.bankProofDoc.value =
-                                              basename(file);
-                                          controller.bankAccountDocPath.value =
-                                              file;
+                                          Get.defaultDialog(
+                                              title: "Upload",
+                                              titleStyle: CustomFonts
+                                                  .kBlack15Black
+                                                  .copyWith(
+                                                  color: Colors.black,
+                                                  fontSize: 20.0,
+                                                  fontWeight:
+                                                  FontWeight.bold),
+                                              content: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: [
+                                                  Divider(),
+                                                  GestureDetector(
+                                                    onTap: () async {
+                                                      var file = await controller
+                                                          .imageFromCamera();
+                                                      print(file);
+                                                      controller
+                                                          .nomineeIdProofDoc
+                                                          .value =
+                                                          basename(file);
+                                                      controller
+                                                          .nomineeIdDocPath
+                                                          .value = file;
+                                                      Get.back(
+                                                          closeOverlays: true);
+                                                    },
+                                                    child: Text(
+                                                      "Take Photo ...",
+                                                      style: CustomFonts
+                                                          .kBlack15Black
+                                                          .copyWith(
+                                                          color: kdarkBlue,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                          fontSize: 16.0),
+                                                    ),
+                                                  ),
+                                                  Divider(),
+                                                  GestureDetector(
+                                                    behavior:
+                                                    HitTestBehavior.opaque,
+                                                    onTap: () async {
+
+                                                      // var file =
+                                                      // await controller.uploadFile();
+                                                      // print(file);
+                                                      // controller.bankProofDoc.value =
+                                                      //     basename(file);
+                                                      // controller.bankAccountDocPath.value =
+                                                      //     file;
+
+                                                      await controller.uploadBankProof();
+                                                      setState(() { });
+                                                      Get.back(
+                                                          closeOverlays: true);
+                                                    },
+                                                    child: Text(
+                                                      "Choose Files from Phone",
+                                                      style: CustomFonts
+                                                          .kBlack15Black
+                                                          .copyWith(
+                                                          color: kdarkBlue,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w600,
+                                                          fontSize: 16.0),
+                                                    ),
+                                                  ),
+                                                  Divider(),
+                                                ],
+                                              ),
+                                              cancel: GestureDetector(
+                                                onTap: () {
+                                                  log("**");
+                                                  Get.back(closeOverlays: true);
+                                                },
+                                                behavior:
+                                                HitTestBehavior.opaque,
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    "Cancel",
+                                                    style: CustomFonts
+                                                        .kBlack15Black
+                                                        .copyWith(
+                                                        color: Colors.red,
+                                                        fontSize: 16),
+                                                  ),
+                                                ),
+                                              ),
+                                              onCancel: () => Get.back());
                                         }
+
+
+
+
+
+
                                       },
                                       shape: RoundedRectangleBorder(
                                           side: const BorderSide(color: kGrey),
@@ -2405,6 +2752,73 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
+                              controller.bankACProof!=null
+                                  ? ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controller.bankACProof!.length,
+                                  itemBuilder: (context, int index) {
+                                    return controller.bankACProof!.isNotEmpty
+                                        ? Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: GestureDetector(
+                                              child: Text(
+                                                "Preview",
+                                                style: CustomFonts
+                                                    .kBlack15Black
+                                                    .copyWith(
+                                                    fontSize:
+                                                    14.0,
+                                                    color:
+                                                    kdarkBlue,
+                                                    fontWeight:
+                                                    FontWeight
+                                                        .w700),
+                                              ),
+                                              onTap: () {
+                                                var filePathinPdf;
+
+                                                String s = "${controller.bankACProof![index].toString()}";
+                                                int idx = s.indexOf(":");
+                                                List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+                                                var str = parts[1];
+                                                var find = "'";
+                                                var replaceWith = '';
+                                                var newString = str.replaceAll(find, replaceWith);
+                                                var parts1 = str.split( '${str[0]}');
+                                                filePathinPdf=newString;
+                                                Get.to(
+                                                        () =>
+                                                        PreviewScreen(
+                                                          filePath: filePathinPdf,
+                                                          // filePath:  controller
+                                                          //     .deathCertificatePath
+                                                          //     .value,
+                                                        ));
+                                              }
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            controller.bankACProof!.removeAt(index);
+
+                                            setState(() {});
+                                          },
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: klightBlue,
+                                            size: 20,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                        : SizedBox();
+                                  })
+                                  : SizedBox(),
+
                               Obx(() =>
                                   controller.bankAccountDocPath.value.isNotEmpty
                                       ? Row(
@@ -2547,6 +2961,51 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         },
                                       )),
                                 ),
+                              // Obx(() => controller.nominee.value == "Minor"
+                              //     ? Container(
+                              //         decoration: BoxDecoration(
+                              //             color: Colors.grey.shade100,
+                              //             borderRadius:
+                              //                 BorderRadius.circular(1.0),
+                              //             border: Border.all(color: kGrey)),
+                              //         child: Obx(() => DropdownButton<String>(
+                              //               isExpanded: true,
+                              //               hint: Padding(
+                              //                 padding:
+                              //                     const EdgeInsets.all(8.0),
+                              //                 child: controller.additionalProof
+                              //                         .value.isNotEmpty
+                              //                     ? Text(
+                              //                         controller.additionalProof
+                              //                             .value,
+                              //                         style: CustomFonts
+                              //                             .kBlack15Black
+                              //                             .copyWith(
+                              //                                 fontSize: 14.0),
+                              //                       )
+                              //                     : Text(
+                              //                         "Select Document Type",
+                              //                         style: CustomFonts
+                              //                             .kBlack15Black
+                              //                             .copyWith(
+                              //                                 fontSize: 14.0),
+                              //                       ),
+                              //               ),
+                              //               underline: const SizedBox(),
+                              //               items:
+                              //                   minorList.map((String value) {
+                              //                 return DropdownMenuItem<String>(
+                              //                   value: value,
+                              //                   child: Text(value),
+                              //                 );
+                              //               }).toList(),
+                              //               onChanged: (value) {
+                              //                 controller.additionalProof.value =
+                              //                     value!;
+                              //               },
+                              //             )),
+                              //       )
+                              //     : SizedBox()),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -2592,7 +3051,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               textColor: Colors.white,
                                               fontSize: 16.0);
                                         } else {
-                                          /*Get.defaultDialog(
+                                          Get.defaultDialog(
                                               title: "Upload",
                                               titleStyle: CustomFonts
                                                   .kBlack15Black
@@ -2742,255 +3201,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               ),
                                               cancel: GestureDetector(
                                                 onTap: () {
-                                                  Get.back(closeOverlays: true);
-                                                },
-                                                behavior:
-                                                    HitTestBehavior.opaque,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    "Cancel",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            color: Colors.red,
-                                                            fontSize: 16),
-                                                  ),
-                                                ),
-                                              ),
-                                              onCancel: () => Get.back());*/
-//TODO: code written for additional list
-                                          Get.defaultDialog(
-                                              title: "Upload",
-                                              titleStyle: CustomFonts
-                                                  .kBlack15Black
-                                                  .copyWith(
-                                                      color: Colors.black,
-                                                      fontSize: 20.0,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                              content: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Divider(),
-                                                  GestureDetector(
-                                                    onTap: () async {
-                                                      if (controller
-                                                          .minorNominee
-                                                          .contains(controller
-                                                              .minorDropdown
-                                                              .value)) {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                "Already Exit Record for Selected Dropdown",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .BOTTOM,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0);
-                                                      } else {
-                                                        var file = await controller
-                                                            .imageFromCamera();
-
-                                                        if (controller
-                                                                .minorDropdown
-                                                                .value ==
-                                                            "RELATIONSHIP_PROOF") {
-                                                          controller.minorProof
-                                                                  .value =
-                                                              basename(file);
-                                                          controller
-                                                              .RelationProof
-                                                              .value = file;
-                                                          Get.back(
-                                                              closeOverlays:
-                                                                  true);
-                                                          controller.addProductLot(
-                                                              selectedValue:
-                                                                  controller
-                                                                      .minorProof
-                                                                      .value,
-                                                              imagePath: controller
-                                                                  .RelationProof
-                                                                  .value,
-                                                              dropDownValue:
-                                                                  controller
-                                                                      .minorDropdown
-                                                                      .value);
-                                                        } else if (controller
-                                                                .minorDropdown
-                                                                .value ==
-                                                            "GUARDIAN_ID_PROOF") {
-                                                          controller.minorProof
-                                                                  .value =
-                                                              basename(file);
-                                                          controller
-                                                              .GUARDIAN_ID_PROOF
-                                                              .value = file;
-                                                          Get.back(
-                                                              closeOverlays:
-                                                                  true);
-                                                          controller.addProductLot(
-                                                              selectedValue:
-                                                                  controller
-                                                                      .minorProof
-                                                                      .value,
-                                                              imagePath: controller
-                                                                  .GUARDIAN_ID_PROOF
-                                                                  .value,
-                                                              dropDownValue:
-                                                                  controller
-                                                                      .minorDropdown
-                                                                      .value);
-                                                        } else if (controller
-                                                                .minorDropdown
-                                                                .value ==
-                                                            "GUARDIAN_ADD_PROOF") {
-                                                          controller.minorProof
-                                                                  .value =
-                                                              basename(file);
-                                                          controller
-                                                              .GUARDIAN_ADD_PROOF
-                                                              .value = file;
-                                                          Get.back(
-                                                              closeOverlays:
-                                                                  true);
-                                                          controller.addProductLot(
-                                                              selectedValue:
-                                                                  controller
-                                                                      .minorProof
-                                                                      .value,
-                                                              imagePath: controller
-                                                                  .GUARDIAN_ADD_PROOF
-                                                                  .value,
-                                                              dropDownValue:
-                                                                  controller
-                                                                      .minorDropdown
-                                                                      .value);
-                                                        } else if (controller
-                                                                .minorDropdown
-                                                                .value ==
-                                                            "Other Document") {
-                                                          controller.minorProof
-                                                                  .value =
-                                                              basename(file);
-                                                          controller
-                                                              .minorProofPath
-                                                              .value = file;
-                                                          Get.back(
-                                                              closeOverlays:
-                                                                  true);
-                                                          controller.addProductLot(
-                                                              selectedValue:
-                                                                  controller
-                                                                      .minorProof
-                                                                      .value,
-                                                              imagePath: controller
-                                                                  .minorProofPath
-                                                                  .value,
-                                                              dropDownValue:
-                                                                  controller
-                                                                      .minorDropdown
-                                                                      .value);
-                                                        }
-                                                      }
-                                                    },
-                                                    child: Text(
-                                                      "Take Photo ...",
-                                                      style: CustomFonts
-                                                          .kBlack15Black
-                                                          .copyWith(
-                                                              color: kdarkBlue,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 16.0),
-                                                    ),
-                                                  ),
-                                                  Divider(),
-                                                  GestureDetector(
-                                                    behavior:
-                                                        HitTestBehavior.opaque,
-                                                    onTap: () async {
-                                                      if (controller
-                                                          .minorNominee
-                                                          .contains(controller
-                                                              .minorDropdown
-                                                              .value)) {
-                                                        Fluttertoast.showToast(
-                                                            msg:
-                                                                "Already Exit Record for Selected Dropdown",
-                                                            toastLength: Toast
-                                                                .LENGTH_SHORT,
-                                                            gravity:
-                                                                ToastGravity
-                                                                    .BOTTOM,
-                                                            timeInSecForIosWeb:
-                                                                1,
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            textColor:
-                                                                Colors.white,
-                                                            fontSize: 16.0);
-                                                      } else {
-                                                        var file =
-                                                            await controller
-                                                                .uploadFile();
-
-                                                        controller.minorProof
-                                                                .value =
-                                                            basename(file);
-                                                        controller
-                                                            .minorProofPath
-                                                            .value = file;
-
-                                                        Get.back(
-                                                            closeOverlays:
-                                                                true);
-                                                        controller.addProductLot(
-                                                            imagePath: controller
-                                                                .minorProofPath
-                                                                .value,
-                                                            selectedValue:
-                                                                controller
-                                                                    .minorProof
-                                                                    .value,
-                                                            dropDownValue:
-                                                                controller
-                                                                    .minorDropdown
-                                                                    .value);
-                                                      }
-                                                    },
-                                                    child: Text(
-                                                      "Choose Files from Phone",
-                                                      style: CustomFonts
-                                                          .kBlack15Black
-                                                          .copyWith(
-                                                              color: kdarkBlue,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              fontSize: 16.0),
-                                                    ),
-                                                  ),
-                                                  Divider(),
-                                                ],
-                                              ),
-                                              cancel: GestureDetector(
-                                                onTap: () {
-                                                  log("**");
                                                   Get.back(closeOverlays: true);
                                                 },
                                                 behavior:

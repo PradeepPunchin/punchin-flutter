@@ -1011,23 +1011,6 @@ class _DetailsState extends State<Details> {
                                       ],
                                     ),
                                   ),
-
-                                  // address
-
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                                  //   child: Column(
-                                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                                  //     children: [
-                                  //       Text("Address",style: kBody13black400,),
-                                  //       SizedBox(height: 4,),
-                                  //
-                                  //
-                                  //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
-                                  //
-                                  //     ],
-                                  //   ),
-                                  // ),
                                   Obx(() => details.value == true
                                       ? Padding(
                                     padding: const EdgeInsets.only(
@@ -1162,30 +1145,6 @@ class _DetailsState extends State<Details> {
                                             ),
                                           ],
                                         ),
-                                        // Column(
-                                        //   crossAxisAlignment:
-                                        //   CrossAxisAlignment
-                                        //       .start,
-                                        //   children: [
-                                        //     // claim register date
-                                        //     Text(
-                                        //       "Claim Amount ",
-                                        //       style: kBody13black400,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       height: 4,
-                                        //     ),
-                                        //     Text(
-                                        //       singleData
-                                        //           .id
-                                        //           .toString(),
-                                        //       style: kBody14black600,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       height: 16,
-                                        //     ),
-                                        //   ],
-                                        // ),
                                       ],
                                     ),
                                   )
@@ -1767,7 +1726,6 @@ class _DetailsState extends State<Details> {
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       physics: BouncingScrollPhysics(),
-                      //padding: EdgeInsets.symmetric(horizontal: 16,vertical: 3),
                       itemCount: claimSubmitted.data!.content!.length,
                       itemBuilder: (context, index) {
                         var singleData = claimSubmitted.data!.content![index];
@@ -1781,7 +1739,7 @@ class _DetailsState extends State<Details> {
                             children: [
                               // claim id
                               Container(
-                                //width: Get.width,
+                                width: Get.width,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(7),
@@ -1792,12 +1750,26 @@ class _DetailsState extends State<Details> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                       left: 20, top: 12, bottom: 12),
-                                  child: Row(
-                                    children: [
-                                      Text("Case/Claim ID : ${singleData.claimId}",
-                                          style: kBody14kWhite600)
-                                    ],
-                                  ),
+                                  child:
+                                  Text(((){
+                                    if("${singleData.claimStatus}"=="VERIFIER_DISCREPENCY"){
+                                      return "Case/Claim ID : ${singleData.claimId}   Discrepancy";
+                                    }
+                                    else if("${singleData.claimStatus}"=="NEW_REQUIREMENT"){
+                                      return "Case/Claim ID : ${singleData.claimId}   New Doc Request";
+                                    }
+
+                                    return "Packed";
+                                  })(),
+                                    softWrap: true,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:kBody14kWhite600 ,),
+
+
+
+
+
                                 ),
                               ),
                               // details like name contact and date
