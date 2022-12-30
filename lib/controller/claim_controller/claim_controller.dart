@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -53,7 +54,6 @@ class ClaimController extends GetxController {
   RxString additionalProof = "".obs;
   RxString additionalProofDoc = "".obs;
   var discrepancyData = {}.obs;
-  
 
   RxBool loading = true.obs;
   RxBool loadUpload = false.obs;
@@ -70,9 +70,12 @@ class ClaimController extends GetxController {
   List additionalImage = [].obs;
   List additionalDropDownList = [].obs;
 
+  /// Multiple list for Additional
+  RxList<String> additionalListDocument = <String>[].obs;
+  RxList<String> selectedAdditionalDocumentsList = <String>[].obs;
+
   addProductLot({selectedValue, imagePath, dropDownValue}) {
     log(dropDownValue.toString());
-
 
     if (minorNominee.value.contains(dropDownValue.toString())) {
       Fluttertoast.showToast(
@@ -258,8 +261,7 @@ class ClaimController extends GetxController {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         }
-      }
-      else {
+      } else {
         var Url = SearchApi +
             "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=200";
         print(Url);
@@ -276,9 +278,9 @@ class ClaimController extends GetxController {
         print(response.body);
 
         if (response.statusCode == 200) {
-         return ClaimSubmitted.fromJson(jsonDecode(response.body));
-          var body= ClaimSubmitted.fromJson(jsonDecode(response.body));
-          log("claim body"+body.toString());
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+          var body = ClaimSubmitted.fromJson(jsonDecode(response.body));
+          log("claim body" + body.toString());
         }
         if (response.statusCode == 404) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
@@ -502,7 +504,7 @@ class ClaimController extends GetxController {
         if (data != null && data["isSuccess"]) {
           loading.value = false;
 
-          claimDetail.value = data["data"];//["claimData"];
+          claimDetail.value = data["data"]; //["claimData"];
 
           //claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]["claimData"]);
         }
@@ -555,6 +557,23 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
+  List imageFileList = [];
+  final imagePicker = ImagePicker();
+
+  Future<List> uploadFileMultiple() async {
+    final result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+
+    if (result!.files.isNotEmpty) {
+      imageFileList!.addAll(result.files);
+    }
+    print("Image List Length:" + imageFileList!.length.toString());
+
+    return imageFileList;
+  }
+
   Future<String> imageFromCamera() async {
     ImagePicker picker = ImagePicker();
     XFile? imageXFile = await picker.pickImage(source: ImageSource.camera);
@@ -566,8 +585,8 @@ class ClaimController extends GetxController {
 
   uploadFormData() async {
     loadUpload.value = true;
-   // var postUri = Uri.parse("$formUploadNew");
-     var postUri = Uri.parse(
+    // var postUri = Uri.parse("$formUploadNew");
+    var postUri = Uri.parse(
         "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
     var request = http.MultipartRequest("Put", postUri);
@@ -582,16 +601,21 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
-    request.fields["isMinor"] = nominee.value=="Minor"?"true":"false";
-    log("Key 1234: ${nominee.value=="Minor"?"true":"false"}");
-    request.fields["causeOfDeath"] = causeofDeathReturn(causeofDeath.value)==""||causeofDeathReturn(causeofDeath.value)==null ||causeofDeathReturn(causeofDeath.value).isEmpty?causeofDeath.value:causeofDeathReturn(causeofDeath.value); //compulsory
+    request.fields["isMinor"] = nominee.value == "Minor" ? "true" : "false";
+    log("Key 1234: ${nominee.value == "Minor" ? "true" : "false"}");
+    request.fields["causeOfDeath"] =
+        causeofDeathReturn(causeofDeath.value) == "" ||
+                causeofDeathReturn(causeofDeath.value) == null ||
+                causeofDeathReturn(causeofDeath.value).isEmpty
+            ? causeofDeath.value
+            : causeofDeathReturn(causeofDeath.value); //compulsory
     log("Key 1234: ${causeofDeathReturn(causeofDeath.value)}");
     log("Key 1234: ${causeofDeath.value}");
     //request.fields["borowerProof"] = "BORROWER_ID_PROOF";
 
     /// code for adding file image
-    if(nominee.value=="Minor") {
-      log("true ${nominee.value=="Minor"}");
+    if (nominee.value == "Minor") {
+      log("true ${nominee.value == "Minor"}");
       if (minorProofPath.value.isNotEmpty) {
         request.files.add(
           await http.MultipartFile.fromPath(
@@ -629,11 +653,11 @@ class ClaimController extends GetxController {
         );
       }
     }
-    if (filledPath.value.isNotEmpty) {
+    if (imageFileList!.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
           'SIGNED_FORM',
-          filledPath.value,
+          imageFileList.toString(),
           contentType: MediaType('file', 'pdf'),
         ),
       );
@@ -658,23 +682,13 @@ class ClaimController extends GetxController {
       );
     }
 
-
-
-
-
-
-
-
-
-
-
     log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
     log("${responsed.statusCode}");
 
     //final responseData = json.decode(responsed.body);
-     log("$response");
+    log("$response");
     if (response.statusCode == 200) {
       getStepperFormData();
       loadUpload.value = false;
@@ -720,7 +734,7 @@ class ClaimController extends GetxController {
     request.fields["nomineeProof"] = documentReturn(nomineeIdProofDoc.value);
     log("Key 2 Nomiee id ${documentReturn(nomineeIdProofDoc.value)}");
 
-   // request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
+    // request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
     log("Key 3 bank id ${documentReturn(bankProofDoc.value)}");
 
     request.fields["isMinorDoc"] = jsonEncode(minor);
@@ -746,8 +760,6 @@ class ClaimController extends GetxController {
         ),
       );
     }
-
-    
 
     log("Request $request");
     var response = await request.send();
@@ -799,8 +811,6 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
-
-
     if (nomineeIdDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -851,18 +861,6 @@ class ClaimController extends GetxController {
     //
     // }
 
-
-
-
-
-
-
-
-
-
-
-
-
     log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
@@ -912,11 +910,6 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
-
-
-
-
-
     if (additionalDocpath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -928,18 +921,6 @@ class ClaimController extends GetxController {
     }
 
     log("message${additionalList.isNotEmpty}");
-
-
-
-
-
-
-
-
-
-
-
-
 
     log("Request $request");
     var response = await request.send();
@@ -971,7 +952,6 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
-
 
   @override
   void onInit() {
