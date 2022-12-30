@@ -1368,12 +1368,29 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                             .w700),
                                                           ),
                                                           onTap: () {
-                                                            controller.filled.value=controller.files1![index].toString();
-                                                            Get.to(
+                                                           var filePathinPdf;
+
+                                                           String s = "${controller.files1![index].toString()}";
+                                                           int idx = s.indexOf(":");
+                                                            List parts = [s.substring(0,idx).trim(), s.substring(idx+1).trim()];
+                                                            var str = parts[1];
+                                                            var find = "'";
+                                                            var replaceWith = '';
+                                                            var newString = str.replaceAll(find, replaceWith);
+                                                            var parts1 = str.split( '${str[0]}');
+                                                            filePathinPdf=newString;
+                                                            //controller.filled.value=controller.files1![index].toString();
+                                                            // print(controller.files1![index].toString());
+                                                            // print(controller.deathCertificatePath.value.toString());
+                                                            // print(filePathinPdf==controller.deathCertificatePath.value.toString());
+                                                             Get.to(
                                                                     () =>
-                                                                    PreviewScreen1(
-                                                                      filePath:  controller.filled.value,
-                                                                    ));
+                                                                  PreviewScreen(
+                                                                     filePath: filePathinPdf,
+                                                                      // filePath:  controller
+                                                                     //     .deathCertificatePath
+                                                                      //     .value,
+                                                                     ));
                                                                           }
                                                         ),
                                                       ),
@@ -1381,6 +1398,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                       GestureDetector(
                                                         onTap: () {
                                                           controller.files1!.removeAt(index);
+
+                                                          setState(() {});
                                                         },
                                                         child: const Icon(
                                                           Icons.delete,
@@ -1565,9 +1584,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                   .dealthCertificate
                                                                   .value =
                                                               basename(file);
-                                                          print("object ${controller
-                                                              .deathCertificatePath
-                                                              .value}");
                                                           controller
                                                               .deathCertificatePath
                                                               .value = file;

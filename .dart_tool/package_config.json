@@ -194,12 +194,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "flutter_pdfview",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_pdfview-1.2.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "flutter_plugin_android_lifecycle",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7",
       "packageUri": "lib/",
@@ -306,12 +300,6 @@
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/internet_connection_checker-0.0.1+4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
-    },
-    {
-      "name": "intl",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "js",
@@ -548,48 +536,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "syncfusion_flutter_core",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "syncfusion_flutter_pdf",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdf-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "syncfusion_flutter_pdfviewer",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdfviewer-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "syncfusion_pdfviewer_macos",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_pdfviewer_macos-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "syncfusion_pdfviewer_platform_interface",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_pdfviewer_platform_interface-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "syncfusion_pdfviewer_web",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_pdfviewer_web-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
-      "name": "syncfusion_pdfviewer_windows",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/syncfusion_pdfviewer_windows-20.4.38",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
-    },
-    {
       "name": "synchronized",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0+3",
       "packageUri": "lib/",
@@ -614,32 +560,8 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "url_launcher",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.1.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "url_launcher_android",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.22",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
-      "name": "url_launcher_ios",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/url_launcher_ios-6.0.17",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
       "name": "url_launcher_linux",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-3.0.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "url_launcher_macos",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -710,7 +632,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-12-29T14:36:46.192600Z",
+  "generated": "2022-12-30T04:33:35.865348Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

@@ -1011,23 +1011,6 @@ class _DetailsState extends State<Details> {
                                       ],
                                     ),
                                   ),
-
-                                  // address
-
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(top: 14,left: 22,right: 22,bottom: 16),
-                                  //   child: Column(
-                                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                                  //     children: [
-                                  //       Text("Address",style: kBody13black400,),
-                                  //       SizedBox(height: 4,),
-                                  //
-                                  //
-                                  //       Text(singleData.borrowerAddress.toString(),style: kBody14black600,),
-                                  //
-                                  //     ],
-                                  //   ),
-                                  // ),
                                   Obx(() => details.value == true
                                       ? Padding(
                                     padding: const EdgeInsets.only(
@@ -1162,30 +1145,6 @@ class _DetailsState extends State<Details> {
                                             ),
                                           ],
                                         ),
-                                        // Column(
-                                        //   crossAxisAlignment:
-                                        //   CrossAxisAlignment
-                                        //       .start,
-                                        //   children: [
-                                        //     // claim register date
-                                        //     Text(
-                                        //       "Claim Amount ",
-                                        //       style: kBody13black400,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       height: 4,
-                                        //     ),
-                                        //     Text(
-                                        //       singleData
-                                        //           .id
-                                        //           .toString(),
-                                        //       style: kBody14black600,
-                                        //     ),
-                                        //     SizedBox(
-                                        //       height: 16,
-                                        //     ),
-                                        //   ],
-                                        // ),
                                       ],
                                     ),
                                   )

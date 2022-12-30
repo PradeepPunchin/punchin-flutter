@@ -1,13 +1,8 @@
-
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:pdf_viewer_plugin/pdf_viewer_plugin.dart';
-import 'package:punchin/controller/claim_controller/claim_controller.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../constant/const_text.dart';
 
 class PreviewScreen extends StatefulWidget {
@@ -66,11 +61,14 @@ class _PreviewScreenState extends State<PreviewScreen> {
       Image.file(File(widget.filePath),
       ):
       Container(
+        width: 400,
+        height: Get.height,
+        child:Container(
         width: 400,//Get.width,
           height: Get.height,
 
           child: PdfView(path: "${widget.filePath.toString()}"),
-      ),
+      ),),
     );
   }
 }
@@ -79,8 +77,6 @@ class _PreviewScreenState extends State<PreviewScreen> {
 class PreviewScreen1 extends StatefulWidget {
   PreviewScreen1({Key? key, required this.filePath}) : super(key: key);
   final  filePath;
-
-
 
   @override
   State<PreviewScreen1> createState() => _PreviewScreen1State();
@@ -128,7 +124,6 @@ class _PreviewScreen1State extends State<PreviewScreen1> {
   Widget build(BuildContext context) {
 
     getFileExtension(widget.filePath.toString());
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -154,12 +149,12 @@ class _PreviewScreen1State extends State<PreviewScreen1> {
       Container(
         width: 400,
         height: Get.height,
-        child:
-        SfPdfViewer.file(
-           // scrollDirection : PdfScrollDirection.vertical,
-          File('${filePathinPdf.toString()}'),
-        ),
-      ),
+        child:Container(
+          width: 400,//Get.width,
+          height: Get.height,
+
+          child: PdfView(path: "${widget.filePath.toString()}"),
+        ),),
 
       // PdfView(path: "${widget.filePath}" ),
       //   SingleChildScrollView(
