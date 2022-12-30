@@ -47,7 +47,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
           child: const Icon(
             Icons.arrow_back_ios,
             color: Colors.blue,
-            size: 20,
+            size: 30,
           ),
         ),
         centerTitle: true,

@@ -575,6 +575,91 @@ class ClaimController extends GetxController {
   }
 
 
+
+  /// death certificate
+  List<File>? deathCertificate ;
+  Future<List<File>?> uploadCertificate() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      deathCertificate = result.paths.map((path) => File(path!)).toList();
+    } else {
+      // User canceled the picker
+    }
+    // return path.value;
+    return deathCertificate;
+  }
+
+
+
+  List<File>? borrowerProof ;
+  Future<List<File>?> uploadBorrowerProof() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      borrowerProof = result.paths.map((path) => File(path!)).toList();
+    } else {
+      // User canceled the picker
+    }
+    // return path.value;
+    return borrowerProof;
+  }
+
+
+  List<File>? nomineeProof ;
+  Future<List<File>?> uploadNomineeProof() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      nomineeProof = result.paths.map((path) => File(path!)).toList();
+    } else {
+      // User canceled the picker
+    }
+    // return path.value;
+    return nomineeProof;
+  }
+
+
+  List<File>? bankACProof ;
+  Future<List<File>?> uploadBankProof() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      bankACProof = result.paths.map((path) => File(path!)).toList();
+    } else {
+      // User canceled the picker
+    }
+    // return path.value;
+    return bankACProof;
+  }
+
+
+
+  List<File>? additionalIDProof ;
+  Future<List<File>?> uploadAdditionalIDProof() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      additionalIDProof = result.paths.map((path) => File(path!)).toList();
+    } else {
+      // User canceled the picker
+    }
+    // return path.value;
+    return additionalIDProof;
+  }
+
+
+
   List<File>? imageFileList = [];
 
   Future<void> selectDocuments() async {
@@ -672,7 +757,7 @@ class ClaimController extends GetxController {
         );
       }
     }
-    if (files1!.isNotEmpty) {
+    if (files1!=null) {
       // request.files.add(
       //   await http.MultipartFile.fromPath(
       //     'SIGNED_FORM',
@@ -695,25 +780,37 @@ class ClaimController extends GetxController {
 
     }
 
-    // List<http.MultipartFile> newList=[];
-    // newList.addAll(files1);
-    // log(files1!.length.toString());
-    //
-    // for (int i = 0; i < files1!.length; i++) {
-    //   File imageFile = File(files1![i].path);
-    //   var stream =
-    //   new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    //
-    //   var length =  await imageFile.length();
-    //   var multipartFile = http.MultipartFile("SIGNED_FORM", stream, length,
-    //       filename: imageFile.path.split('/').last);
-    //   newList.addAll({multipartFile});
-    //
-    // }
-    // request.files.addAll(files1);
 
 
-    //Files
+    if (deathCertificate!=null) {
+      List<http.MultipartFile> newList=[] ;
+      for (int i = 0; i < deathCertificate!.length; i++) {
+        File imageFile = File(deathCertificate![i].path);
+        var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        var length = await imageFile.length();
+        var multipartFile = http.MultipartFile("DEATH_CERTIFICATE :  : ${i}", stream, length,
+            filename: imageFile.path.split('/').last);
+        newList.add(multipartFile);
+      }
+      request.files.addAll(newList);
+    }
+
+    if (borrowerProof!=null) {
+      List<http.MultipartFile> newList=[] ;
+      for (int i = 0; i < borrowerProof!.length; i++) {
+        File imageFile = File(borrowerProof![i].path);
+        var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        var length = await imageFile.length();
+        var multipartFile = http.MultipartFile("BORROWER_KYC_PROOF : ${borroweridProof.value} : ${i}", stream, length,
+            filename: imageFile.path.split('/').last);
+        newList.add(multipartFile);
+      }
+      request.files.addAll(newList);
+    }
+
+
     if (filledPath.value.isEmpty) {
 
     }
@@ -779,85 +876,85 @@ class ClaimController extends GetxController {
     }
   }
 
-  uploadFormData1() async {
-    loadUpload.value = true;
-    var postUri = Uri.parse("$formUpload/22/uploadDocument");
-    // var postUri = Uri.parse(
-    //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
-    log(postUri.toString());
-    var request = http.MultipartRequest("Put", postUri);
-    Map<String, String> headers = {
-      // "Content-Type": "multipart/form-data",
-      "X-Xsrf-Token": box.read("authToken"),
-    };
-    request.headers.addAll(headers);
-
-    ///code for adding keys
-
-    request.fields["id"] = Get.arguments[1].id.toString();
-    request.fields["nomineeProof"] = documentReturn(nomineeIdProofDoc.value);
-    log("Key 2 Nomiee id ${documentReturn(nomineeIdProofDoc.value)}");
-
-   // request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
-    log("Key 3 bank id ${documentReturn(bankProofDoc.value)}");
-
-    request.fields["isMinorDoc"] = jsonEncode(minor);
-
-    /// code for adding file image
-
-    if (nomineeAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'nomineeMultiparts',
-          borrowerAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    if (borrowerAddressDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'bankerPROOFMultipart',
-          borrowerAddressDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    
-
-    log("Request $request");
-    var response = await request.send();
-    var responsed = await http.Response.fromStream(response);
-    log("${responsed.statusCode}");
-
-    //final responseData = json.decode(responsed.body);
-    // log("$responseData");
-    if (response.statusCode == 200) {
-      loadUpload.value = false;
-      Get.rawSnackbar(
-          message: "Form Submitted Successfully",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.green);
-
-      Get.offAll(() => Details(
-            title: 'Allocated',
-          ));
-      log("Success");
-    } else {
-      loadUpload.value = false;
-      log("errorCode ${response.statusCode}");
-      Get.rawSnackbar(
-          message: "Something went wrong",
-          snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.zero,
-          snackStyle: SnackStyle.GROUNDED,
-          backgroundColor: Colors.red);
-    }
-  }
+  // uploadFormData1() async {
+  //   loadUpload.value = true;
+  //   var postUri = Uri.parse("$formUpload/22/uploadDocument");
+  //   // var postUri = Uri.parse(
+  //   //     "https://b700-223-190-95-222.in.ngrok.io/api/v1/agent/claim/${Get.arguments[1].id.toString()}/uploadDocument");
+  //   log(postUri.toString());
+  //   var request = http.MultipartRequest("Put", postUri);
+  //   Map<String, String> headers = {
+  //     // "Content-Type": "multipart/form-data",
+  //     "X-Xsrf-Token": box.read("authToken"),
+  //   };
+  //   request.headers.addAll(headers);
+  //
+  //   ///code for adding keys
+  //
+  //   request.fields["id"] = Get.arguments[1].id.toString();
+  //   request.fields["nomineeProof"] = documentReturn(nomineeIdProofDoc.value);
+  //   log("Key 2 Nomiee id ${documentReturn(nomineeIdProofDoc.value)}");
+  //
+  //  // request.fields["bankerProof"] = documentReturn(bankProofDoc.value);
+  //   log("Key 3 bank id ${documentReturn(bankProofDoc.value)}");
+  //
+  //   request.fields["isMinorDoc"] = jsonEncode(minor);
+  //
+  //   /// code for adding file image
+  //
+  //   if (nomineeAddressDocPath.value.isNotEmpty) {
+  //     request.files.add(
+  //       await http.MultipartFile.fromPath(
+  //         'nomineeMultiparts',
+  //         borrowerAddressDocPath.value,
+  //         contentType: MediaType('file', 'pdf'),
+  //       ),
+  //     );
+  //   }
+  //
+  //   if (borrowerAddressDocPath.value.isNotEmpty) {
+  //     request.files.add(
+  //       await http.MultipartFile.fromPath(
+  //         'bankerPROOFMultipart',
+  //         borrowerAddressDocPath.value,
+  //         contentType: MediaType('file', 'pdf'),
+  //       ),
+  //     );
+  //   }
+  //
+  //
+  //
+  //   log("Request $request");
+  //   var response = await request.send();
+  //   var responsed = await http.Response.fromStream(response);
+  //   log("${responsed.statusCode}");
+  //
+  //   //final responseData = json.decode(responsed.body);
+  //   // log("$responseData");
+  //   if (response.statusCode == 200) {
+  //     loadUpload.value = false;
+  //     Get.rawSnackbar(
+  //         message: "Form Submitted Successfully",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         margin: EdgeInsets.zero,
+  //         snackStyle: SnackStyle.GROUNDED,
+  //         backgroundColor: Colors.green);
+  //
+  //     Get.offAll(() => Details(
+  //           title: 'Allocated',
+  //         ));
+  //     log("Success");
+  //   } else {
+  //     loadUpload.value = false;
+  //     log("errorCode ${response.statusCode}");
+  //     Get.rawSnackbar(
+  //         message: "Something went wrong",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         margin: EdgeInsets.zero,
+  //         snackStyle: SnackStyle.GROUNDED,
+  //         backgroundColor: Colors.red);
+  //   }
+  // }
 
   uploadFormData2() async {
     getStepperFormData();
@@ -888,6 +985,41 @@ class ClaimController extends GetxController {
         ),
       );
     }
+
+    if (nomineeProof!=null) {
+      List<http.MultipartFile> newList=[] ;
+      for (int i = 0; i < nomineeProof!.length; i++) {
+        File imageFile = File(nomineeProof![i].path);
+        var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        var length = await imageFile.length();
+        var multipartFile = http.MultipartFile("NOMINEE_KYC_PROOF : ${nomineeIdProof.value} : ${i}", stream, length,
+            filename: imageFile.path.split('/').last);
+        newList.add(multipartFile);
+      }
+
+      request.files.addAll(newList);
+
+    }
+
+
+    if (bankACProof!=null) {
+      List<http.MultipartFile> newList=[] ;
+      for (int i = 0; i < bankACProof!.length; i++) {
+        File imageFile = File(bankACProof![i].path);
+        var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        var length = await imageFile.length();
+        var multipartFile = http.MultipartFile("BANK_ACCOUNT_PROOF : ${bankProof.value} : ${i}", stream, length,
+            filename: imageFile.path.split('/').last);
+        newList.add(multipartFile);
+      }
+
+      request.files.addAll(newList);
+
+    }
+
+
     if (bankAccountDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
