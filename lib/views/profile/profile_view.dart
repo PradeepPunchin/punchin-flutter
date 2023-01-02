@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
 
-import '../notification/notification_view.dart';
-
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
 
@@ -24,7 +22,7 @@ class ProfileView extends StatelessWidget {
         centerTitle: true,
         actions: <Widget>[
           GestureDetector(
-            onTap: () => Get.to(() => NotificationView()),
+            // onTap: () => Get.to(() => NotificationView()),
             behavior: HitTestBehavior.opaque,
             child: CircleAvatar(
               backgroundColor: Colors.white10,

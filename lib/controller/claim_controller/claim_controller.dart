@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:async/async.dart';
 import 'dart:io';
+
+import 'package:async/async.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,6 +17,7 @@ import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
 import 'package:punchin/views/claim_details/details.dart';
 import 'package:punchin/views/login/login_screen.dart';
+
 import '../../model/claim_model/claim_details.dart';
 
 class ClaimController extends GetxController {
@@ -53,7 +55,9 @@ class ClaimController extends GetxController {
   RxString additionalProof = "".obs;
   RxString additionalProofDoc = "".obs;
   var discrepancyData = {}.obs;
-  
+
+  RxBool agentRemarkValue = false.obs;
+  RxString agentRemarkDropDownValue = "".obs;
 
   RxBool loading = true.obs;
   RxBool loadUpload = false.obs;
@@ -72,7 +76,6 @@ class ClaimController extends GetxController {
 
   addProductLot({selectedValue, imagePath, dropDownValue}) {
     log(dropDownValue.toString());
-
 
     if (minorNominee.value.contains(dropDownValue.toString())) {
       Fluttertoast.showToast(
@@ -258,10 +261,9 @@ class ClaimController extends GetxController {
           final details = jsonDecode(response.body);
           //getErrorToaster(details["message"]);
         }
-      }
-      else {
-        var Url = SearchApi +
-            "${causeofDeath.value}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=200";
+      } else {
+        var Url =
+            "$SearchApi${dropDownSearchChecker(causeofDeath.value)}&searchedKeyword=${searchKey.toString()}&claimDataFilter=${status}&pageNo=0&limit=200";
         print(Url);
 
         var response = await http.get(
@@ -276,9 +278,9 @@ class ClaimController extends GetxController {
         print(response.body);
 
         if (response.statusCode == 200) {
-         return ClaimSubmitted.fromJson(jsonDecode(response.body));
-          var body= ClaimSubmitted.fromJson(jsonDecode(response.body));
-          log("claim body"+body.toString());
+          return ClaimSubmitted.fromJson(jsonDecode(response.body));
+          var body = ClaimSubmitted.fromJson(jsonDecode(response.body));
+          log("claim body" + body.toString());
         }
         if (response.statusCode == 404) {
           return ClaimSubmitted.fromJson(jsonDecode(response.body));
@@ -502,7 +504,7 @@ class ClaimController extends GetxController {
         if (data != null && data["isSuccess"]) {
           loading.value = false;
 
-          claimDetail.value = data["data"];//["claimData"];
+          claimDetail.value = data["data"]; //["claimData"];
 
           //claimDetailsObject.value = ClaimDetailsData.fromJson(data["data"]["claimData"]);
         }
@@ -555,8 +557,9 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
-  List<File>? files1 ;
-  List<http.MultipartFile> signForm=[];
+  List<File>? files1;
+  List<http.MultipartFile> signForm = [];
+
   Future<List<File>?> uploadFile1() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
@@ -564,20 +567,21 @@ class ClaimController extends GetxController {
         allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
     if (result != null) {
       //List<File> file = File(result.files.single.path!);
-      files1 = result.paths.map((path) => File(path!)).toList();//result.paths.map((path) => File(result.files.path.toString())).toList();
+      files1 = result.paths
+          .map((path) => File(path!))
+          .toList(); //result.paths.map((path) => File(result.files.path.toString())).toList();
       // path.value = basename(file.path);
       //path.value = file.path;
     } else {
       // User canceled the picker
     }
-   // return path.value;
-   return files1;
+    // return path.value;
+    return files1;
   }
 
-
-
   /// death certificate
-  List<File>? deathCertificate ;
+  List<File>? deathCertificate;
+
   Future<List<File>?> uploadCertificate() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
@@ -592,9 +596,8 @@ class ClaimController extends GetxController {
     return deathCertificate;
   }
 
+  List<File>? borrowerProof;
 
-
-  List<File>? borrowerProof ;
   Future<List<File>?> uploadBorrowerProof() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
@@ -609,8 +612,8 @@ class ClaimController extends GetxController {
     return borrowerProof;
   }
 
+  List<File>? nomineeProof;
 
-  List<File>? nomineeProof ;
   Future<List<File>?> uploadNomineeProof() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
@@ -625,8 +628,8 @@ class ClaimController extends GetxController {
     return nomineeProof;
   }
 
+  List<File>? bankACProof;
 
-  List<File>? bankACProof ;
   Future<List<File>?> uploadBankProof() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
@@ -641,9 +644,8 @@ class ClaimController extends GetxController {
     return bankACProof;
   }
 
+  List<File>? additionalIDProof;
 
-
-  List<File>? additionalIDProof ;
   Future<List<File>?> uploadAdditionalIDProof() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,
@@ -657,8 +659,6 @@ class ClaimController extends GetxController {
     // return path.value;
     return additionalIDProof;
   }
-
-
 
   List<File>? imageFileList = [];
 
@@ -687,15 +687,10 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
-
-
-
-
-
   Future<http.StreamedResponse?> uploadFormData() async {
     loadUpload.value = true;
-   // var postUri = Uri.parse("$formUploadNew");
-     var postUri = Uri.parse(
+    // var postUri = Uri.parse("$formUploadNew");
+    var postUri = Uri.parse(
         "$formUpload${Get.arguments[1].id.toString()}/uploadDocument");
     log(postUri.toString());
     var request = http.MultipartRequest("Put", postUri);
@@ -710,16 +705,27 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
-    request.fields["isMinor"] = nominee.value=="Minor"?"true":"false";
-    log("Key 1234: ${nominee.value=="Minor"?"true":"false"}");
-    request.fields["causeOfDeath"] = causeofDeathReturn(causeofDeath.value)==""||causeofDeathReturn(causeofDeath.value)==null ||causeofDeathReturn(causeofDeath.value).isEmpty?causeofDeath.value:causeofDeathReturn(causeofDeath.value); //compulsory
+    request.fields["isMinor"] = nominee.value == "Minor" ? "true" : "false";
+    log("Key 1234: ${nominee.value == "Minor" ? "true" : "false"}");
+    request.fields["causeOfDeath"] =
+        causeofDeathReturn(causeofDeath.value) == "" ||
+                causeofDeathReturn(causeofDeath.value) == null ||
+                causeofDeathReturn(causeofDeath.value).isEmpty
+            ? causeofDeath.value
+            : causeofDeathReturn(causeofDeath.value); //compulsory
     log("Key 1234: ${causeofDeathReturn(causeofDeath.value)}");
     log("Key 1234: ${causeofDeath.value}");
     //request.fields["borowerProof"] = "BORROWER_ID_PROOF";
 
+    if (agentRemarkDropDownValue.value.isNotEmpty) {
+      request.fields["agentRemark"] = agentRemarkDropDownValue.value.toString();
+
+      /// Agent Remarks
+    }
+
     /// code for adding file image
-    if(nominee.value=="Minor") {
-      log("true ${nominee.value=="Minor"}");
+    if (nominee.value == "Minor") {
+      log("true ${nominee.value == "Minor"}");
       if (minorProofPath.value.isNotEmpty) {
         request.files.add(
           await http.MultipartFile.fromPath(
@@ -757,7 +763,7 @@ class ClaimController extends GetxController {
         );
       }
     }
-    if (files1!=null) {
+    if (files1 != null) {
       // request.files.add(
       //   await http.MultipartFile.fromPath(
       //     'SIGNED_FORM',
@@ -765,55 +771,54 @@ class ClaimController extends GetxController {
       //     contentType: MediaType('file', 'pdf'),
       //   ),
       // );
-      List<http.MultipartFile> newList=[] ;
+      List<http.MultipartFile> newList = [];
       for (int i = 0; i < files1!.length; i++) {
         File imageFile = File(files1![i].path);
         var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
         var length = await imageFile.length();
-        var multipartFile = http.MultipartFile("SIGNED_FORM :  : ${i}", stream, length,
+        var multipartFile = http.MultipartFile(
+            "SIGNED_FORM :  : ${i}", stream, length,
             filename: imageFile.path.split('/').last);
         newList.add(multipartFile);
       }
 
       request.files.addAll(newList);
-
     }
 
-
-
-    if (deathCertificate!=null) {
-      List<http.MultipartFile> newList=[] ;
+    if (deathCertificate != null) {
+      List<http.MultipartFile> newList = [];
       for (int i = 0; i < deathCertificate!.length; i++) {
         File imageFile = File(deathCertificate![i].path);
         var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
         var length = await imageFile.length();
-        var multipartFile = http.MultipartFile("DEATH_CERTIFICATE :  : ${i}", stream, length,
+        var multipartFile = http.MultipartFile(
+            "DEATH_CERTIFICATE :  : ${i}", stream, length,
             filename: imageFile.path.split('/').last);
         newList.add(multipartFile);
       }
       request.files.addAll(newList);
     }
 
-    if (borrowerProof!=null) {
-      List<http.MultipartFile> newList=[] ;
+    if (borrowerProof != null) {
+      List<http.MultipartFile> newList = [];
       for (int i = 0; i < borrowerProof!.length; i++) {
         File imageFile = File(borrowerProof![i].path);
         var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
         var length = await imageFile.length();
-        var multipartFile = http.MultipartFile("BORROWER_KYC_PROOF : ${borroweridProof.value} : ${i}", stream, length,
+        var multipartFile = http.MultipartFile(
+            "BORROWER_KYC_PROOF : ${borroweridProof.value} : ${i}",
+            stream,
+            length,
             filename: imageFile.path.split('/').last);
         newList.add(multipartFile);
       }
       request.files.addAll(newList);
     }
 
-
-    if (filledPath.value.isEmpty) {
-
-    }
+    if (filledPath.value.isEmpty) {}
     if (deathCertificatePath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -833,23 +838,13 @@ class ClaimController extends GetxController {
       );
     }
 
-
-
-
-
-
-
-
-
-
-
     log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
     log("${responsed.statusCode}");
 
     //final responseData = json.decode(responsed.body);
-     log("$response");
+    log("$response");
     if (response.statusCode == 200) {
       getStepperFormData();
       loadUpload.value = false;
@@ -974,8 +969,6 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
-
-
     if (nomineeIdDocPath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -986,39 +979,39 @@ class ClaimController extends GetxController {
       );
     }
 
-    if (nomineeProof!=null) {
-      List<http.MultipartFile> newList=[] ;
+    if (nomineeProof != null) {
+      List<http.MultipartFile> newList = [];
       for (int i = 0; i < nomineeProof!.length; i++) {
         File imageFile = File(nomineeProof![i].path);
         var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
         var length = await imageFile.length();
-        var multipartFile = http.MultipartFile("NOMINEE_KYC_PROOF : ${nomineeIdProof.value} : ${i}", stream, length,
+        var multipartFile = http.MultipartFile(
+            "NOMINEE_KYC_PROOF : ${nomineeIdProof.value} : ${i}",
+            stream,
+            length,
             filename: imageFile.path.split('/').last);
         newList.add(multipartFile);
       }
 
       request.files.addAll(newList);
-
     }
 
-
-    if (bankACProof!=null) {
-      List<http.MultipartFile> newList=[] ;
+    if (bankACProof != null) {
+      List<http.MultipartFile> newList = [];
       for (int i = 0; i < bankACProof!.length; i++) {
         File imageFile = File(bankACProof![i].path);
         var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
         var length = await imageFile.length();
-        var multipartFile = http.MultipartFile("BANK_ACCOUNT_PROOF : ${bankProof.value} : ${i}", stream, length,
+        var multipartFile = http.MultipartFile(
+            "BANK_ACCOUNT_PROOF : ${bankProof.value} : ${i}", stream, length,
             filename: imageFile.path.split('/').last);
         newList.add(multipartFile);
       }
 
       request.files.addAll(newList);
-
     }
-
 
     if (bankAccountDocPath.value.isNotEmpty) {
       request.files.add(
@@ -1060,18 +1053,6 @@ class ClaimController extends GetxController {
     //   }
     //
     // }
-
-
-
-
-
-
-
-
-
-
-
-
 
     log("Request $request");
     var response = await request.send();
@@ -1122,11 +1103,6 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
 
-
-
-
-
-
     if (additionalDocpath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
@@ -1138,18 +1114,6 @@ class ClaimController extends GetxController {
     }
 
     log("message${additionalList.isNotEmpty}");
-
-
-
-
-
-
-
-
-
-
-
-
 
     log("Request $request");
     var response = await request.send();
@@ -1181,10 +1145,6 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
-
-
-
-
 
   @override
   void onInit() {
@@ -1368,5 +1328,19 @@ class ClaimController extends GetxController {
           snackStyle: SnackStyle.GROUNDED,
           backgroundColor: Colors.red);
     }
+  }
+
+  String dropDownSearchChecker(value) {
+    // log("This is called with ${value.toString()}");
+    RxString tempValue = "".obs;
+
+    if (value == "PunchIn Ref. ID") {
+      tempValue.value = "CLAIM_DATA_ID";
+    } else if (value == "Loan Account Number") {
+      tempValue.value = "LOAN_ACCOUNT_NUMBER";
+    } else if (value == "Name") {
+      tempValue.value = "NAME";
+    }
+    return tempValue.value;
   }
 }

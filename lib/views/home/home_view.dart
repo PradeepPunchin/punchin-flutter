@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -15,8 +14,6 @@ import 'package:punchin/controller/home_controller/home_controller.dart';
 import 'package:punchin/model/home_model/home_count_model.dart';
 import 'package:punchin/views/claim_details/details.dart';
 
-import 'package:punchin/widget/text_widget/search_text_field.dart';
-
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -25,8 +22,12 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
-  List<String> subtitle = ["Allocated", "Action Pending Cases", "WIP","UNDER VERIFICATION"];
+  List<String> subtitle = [
+    "Allocated",
+    "Action Pending Cases",
+    "WIP",
+    "UNDER VERIFICATION"
+  ];
 
   LoginController loginController = Get.put(LoginController());
   HomeController homeController = Get.put(HomeController());
@@ -43,7 +44,7 @@ class _HomeViewState extends State<HomeView> {
 
   getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(
-            (ConnectivityResult result) async {
+        (ConnectivityResult result) async {
           isDeviceConnected = await InternetConnectionChecker().hasConnection;
           if (!isDeviceConnected && isAlertSet == false) {
             showDialogBox();
@@ -69,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-               const SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
 
@@ -116,7 +117,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children:const [
+                      children: const [
                         Text("Anil Kumar"),
                         Text("Id:983821"),
                       ],
@@ -126,15 +127,17 @@ class _HomeViewState extends State<HomeView> {
                 ),
 
                 //search
-                const Padding(
-                  padding: EdgeInsets.only(top: 12, bottom: 2),
-                  child: CustomSearch(
-                    hint: "Search by Name, LAN & Claim id...",
-                    search: true,
-                    //controller: ,
-                  ),
+                // const Padding(
+                //   padding: EdgeInsets.only(top: 12, bottom: 2),
+                //   child: CustomSearch(
+                //     hint: "Search by Name, LAN & Claim id...",
+                //     search: true,
+                //     //controller: ,
+                //   ),
+                // ),
+                SizedBox(
+                  height: 20,
                 ),
-
                 FutureBuilder(
                     future: homeController.homeTile(),
                     builder: (context, AsyncSnapshot snapshot) {
@@ -257,13 +260,13 @@ class _HomeViewState extends State<HomeView> {
                                       children: [
                                         GestureDetector(
                                           onTap: () {
-                                            if(homeCount.data!.aGENTALLOCATED.toString()=="0"){
-
+                                            if (homeCount.data!.aGENTALLOCATED
+                                                    .toString() ==
+                                                "0") {
+                                            } else {
+                                              Get.offAll(() =>
+                                                  Details(title: subtitle[0]));
                                             }
-                                            else {
-                                              Get.offAll(() => Details(title: subtitle[0]));
-                                            }
-
                                           },
                                           child: Container(
                                             width: 170,
@@ -272,99 +275,8 @@ class _HomeViewState extends State<HomeView> {
                                                 gradient: RadialGradient(
                                                   colors: totalCasseColor,
                                                 ),
-                                                color: Color(0xff1dafaf),//kLightBlue,
-                                                borderRadius:
-                                                BorderRadius.circular(7)),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  children: [
-                                                    Stack(
-                                                      alignment:
-                                                      AlignmentDirectional
-                                                          .center,
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          "assets/icons/book.svg",
-                                                          color: kWhite,
-                                                        ),
-                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                        Positioned(
-                                                          //left: 18,
-                                                          // top: 20,
-                                                          child: Container(
-                                                            width: 68,
-                                                            height: 68,
-                                                            decoration:
-                                                            BoxDecoration(
-                                                              shape:
-                                                              BoxShape.circle,
-                                                              gradient:
-                                                              LinearGradient(
-                                                                colors:
-                                                                circleColor,
-                                                              ),
-
-                                                              //borderRadius: BorderRadius.circular(100)
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                //SizedBox(width: 13,),
-                                                Flexible(
-                                                  child: Padding(
-                                                    padding:
-                                                    const EdgeInsets.only(
-                                                        top: 20),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-
-                                                        Text(
-                                                          homeCount
-                                                              .data!.aGENTALLOCATED
-                                                              .toString(),
-                                                          style: kBody20white700,
-                                                        ),
-                                                        Text(
-                                                            subtitle[0]
-                                                                .toString(),
-                                                            style:
-                                                            kBody12kWhite500),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        GestureDetector(
-                                          onTap: () {
-                                            if(homeCount.data!.iNPROGRESS.toString()=="0"){
-
-                                            }
-                                            else {
-                                              Get.offAll(() => Details(title: subtitle[2]));
-                                            }
-                                          },
-                                          child: Container(
-                                            width: 170,
-                                            height: 77,
-                                            decoration: BoxDecoration(
-                                                color:Color(0xff7cb5ec),// kPurpul,
+                                                color: Color(
+                                                    0xff1dafaf), //kLightBlue,
                                                 borderRadius:
                                                     BorderRadius.circular(7)),
                                             child: Row(
@@ -395,105 +307,12 @@ class _HomeViewState extends State<HomeView> {
                                                             height: 68,
                                                             decoration:
                                                                 BoxDecoration(
-                                                              shape:
-                                                                  BoxShape.circle,
+                                                              shape: BoxShape
+                                                                  .circle,
                                                               gradient:
                                                                   LinearGradient(
                                                                 colors:
                                                                     circleColor,
-                                                              ),
-
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                //SizedBox(width: 13,),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 20),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        homeCount
-                                                            .data!.iNPROGRESS
-                                                            .toString(),
-                                                        style: kBody20white700,
-                                                      ),
-                                                      Text(subtitle[2].toString(),
-                                                          style:
-                                                              kBody12kWhite500),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-
-
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8.0),
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            if(homeCount.data!.aCTIONPENDING.toString()=="0"){
-
-                                            }
-                                            else {
-                                              Get.offAll(() => Details(title: subtitle[1]));
-                                            }
-
-                                          },
-                                          child: Container(
-                                            width: 170,
-                                            height: 77,
-                                            decoration: BoxDecoration(
-                                                color: kPurpul,
-                                                borderRadius:
-                                                BorderRadius.circular(7)),
-                                            child: Row(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  children: [
-                                                    Stack(
-                                                      alignment:
-                                                      AlignmentDirectional
-                                                          .center,
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          "assets/icons/book.svg",
-                                                          color: kWhite,
-                                                        ),
-                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
-                                                        Positioned(
-                                                          //left: 18,
-                                                          // top: 20,
-                                                          child: Container(
-                                                            width: 68,
-                                                            height: 68,
-                                                            decoration:
-                                                            BoxDecoration(
-                                                              shape:
-                                                              BoxShape.circle,
-                                                              gradient:
-                                                              LinearGradient(
-                                                                colors:
-                                                                circleColor,
                                                               ),
 
                                                               //borderRadius: BorderRadius.circular(100)
@@ -508,24 +327,25 @@ class _HomeViewState extends State<HomeView> {
                                                 Flexible(
                                                   child: Padding(
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        top: 20),
+                                                        const EdgeInsets.only(
+                                                            top: 20),
                                                     child: Column(
                                                       crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
-                                                          homeCount
-                                                              .data!.aCTIONPENDING
+                                                          homeCount.data!
+                                                              .aGENTALLOCATED
                                                               .toString(),
-                                                          style: kBody20white700,
+                                                          style:
+                                                              kBody20white700,
                                                         ),
                                                         Text(
-                                                            subtitle[1]
+                                                            subtitle[0]
                                                                 .toString(),
                                                             style:
-                                                            kBody12kWhite500),
+                                                                kBody12kWhite500),
                                                       ],
                                                     ),
                                                   ),
@@ -537,35 +357,36 @@ class _HomeViewState extends State<HomeView> {
                                         Spacer(),
                                         GestureDetector(
                                           onTap: () {
-                                            if(homeCount.data!.uNDERVERIFICATION.toString()=="0"){
-
+                                            if (homeCount.data!.iNPROGRESS
+                                                    .toString() ==
+                                                "0") {
+                                            } else {
+                                              Get.offAll(() =>
+                                                  Details(title: subtitle[2]));
                                             }
-                                            else {
-                                              Get.offAll(() => Details(title: subtitle[3]));
-                                            }
-
                                           },
                                           child: Container(
                                             width: 170,
                                             height: 77,
                                             decoration: BoxDecoration(
-                                                color: kYellowColor,
+                                                color: Color(
+                                                    0xff7cb5ec), // kPurpul,
                                                 borderRadius:
-                                                BorderRadius.circular(7)),
+                                                    BorderRadius.circular(7)),
                                             child: Row(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Column(
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Stack(
                                                       alignment:
-                                                      AlignmentDirectional
-                                                          .center,
+                                                          AlignmentDirectional
+                                                              .center,
                                                       children: [
                                                         SvgPicture.asset(
                                                           "assets/icons/book.svg",
@@ -579,13 +400,107 @@ class _HomeViewState extends State<HomeView> {
                                                             width: 68,
                                                             height: 68,
                                                             decoration:
-                                                            BoxDecoration(
-                                                              shape:
-                                                              BoxShape.circle,
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
                                                               gradient:
-                                                              LinearGradient(
+                                                                  LinearGradient(
                                                                 colors:
-                                                                circleColor,
+                                                                    circleColor,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                //SizedBox(width: 13,),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 20),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        homeCount
+                                                            .data!.iNPROGRESS
+                                                            .toString(),
+                                                        style: kBody20white700,
+                                                      ),
+                                                      Text(
+                                                          subtitle[2]
+                                                              .toString(),
+                                                          style:
+                                                              kBody12kWhite500),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (homeCount.data!.aCTIONPENDING
+                                                    .toString() ==
+                                                "0") {
+                                            } else {
+                                              Get.offAll(() =>
+                                                  Details(title: subtitle[1]));
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 170,
+                                            height: 77,
+                                            decoration: BoxDecoration(
+                                                color: kPurpul,
+                                                borderRadius:
+                                                    BorderRadius.circular(7)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/icons/book.svg",
+                                                          color: kWhite,
+                                                        ),
+                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                        Positioned(
+                                                          //left: 18,
+                                                          // top: 20,
+                                                          child: Container(
+                                                            width: 68,
+                                                            height: 68,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                colors:
+                                                                    circleColor,
                                                               ),
 
                                                               //borderRadius: BorderRadius.circular(100)
@@ -600,24 +515,119 @@ class _HomeViewState extends State<HomeView> {
                                                 Flexible(
                                                   child: Padding(
                                                     padding:
-                                                    const EdgeInsets.only(
-                                                        top: 20),
+                                                        const EdgeInsets.only(
+                                                            top: 20),
                                                     child: Column(
                                                       crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
-                                                          homeCount
-                                                              .data!.uNDERVERIFICATION
+                                                          homeCount.data!
+                                                              .aCTIONPENDING
                                                               .toString(),
-                                                          style: kBody20white700,
+                                                          style:
+                                                              kBody20white700,
+                                                        ),
+                                                        Text(
+                                                            subtitle[1]
+                                                                .toString(),
+                                                            style:
+                                                                kBody12kWhite500),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (homeCount
+                                                    .data!.uNDERVERIFICATION
+                                                    .toString() ==
+                                                "0") {
+                                            } else {
+                                              Get.offAll(() =>
+                                                  Details(title: subtitle[3]));
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 170,
+                                            height: 77,
+                                            decoration: BoxDecoration(
+                                                color: kYellowColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(7)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/icons/book.svg",
+                                                          color: kWhite,
+                                                        ),
+                                                        //SvgPicture.asset("assets/icons/transparentcircle.svg",color: kWhite,),
+                                                        Positioned(
+                                                          //left: 18,
+                                                          // top: 20,
+                                                          child: Container(
+                                                            width: 68,
+                                                            height: 68,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              gradient:
+                                                                  LinearGradient(
+                                                                colors:
+                                                                    circleColor,
+                                                              ),
+
+                                                              //borderRadius: BorderRadius.circular(100)
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                //SizedBox(width: 13,),
+                                                Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 20),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          homeCount.data!
+                                                              .uNDERVERIFICATION
+                                                              .toString(),
+                                                          style:
+                                                              kBody20white700,
                                                         ),
                                                         Text(
                                                             subtitle[3]
                                                                 .toString(),
                                                             style:
-                                                            kBody12kWhite500),
+                                                                kBody12kWhite500),
                                                       ],
                                                     ),
                                                   ),
@@ -649,7 +659,7 @@ class _HomeViewState extends State<HomeView> {
                       );
                     }),
 
-               const SizedBox(
+                const SizedBox(
                   height: 220,
                 ),
 
@@ -670,7 +680,6 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -678,26 +687,27 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
-   showDialogBox() => showCupertinoDialog<String>(
-    context: context,
-    builder: (BuildContext context) => CupertinoAlertDialog(
-      title: const Text('No Connection'),
-      content: const Text('Please check your internet connectivity'),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () async {
-            Navigator.pop(context, 'Cancel');
-            setState(() => isAlertSet = false);
-            isDeviceConnected =
-            await InternetConnectionChecker().hasConnection;
-            if (!isDeviceConnected && isAlertSet == false) {
-              showDialogBox();
-              setState(() => isAlertSet = true);
-            }
-          },
-          child: const Text('OK'),
+
+  showDialogBox() => showCupertinoDialog<String>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text('No Connection'),
+          content: const Text('Please check your internet connectivity'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context, 'Cancel');
+                setState(() => isAlertSet = false);
+                isDeviceConnected =
+                    await InternetConnectionChecker().hasConnection;
+                if (!isDeviceConnected && isAlertSet == false) {
+                  showDialogBox();
+                  setState(() => isAlertSet = true);
+                }
+              },
+              child: const Text('OK'),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 }
