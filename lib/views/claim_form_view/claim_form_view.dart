@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,6 +75,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   @override
   Widget build(BuildContext context) {
     controller.loadUpload.value = false;
+    controller.getStepperFormData();
 
     return Obx(() => controller.loading.value == true
         ? Scaffold(

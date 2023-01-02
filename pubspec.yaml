@@ -53,7 +53,7 @@ dependencies:
   pdf_viewer_plugin: ^2.0.1
   fluttertoast: ^8.1.2
   share_plus: ^6.3.0
-  whatsapp_share2: ^2.0.2
+  #whatsapp_share2: ^2.0.2
 #  flutter_pdfview: ^1.2.5
 #  syncfusion_flutter_pdfviewer: ^20.4.38
 #  advance_pdf_viewer: ^2.0.1

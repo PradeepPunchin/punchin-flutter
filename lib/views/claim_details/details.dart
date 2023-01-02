@@ -18,7 +18,7 @@ import 'package:punchin/views/claim_form_view/claim_form_view.dart';
 import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:whatsapp_share2/whatsapp_share2.dart';
+//import 'package:whatsapp_share2/whatsapp_share2.dart';
 
 class Details extends StatefulWidget {
   const Details({Key? key, required this.title}) : super(key: key);
@@ -71,11 +71,11 @@ class _DetailsState extends State<Details> {
   Future<void> share() async {
 
     print(_phone);
-    await WhatsappShare.share(
-      text: 'WhatsaApp',
-      linkUrl: 'https://flutter.dev/',
-      phone: _phone,
-    );
+    // await WhatsappShare.share(
+    //   text: 'WhatsaApp',
+    //   linkUrl: 'https://flutter.dev/',
+    //   phone: _phone,
+    // );
   }
   @override
   Widget build(BuildContext context) {
@@ -836,6 +836,7 @@ class _DetailsState extends State<Details> {
               // WIP
               widget.title.toString() == "WIP" ? tab() : Container(),
 
+              // under verification
               widget.title.toString() == "UNDER VERIFICATION"
                   ? FutureBuilder(
 
@@ -899,18 +900,15 @@ class _DetailsState extends State<Details> {
                                           GestureDetector(
 
                                             onTap: ()async{
-                                              //   await Share.share("text",
-                                              //       subject: "subject",
-                                              //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
-                                              //     );
-
-
-                                              // share(phone: singleData.nomineeContactNumber.toString() );
+                                              await Share.share("${"https://flutter.dev/"}",
+                                              subject: "link to update document",
+                                              //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                              );
                                               _phone="91${singleData.nomineeContactNumber.toString()}";
 
 
 
-                                              share( );
+                                             // share( );
 
                                             },
                                             child: Padding(
@@ -1194,59 +1192,59 @@ class _DetailsState extends State<Details> {
                                       ],
                                     ),
                                   ),
-                                  const  Padding(
-                                    padding:
-                                    EdgeInsets.only(top: 16, left: 22, right: 22),
-                                    child: Divider(
-                                      thickness: 2,
-                                      height: 2,
-                                    ),
-                                  ),
+                                  // const  Padding(
+                                  //   padding:
+                                  //   EdgeInsets.only(top: 16, left: 22, right: 22),
+                                  //   child: Divider(
+                                  //     thickness: 2,
+                                  //     height: 2,
+                                  //   ),
+                                  // ),
 
-                                  Padding(
-                                    padding: const EdgeInsets.all(12),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                          onTap:()async{
-                                            await Share.share("text",
-                                              subject: "subject",
-                                              //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
-                                            );
-
-
-                                          },
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset("assets/icons/Share.svg"),
-                                              Text("Share With Option"),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 10,),
-                                        GestureDetector(
-                                          onTap:(){
-                                            //   await Share.share("text",
-                                            //       subject: "subject",
-                                            //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
-                                            //     );
-
-                                            _phone="91${singleData.nomineeContactNumber.toString()}";
-
-
-                                            share( );
-                                          },
-                                          child:Row(
-                                            children: [
-                                              SvgPicture.asset("assets/icons/Share.svg"),
-                                              Text("Share With WhatsApp"),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(12),
+                                  //   child: Row(
+                                  //     mainAxisAlignment: MainAxisAlignment.center,
+                                  //     children: [
+                                  //       GestureDetector(
+                                  //         onTap:()async{
+                                  //           await Share.share("text",
+                                  //             subject: "subject",
+                                  //             //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                  //           );
+                                  //
+                                  //
+                                  //         },
+                                  //         child: Row(
+                                  //           children: [
+                                  //             SvgPicture.asset("assets/icons/Share.svg"),
+                                  //             Text("Share With Option"),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //       SizedBox(width: 10,),
+                                  //       GestureDetector(
+                                  //         onTap:(){
+                                  //           //   await Share.share("text",
+                                  //           //       subject: "subject",
+                                  //           //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                  //           //     );
+                                  //
+                                  //           _phone="91${singleData.nomineeContactNumber.toString()}";
+                                  //
+                                  //
+                                  //           share( );
+                                  //         },
+                                  //         child:Row(
+                                  //           children: [
+                                  //             SvgPicture.asset("assets/icons/Share.svg"),
+                                  //             Text("Share With WhatsApp"),
+                                  //           ],
+                                  //         ),
+                                  //       )
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             );
