@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="03aed0f3-b88b-40d1-b417-e537cb72adef" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/model/tracking_model/tracking_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/version" afterDir="false" />
@@ -21,17 +22,28 @@
       <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/Pods-Runner.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/Pods-Runner.build/dgph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/path_provider_ios.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/path_provider_ios.build/dgph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/sqflite.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Pods.build/Release-iphonesimulator/sqflite.build/dgph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/constant/api_url.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constant/api_url.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/controller/authentication_controller/login_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/authentication_controller/login_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/claim_details/claim_discrepancy_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_details/claim_discrepancy_details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/claim_details/details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_details/details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/home/home_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/home/home_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/profile/profile_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/profile/profile_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/tracking/tracking_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/tracking/tracking_home.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widget/custom_bottom_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widget/custom_bottom_bar.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -50,15 +62,15 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pubspec.yaml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/constant/api_url.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/views/claim_details/details.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/views/claim_details/claim_discrepancy_details.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/lib/views/discrepency_view_screen.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/views/home/home_view.dart" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/README.md" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/views/discrepency_view_screen.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/views/claim_details/claim_discrepancy_details.dart" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/lib/views/claim_form_view/claim_form_view.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/README.md" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/views/claim_details/details.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/lib/constant/api_url.dart" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -130,12 +142,12 @@
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/views/home/home_view.dart</url>
-          <line>63</line>
+          <line>64</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/controller/claim_controller/claim_controller.dart</url>
-          <line>249</line>
+          <line>242</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
@@ -147,6 +159,16 @@
           <url>file://$PROJECT_DIR$/lib/model/claim_model/claim_submitted.dart</url>
           <line>83</line>
           <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_details/claim_discrepancy_details.dart</url>
+          <line>400</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/views/claim_details/details.dart</url>
+          <line>787</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

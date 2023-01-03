@@ -2,12 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
+import 'package:punchin/controller/authentication_controller/login_controller.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({Key? key}) : super(key: key);
+   ProfileView({Key? key}) : super(key: key);
 
+   final loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +25,11 @@ class ProfileView extends StatelessWidget {
         centerTitle: true,
         actions: <Widget>[
           GestureDetector(
-            // onTap: () => Get.to(() => NotificationView()),
+             onTap: () {
+               loginController.postLogout();
+                 },//=> Get.to(() => NotificationView()
+
+             //),
             behavior: HitTestBehavior.opaque,
             child: CircleAvatar(
               backgroundColor: Colors.white10,
@@ -30,13 +37,13 @@ class ProfileView extends StatelessWidget {
               child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: klightBlue,
+                    color: Colors.red,
                     border: Border.all(width: 2, color: Colors.black12),
                   ),
                   child: const Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Icon(
-                      Icons.notifications_none,
+                      Icons.logout,
                       color: Colors.white,
                     ),
                   )),
@@ -79,7 +86,7 @@ class ProfileView extends StatelessWidget {
               height: 5.h,
             ),
             Text(
-              "Anil Kumar",
+              "${GetStorage().read("firstName")} ${GetStorage().read("lastName")}",
               style: CustomFonts.kBlack15Black,
             ),
             SizedBox(
@@ -90,7 +97,7 @@ class ProfileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "ID:983821",
+                  "${GetStorage().read("userId")} (${GetStorage().read("role")})",
                   style: CustomFonts.kBlack15Black.copyWith(
                     fontSize: 12.0.sp,
                   ),

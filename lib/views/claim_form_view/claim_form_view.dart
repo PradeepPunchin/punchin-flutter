@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +23,7 @@ class ClaimFormView extends StatefulWidget {
 
 class _ClaimFormViewState extends State<ClaimFormView> {
   ClaimController controller = Get.put(ClaimController());
-
   var dataArg = Get.arguments;
-
   late StreamSubscription subscription;
   bool isDeviceConnected = false;
   bool isAlertSet = false;
@@ -489,6 +486,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     height: 15.0.h,
                                   ),
                                   smallText(
+                                      text: "Insurance Category"),
+                                  const SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  field(
+                                      text: controller.claimDetail
+                                          .value["claimData"]
+                                      ["claimCategory"]),
+                                  const SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  smallText(
                                       text: "Cause of Death (Life Insurance)"),
                                   const SizedBox(
                                     height: 5.0,
@@ -603,26 +612,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     ),
                                                     underline: const SizedBox(),
                                                     items: minorList
-                                                        // <String>[
-                                                        //   'Police FIR Copy',
-                                                        //   'Postmortem Report',
-                                                        //   'Income Tax Returns',
-                                                        //   'Medical Records',
-                                                        //   'Legal Heir Certificate',
-                                                        //   'Police Investigation Report',
-                                                        //   'Relationship Proof',
-                                                        //   'Stamped Affidavit',
-                                                        //   'Medical Attendant Certificate',
-                                                        //   'Guardian - Id proof',
-                                                        //   'Guardian - Add proof',
-                                                        //   'Any utility bill (gas / electricity / rental agreement)',
-                                                        //   'Other Document',
-                                                        //   // 'Income Tax Return',
-                                                        //   // 'Medical Records',
-                                                        //   // 'Legal Heir Certificate',
-                                                        //   // 'Police Investigation Report',
-                                                        //   // 'Other',
-                                                        // ]
                                                         .map((String value) {
                                                       return DropdownMenuItem<
                                                           String>(
@@ -1096,10 +1085,17 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   GestureDetector(
                                                     onTap: () {
                                                       controller
-                                                          .firProof.value = "";
+                                                          .minorProof
+                                                          .value= "";
                                                       controller
-                                                          .firOrPostmortemReportPath
+                                                          .minorProofPath
                                                           .value = "";
+                                                      controller
+                                                          .minorImage
+                                                          .removeAt(index);
+                                                      controller.minor.removeAt(index);
+                                                      controller.minorNominee.removeAt(index);
+
                                                     },
                                                     child: const Icon(
                                                       Icons.delete,
@@ -1168,7 +1164,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     .value["claimDocuments"][0]
                                                         ["singnedClaimDocument"]
                                                     .toString() ==
-                                                "UPLOADED1") {
+                                                "UPLOADED") {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Already Under Verification",
@@ -1417,6 +1413,43 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                 : SizedBox();
                                           })
                                       : SizedBox(),
+
+                                  Obx(() => controller
+                                          .filledPath.value.isNotEmpty
+                                      ? Row(
+                                          children: [
+                                            GestureDetector(
+                                              child: Text(
+                                                "Preview",
+                                                style: CustomFonts.kBlack15Black
+                                                    .copyWith(
+                                                        fontSize: 14.0,
+                                                        color: kdarkBlue,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                              onTap: () =>
+                                                  Get.to(() => PreviewScreen(
+                                                        filePath: controller
+                                                            .filledPath.value,
+                                                      )),
+                                            ),
+                                            const Spacer(),
+                                            GestureDetector(
+                                              onTap: () {
+                                                controller.filled.value = "";
+                                                controller.filledPath.value =
+                                                    "";
+                                              },
+                                              child: const Icon(
+                                                Icons.delete,
+                                                color: klightBlue,
+                                                size: 20,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      : SizedBox()),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -1470,7 +1503,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                     .value["claimDocuments"][0]
                                                         ["deathCertificate"]
                                                     .toString() ==
-                                                "UPLOADED1") {
+                                                "UPLOADED") {
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Already Under Verification",
@@ -1935,7 +1968,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                           //     .value = file;
 
                                                           await controller
-                                                              .uploadBorrowerProof();
+                                                              .uploadDiscrepancyDocument();
                                                           setState(() {});
                                                           Get.back(
                                                               closeOverlays:
@@ -2203,6 +2236,21 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   const SizedBox(
                                     height: 10.0,
                                   ),
+
+                                  Obx(()=>controller.agentRemarkDropDownValue.value!=null?MaterialButton(
+                                    onPressed: () {
+                                      controller.agentRemarkDropDownValue.value = "";
+                                    },
+                                    color: kdarkBlue,
+                                    child: Text(
+                                      "Remove agent remark",
+                                      style: CustomFonts.kBlack15Black
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ):SizedBox(),),
+
+
+
                                   Center(
                                     child: MaterialButton(
                                       onPressed: () {
@@ -2262,21 +2310,36 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               controller.claimDetail
                                                       .value["claimData"]
                                                   ["causeOfDeath"];
+                                          controller.uploadFormData();
                                         }
-                                        // controller.uploadFormData();
-                                        if (controller.agentRemarkDropDownValue
+                                       else if (controller.causeofDeath.value ==
+                                            null || controller.causeofDeath.value ==
+                                            "null" ||controller.causeofDeath.value =="") {
+
+                                          Fluttertoast.showToast(
+                                              msg: "Cause of Death can't be Empty",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        }
+                                      else   if (controller.agentRemarkDropDownValue
                                             .value.isNotEmpty) {
                                           controller.uploadFormData();
-                                        } else if (controller
-                                            .causeofDeath.value.isNotEmpty) {
+                                        }
+                                        else{
+                                          print("Object !");
                                           controller.uploadFormData();
                                         }
+
 
                                         //  }
                                       },
                                       color: kdarkBlue,
                                       child: Text(
-                                        "Save",
+                                        "Save ",
                                         style: CustomFonts.kBlack15Black
                                             .copyWith(color: Colors.white),
                                       ),
@@ -2613,7 +2676,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   GestureDetector(
                                                     onTap: () {
                                                       controller
-                                                          .deathCertificate!
+                                                          .nomineeProof!
                                                           .removeAt(index);
 
                                                       setState(() {});
@@ -3125,51 +3188,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         },
                                       )),
                                 ),
-                              // Obx(() => controller.nominee.value == "Minor"
-                              //     ? Container(
-                              //         decoration: BoxDecoration(
-                              //             color: Colors.grey.shade100,
-                              //             borderRadius:
-                              //                 BorderRadius.circular(1.0),
-                              //             border: Border.all(color: kGrey)),
-                              //         child: Obx(() => DropdownButton<String>(
-                              //               isExpanded: true,
-                              //               hint: Padding(
-                              //                 padding:
-                              //                     const EdgeInsets.all(8.0),
-                              //                 child: controller.additionalProof
-                              //                         .value.isNotEmpty
-                              //                     ? Text(
-                              //                         controller.additionalProof
-                              //                             .value,
-                              //                         style: CustomFonts
-                              //                             .kBlack15Black
-                              //                             .copyWith(
-                              //                                 fontSize: 14.0),
-                              //                       )
-                              //                     : Text(
-                              //                         "Select Document Type",
-                              //                         style: CustomFonts
-                              //                             .kBlack15Black
-                              //                             .copyWith(
-                              //                                 fontSize: 14.0),
-                              //                       ),
-                              //               ),
-                              //               underline: const SizedBox(),
-                              //               items:
-                              //                   minorList.map((String value) {
-                              //                 return DropdownMenuItem<String>(
-                              //                   value: value,
-                              //                   child: Text(value),
-                              //                 );
-                              //               }).toList(),
-                              //               onChanged: (value) {
-                              //                 controller.additionalProof.value =
-                              //                     value!;
-                              //               },
-                              //             )),
-                              //       )
-                              //     : SizedBox()),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -3452,6 +3470,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   child: MaterialButton(
                                     onPressed: () {
                                       controller.uploadFormData2();
+                                      setState(() {
+
+                                      });
                                     },
                                     child: Text(
                                       "Upload Addition Document",
@@ -3465,76 +3486,10 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               Center(
                                 child: MaterialButton(
                                   onPressed: () {
-                                    // if (controller.nominee.value == "Minor") {
-                                    //   if (controller.minor.length >= 3) {
-                                    //     if (controller.causeofDeath.value
-                                    //             .isNotEmpty &&
-                                    //         controller
-                                    //             .filledPath.value.isNotEmpty &&
-                                    //         controller
-                                    //             .dealthCertificate.value.isNotEmpty &&
-                                    //         controller.borroweridProofDoc.value
-                                    //             .isNotEmpty &&
-                                    //         controller.borrowerIdDocPath.value
-                                    //             .isNotEmpty) {
-                                    //       controller.uploadFormData1();
-                                    //     } else {
-                                    //       log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
-                                    //       Fluttertoast.showToast(
-                                    //           msg:
-                                    //               "Please update all mandatory fields",
-                                    //           toastLength: Toast.LENGTH_SHORT,
-                                    //           gravity: ToastGravity.BOTTOM,
-                                    //           timeInSecForIosWeb: 1,
-                                    //           backgroundColor: Colors.red,
-                                    //           textColor: Colors.white,
-                                    //           fontSize: 16.0);
-                                    //     }
-                                    //   } else {
-                                    //     Fluttertoast.showToast(
-                                    //         msg:
-                                    //             "Please update atleast 3 documents for minor",
-                                    //         toastLength: Toast.LENGTH_SHORT,
-                                    //         gravity: ToastGravity.BOTTOM,
-                                    //         timeInSecForIosWeb: 1,
-                                    //         backgroundColor: Colors.red,
-                                    //         textColor: Colors.white,
-                                    //         fontSize: 16.0);
-                                    //   }
-                                    // } else if (controller
-                                    //         .causeofDeath.value.isNotEmpty ||
-                                    //     controller
-                                    //         .filledPath.value.isNotEmpty ||
-                                    //     controller.dealthCertificate.value
-                                    //         .isNotEmpty ||
-                                    //     controller
-                                    //         .borroweridProof.value.isNotEmpty ||
-                                    //     controller.borrowerIdDocPath.value
-                                    //         .isNotEmpty) {
-                                    //   controller.uploadFormData1();
-                                    // }
-                                    // if (controller.additionalDropDownList
-                                    //     .contains(controller
-                                    //         .additionalProofDoc.value)) {
-                                    //   Fluttertoast.showToast(
-                                    //       msg:
-                                    //           "Already Exit Record for Selected Dropdown",
-                                    //       toastLength: Toast.LENGTH_SHORT,
-                                    //       gravity: ToastGravity.BOTTOM,
-                                    //       timeInSecForIosWeb: 1,
-                                    //       backgroundColor: Colors.red,
-                                    //       textColor: Colors.white,
-                                    //       fontSize: 16.0);
-                                    // } else {
-                                    //   controller.additionalDocumentList(
-                                    //       dropDownValue:
-                                    //           controller.additionalProof.value,
-                                    //       imagePath: controller
-                                    //           .additionalDocpath.value,
-                                    //       selectedValue:
-                                    //           controller.additionalProof.value);
-                                    // }
                                     controller.uploadFormData2();
+                                    setState(() {
+
+                                    });
                                   },
                                   child: Text(
                                     "Save",
@@ -3615,121 +3570,58 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       controller.currentIndex.value + 1;
                                 } else {
                                   log("--");
-                                  if (controller.causeofDeath.value.isEmpty) {
+                                  if (
+                                  controller
+                                      .claimDetail
+                                      .value["claimDocuments"][0]
+                                  ["singnedClaimDocument"]
+                                      .toString() !=
+                                      "UPLOADED" ||
+                                      controller
+                                          .claimDetail
+                                          .value["claimDocuments"][0]
+                                      ["deathCertificate"]
+                                          .toString() !=
+                                          "UPLOADED" ||
+                                      controller
+                                          .claimDetail
+                                          .value["claimDocuments"][0]
+                                      ["borrowerKycProof"]
+                                          .toString() !=
+                                          "UPLOADED" ||
+                                      controller
+                                          .claimDetail
+                                          .value["claimDocuments"][0]
+                                      ["nomineeKycProof"]
+                                          .toString() !=
+                                          "UPLOADED"||
+                                      controller
+                                          .claimDetail
+                                          .value["claimDocuments"][0]
+                                      ["bankAccountProof"]
+                                          .toString() !=
+                                          "UPLOADED"  ) {
                                     Fluttertoast.showToast(
-                                        msg: "Cause of Death Cannot be blank",
+                                        msg: "Upload all required Document",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.red,
                                         textColor: Colors.white,
                                         fontSize: 16.0);
-                                    //controller.uploadFormData();
-                                    if (controller
-                                            .borroweridProof.value.isNotEmpty
-                                        // || controller.borrowerAddressProof.value.isNotEmpty
-                                        ||
-                                        controller
-                                            .nomineeIdProof.value.isNotEmpty ||
-                                        // controller.nomineeAddressProof.value.isNotEmpty ||
-                                        controller.bankProof.value.isNotEmpty ||
-                                        controller
-                                            .additionalProof.value.isNotEmpty) {
-                                      log("87");
-                                    } else if (controller
-                                            .borrowerIdDocPath.isNotEmpty ||
-                                        // controller.borrowerAddressDocPath.isNotEmpty ||
-                                        controller
-                                            .nomineeIdDocPath.isNotEmpty ||
-                                        // controller.nomineeAddressDocPath.isNotEmpty ||
-                                        // controller.borrowerAddressDocPath.isNotEmpty ||
-                                        controller
-                                            .additionalDocpath.isNotEmpty) {
-                                      log("88");
-                                    } else {
-                                      if (controller.causeofDeath.value ==
-                                          "Accident") {
-                                        if (controller
-                                                .additionalProofDoc.value ==
-                                            "Police FIR Copy") {
-                                          controller.uploadFormData();
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Police Fir Copy is compulsory",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        }
-                                      }
 
-                                      if (controller.causeofDeath.value ==
-                                          "Illness & Medical Reason") {
-                                        if (controller
-                                                .additionalProofDoc.value ==
-                                            "Medical Attendant Certificate") {
-                                          controller.uploadFormData();
-                                        } else {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Medical Attendant Certificate is compulsory",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.red,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        }
-                                      }
-                                    }
-                                  } else if (controller.filled.value == '' ||
-                                      controller.filledPath.value == null) {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "Filled & Signed Claim form Cannot be blank",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  } else if (controller
-                                              .dealthCertificate.value ==
-                                          "" ||
-                                      controller.deathCertificatePath.value ==
-                                          null) {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "Death Certificate Cannot be blank",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  } else if (controller
-                                          .claimDetail.value["claimStatus"]
-                                          .toString() ==
-                                      "UNDER_VERIFICATION1") {
-                                    Fluttertoast.showToast(
-                                        msg: "Already Under Verification",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  } else {
+                                  }
+
+                                  else {
                                     log("rrr");
+
+                                    controller.sendToVerifier();
                                     Fluttertoast.showToast(
-                                        msg: "Cause of Death Cannot be blank",
+                                        msg: "Form send to Verifier",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.red,
+                                        backgroundColor: Colors.green,
                                         textColor: Colors.white,
                                         fontSize: 16.0);
                                   }
@@ -3753,12 +3645,41 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                           ),
                                         ),
                                       )
-                                    : controller.causeofDeath.value.isEmpty
+                                    : controller
+                                                    .claimDetail
+                                                    .value["claimDocuments"][0]
+                                                        ["singnedClaimDocument"]
+                                                    .toString() ==
+                                                "UPLOADED" &&
+                                            controller
+                                                    .claimDetail
+                                                    .value["claimDocuments"][0]
+                                                        ["deathCertificate"]
+                                                    .toString() ==
+                                                "UPLOADED" &&
+
+                                            controller
+                                                    .claimDetail
+                                                    .value["claimDocuments"][0]
+                                                        ["bankAccountProof"]
+                                                    .toString() ==
+                                                "UPLOADED" &&
+                                            controller
+                                                    .claimDetail
+                                                    .value["claimDocuments"][0]
+                                                        ["borrowerKycProof"]
+                                                    .toString() ==
+                                                "UPLOADED" &&
+                                            controller
+                                                    .claimDetail
+                                                    .value["claimDocuments"][0]
+                                                        ["nomineeKycProof"]
+                                                    .toString() ==
+                                                "UPLOADED"
                                         ? Container(
                                             height: 50,
                                             decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    19, 78, 133, 0.6),
+                                                color: const Color(0xff134E85),
                                                 border: Border.all(
                                                     color: const Color(
                                                         0xff134E85)),
@@ -3768,7 +3689,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               child: Obx(
                                                 () => controller.currentIndex
                                                             .value <
-                                                        3
+                                                        4
                                                     ? Text(
                                                         "Next",
                                                         style: TextStyle(
@@ -3787,7 +3708,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         : Container(
                                             height: 50,
                                             decoration: BoxDecoration(
-                                                color: const Color(0xff134E85),
+                                                color: const Color.fromRGBO(
+                                                    19, 78, 133, 0.6),
                                                 border: Border.all(
                                                     color: const Color(
                                                         0xff134E85)),
@@ -3797,7 +3719,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               child: Obx(
                                                 () => controller.currentIndex
                                                             .value <
-                                                        4
+                                                        3
                                                     ? Text(
                                                         "Next",
                                                         style: TextStyle(
@@ -4042,13 +3964,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select KYC ID Proof");
       }
     }
-    // if (controller.borrowerAddressProof.value.isNotEmpty) {
-    //   if (controller.borrowerAddressDocPath.isNotEmpty) {
-    //     ///Api call krni h yha se
-    //   } else {
-    //     showMessage(message: "Please Select KYC Address Proof");
-    //   }
-    // }
     if (controller.nomineeIdProof.value.isNotEmpty) {
       if (controller.nomineeIdDocPath.isNotEmpty) {
         ///Api call krni h yha se
@@ -4056,13 +3971,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select Nominee ID Proof");
       }
     }
-    // if (controller.nomineeAddressProof.value.isNotEmpty) {
-    //   if (controller.nomineeIdDocPath.isNotEmpty) {
-    //     ///Api call krni h yha se
-    //   } else {
-    //     showMessage(message: "Please Select Nominee Address Proof");
-    //   }
-    // }
+
     if (controller.bankProof.value.isNotEmpty) {
       if (controller.bankAccountDocPath.isNotEmpty) {
         ///Api call krni h yha se
@@ -4094,13 +4003,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select KYC ID Proof Type");
       }
     }
-    // if (controller.borrowerAddressDocPath.value.isNotEmpty) {
-    //   if (controller.borrowerAddressProof.isNotEmpty) {
-    //     ///Api call krni h yha se
-    //   } else {
-    //     showMessage(message: "Please Select KYC Address Proof");
-    //   }
-    // }
+
     if (controller.nomineeIdDocPath.value.isNotEmpty) {
       if (controller.nomineeIdProof.isNotEmpty) {
         ///Api call krni h yha se
@@ -4108,13 +4011,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
         showMessage(message: "Please Select Nominee ID Proof");
       }
     }
-    // if (controller.nomineeAddressProof.value.isNotEmpty) {
-    //   if (controller.nomineeAddressProofDoc.isNotEmpty) {
-    //     ///Api call krni h yha se
-    //   } else {
-    //     showMessage(message: "Please Select Nominee Address Proof");
-    //   }
-    // }
+
     if (controller.bankAccountDocPath.value.isNotEmpty) {
       if (controller.bankProof.isNotEmpty) {
         ///Api call krni h yha se

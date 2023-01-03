@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
@@ -117,9 +118,9 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("Anil Kumar"),
-                        Text("Id:983821"),
+                      children:  [
+                        Text("${GetStorage().read("firstName")} ${GetStorage().read("lastName")}"),
+                        Text("${GetStorage().read("userId")} (${GetStorage().read("role")})"),
                       ],
                     ),
                     const Spacer(),

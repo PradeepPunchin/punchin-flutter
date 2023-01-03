@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
@@ -220,7 +222,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                       width: 10,
                                     ),
                                     Text(
-                                      "Remark",
+                                      "Verifier Remark",
                                       style: CustomFonts.kBlack15Black
                                           .copyWith(
                                           fontSize: 15.0,
@@ -386,11 +388,142 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     const SizedBox(
                                       height: 10.0,
                                     ),
+                                    // Container(
+                                    //   height: 40.0,
+                                    //   decoration: BoxDecoration(
+                                    //       color: Colors.grey.shade50,
+                                    //       borderRadius: BorderRadius.circular(5.0),
+                                    //       border: Border.all(
+                                    //         color: kGrey,
+                                    //       )),
+                                    //   child: Row(
+                                    //     children: [
+                                    //       Flexible(
+                                    //         fit: FlexFit.tight,
+                                    //         child: Padding(
+                                    //           padding: const EdgeInsets.all(8.0),
+                                    //           child: Obx(() => Text(
+                                    //             controller.additionalProofDoc.value,
+                                    //             style: CustomFonts.kBlack15Black
+                                    //                 .copyWith(
+                                    //                 fontWeight: FontWeight.w600,
+                                    //                 fontSize: 14.0),
+                                    //           )),
+                                    //         ),
+                                    //       ),
+                                    //       const Spacer(),
+                                    //       MaterialButton(
+                                    //         elevation: 1.0,
+                                    //         onPressed: () async {
+                                    //           Get.defaultDialog(
+                                    //               title: "Upload",
+                                    //               titleStyle: CustomFonts.kBlack15Black
+                                    //                   .copyWith(
+                                    //                   color: Colors.black,
+                                    //                   fontSize: 20.0,
+                                    //                   fontWeight: FontWeight.bold),
+                                    //               content: Column(
+                                    //                 mainAxisSize: MainAxisSize.min,
+                                    //                 crossAxisAlignment:
+                                    //                 CrossAxisAlignment.center,
+                                    //                 mainAxisAlignment:
+                                    //                 MainAxisAlignment.center,
+                                    //                 children: [
+                                    //                   Divider(),
+                                    //                   GestureDetector(
+                                    //                     onTap: () async {
+                                    //                       var file = await controller
+                                    //                           .imageFromCamera();
+                                    //
+                                    //                       controller.additionalProofDoc
+                                    //                           .value = basename(file);
+                                    //                       controller.additionalDocpath
+                                    //                           .value = file;
+                                    //                       Get.back(closeOverlays: true);
+                                    //                     },
+                                    //                     child: Text(
+                                    //                       "Take Photo ...",
+                                    //                       style: CustomFonts
+                                    //                           .kBlack15Black
+                                    //                           .copyWith(
+                                    //                           color: kdarkBlue,
+                                    //                           fontWeight:
+                                    //                           FontWeight.w600,
+                                    //                           fontSize: 16.0),
+                                    //                     ),
+                                    //                   ),
+                                    //                   const Divider(),
+                                    //                   GestureDetector(
+                                    //                     behavior:
+                                    //                     HitTestBehavior.opaque,
+                                    //                     onTap: () async {
+                                    //                       await controller
+                                    //                           .uploadBorrowerProof();
+                                    //                       setState(() {});
+                                    //                       Get.back(
+                                    //                           closeOverlays:
+                                    //                           true);
+                                    //                     },
+                                    //                     child: Text(
+                                    //                       "Choose Files from Phone",
+                                    //                       style: CustomFonts
+                                    //                           .kBlack15Black
+                                    //                           .copyWith(
+                                    //                           color: kdarkBlue,
+                                    //                           fontWeight:
+                                    //                           FontWeight.w600,
+                                    //                           fontSize: 16.0),
+                                    //                     ),
+                                    //                   ),
+                                    //                   const Divider(),
+                                    //                 ],
+                                    //               ),
+                                    //               cancel: GestureDetector(
+                                    //                 onTap: () {
+                                    //                   Get.back(closeOverlays: true);
+                                    //                 },
+                                    //                 behavior: HitTestBehavior.opaque,
+                                    //                 child: Padding(
+                                    //                   padding:
+                                    //                   const EdgeInsets.all(8.0),
+                                    //                   child: Text(
+                                    //                     "Cancel",
+                                    //                     style: CustomFonts.kBlack15Black
+                                    //                         .copyWith(
+                                    //                         color: Colors.red,
+                                    //                         fontSize: 16),
+                                    //                   ),
+                                    //                 ),
+                                    //               ),
+                                    //               onCancel: () => Get.back());
+                                    //         },
+                                    //         shape: RoundedRectangleBorder(
+                                    //             side: const BorderSide(color: kGrey),
+                                    //             borderRadius:
+                                    //             BorderRadius.circular(5.0)),
+                                    //         color: Colors.white,
+                                    //         child: Text("Upload",
+                                    //             style: CustomFonts.kBlack15Black
+                                    //                 .copyWith(
+                                    //                 fontSize: 15.0,
+                                    //                 fontWeight: FontWeight.w400)),
+                                    //       ),
+                                    //       const SizedBox(
+                                    //         width: 10,
+                                    //       )
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 10.0,
+                                    // ),
+                                    // Text("data"),
                                     Container(
-                                      height: 40.0,
+                                      height: 40.0.h,
                                       decoration: BoxDecoration(
                                           color: Colors.grey.shade50,
-                                          borderRadius: BorderRadius.circular(5.0),
+                                          borderRadius:
+                                          BorderRadius.circular(5.0),
                                           border: Border.all(
                                             color: kGrey,
                                           )),
@@ -413,92 +546,127 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                           MaterialButton(
                                             elevation: 1.0,
                                             onPressed: () async {
-                                              Get.defaultDialog(
-                                                  title: "Upload",
-                                                  titleStyle: CustomFonts.kBlack15Black
-                                                      .copyWith(
-                                                      color: Colors.black,
-                                                      fontSize: 20.0,
-                                                      fontWeight: FontWeight.bold),
-                                                  content: Column(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                    children: [
-                                                      Divider(),
-                                                      GestureDetector(
-                                                        onTap: () async {
-                                                          var file = await controller
-                                                              .imageFromCamera();
 
-                                                          controller.additionalProofDoc
-                                                              .value = basename(file);
-                                                          controller.additionalDocpath
-                                                              .value = file;
-                                                          Get.back(closeOverlays: true);
-                                                        },
+                                                Get.defaultDialog(
+                                                    title: "Upload",
+                                                    titleStyle: CustomFonts
+                                                        .kBlack15Black
+                                                        .copyWith(
+                                                        color: Colors.black,
+                                                        fontSize: 20.0,
+                                                        fontWeight:
+                                                        FontWeight.bold),
+                                                    content: Column(
+                                                      mainAxisSize:
+                                                      MainAxisSize.min,
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .center,
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .center,
+                                                      children: [
+                                                        Divider(),
+                                                        GestureDetector(
+                                                          onTap: () async {
+                                                            var file =
+                                                            await controller
+                                                                .imageFromCamera();
+                                                            print(file);
+                                                            controller
+                                                                .borroweridProofDoc
+                                                                .value =
+                                                                basename(file);
+                                                            controller
+                                                                .borrowerIdDocPath
+                                                                .value = file;
+                                                            Get.back(
+                                                                closeOverlays:
+                                                                true);
+                                                          },
+                                                          child: Text(
+                                                            "Take Photo ...",
+                                                            style: CustomFonts
+                                                                .kBlack15Black
+                                                                .copyWith(
+                                                                color:
+                                                                kdarkBlue,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w600,
+                                                                fontSize:
+                                                                16.0),
+                                                          ),
+                                                        ),
+                                                        Divider(),
+                                                        GestureDetector(
+                                                          behavior:
+                                                          HitTestBehavior
+                                                              .opaque,
+                                                          onTap: () async {
+                                                            // var file =
+                                                            //     await controller
+                                                            //         .uploadFile();
+                                                            // controller
+                                                            //         .borroweridProofDoc
+                                                            //         .value =
+                                                            //     basename(file);
+                                                            // controller
+                                                            //     .borrowerIdDocPath
+                                                            //     .value = file;
+
+                                                            await controller
+                                                                .uploadDiscrepancyDocument();
+                                                            setState(() {});
+                                                            Get.back(
+                                                                closeOverlays:
+                                                                true);
+                                                          },
+                                                          child: Text(
+                                                            "Choose Files from Phone",
+                                                            style: CustomFonts
+                                                                .kBlack15Black
+                                                                .copyWith(
+                                                                color:
+                                                                kdarkBlue,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w600,
+                                                                fontSize:
+                                                                16.0),
+                                                          ),
+                                                        ),
+                                                        Divider(),
+                                                      ],
+                                                    ),
+                                                    cancel: GestureDetector(
+                                                      onTap: () {
+                                                        Get.back(
+                                                            closeOverlays: true);
+                                                      },
+                                                      behavior:
+                                                      HitTestBehavior.opaque,
+                                                      child: Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
                                                         child: Text(
-                                                          "Take Photo ...",
+                                                          "Cancel",
                                                           style: CustomFonts
                                                               .kBlack15Black
                                                               .copyWith(
-                                                              color: kdarkBlue,
-                                                              fontWeight:
-                                                              FontWeight.w600,
-                                                              fontSize: 16.0),
+                                                              color:
+                                                              Colors.red,
+                                                              fontSize: 16),
                                                         ),
-                                                      ),
-                                                      const Divider(),
-                                                      GestureDetector(
-                                                        behavior:
-                                                        HitTestBehavior.opaque,
-                                                        onTap: () async {
-                                                          var file = await controller
-                                                              .discrepancyFile();
-
-                                                          controller.additionalProofDoc
-                                                              .value = basename(file);
-                                                          controller.additionalDocpath
-                                                              .value = file;
-                                                          Get.back(closeOverlays: true);
-                                                        },
-                                                        child: Text(
-                                                          "Choose Files from Phone",
-                                                          style: CustomFonts
-                                                              .kBlack15Black
-                                                              .copyWith(
-                                                              color: kdarkBlue,
-                                                              fontWeight:
-                                                              FontWeight.w600,
-                                                              fontSize: 16.0),
-                                                        ),
-                                                      ),
-                                                      const Divider(),
-                                                    ],
-                                                  ),
-                                                  cancel: GestureDetector(
-                                                    onTap: () {
-                                                      Get.back(closeOverlays: true);
-                                                    },
-                                                    behavior: HitTestBehavior.opaque,
-                                                    child: Padding(
-                                                      padding:
-                                                      const EdgeInsets.all(8.0),
-                                                      child: Text(
-                                                        "Cancel",
-                                                        style: CustomFonts.kBlack15Black
-                                                            .copyWith(
-                                                            color: Colors.red,
-                                                            fontSize: 16),
                                                       ),
                                                     ),
-                                                  ),
-                                                  onCancel: () => Get.back());
+                                                    onCancel: () => Get.back());
+
                                             },
                                             shape: RoundedRectangleBorder(
-                                                side: const BorderSide(color: kGrey),
+                                                side: const BorderSide(
+                                                    color: kGrey),
                                                 borderRadius:
                                                 BorderRadius.circular(5.0)),
                                             color: Colors.white,
@@ -506,7 +674,8 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                 style: CustomFonts.kBlack15Black
                                                     .copyWith(
                                                     fontSize: 15.0,
-                                                    fontWeight: FontWeight.w400)),
+                                                    fontWeight:
+                                                    FontWeight.w400)),
                                           ),
                                           const SizedBox(
                                             width: 10,
@@ -514,10 +683,99 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         ],
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
 
+                                    // Text(controller.discrepancyDocument.toString()),
+                                    controller.discrepancyDocument != null
+                                        ? ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                        NeverScrollableScrollPhysics(),
+                                        itemCount:
+                                        controller.discrepancyDocument!.length,
+                                        itemBuilder: (context, int index) {
+                                          return controller
+                                              .discrepancyDocument!.isNotEmpty
+                                              ? Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets
+                                                    .all(8.0),
+                                                child: GestureDetector(
+                                                    child: Text(
+                                                      "Preview",
+                                                      style: CustomFonts
+                                                          .kBlack15Black
+                                                          .copyWith(
+                                                          fontSize:
+                                                          14.0,
+                                                          color:
+                                                          kdarkBlue,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w700),
+                                                    ),
+                                                    onTap: () {
+                                                      var filePathinPdf;
+
+                                                      String s =
+                                                          "${controller.discrepancyDocument![index].toString()}";
+                                                      int idx = s
+                                                          .indexOf(":");
+                                                      List parts = [
+                                                        s
+                                                            .substring(
+                                                            0, idx)
+                                                            .trim(),
+                                                        s
+                                                            .substring(
+                                                            idx + 1)
+                                                            .trim()
+                                                      ];
+                                                      var str =
+                                                      parts[1];
+                                                      var find = "'";
+                                                      var replaceWith =
+                                                          '';
+                                                      var newString =
+                                                      str.replaceAll(
+                                                          find,
+                                                          replaceWith);
+                                                      var parts1 =
+                                                      str.split(
+                                                          '${str[0]}');
+                                                      filePathinPdf =
+                                                          newString;
+                                                      Get.to(() =>
+                                                          PreviewScreen(
+                                                            filePath:
+                                                            filePathinPdf,
+                                                            // filePath:  controller
+                                                            //     .deathCertificatePath
+                                                            //     .value,
+                                                          ));
+                                                    }),
+                                              ),
+                                              const Spacer(),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  controller
+                                                      .discrepancyDocument!
+                                                      .removeAt(index);
+
+                                                  setState(() {});
+                                                },
+                                                child: const Icon(
+                                                  Icons.delete,
+                                                  color: klightBlue,
+                                                  size: 20,
+                                                ),
+                                              )
+                                            ],
+                                          )
+                                              : SizedBox();
+                                        })
+                                        : SizedBox(),
                                     Obx(() => controller
                                         .additionalDocpath.value.isNotEmpty
                                         ? Row(

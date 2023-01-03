@@ -15,6 +15,7 @@ import 'package:punchin/constant/api_url.dart';
 import 'package:punchin/model/claim_model/claim_discrepancy_model.dart';
 import 'package:punchin/model/claim_model/claim_in_progress_model.dart';
 import 'package:punchin/model/claim_model/claim_submitted.dart';
+import 'package:punchin/model/tracking_model/tracking_model.dart';
 import 'package:punchin/views/claim_details/details.dart';
 import 'package:punchin/views/login/login_screen.dart';
 
@@ -163,14 +164,6 @@ class ClaimController extends GetxController {
         //getErrorToaster(details["message"]);
       }
     }
-    // on SocketException {
-    //   Get.rawSnackbar(
-    //       message: "Bad Connectivity",
-    //       snackPosition: SnackPosition.BOTTOM,
-    //       margin: EdgeInsets.zero,
-    //       snackStyle: SnackStyle.GROUNDED,
-    //       backgroundColor: Colors.red);
-    // }
     catch (e) {
       print("2");
       print(e);
@@ -400,7 +393,8 @@ class ClaimController extends GetxController {
         },
       );
 
-      ;
+
+      log(response.body);
       if (response.statusCode == 200) {
         // discrepancyData.value=jsonDecode(response.body);
         Map data = jsonDecode(response.body);
@@ -542,6 +536,57 @@ class ClaimController extends GetxController {
     }
   }
 
+
+  /// send to verifier
+  sendToVerifier() async {
+    try {
+      var Url="$claimDetails${Get.arguments[1].id.toString()}/forward-to-verifier";
+      print("link url"+Url);
+      var response = await http.get(
+        Uri.parse(Url),
+        headers: {
+          "Content-Type": "application/json",
+          "X-Xsrf-Token": box.read("authToken"),
+        },
+      );
+
+
+      if (response.statusCode == 200) {
+      } else if (response.statusCode == 401) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+        Get.off(() => LoginScreen());
+      } else if (response.statusCode == 400) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      } else if (response.statusCode == 405) {
+        final details = jsonDecode(response.body);
+        //getErrorToaster(details["message"]);
+      }
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      // print("3");
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
+
+
   /// upload file
   Future<String> uploadFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -678,6 +723,28 @@ class ClaimController extends GetxController {
     }
   }
 
+
+
+  /// discrepancy upload document
+  List<File>? discrepancyDocument;
+
+  Future<List<File>?> uploadDiscrepancyDocument() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'jpg', 'jpeg']);
+    if (result != null) {
+      discrepancyDocument = result.paths.map((path) => File(path!)).toList();
+    } else {
+      // User canceled the picker
+    }
+    // return path.value;
+    return discrepancyDocument;
+  }
+
+
+
+
   Future<String> imageFromCamera() async {
     ImagePicker picker = ImagePicker();
     XFile? imageXFile = await picker.pickImage(source: ImageSource.camera);
@@ -724,127 +791,140 @@ class ClaimController extends GetxController {
     }
 
     /// code for adding file image
-    if (nominee.value == "Minor") {
-      log("true ${nominee.value == "Minor"}");
-      if (minorProofPath.value.isNotEmpty) {
+    if(agentRemarkDropDownValue
+        .value  == null || agentRemarkDropDownValue
+        .value  == "null" || agentRemarkDropDownValue
+        .value  == '' ) {
+      if (nominee.value == "Minor") {
+        log("true ${nominee.value == "Minor"}");
+        if (minorProofPath.value.isNotEmpty) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'OTHER',
+              minorProofPath.value,
+              contentType: MediaType('file', 'pdf'),
+            ),
+          );
+        }
+        if (RelationProof.value.isNotEmpty) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'RELATIONSHIP_PROOF',
+              RelationProof.value,
+              contentType: MediaType('file', 'pdf'),
+            ),
+          );
+        }
+        if (GUARDIAN_ID_PROOF.value.isNotEmpty) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'GUARDIAN_ID_PROOF',
+              GUARDIAN_ID_PROOF.value,
+              contentType: MediaType('file', 'pdf'),
+            ),
+          );
+        }
+        if (GUARDIAN_ADD_PROOF.value.isNotEmpty) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'GUARDIAN_ADD_PROOF',
+              GUARDIAN_ADD_PROOF.value,
+              contentType: MediaType('file', 'pdf'),
+            ),
+          );
+        }
+      }
+      if (files1 != null) {
+        // request.files.add(
+        //   await http.MultipartFile.fromPath(
+        //     'SIGNED_FORM',
+        //     signForm.toList().toString(),
+        //     contentType: MediaType('file', 'pdf'),
+        //   ),
+        // );"SIGNED_FORM :  : ${i}
+        List<http.MultipartFile> newList = [];
+        for (int i = 0; i < files1!.length; i++) {
+          File imageFile = File(files1![i].path);
+          var stream =
+          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+          var length = await imageFile.length();
+          var multipartFile = http.MultipartFile(
+              "SIGNED_FORM :  : ${i}", stream, length,
+              filename: imageFile.path
+                  .split('/')
+                  .last);
+          newList.add(multipartFile);
+        }
+
+        request.files.addAll(newList);
+      }
+
+      if (deathCertificate != null) {
+        List<http.MultipartFile> newList = [];
+        for (int i = 0; i < deathCertificate!.length; i++) {
+          File imageFile = File(deathCertificate![i].path);
+          var stream =
+          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+          var length = await imageFile.length();
+          var multipartFile = http.MultipartFile(
+              "DEATH_CERTIFICATE :  : ${i}", stream, length,
+              filename: imageFile.path
+                  .split('/')
+                  .last);
+          newList.add(multipartFile);
+        }
+        request.files.addAll(newList);
+      }
+
+      if (borrowerProof != null) {
+        List<http.MultipartFile> newList = [];
+        for (int i = 0; i < borrowerProof!.length; i++) {
+          File imageFile = File(borrowerProof![i].path);
+          var stream =
+          new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+          var length = await imageFile.length();
+          var multipartFile = http.MultipartFile(
+              "BORROWER_KYC_PROOF : ${borroweridProof.value} : ${i}",
+              stream,
+              length,
+              filename: imageFile.path
+                  .split('/')
+                  .last);
+          newList.add(multipartFile);
+        }
+        request.files.addAll(newList);
+      }
+
+      if (filledPath.value.isEmpty) {}
+      if (deathCertificatePath.value.isNotEmpty) {
         request.files.add(
           await http.MultipartFile.fromPath(
-            'OTHER',
-            minorProofPath.value,
+            'DEATH_CERTIFICATE',
+            deathCertificatePath.value,
             contentType: MediaType('file', 'pdf'),
           ),
         );
       }
-      if (RelationProof.value.isNotEmpty) {
+      if (borrowerIdDocPath.value.isNotEmpty) {
         request.files.add(
           await http.MultipartFile.fromPath(
-            'RELATIONSHIP_PROOF',
-            RelationProof.value,
-            contentType: MediaType('file', 'pdf'),
-          ),
-        );
-      }
-      if (GUARDIAN_ID_PROOF.value.isNotEmpty) {
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'GUARDIAN_ID_PROOF',
-            GUARDIAN_ID_PROOF.value,
-            contentType: MediaType('file', 'pdf'),
-          ),
-        );
-      }
-      if (GUARDIAN_ADD_PROOF.value.isNotEmpty) {
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'GUARDIAN_ADD_PROOF',
-            GUARDIAN_ADD_PROOF.value,
+            'BORROWER_KYC_PROOF :${borroweridProof.value}',
+            borrowerIdDocPath.value,
             contentType: MediaType('file', 'pdf'),
           ),
         );
       }
     }
-    if (files1 != null) {
-      // request.files.add(
-      //   await http.MultipartFile.fromPath(
-      //     'SIGNED_FORM',
-      //     signForm.toList().toString(),
-      //     contentType: MediaType('file', 'pdf'),
-      //   ),
-      // );
-      List<http.MultipartFile> newList = [];
-      for (int i = 0; i < files1!.length; i++) {
-        File imageFile = File(files1![i].path);
-        var stream =
-            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-        var length = await imageFile.length();
-        var multipartFile = http.MultipartFile(
-            "SIGNED_FORM :  : ${i}", stream, length,
-            filename: imageFile.path.split('/').last);
-        newList.add(multipartFile);
-      }
 
-      request.files.addAll(newList);
+    if(agentRemarkDropDownValue.value  != null){
+      request.fields["agentRemark"] = agentRemarkDropDownValue.value.toString();
+
     }
 
-    if (deathCertificate != null) {
-      List<http.MultipartFile> newList = [];
-      for (int i = 0; i < deathCertificate!.length; i++) {
-        File imageFile = File(deathCertificate![i].path);
-        var stream =
-            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-        var length = await imageFile.length();
-        var multipartFile = http.MultipartFile(
-            "DEATH_CERTIFICATE :  : ${i}", stream, length,
-            filename: imageFile.path.split('/').last);
-        newList.add(multipartFile);
-      }
-      request.files.addAll(newList);
-    }
 
-    if (borrowerProof != null) {
-      List<http.MultipartFile> newList = [];
-      for (int i = 0; i < borrowerProof!.length; i++) {
-        File imageFile = File(borrowerProof![i].path);
-        var stream =
-            new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-        var length = await imageFile.length();
-        var multipartFile = http.MultipartFile(
-            "BORROWER_KYC_PROOF : ${borroweridProof.value} : ${i}",
-            stream,
-            length,
-            filename: imageFile.path.split('/').last);
-        newList.add(multipartFile);
-      }
-      request.files.addAll(newList);
-    }
-
-    if (filledPath.value.isEmpty) {}
-    if (deathCertificatePath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'DEATH_CERTIFICATE',
-          deathCertificatePath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-    if (borrowerIdDocPath.value.isNotEmpty) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'BORROWER_KYC_PROOF :${borroweridProof.value}',
-          borrowerIdDocPath.value,
-          contentType: MediaType('file', 'pdf'),
-        ),
-      );
-    }
-
-    log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
-    log("${responsed.statusCode}");
 
-    //final responseData = json.decode(responsed.body);
-    log("$response");
     if (response.statusCode == 200) {
       getStepperFormData();
       loadUpload.value = false;
@@ -870,6 +950,7 @@ class ClaimController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+
 
   // uploadFormData1() async {
   //   loadUpload.value = true;
@@ -1034,33 +1115,12 @@ class ClaimController extends GetxController {
     }
 
     log("message${additionalList.isNotEmpty}");
-    // if (additionalList.value.isNotEmpty) {
-    //
-    //   for(int i=0;i<additionalList.length;i++){
-    //
-    //     request.files.add(
-    //       await http.MultipartFile.fromPath(
-    //         additionalList.value[i]["dropDownValue"],
-    //         additionalList.value[i]["image_path"],
-    //         contentType: MediaType('file', 'pdf'),
-    //       ),
-    //     );
-    //
-    //     print(additionalList.value[i]["dropDownValue"]);
-    //     print(additionalList.value[i]["image_path"]);
-    //
-    //     i++;
-    //   }
-    //
-    // }
 
     log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
     log("${responsed.statusCode}");
 
-    //final responseData = json.decode(responsed.body);
-    // log("$responseData");
     if (response.statusCode == 200) {
       loadUpload.value = false;
 
@@ -1243,30 +1303,46 @@ class ClaimController extends GetxController {
     request.headers.addAll(headers);
 
     /// code for adding file image
-    log("Path is 1 ${additionalDocpath.value}");
-
     if (additionalDocpath.value.isNotEmpty) {
       print("1" + additionalDocpath.value);
       request.files.add(await http.MultipartFile.fromPath(
         'multipartFile',
         additionalDocpath.value,
       ));
-      // request.files.add(
-      //   await http.MultipartFile.fromPath(
-      //     '$docType',
-      //     additionalDocpath.value,
-      //     contentType: MediaType('file', 'jpg'),
-      //   ),
-      // );
     }
-    print(additionalDocpath.value.isNotEmpty);
-    print(request.files.length.toString());
+
+    if (discrepancyDocument != null) {
+
+
+
+      List<http.MultipartFile> newList = [];
+      for (int i = 0; i < discrepancyDocument!.length; i++) {
+        File imageFile = File(discrepancyDocument![i].path);
+        var stream =
+        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+        var length = await imageFile.length();
+        print("error line in length "+ discrepancyDocument.toString());
+        var multipartFile = http.MultipartFile(
+            "multipartFile", stream, length,
+            filename: imageFile.path.split('/').last);
+        newList.add(multipartFile);
+      }
+
+      request.files.addAll(newList);
+
+
+
+    }
+
+
+
+
+
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
-    log("${responsed.statusCode}");
 
     if (response.statusCode == 200) {
-      moveToVerify(id: id);
+      //moveToVerify(id: id);
       loadUpload.value = false;
       Get.rawSnackbar(
           message: "Form Submitted Successfully",
@@ -1343,4 +1419,63 @@ class ClaimController extends GetxController {
     }
     return tempValue.value;
   }
+
+
+
+
+  getClaimTracking({searchKey}) async {
+    try {
+        var Url = claimDetails + "$searchKey/history";
+        log(Url.toString());
+        var response = await http.get(
+          Uri.parse(Url),
+          headers: {
+            "Content-Type": "application/json",
+            "X-Xsrf-Token": box.read("authToken"),
+          },
+        );
+        log(response.statusCode.toString());
+        if (response.statusCode == 200) {
+          log(response.body);
+          return TrackingModel.fromJson(jsonDecode(response.body));
+        }
+        if (response.statusCode == 404) {
+          return TrackingModel.fromJson(jsonDecode(response.body));
+        } else if (response.statusCode == 401) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 400) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        } else if (response.statusCode == 405) {
+          final details = jsonDecode(response.body);
+          //getErrorToaster(details["message"]);
+        }
+
+
+
+    }
+    // on SocketException {
+    //   Get.rawSnackbar(
+    //       message: "Bad Connectivity",
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       margin: EdgeInsets.zero,
+    //       snackStyle: SnackStyle.GROUNDED,
+    //       backgroundColor: Colors.red);
+    // }
+    catch (e) {
+      // print("12345" + e.toString());
+      // print(e);
+      // Get.rawSnackbar(
+      //     message: " $e Error Occured",
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     margin: EdgeInsets.zero,
+      //     snackStyle: SnackStyle.GROUNDED,
+      //     backgroundColor: Colors.red);
+    } finally {
+      //btnController.value.stop();
+    }
+  }
+
+
 }

@@ -25,7 +25,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
   final List<Widget> screens = [
     const HomeView(),
     const TrackingHome(),
-    const ProfileView(),
+     ProfileView(),
 
   ];
   @override

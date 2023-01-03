@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ import 'package:punchin/views/claim_form_view/claim_form_view.dart';
 import 'package:punchin/widget/custom_bottom_bar.dart';
 import 'package:punchin/widget/text_widget/search_text_field.dart';
 import 'package:share_plus/share_plus.dart';
-//import 'package:whatsapp_share2/whatsapp_share2.dart';
 
 class Details extends StatefulWidget {
   const Details({Key? key, required this.title}) : super(key: key);
@@ -41,12 +39,6 @@ class _DetailsState extends State<Details> {
   void initState() {
     getConnectivity();
     super.initState();
-    // controller.searchController.value.addListener(() {
-    //
-    //   setState(() {
-    //
-    //   });
-    // });
   }
 
   getConnectivity() =>
@@ -70,11 +62,6 @@ class _DetailsState extends State<Details> {
 
   Future<void> share() async {
     print(_phone);
-    // await WhatsappShare.share(
-    //   text: 'WhatsaApp',
-    //   linkUrl: 'https://flutter.dev/',
-    //   phone: _phone,
-    // );
   }
 
   @override
@@ -192,7 +179,7 @@ class _DetailsState extends State<Details> {
                             child: SizedBox(
                               child: CustomSearch(
                                 controller: controller.searchController.value,
-                                hint: "Search by Name, LAN & Claim id...",
+                                hint: "Search by Name, LAN & P Ref.id...",
                                 search: true,
                                 //controller: ,
                               ),
@@ -238,6 +225,7 @@ class _DetailsState extends State<Details> {
                   ),
                 ),
               ),
+
               const SizedBox(
                 height: 20,
               ),
@@ -332,10 +320,13 @@ class _DetailsState extends State<Details> {
                                                           //       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
                                                           //     );
 
-                                                          _phone =
-                                                              "91${singleData.nomineeContactNumber.toString()}";
+                                                          await Share.share(
+                                                            "${"https://flutter.dev/"}",
+                                                            subject:
+                                                            "link to update document",
+                                                            //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
+                                                          );
 
-                                                          share();
                                                         },
                                                         child: Padding(
                                                           padding:
@@ -1521,127 +1512,135 @@ class _DetailsState extends State<Details> {
                                                             ],
                                                           ),
                                                         )
-                                                      : Container(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  10.0),
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                "Document Uploaded",
-                                                                style: CustomFonts
-                                                                    .kBlack15Black,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 8.0,
-                                                              ),
-                                                              Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            5.0),
-                                                                    border: Border.all(
-                                                                        color:
-                                                                            kGrey)),
-                                                                padding: const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        15,
-                                                                    vertical:
-                                                                        10.0),
-                                                                child: Row(
-                                                                  children: [
-                                                                    Text(
-                                                                      "Application process:",
-                                                                      style: CustomFonts.kBlack15Black.copyWith(
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          color:
-                                                                              Colors.black),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      width: 10,
-                                                                    ),
-                                                                    Text(
-                                                                      "In-progress",
-                                                                      style: CustomFonts.kBlack15Black.copyWith(
-                                                                          fontSize:
-                                                                              15.0,
-                                                                          color:
-                                                                              klightBlue),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Container(
-                                                                //height: Get.height * 0.6,
-                                                                width:
-                                                                    Get.width,
-                                                                margin: const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        3.0,
-                                                                    vertical:
-                                                                        10),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10.0)),
-                                                                child: ListView
-                                                                    .builder(
-                                                                        itemCount: controller
-                                                                            .discrepancyData
-                                                                            .value[
-                                                                                "claimDocuments"]
-                                                                            .length,
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                int index) {
-                                                                          var claimDiscrepancy = controller
-                                                                              .discrepancyData
-                                                                              .value["claimDocuments"][index];
+                                                      : SingleChildScrollView(
+                                                      //padding: MediaQuery.of(context).size.height *1,
+                                                      physics: NeverScrollableScrollPhysics(),
 
-                                                                          return Container(
-                                                                            child:
-                                                                                Row(
-                                                                              children: [
-                                                                                Expanded(
-                                                                                  flex: 3,
-                                                                                  child: Container(
-                                                                                    decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                    child: Text(
-                                                                                      "${claimDiscrepancy["agentDocType"]}",
-                                                                                      style: CustomFonts.kBlack15Black,
-                                                                                    ),
-                                                                                    height: 50,
-                                                                                    alignment: Alignment.center,
-                                                                                  ),
-                                                                                ),
-                                                                                Expanded(
-                                                                                  flex: 1,
-                                                                                  child: Container(
+                                                        child: Container(
+                                                         // height: MediaQuery.of(context).size.height ,
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    10.0),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  "Document Uploaded",
+                                                                  style: CustomFonts
+                                                                      .kBlack15Black,
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 8.0,
+                                                                ),
+                                                                Container(
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              5.0),
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              kGrey)),
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          15,
+                                                                      vertical:
+                                                                          10.0),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "Application process:",
+                                                                        style: CustomFonts.kBlack15Black.copyWith(
+                                                                            fontSize:
+                                                                                14.0,
+                                                                            color:
+                                                                                Colors.black),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width: 10,
+                                                                      ),
+                                                                      Text(
+                                                                        "In-progress",
+                                                                        style: CustomFonts.kBlack15Black.copyWith(
+                                                                            fontSize:
+                                                                                15.0,
+                                                                            color:
+                                                                                klightBlue),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  height: Get.height * 0.6,
+                                                                  //height: Get.height,
+                                                                  width: Get.width,
+                                                                  margin: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          3.0,
+                                                                      vertical:
+                                                                          10),
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10.0)),
+                                                                  child: ListView
+                                                                      .builder(
+                                                                    shrinkWrap: true,
+                                                                      physics:NeverScrollableScrollPhysics(),
+                                                                          itemCount: controller
+                                                                              .discrepancyData
+                                                                              .value[
+                                                                                  "claimDocuments"]
+                                                                              .length,
+                                                                          itemBuilder:
+                                                                              (context,
+                                                                                  int index) {
+                                                                            var claimDiscrepancy = controller
+                                                                                .discrepancyData
+                                                                                .value["claimDocuments"][index];
+
+                                                                            return Container(
+                                                                              child:
+                                                                                  Row(
+                                                                                children: [
+                                                                                  Expanded(
+                                                                                    flex: 3,
+                                                                                    child: Container(
                                                                                       decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                      child: Text(
+                                                                                        "${claimDiscrepancy["agentDocType"]}",
+                                                                                        style: CustomFonts.kBlack15Black,
+                                                                                      ),
                                                                                       height: 50,
-                                                                                      child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
-                                                                                          ? Icon(Icons.check_circle, color: Colors.blue)
-                                                                                          : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
-                                                                                              ? Icon(Icons.check_circle, color: Colors.green)
-                                                                                              : Icon(Icons.cancel, color: Colors.red)),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          );
-                                                                        }),
-                                                              )
-                                                            ],
+                                                                                      alignment: Alignment.center,
+                                                                                    ),
+                                                                                  ),
+                                                                                  Expanded(
+                                                                                    flex: 1,
+                                                                                    child: Container(
+                                                                                        decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                        height: 50,
+                                                                                        child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
+                                                                                            ? Icon(Icons.check_circle, color: Colors.blue)
+                                                                                            : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
+                                                                                                ? Icon(Icons.check_circle, color: Colors.green)
+                                                                                                : Icon(Icons.cancel, color: Colors.red)),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            );
+                                                                          }),
+                                                                )
+                                                              ],
+                                                            ),
                                                           ),
-                                                        ));
+                                                      ));
                                             },
                                             child: Padding(
                                               padding:

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,11 +33,16 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         var details = jsonDecode(response.body);
+        log("login details "+details.toString());
         var data = details["data"];
         var user = data["user"];
 
         if (user["role"] == "AGENT") {
           GetStorage().write("authToken", data["authToken"]);
+          GetStorage().write("userId", data['user']["userId"]);
+          GetStorage().write("firstName", data['user']["firstName"]);
+          GetStorage().write("lastName", data['user']["lastName"]);
+          GetStorage().write("role", data['user']["role"]);
           Get.offAll(() => CustomNavigation());
         } else {
           //getErrorToaster("you are not authorized");
