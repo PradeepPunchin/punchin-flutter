@@ -342,10 +342,10 @@ class _TrackingHomeState extends State<TrackingHome> {
                               ),
                             ):SizedBox(child: Text("No Data Found"),),
                             trackingModel.data!.startedAt != null?Obx(() => details.value == true ?SizedBox(
-                              height: 400,
+                              //height: 400,
                               child: ListView.separated(
                                 shrinkWrap: true,
-                                physics: BouncingScrollPhysics(),
+                                physics: NeverScrollableScrollPhysics(),
                                 itemCount:trackingModel.data!.claimHistoryDTOS!.length,
                                 itemBuilder: (context, index) {
                                   var singleData = trackingModel.data!.claimHistoryDTOS![index];
@@ -386,15 +386,13 @@ class _TrackingHomeState extends State<TrackingHome> {
                                               ),
                                             ),
                                           ),
-
-                                          //SvgPicture.asset("assets/icons/search.svg"),
                                         ),
                                         title: Text(
                                           "${dateChange(trackingModel.data!.claimHistoryDTOS![index].createdAt)}",
-                                          style: k11Body929292LightBlack500,
+                                          style: k11Body929292LightBlack500.copyWith(fontSize: 14),
                                         ),
                                         subtitle: Text("${singleData.description}",
-                                            style: k12Body323232Black500),
+                                            style: k12Body323232Black500.copyWith(fontSize: 16)),
                                       ),
                                     ),
                                   );

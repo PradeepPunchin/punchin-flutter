@@ -542,7 +542,7 @@ class ClaimController extends GetxController {
     try {
       var Url="$claimDetails${Get.arguments[1].id.toString()}/forward-to-verifier";
       print("link url"+Url);
-      var response = await http.get(
+      var response = await http.post(
         Uri.parse(Url),
         headers: {
           "Content-Type": "application/json",

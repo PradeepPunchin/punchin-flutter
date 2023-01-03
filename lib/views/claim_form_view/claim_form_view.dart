@@ -1968,7 +1968,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                           //     .value = file;
 
                                                           await controller
-                                                              .uploadDiscrepancyDocument();
+                                                              .uploadBorrowerProof();
                                                           setState(() {});
                                                           Get.back(
                                                               closeOverlays:
