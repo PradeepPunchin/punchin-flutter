@@ -770,24 +770,22 @@ class ClaimController extends GetxController {
     ///code for adding keys
 
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
-    log("Key 1: ${Get.arguments[1].id.toString()}");
 
     request.fields["isMinor"] = nominee.value == "Minor" ? "true" : "false";
-    log("Key 1234: ${nominee.value == "Minor" ? "true" : "false"}");
+
     request.fields["causeOfDeath"] =
         causeofDeathReturn(causeofDeath.value) == "" ||
                 causeofDeathReturn(causeofDeath.value) == null ||
                 causeofDeathReturn(causeofDeath.value).isEmpty
             ? causeofDeath.value
             : causeofDeathReturn(causeofDeath.value); //compulsory
-    log("Key 1234: ${causeofDeathReturn(causeofDeath.value)}");
-    log("Key 1234: ${causeofDeath.value}");
-    //request.fields["borowerProof"] = "BORROWER_ID_PROOF";
+
+
 
     if (agentRemarkDropDownValue.value.isNotEmpty) {
       request.fields["agentRemark"] = agentRemarkDropDownValue.value.toString();
 
-      /// Agent Remarks
+
     }
 
     /// code for adding file image
@@ -927,6 +925,24 @@ class ClaimController extends GetxController {
 
     if (response.statusCode == 200) {
       getStepperFormData();
+      minorProofPath.value='';
+      RelationProof.value='';
+      GUARDIAN_ID_PROOF.value='';
+      GUARDIAN_ADD_PROOF.value='';
+      deathCertificatePath.value='';
+      GUARDIAN_ADD_PROOF.value='';
+      borrowerIdDocPath.value='';
+      minor.value.clear();
+      minorDropdown.value='';
+      minorImage.value.clear();
+      minorNominee.value.clear();
+      additionalList.clear();
+      additionalImage..clear();
+      additionalDropDownList.clear();
+
+      files1?.clear();
+      deathCertificate?.clear();
+      borrowerProof?.clear();
       loadUpload.value = false;
 
       Fluttertoast.showToast(
@@ -1107,7 +1123,7 @@ class ClaimController extends GetxController {
     if (additionalDocpath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          "ADDITIONAL:${additionalProof.value}",
+          "${documentReturn(additionalProof.value)}: ADDITIONAL:",
           additionalDocpath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -1123,6 +1139,7 @@ class ClaimController extends GetxController {
 
     if (response.statusCode == 200) {
       loadUpload.value = false;
+      getStepperFormData();
 
       Fluttertoast.showToast(
           msg: "Form Submitted Successfully",
@@ -1162,11 +1179,11 @@ class ClaimController extends GetxController {
 
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
     log("Key 1: ${Get.arguments[1].id.toString()}");
-
+    log("message${documentReturn(additionalProof.value)}");
     if (additionalDocpath.value.isNotEmpty) {
       request.files.add(
         await http.MultipartFile.fromPath(
-          "ADDITIONAL:${additionalProof.value}",
+          "${documentReturn(additionalProof.value)} :ADDITIONAL",
           additionalDocpath.value,
           contentType: MediaType('file', 'pdf'),
         ),
@@ -1175,10 +1192,9 @@ class ClaimController extends GetxController {
 
     log("message${additionalList.isNotEmpty}");
 
-    log("Request $request");
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
-    log("${responsed.statusCode}");
+
 
     //final responseData = json.decode(responsed.body);
     // log("$responseData");
@@ -1247,6 +1263,15 @@ class ClaimController extends GetxController {
       temp.value = "LEGAL_HEIR_CERTIFICATE";
     } else if (text == "Police Investigation Report") {
       temp.value = "POLICE_INVESTIGATION_REPORT";
+    }
+    else if (text == "Postmortem Report") {
+      temp.value = "POSTMORTEM_REPORT";
+    } else if (text == "Stamped Affidavit") {
+      temp.value = "STAMPED_AFFIDAVIT";
+    } else if (text == "Medical Attendant Certificate") {
+      temp.value = "MEDICAL_ATTENDANT_CERTIFICATE";
+    } else if (text == "Any utility bill (gas / electricity / rental agreement)") {
+      temp.value = "ANY_UTILITY_BILL";
     } else {
       temp.value = "OTHER";
     }
@@ -1266,6 +1291,15 @@ class ClaimController extends GetxController {
       temp.value = "ILLNESS_MEDICAL_REASON";
     } else if (text == "Death due to Natural Calamity") {
       temp.value = "DUE_TO_NATURAL_CALAMITY";
+    }
+
+    else if (text == "Critical illness") {
+      temp.value = "CRITICAL";
+    }
+    else if (text == "Loss of job") {
+      temp.value = "JOB_LOSS";
+    } else if (text == "Disability (Partial / Total)") {
+      temp.value = "DISABILITY";
     }
 
     return temp.value;
@@ -1290,10 +1324,9 @@ class ClaimController extends GetxController {
     return path.value;
   }
 
-  uploadDiscrepancyData({id, docType}) async {
+  uploadDiscrepancyData({id, docType,claimStatus}) async {
     loadUpload.value = true;
-    var postUri =
-        Uri.parse("$formUpload$id/discrepancy-document-upload/$docType");
+    var postUri = Uri.parse("$formUpload$id/discrepancy-document-upload/$docType");
     log(postUri.toString());
     var request = http.MultipartRequest("Post", postUri);
     Map<String, String> headers = {
@@ -1301,7 +1334,7 @@ class ClaimController extends GetxController {
       "X-Xsrf-Token": box.read("authToken"),
     };
     request.headers.addAll(headers);
-
+    request.fields["isDiscrepancy"] = "${claimStatus=="NEW_REQUIREMENT"?false:true}"; //compulsory
     /// code for adding file image
     if (additionalDocpath.value.isNotEmpty) {
       print("1" + additionalDocpath.value);
@@ -1351,9 +1384,9 @@ class ClaimController extends GetxController {
           snackStyle: SnackStyle.GROUNDED,
           backgroundColor: Colors.green);
 
-      Get.offAll(() => Details(
-            title: 'WIP',
-          ));
+      // Get.offAll(() => Details(
+      //       title: 'WIP',
+      //     ));
     } else {
       loadUpload.value = false;
       log("errorCode ${response.statusCode}");

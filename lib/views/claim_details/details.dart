@@ -101,23 +101,23 @@ class _DetailsState extends State<Details> {
                     ],
                   ),
                   Spacer(),
-                  CircleAvatar(
-                    backgroundColor: Colors.white10,
-                    radius: 17.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(width: 2, color: Colors.black12),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Icon(
-                          Icons.notifications_outlined,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // CircleAvatar(
+                  //   backgroundColor: Colors.white10,
+                  //   radius: 17.0,
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(100),
+                  //       border: Border.all(width: 2, color: Colors.black12),
+                  //     ),
+                  //     child: const Padding(
+                  //       padding: EdgeInsets.all(4.0),
+                  //       child: Icon(
+                  //         Icons.notifications_outlined,
+                  //         color: Colors.black,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               // search bar
@@ -179,7 +179,7 @@ class _DetailsState extends State<Details> {
                             child: SizedBox(
                               child: CustomSearch(
                                 controller: controller.searchController.value,
-                                hint: "Search by Name, LAN & P Ref.id...",
+                                hint: "Search by Bor_Name, LAN & P Ref.id...",
                                 search: true,
                                 //controller: ,
                               ),

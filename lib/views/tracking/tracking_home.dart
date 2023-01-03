@@ -185,7 +185,9 @@ class _TrackingHomeState extends State<TrackingHome> {
                 height: 5,
               ),
 
-              Obx(()=>controller.searchController.value.text != null?FutureBuilder(
+              //Text("${controller.searchController.value.text.isEmpty}"),
+
+              Obx(()=>controller.searchController.value.text.isEmpty?SizedBox():FutureBuilder(
                   future: controller.getClaimTracking(
                       searchKey: controller.searchController.value.text),
                   builder: (context, AsyncSnapshot snapshot) {
@@ -203,7 +205,6 @@ class _TrackingHomeState extends State<TrackingHome> {
                         // if we got our data
                       } else if (snapshot.hasData) {
                         // Extracting data from snapshot object
-                        log("response tracking ${snapshot.data.toString()}");
                         TrackingModel? trackingModel = snapshot.data
                         as TrackingModel;
                         return Column(
@@ -417,7 +418,7 @@ class _TrackingHomeState extends State<TrackingHome> {
                         child: CircularProgressIndicator(),
                       ),
                     );
-                  }):SizedBox()),
+                  })),
               // Container(
               //   //width: Get.width,
               //   decoration: BoxDecoration(

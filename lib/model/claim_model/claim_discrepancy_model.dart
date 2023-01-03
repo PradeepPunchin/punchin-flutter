@@ -5,6 +5,7 @@ class ClaimDiscrepancyModel {
   bool? isSuccess;
   int? statusCode;
 
+
   ClaimDiscrepancyModel(
       {this.timeStamp,
         this.data,
@@ -37,6 +38,7 @@ class Data {
   List<ClaimDocuments>? claimDocuments;
   List<String>? rejectedDocList;
   String? message;
+  String? claimStatus;
 
   Data({this.claimDocuments, this.rejectedDocList, this.message});
 
@@ -49,6 +51,7 @@ class Data {
     }
     rejectedDocList = json['rejectedDocList'].cast<String>();
     message = json['message'];
+    claimStatus=json["claimStatus"];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +62,7 @@ class Data {
     }
     data['rejectedDocList'] = this.rejectedDocList;
     data['message'] = this.message;
+    data['claimStatus']=this.claimStatus;
     return data;
   }
 }

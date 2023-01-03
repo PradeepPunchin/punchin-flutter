@@ -660,27 +660,27 @@ class _HomeViewState extends State<HomeView> {
                       );
                     }),
 
-                const SizedBox(
-                  height: 220,
-                ),
+                // const SizedBox(
+                //   height: 220,
+                // ),
 
-                Center(
-                  child: MaterialButton(
-                    height: 30,
-                    minWidth: 104,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    color: kdarkBlue,
-                    onPressed: () {
-                      loginController.postLogout();
-                    },
-                    child: Text(
-                      "Logout",
-                      style: CustomFonts.getMultipleStyle(
-                          15.0, Colors.white, FontWeight.w400),
-                    ),
-                  ),
-                ),
+                // Center(
+                //   child: MaterialButton(
+                //     height: 30,
+                //     minWidth: 104,
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(5.0)),
+                //     color: kdarkBlue,
+                //     onPressed: () {
+                //       loginController.postLogout();
+                //     },
+                //     child: Text(
+                //       "Logout",
+                //       style: CustomFonts.getMultipleStyle(
+                //           15.0, Colors.white, FontWeight.w400),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

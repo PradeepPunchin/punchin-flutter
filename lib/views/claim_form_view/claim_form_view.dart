@@ -38,8 +38,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
   List<String> medicialList = <String>[
     'Police FIR Copy *',
     'Medical Records *',
-    "Medical Records"
-        'Other Document',
+    'Other Document',
   ];
 
   List<String> accientList = <String>[
@@ -53,6 +52,19 @@ class _ClaimFormViewState extends State<ClaimFormView> {
     'Medical Attendant Certificate *',
     "Medical Records",
     'Other Document',
+  ];
+
+  List<String> other = <String>[
+    'Police FIR Copy',
+    'Postmortem Report',
+    'Income Tax Returns',
+    'Medical Records',
+    'Legal Heir Certificate',
+    'Police Investigation Report',
+    'Stamped Affidavit',
+    'Medical Attendant Certificate',
+    'Any utility bill (gas / electricity / rental agreement)',
+    'Other Document'
   ];
 
   @override
@@ -71,8 +83,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
 
   @override
   Widget build(BuildContext context) {
-    controller.loadUpload.value = false;
-    controller.getStepperFormData();
+
+controller.loadUpload.value = false;
+    //controller.causeofDeath.value = controller.claimDetail.value["claimData"]["causeOfDeath"] == null?"":controller.claimDetail.value["claimData"]["causeOfDeath"];
 
     return Obx(() => controller.loading.value == true
         ? Scaffold(
@@ -485,31 +498,345 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   SizedBox(
                                     height: 15.0.h,
                                   ),
-                                  smallText(
-                                      text: "Insurance Category"),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  field(
-                                      text: controller.claimDetail
-                                          .value["claimData"]
-                                      ["claimCategory"]),
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  smallText(
-                                      text: "Cause of Death (Life Insurance)"),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
+                                  // smallText(text: "Insurance Category"),
+                                  // const SizedBox(
+                                  //   height: 5.0,
+                                  // ),
+                                  // field(
+                                  //     text: controller
+                                  //         .claimDetail.value["claimCategory"]),
+                                  // const SizedBox(
+                                  //   height: 10.0,
+                                  // ),
+
+                                  controller.claimDetail
+                                                  .value["claimCategory"] ==
+                                              "Life" ||
+                                          controller.claimDetail
+                                                  .value["claimCategory"] ==
+                                              "life"
+                                      ? Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            smallText(
+                                                text: controller.claimDetail
+                                                                        .value[
+                                                                    "claimData"]
+                                                                [
+                                                                "claimCategory"] ==
+                                                            "Life" ||
+                                                        controller.claimDetail
+                                                                        .value[
+                                                                    "claimData"]
+                                                                [
+                                                                "claimCategory"] ==
+                                                            "life"
+                                                    ? "Cause of Death (Life Insurance)"
+                                                    : ""),
+                                            const SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            controller.claimDetail.value[
+                                                                "claimData"]
+                                                            ["claimCategory"] ==
+                                                        "Life" ||
+                                                    controller.claimDetail
+                                                                    .value[
+                                                                "claimData"]
+                                                            ["claimCategory"] ==
+                                                        "life"
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade100,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(1.0),
+                                                        border: Border.all(
+                                                            color: kGrey)),
+                                                    child: Obx(() =>
+                                                        DropdownButton<String>(
+                                                          isExpanded: true,
+                                                          hint: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: controller
+                                                                    .causeofDeath
+                                                                    .value
+                                                                    .isNotEmpty
+                                                                ? Text(
+                                                                    controller
+                                                                        .causeofDeath
+                                                                        .value,
+                                                                    style: CustomFonts
+                                                                        .kBlack15Black
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                14.0),
+                                                                  )
+                                                                : Text(
+                                                                    "Choose The Cause ",
+                                                                    style: CustomFonts
+                                                                        .kBlack15Black
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                14.0),
+                                                                  ),
+                                                          ),
+                                                          underline:
+                                                              const SizedBox(),
+                                                          items: <String>[
+                                                            'Accident',
+                                                            'Natural Death',
+                                                            'Suicide',
+                                                            'Illness &  Medical Reason',
+                                                            'Dealth due to Natural Calamity',
+                                                            'OTHER'
+                                                          ].map((String value) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: value,
+                                                              child:
+                                                                  Text(value),
+                                                            );
+                                                          }).toList(),
+                                                          onChanged: (value) {
+                                                            controller
+                                                                .causeofDeath
+                                                                .value = value!;
+                                                          },
+                                                        )),
+                                                  )
+                                                : SizedBox()
+                                          ],
+                                        )
+                                      : SizedBox(),
+                                  controller.claimDetail
+                                                  .value["claimCategory"] ==
+                                              "Health" ||
+                                          controller.claimDetail
+                                                  .value["claimCategory"] ==
+                                              "health"
+                                      ? Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                           crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+
+                                            smallText(
+                                                text: controller.claimDetail
+                                                                    .value[
+                                                                "claimCategory"] ==
+                                                            "Health" ||
+                                                        controller.claimDetail
+                                                                    .value[
+                                                                "claimCategory"] ==
+                                                            "health"
+                                                    ? "Claim Purpose (Health Insurance)"
+                                                    : ""),
+                                            const SizedBox(
+                                              height: 5.0,
+                                            ),
+
+                                            controller.claimDetail.value[
+                                                            "claimCategory"] ==
+                                                        "Health" ||
+                                                    controller.claimDetail
+                                                                .value[
+                                                            "claimCategory"] ==
+                                                        "health"
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade100,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(1.0),
+                                                        border: Border.all(
+                                                            color: kGrey)),
+                                                    child: Obx(() =>
+                                                        DropdownButton<String>(
+                                                          isExpanded: true,
+                                                          hint: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: controller
+                                                                    .causeofDeath
+                                                                    .value
+                                                                    .isNotEmpty
+                                                                ? Text(
+                                                                    controller
+                                                                        .causeofDeath
+                                                                        .value,
+                                                                    style: CustomFonts
+                                                                        .kBlack15Black
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                14.0),
+                                                                  )
+                                                                : Text(
+                                                                    "Choose Claim Purpose",
+                                                                    style: CustomFonts
+                                                                        .kBlack15Black
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                14.0),
+                                                                  ),
+                                                          ),
+                                                          underline:
+                                                              const SizedBox(),
+                                                          items: <String>[
+                                                            'Accident',
+                                                            'Critical illness',
+                                                            'Loss of job',
+                                                            'Disability (Partial / Total)',
+                                                            'OTHER'
+                                                          ].map((String value) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: value,
+                                                              child:
+                                                                  Text(value),
+                                                            );
+                                                          }).toList(),
+                                                          onChanged: (value) {
+                                                            controller
+                                                                .causeofDeath
+                                                                .value = value!;
+                                                          },
+                                                        )),
+                                                  )
+                                                : SizedBox(),
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+
+                                            /// new
+                                          ],
+                                        )
+                                      : SizedBox(),
+
+                                  controller.claimDetail
+                                                  .value["claimCategory"] ==
+                                              "General" ||
+                                          controller.claimDetail
+                                                  .value["claimCategory"] ==
+                                              "general"
+                                      ? Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+
+                                            smallText(
+                                                text: controller.claimDetail
+                                                                    .value[
+                                                                "claimCategory"] ==
+                                                            "General" ||
+                                                        controller.claimDetail
+                                                                    .value[
+                                                                "claimCategory"] ==
+                                                            "general"
+                                                    ? "Claim Purpose (General Insurance)"
+                                                    : ""),
+                                            const SizedBox(
+                                              height: 5.0,
+                                            ),
+
+                                            controller.claimDetail.value[
+                                                            "claimCategory"] ==
+                                                        "General" ||
+                                                    controller.claimDetail
+                                                                .value[
+                                                            "claimCategory"] ==
+                                                        "general"
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade100,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(1.0),
+                                                        border: Border.all(
+                                                            color: kGrey)),
+                                                    child: Obx(() =>
+                                                        DropdownButton<String>(
+                                                          isExpanded: true,
+                                                          hint: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: controller
+                                                                    .causeofDeath
+                                                                    .value
+                                                                    .isNotEmpty
+                                                                ? Text(
+                                                                    controller
+                                                                        .causeofDeath
+                                                                        .value,
+                                                                    style: CustomFonts
+                                                                        .kBlack15Black
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                14.0),
+                                                                  )
+                                                                : Text(
+                                                                    "Choose Claim Purpose",
+                                                                    style: CustomFonts
+                                                                        .kBlack15Black
+                                                                        .copyWith(
+                                                                            fontSize:
+                                                                                14.0),
+                                                                  ),
+                                                          ),
+                                                          underline:
+                                                              const SizedBox(),
+                                                          items: <String>[
+                                                            'Accident',
+                                                            'Critical illness',
+                                                            'Loss of job',
+                                                            'Disability (Partial / Total)',
+                                                            'OTHER'
+                                                          ].map((String value) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: value,
+                                                              child:
+                                                                  Text(value),
+                                                            );
+                                                          }).toList(),
+                                                          onChanged: (value) {
+                                                            controller
+                                                                .causeofDeath
+                                                                .value = value!;
+                                                          },
+                                                        )),
+                                                  )
+                                                : SizedBox(),
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+
+                                            /// new
+                                          ],
+                                        )
+                                      : SizedBox(),
+
                                   controller.claimDetail.value["claimData"]
-                                              ["causeOfDeath"] !=
-                                          null
-                                      ? field(
-                                          text: controller.claimDetail
-                                                  .value["claimData"]
-                                              ["causeOfDeath"])
-                                      : Container(
+                                                  ["claimCategory"] ==
+                                              "General" ||
+                                          controller.claimDetail
+                                                      .value["claimData"]
+                                                  ["claimCategory"] ==
+                                              "general"
+                                      ? Container(
                                           decoration: BoxDecoration(
                                               color: Colors.grey.shade100,
                                               borderRadius:
@@ -537,7 +864,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                           14.0),
                                                             )
                                                           : Text(
-                                                              "Choose The Cause ",
+                                                              "Choose Claim Purpose",
                                                               style: CustomFonts
                                                                   .kBlack15Black
                                                                   .copyWith(
@@ -551,7 +878,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                       'Natural Death',
                                                       'Suicide',
                                                       'Illness &  Medical Reason',
-                                                      'Dealth due to Natural Calamity'
+                                                      'Dealth due to Natural Calamity',
+                                                      'OTHER'
                                                     ].map((String value) {
                                                       return DropdownMenuItem<
                                                           String>(
@@ -564,7 +892,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                           .value = value!;
                                                     },
                                                   )),
-                                        ),
+                                        )
+                                      : SizedBox(),
+
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -949,15 +1279,119 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                         await controller
                                                                             .uploadFile();
 
-                                                                    controller
-                                                                            .minorProof
-                                                                            .value =
-                                                                        basename(
-                                                                            file);
-                                                                    controller
-                                                                        .minorProofPath
-                                                                        .value = file;
+                                                                    // controller
+                                                                    //         .minorProof
+                                                                    //         .value =
+                                                                    //     basename(
+                                                                    //         file);
+                                                                    // controller
+                                                                    //     .minorProofPath
+                                                                    //     .value = file;
 
+                                                                    if (controller
+                                                                        .minorDropdown
+                                                                        .value ==
+                                                                        "RELATIONSHIP_PROOF") {
+                                                                      controller
+                                                                          .minorProof
+                                                                          .value =
+                                                                          basename(
+                                                                              file);
+                                                                      controller
+                                                                          .RelationProof
+                                                                          .value = file;
+                                                                      Get.back(
+                                                                          closeOverlays:
+                                                                          true);
+                                                                      controller.addProductLot(
+                                                                          selectedValue: controller
+                                                                              .minorProof
+                                                                              .value,
+                                                                          imagePath: controller
+                                                                              .RelationProof
+                                                                              .value,
+                                                                          dropDownValue: controller
+                                                                              .minorDropdown
+                                                                              .value);
+                                                                    }
+                                                                    else if (controller
+                                                                        .minorDropdown
+                                                                        .value ==
+                                                                        "GUARDIAN_ID_PROOF") {
+                                                                      controller
+                                                                          .minorProof
+                                                                          .value =
+                                                                          basename(
+                                                                              file);
+                                                                      controller
+                                                                          .GUARDIAN_ID_PROOF
+                                                                          .value = file;
+                                                                      Get.back(
+                                                                          closeOverlays:
+                                                                          true);
+                                                                      controller.addProductLot(
+                                                                          selectedValue: controller
+                                                                              .minorProof
+                                                                              .value,
+                                                                          imagePath: controller
+                                                                              .GUARDIAN_ID_PROOF
+                                                                              .value,
+                                                                          dropDownValue: controller
+                                                                              .minorDropdown
+                                                                              .value);
+                                                                    }
+                                                                    else if (controller
+                                                                        .minorDropdown
+                                                                        .value ==
+                                                                        "GUARDIAN_ADD_PROOF") {
+                                                                      controller
+                                                                          .minorProof
+                                                                          .value =
+                                                                          basename(
+                                                                              file);
+                                                                      controller
+                                                                          .GUARDIAN_ADD_PROOF
+                                                                          .value = file;
+                                                                      Get.back(
+                                                                          closeOverlays:
+                                                                          true);
+                                                                      controller.addProductLot(
+                                                                          selectedValue: controller
+                                                                              .minorProof
+                                                                              .value,
+                                                                          imagePath: controller
+                                                                              .GUARDIAN_ADD_PROOF
+                                                                              .value,
+                                                                          dropDownValue: controller
+                                                                              .minorDropdown
+                                                                              .value);
+                                                                    }
+                                                                    else if (controller
+                                                                        .minorDropdown
+                                                                        .value ==
+                                                                        "Other Document") {
+                                                                      controller
+                                                                          .minorProof
+                                                                          .value =
+                                                                          basename(
+                                                                              file);
+                                                                      controller
+                                                                          .minorProofPath
+                                                                          .value = file;
+                                                                      Get.back(
+                                                                          closeOverlays:
+                                                                          true);
+                                                                      controller.addProductLot(
+                                                                          selectedValue: controller
+                                                                              .minorProof
+                                                                              .value,
+                                                                          imagePath: controller
+                                                                              .minorProofPath
+                                                                              .value,
+                                                                          dropDownValue: controller
+                                                                              .minorDropdown
+                                                                              .value);
+                                                                    }
                                                                     Get.back(
                                                                         closeOverlays:
                                                                             true);
@@ -1084,18 +1518,16 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   const Spacer(),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      controller
-                                                          .minorProof
-                                                          .value= "";
-                                                      controller
-                                                          .minorProofPath
+                                                      controller.minorProof
                                                           .value = "";
-                                                      controller
-                                                          .minorImage
+                                                      controller.minorProofPath
+                                                          .value = "";
+                                                      controller.minorImage
                                                           .removeAt(index);
-                                                      controller.minor.removeAt(index);
-                                                      controller.minorNominee.removeAt(index);
-
+                                                      controller.minor
+                                                          .removeAt(index);
+                                                      controller.minorNominee
+                                                          .removeAt(index);
                                                     },
                                                     child: const Icon(
                                                       Icons.delete,
@@ -2237,19 +2669,26 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                     height: 10.0,
                                   ),
 
-                                  Obx(()=>controller.agentRemarkDropDownValue.value!=null?MaterialButton(
-                                    onPressed: () {
-                                      controller.agentRemarkDropDownValue.value = "";
-                                    },
-                                    color: kdarkBlue,
-                                    child: Text(
-                                      "Remove agent remark",
-                                      style: CustomFonts.kBlack15Black
-                                          .copyWith(color: Colors.white),
-                                    ),
-                                  ):SizedBox(),),
-
-
+                                  Obx(
+                                    () => controller.agentRemarkDropDownValue
+                                                .value !=
+                                            null
+                                        ? MaterialButton(
+                                            onPressed: () {
+                                              controller
+                                                  .agentRemarkDropDownValue
+                                                  .value = "";
+                                            },
+                                            color: kdarkBlue,
+                                            child: Text(
+                                              "Remove agent remark",
+                                              style: CustomFonts.kBlack15Black
+                                                  .copyWith(
+                                                      color: Colors.white),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                  ),
 
                                   Center(
                                     child: MaterialButton(
@@ -2310,14 +2749,53 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               controller.claimDetail
                                                       .value["claimData"]
                                                   ["causeOfDeath"];
+                                          if(controller
+                                              .claimDetail
+                                              .value["claimData"]
+                                          ["isForwardToVerifier"].toString()
+                                              == "true"){
+
+                                            Fluttertoast.showToast(
+                                                msg: "Already send to Verifier",
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.BOTTOM,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.red,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          }
+                                          else {
+                                            controller.uploadFormData();
+                                          }
+                                        } else if (controller
+                                                    .causeofDeath.value ==
+                                                null ||
+                                            controller.causeofDeath.value ==
+                                                "null" ||
+                                            controller.causeofDeath.value ==
+                                                "") {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Cause of Death can't be Empty",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
+                                        } else if (controller
+                                            .agentRemarkDropDownValue
+                                            .value
+                                            .isNotEmpty) {
                                           controller.uploadFormData();
-                                        }
-                                       else if (controller.causeofDeath.value ==
-                                            null || controller.causeofDeath.value ==
-                                            "null" ||controller.causeofDeath.value =="") {
+                                        }else if(controller
+                                            .claimDetail
+                                            .value["claimData"]
+                                        ["isForwardToVerifier"].toString()
+                                            == "true"){
 
                                           Fluttertoast.showToast(
-                                              msg: "Cause of Death can't be Empty",
+                                              msg: "Already send to Verifier",
                                               toastLength: Toast.LENGTH_SHORT,
                                               gravity: ToastGravity.BOTTOM,
                                               timeInSecForIosWeb: 1,
@@ -2325,15 +2803,9 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                               textColor: Colors.white,
                                               fontSize: 16.0);
                                         }
-                                      else   if (controller.agentRemarkDropDownValue
-                                            .value.isNotEmpty) {
+                                        else {
                                           controller.uploadFormData();
                                         }
-                                        else{
-                                          print("Object !");
-                                          controller.uploadFormData();
-                                        }
-
 
                                         //  }
                                       },
@@ -2357,6 +2829,1899 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                             ],
                           ),
                         ),
+
+                        // SingleChildScrollView(
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     children: <Widget>[
+                        //       Column(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         mainAxisAlignment: MainAxisAlignment.start,
+                        //         mainAxisSize: MainAxisSize.min,
+                        //         children: [
+                        //           Text(
+                        //             "Documentation Upload",
+                        //             style: CustomFonts.kBlack15Black.copyWith(
+                        //                 fontSize: 15.0,
+                        //                 fontWeight: FontWeight.w900,
+                        //                 color: Colors.black),
+                        //           ),
+                        //           SizedBox(
+                        //             height: 15.0.h,
+                        //           ),
+                        //           smallText(
+                        //               text: "Insurance Category"),
+                        //           const SizedBox(
+                        //             height: 5.0,
+                        //           ),
+                        //           field(
+                        //               text: controller.claimDetail
+                        //                   .value["claimData"]
+                        //               ["claimCategory"]),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           smallText(
+                        //               text: "Cause of Death (Life Insurance)"),
+                        //           const SizedBox(
+                        //             height: 5.0,
+                        //           ),
+                        //           controller.claimDetail.value["claimData"]
+                        //                       ["causeOfDeath"] !=
+                        //                   null
+                        //               ? field(
+                        //                   text: controller.claimDetail
+                        //                           .value["claimData"]
+                        //                       ["causeOfDeath"])
+                        //               : Container(
+                        //                   decoration: BoxDecoration(
+                        //                       color: Colors.grey.shade100,
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(1.0),
+                        //                       border: Border.all(color: kGrey)),
+                        //                   child:
+                        //                       Obx(() => DropdownButton<String>(
+                        //                             isExpanded: true,
+                        //                             hint: Padding(
+                        //                               padding:
+                        //                                   const EdgeInsets.all(
+                        //                                       8.0),
+                        //                               child: controller
+                        //                                       .causeofDeath
+                        //                                       .value
+                        //                                       .isNotEmpty
+                        //                                   ? Text(
+                        //                                       controller
+                        //                                           .causeofDeath
+                        //                                           .value,
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0),
+                        //                                     )
+                        //                                   : Text(
+                        //                                       "Choose The Cause ",
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0),
+                        //                                     ),
+                        //                             ),
+                        //                             underline: const SizedBox(),
+                        //                             items: <String>[
+                        //                               'Accident',
+                        //                               'Natural Death',
+                        //                               'Suicide',
+                        //                               'Illness &  Medical Reason',
+                        //                               'Dealth due to Natural Calamity'
+                        //                             ].map((String value) {
+                        //                               return DropdownMenuItem<
+                        //                                   String>(
+                        //                                 value: value,
+                        //                                 child: Text(value),
+                        //                               );
+                        //                             }).toList(),
+                        //                             onChanged: (value) {
+                        //                               controller.causeofDeath
+                        //                                   .value = value!;
+                        //                             },
+                        //                           )),
+                        //                 ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           smallText(text: "Is Nominee "),
+                        //           const SizedBox(
+                        //             height: 5.0,
+                        //           ),
+                        //           nominee(),
+                        //           Obx(() => controller.nominee.value == "Minor"
+                        //               ? Container(
+                        //                   decoration: BoxDecoration(
+                        //                       color: Colors.grey.shade100,
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(1.0),
+                        //                       border: Border.all(color: kGrey)),
+                        //                   child:
+                        //                       Obx(() => DropdownButton<String>(
+                        //                             isExpanded: true,
+                        //                             hint: Padding(
+                        //                               padding:
+                        //                                   const EdgeInsets.all(
+                        //                                       8.0),
+                        //                               child: controller
+                        //                                       .minorDropdown
+                        //                                       .value
+                        //                                       .isNotEmpty
+                        //                                   ? Text(
+                        //                                       controller
+                        //                                           .minorDropdown
+                        //                                           .value,
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0),
+                        //                                     )
+                        //                                   : Text(
+                        //                                       "Select Document Type",
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0),
+                        //                                     ),
+                        //                             ),
+                        //                             underline: const SizedBox(),
+                        //                             items: minorList
+                        //                                 .map((String value) {
+                        //                               return DropdownMenuItem<
+                        //                                   String>(
+                        //                                 value: value,
+                        //                                 child: Text(value),
+                        //                               );
+                        //                             }).toList(),
+                        //                             onChanged: (value) {
+                        //                               controller.minorDropdown
+                        //                                   .value = value!;
+                        //                             },
+                        //                           )),
+                        //                 )
+                        //               : SizedBox()),
+                        //           SizedBox(
+                        //             height: 10,
+                        //           ),
+                        //           Obx(() => controller.nominee.value == "Minor"
+                        //               ? Column(
+                        //                   crossAxisAlignment:
+                        //                       CrossAxisAlignment.start,
+                        //                   mainAxisAlignment:
+                        //                       MainAxisAlignment.start,
+                        //                   children: [
+                        //                     smallText(
+                        //                         text:
+                        //                             "Additional Document for Minor"),
+                        //                     const SizedBox(
+                        //                       height: 10.0,
+                        //                     ),
+                        //                     Container(
+                        //                       height: 40.0.h,
+                        //                       decoration: BoxDecoration(
+                        //                           color: Colors.grey.shade50,
+                        //                           borderRadius:
+                        //                               BorderRadius.circular(
+                        //                                   5.0),
+                        //                           border: Border.all(
+                        //                             color: kGrey,
+                        //                           )),
+                        //                       child: Row(
+                        //                         children: [
+                        //                           Flexible(
+                        //                             fit: FlexFit.tight,
+                        //                             child: Padding(
+                        //                               padding:
+                        //                                   const EdgeInsets.all(
+                        //                                       8.0),
+                        //                               child: Obx(() => Text(
+                        //                                     "${controller.minorProofPath.value}",
+                        //                                     style: CustomFonts
+                        //                                         .kBlack15Black
+                        //                                         .copyWith(
+                        //                                             fontWeight:
+                        //                                                 FontWeight
+                        //                                                     .w600,
+                        //                                             fontSize:
+                        //                                                 14.0),
+                        //                                   )),
+                        //                             ),
+                        //                           ),
+                        //                           const Spacer(),
+                        //                           MaterialButton(
+                        //                             elevation: 1.0,
+                        //                             onPressed: () async {
+                        //                               // if (controller.minor.value
+                        //                               //     .contains(controller
+                        //                               //         .minorNominee
+                        //                               //         .value)) {
+                        //                               //   Fluttertoast.showToast(
+                        //                               //       msg:
+                        //                               //           "File Already Exists ! Please Choose Another",
+                        //                               //       toastLength: Toast
+                        //                               //           .LENGTH_SHORT,
+                        //                               //       gravity:
+                        //                               //           ToastGravity
+                        //                               //               .BOTTOM,
+                        //                               //       timeInSecForIosWeb:
+                        //                               //           1,
+                        //                               //       backgroundColor:
+                        //                               //           Colors.red,
+                        //                               //       textColor:
+                        //                               //           Colors.white,
+                        //                               //       fontSize: 16.0);
+                        //                               // } else if (controller
+                        //                               //         .minor.value
+                        //                               //         .contains(
+                        //                               //             controller
+                        //                               //                 .minorProof
+                        //                               //                 .value) &&
+                        //                               //     controller.minor.value
+                        //                               //             .length <
+                        //                               //         3) {
+                        //                               //   Fluttertoast.showToast(
+                        //                               //       msg:
+                        //                               //           "Add Mandatory Documents",
+                        //                               //       toastLength: Toast
+                        //                               //           .LENGTH_SHORT,
+                        //                               //       gravity:
+                        //                               //           ToastGravity
+                        //                               //               .BOTTOM,
+                        //                               //       timeInSecForIosWeb:
+                        //                               //           1,
+                        //                               //       backgroundColor:
+                        //                               //           Colors.red,
+                        //                               //       textColor:
+                        //                               //           Colors.white,
+                        //                               //       fontSize: 16.0);
+                        //                               // } else if (controller
+                        //                               //         .claimDetail
+                        //                               //         .value["claimDocuments"][
+                        //                               //             "claimStatus"]
+                        //                               //         .toString() ==
+                        //                               //     "UNDER_VERIFICATION1") {
+                        //                               //   Fluttertoast.showToast(
+                        //                               //       msg:
+                        //                               //           "Already Under Verification",
+                        //                               //       toastLength: Toast
+                        //                               //           .LENGTH_SHORT,
+                        //                               //       gravity:
+                        //                               //           ToastGravity
+                        //                               //               .BOTTOM,
+                        //                               //       timeInSecForIosWeb:
+                        //                               //           1,
+                        //                               //       backgroundColor:
+                        //                               //           Colors.red,
+                        //                               //       textColor:
+                        //                               //           Colors.white,
+                        //                               //       fontSize: 16.0);
+                        //                               // } else {
+                        //                               Get.defaultDialog(
+                        //                                   title: "Upload",
+                        //                                   titleStyle: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color: Colors
+                        //                                               .black,
+                        //                                           fontSize:
+                        //                                               20.0,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .bold),
+                        //                                   content: Column(
+                        //                                     mainAxisSize:
+                        //                                         MainAxisSize
+                        //                                             .min,
+                        //                                     crossAxisAlignment:
+                        //                                         CrossAxisAlignment
+                        //                                             .center,
+                        //                                     mainAxisAlignment:
+                        //                                         MainAxisAlignment
+                        //                                             .center,
+                        //                                     children: [
+                        //                                       Divider(),
+                        //                                       GestureDetector(
+                        //                                         onTap:
+                        //                                             () async {
+                        //                                           if (controller
+                        //                                               .minorNominee
+                        //                                               .contains(controller
+                        //                                                   .minorDropdown
+                        //                                                   .value)) {
+                        //                                             Fluttertoast.showToast(
+                        //                                                 msg:
+                        //                                                     "Already Exit Record for Selected Dropdown",
+                        //                                                 toastLength:
+                        //                                                     Toast
+                        //                                                         .LENGTH_SHORT,
+                        //                                                 gravity:
+                        //                                                     ToastGravity
+                        //                                                         .BOTTOM,
+                        //                                                 timeInSecForIosWeb:
+                        //                                                     1,
+                        //                                                 backgroundColor:
+                        //                                                     Colors
+                        //                                                         .red,
+                        //                                                 textColor:
+                        //                                                     Colors
+                        //                                                         .white,
+                        //                                                 fontSize:
+                        //                                                     16.0);
+                        //                                           } else {
+                        //                                             var file =
+                        //                                                 await controller
+                        //                                                     .imageFromCamera();
+                        //
+                        //                                             if (controller
+                        //                                                     .minorDropdown
+                        //                                                     .value ==
+                        //                                                 "RELATIONSHIP_PROOF") {
+                        //                                               controller
+                        //                                                       .minorProof
+                        //                                                       .value =
+                        //                                                   basename(
+                        //                                                       file);
+                        //                                               controller
+                        //                                                   .RelationProof
+                        //                                                   .value = file;
+                        //                                               Get.back(
+                        //                                                   closeOverlays:
+                        //                                                       true);
+                        //                                               controller.addProductLot(
+                        //                                                   selectedValue: controller
+                        //                                                       .minorProof
+                        //                                                       .value,
+                        //                                                   imagePath: controller
+                        //                                                       .RelationProof
+                        //                                                       .value,
+                        //                                                   dropDownValue: controller
+                        //                                                       .minorDropdown
+                        //                                                       .value);
+                        //                                             } else if (controller
+                        //                                                     .minorDropdown
+                        //                                                     .value ==
+                        //                                                 "GUARDIAN_ID_PROOF") {
+                        //                                               controller
+                        //                                                       .minorProof
+                        //                                                       .value =
+                        //                                                   basename(
+                        //                                                       file);
+                        //                                               controller
+                        //                                                   .GUARDIAN_ID_PROOF
+                        //                                                   .value = file;
+                        //                                               Get.back(
+                        //                                                   closeOverlays:
+                        //                                                       true);
+                        //                                               controller.addProductLot(
+                        //                                                   selectedValue: controller
+                        //                                                       .minorProof
+                        //                                                       .value,
+                        //                                                   imagePath: controller
+                        //                                                       .GUARDIAN_ID_PROOF
+                        //                                                       .value,
+                        //                                                   dropDownValue: controller
+                        //                                                       .minorDropdown
+                        //                                                       .value);
+                        //                                             } else if (controller
+                        //                                                     .minorDropdown
+                        //                                                     .value ==
+                        //                                                 "GUARDIAN_ADD_PROOF") {
+                        //                                               controller
+                        //                                                       .minorProof
+                        //                                                       .value =
+                        //                                                   basename(
+                        //                                                       file);
+                        //                                               controller
+                        //                                                   .GUARDIAN_ADD_PROOF
+                        //                                                   .value = file;
+                        //                                               Get.back(
+                        //                                                   closeOverlays:
+                        //                                                       true);
+                        //                                               controller.addProductLot(
+                        //                                                   selectedValue: controller
+                        //                                                       .minorProof
+                        //                                                       .value,
+                        //                                                   imagePath: controller
+                        //                                                       .GUARDIAN_ADD_PROOF
+                        //                                                       .value,
+                        //                                                   dropDownValue: controller
+                        //                                                       .minorDropdown
+                        //                                                       .value);
+                        //                                             } else if (controller
+                        //                                                     .minorDropdown
+                        //                                                     .value ==
+                        //                                                 "Other Document") {
+                        //                                               controller
+                        //                                                       .minorProof
+                        //                                                       .value =
+                        //                                                   basename(
+                        //                                                       file);
+                        //                                               controller
+                        //                                                   .minorProofPath
+                        //                                                   .value = file;
+                        //                                               Get.back(
+                        //                                                   closeOverlays:
+                        //                                                       true);
+                        //                                               controller.addProductLot(
+                        //                                                   selectedValue: controller
+                        //                                                       .minorProof
+                        //                                                       .value,
+                        //                                                   imagePath: controller
+                        //                                                       .minorProofPath
+                        //                                                       .value,
+                        //                                                   dropDownValue: controller
+                        //                                                       .minorDropdown
+                        //                                                       .value);
+                        //                                             }
+                        //                                           }
+                        //                                         },
+                        //                                         child: Text(
+                        //                                           "Take Photo ...",
+                        //                                           style: CustomFonts.kBlack15Black.copyWith(
+                        //                                               color:
+                        //                                                   kdarkBlue,
+                        //                                               fontWeight:
+                        //                                                   FontWeight
+                        //                                                       .w600,
+                        //                                               fontSize:
+                        //                                                   16.0),
+                        //                                         ),
+                        //                                       ),
+                        //                                       Divider(),
+                        //                                       GestureDetector(
+                        //                                         behavior:
+                        //                                             HitTestBehavior
+                        //                                                 .opaque,
+                        //                                         onTap:
+                        //                                             () async {
+                        //                                           if (controller
+                        //                                               .minorNominee
+                        //                                               .contains(controller
+                        //                                                   .minorDropdown
+                        //                                                   .value)) {
+                        //                                             Fluttertoast.showToast(
+                        //                                                 msg:
+                        //                                                     "Already Exit Record for Selected Dropdown",
+                        //                                                 toastLength:
+                        //                                                     Toast
+                        //                                                         .LENGTH_SHORT,
+                        //                                                 gravity:
+                        //                                                     ToastGravity
+                        //                                                         .BOTTOM,
+                        //                                                 timeInSecForIosWeb:
+                        //                                                     1,
+                        //                                                 backgroundColor:
+                        //                                                     Colors
+                        //                                                         .red,
+                        //                                                 textColor:
+                        //                                                     Colors
+                        //                                                         .white,
+                        //                                                 fontSize:
+                        //                                                     16.0);
+                        //                                           } else {
+                        //                                             var file =
+                        //                                                 await controller
+                        //                                                     .uploadFile();
+                        //
+                        //                                             controller
+                        //                                                     .minorProof
+                        //                                                     .value =
+                        //                                                 basename(
+                        //                                                     file);
+                        //                                             controller
+                        //                                                 .minorProofPath
+                        //                                                 .value = file;
+                        //
+                        //                                             Get.back(
+                        //                                                 closeOverlays:
+                        //                                                     true);
+                        //                                             controller.addProductLot(
+                        //                                                 imagePath: controller
+                        //                                                     .minorProofPath
+                        //                                                     .value,
+                        //                                                 selectedValue: controller
+                        //                                                     .minorProof
+                        //                                                     .value,
+                        //                                                 dropDownValue: controller
+                        //                                                     .minorDropdown
+                        //                                                     .value);
+                        //                                           }
+                        //                                         },
+                        //                                         child: Text(
+                        //                                           "Choose Files from Phone",
+                        //                                           style: CustomFonts.kBlack15Black.copyWith(
+                        //                                               color:
+                        //                                                   kdarkBlue,
+                        //                                               fontWeight:
+                        //                                                   FontWeight
+                        //                                                       .w600,
+                        //                                               fontSize:
+                        //                                                   16.0),
+                        //                                         ),
+                        //                                       ),
+                        //                                       Divider(),
+                        //                                     ],
+                        //                                   ),
+                        //                                   cancel:
+                        //                                       GestureDetector(
+                        //                                     onTap: () {
+                        //                                       log("**");
+                        //                                       Get.back(
+                        //                                           closeOverlays:
+                        //                                               true);
+                        //                                     },
+                        //                                     behavior:
+                        //                                         HitTestBehavior
+                        //                                             .opaque,
+                        //                                     child: Padding(
+                        //                                       padding:
+                        //                                           const EdgeInsets
+                        //                                               .all(8.0),
+                        //                                       child: Text(
+                        //                                         "Cancel",
+                        //                                         style: CustomFonts
+                        //                                             .kBlack15Black
+                        //                                             .copyWith(
+                        //                                                 color: Colors
+                        //                                                     .red,
+                        //                                                 fontSize:
+                        //                                                     16),
+                        //                                       ),
+                        //                                     ),
+                        //                                   ),
+                        //                                   onCancel: () =>
+                        //                                       Get.back());
+                        //                               // }
+                        //                             },
+                        //                             shape:
+                        //                                 RoundedRectangleBorder(
+                        //                                     side:
+                        //                                         const BorderSide(
+                        //                                             color:
+                        //                                                 kGrey),
+                        //                                     borderRadius:
+                        //                                         BorderRadius
+                        //                                             .circular(
+                        //                                                 5.0)),
+                        //                             color: Colors.white,
+                        //                             child: Text("Upload",
+                        //                                 style: CustomFonts
+                        //                                     .kBlack15Black
+                        //                                     .copyWith(
+                        //                                         fontSize: 15.0,
+                        //                                         fontWeight:
+                        //                                             FontWeight
+                        //                                                 .w400)),
+                        //                           ),
+                        //                           const SizedBox(
+                        //                             width: 10,
+                        //                           )
+                        //                         ],
+                        //                       ),
+                        //                     ),
+                        //                   ],
+                        //                 )
+                        //               : const SizedBox()),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           ListView.builder(
+                        //               shrinkWrap: true,
+                        //               physics: NeverScrollableScrollPhysics(),
+                        //               itemCount: controller.minorImage.length,
+                        //               itemBuilder: (context, int index) {
+                        //                 return Obx(() => controller
+                        //                             .nominee.value.isNotEmpty ||
+                        //                         controller.nominee.value ==
+                        //                             "Minor"
+                        //                     ? Row(
+                        //                         children: [
+                        //                           GestureDetector(
+                        //                             child: Text(
+                        //                               "Preview",
+                        //                               style: CustomFonts
+                        //                                   .kBlack15Black
+                        //                                   .copyWith(
+                        //                                       fontSize: 14.0,
+                        //                                       color: kdarkBlue,
+                        //                                       fontWeight:
+                        //                                           FontWeight
+                        //                                               .w700),
+                        //                             ),
+                        //                             onTap: () => Get.to(
+                        //                                 () => PreviewScreen(
+                        //                                       filePath: controller
+                        //                                           .minorImage
+                        //                                           .value[index],
+                        //                                     )),
+                        //                           ),
+                        //                           const Spacer(),
+                        //                           GestureDetector(
+                        //                             onTap: () {
+                        //                               controller
+                        //                                   .minorProof
+                        //                                   .value= "";
+                        //                               controller
+                        //                                   .minorProofPath
+                        //                                   .value = "";
+                        //                               controller
+                        //                                   .minorImage
+                        //                                   .removeAt(index);
+                        //                               controller.minor.removeAt(index);
+                        //                               controller.minorNominee.removeAt(index);
+                        //
+                        //                             },
+                        //                             child: const Icon(
+                        //                               Icons.delete,
+                        //                               color: klightBlue,
+                        //                               size: 20,
+                        //                             ),
+                        //                           )
+                        //                         ],
+                        //                       )
+                        //                     : SizedBox());
+                        //               }),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           Row(
+                        //             children: [
+                        //               smallText(
+                        //                   text: "Filled & Signed Claim form"),
+                        //               Text(
+                        //                 " * ",
+                        //                 style: TextStyle(color: Colors.red),
+                        //               )
+                        //             ],
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 5.0,
+                        //           ),
+                        //           Text(
+                        //               "${controller.claimDetail.value["claimDocuments"][0]["singnedClaimDocument"].toString() == "UPLOADED" ? controller.claimDetail.value["claimDocuments"][0]["singnedClaimDocument"].toString() : ""}"),
+                        //           Container(
+                        //             height: 40.0.h,
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.grey.shade50,
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(5.0),
+                        //                 border: Border.all(
+                        //                   color: kGrey,
+                        //                 )),
+                        //             child: Row(
+                        //               children: [
+                        //                 Flexible(
+                        //                   fit: FlexFit.tight,
+                        //                   child: Padding(
+                        //                     padding: const EdgeInsets.symmetric(
+                        //                         horizontal: 8, vertical: 8),
+                        //                     child: Obx(() => Text(
+                        //                           "${controller.filled.value}",
+                        //                           style: CustomFonts
+                        //                               .kBlack15Black
+                        //                               .copyWith(
+                        //                                   fontWeight:
+                        //                                       FontWeight.w600,
+                        //                                   fontSize: 14.0),
+                        //                         )),
+                        //                   ),
+                        //                 ),
+                        //                 const Spacer(),
+                        //                 MaterialButton(
+                        //                   elevation: 1.0,
+                        //                   onPressed: () async {
+                        //                     if (controller
+                        //                             .claimDetail
+                        //                             .value["claimDocuments"][0]
+                        //                                 ["singnedClaimDocument"]
+                        //                             .toString() ==
+                        //                         "UPLOADED") {
+                        //                       Fluttertoast.showToast(
+                        //                           msg:
+                        //                               "Already Under Verification",
+                        //                           toastLength:
+                        //                               Toast.LENGTH_SHORT,
+                        //                           gravity: ToastGravity.BOTTOM,
+                        //                           timeInSecForIosWeb: 1,
+                        //                           backgroundColor: Colors.red,
+                        //                           textColor: Colors.white,
+                        //                           fontSize: 16.0);
+                        //                     } else {
+                        //                       Get.defaultDialog(
+                        //                           title: "Upload",
+                        //                           titleStyle: CustomFonts
+                        //                               .kBlack15Black
+                        //                               .copyWith(
+                        //                                   color: Colors.black,
+                        //                                   fontSize: 20.0,
+                        //                                   fontWeight:
+                        //                                       FontWeight.bold),
+                        //                           content: Column(
+                        //                             mainAxisSize:
+                        //                                 MainAxisSize.min,
+                        //                             crossAxisAlignment:
+                        //                                 CrossAxisAlignment
+                        //                                     .center,
+                        //                             mainAxisAlignment:
+                        //                                 MainAxisAlignment
+                        //                                     .center,
+                        //                             children: [
+                        //                               Divider(),
+                        //                               GestureDetector(
+                        //                                 onTap: () async {
+                        //                                   var file =
+                        //                                       await controller
+                        //                                           .imageFromCamera();
+                        //                                   controller.filled
+                        //                                           .value =
+                        //                                       basename(file);
+                        //                                   controller.filledPath
+                        //                                       .value = file;
+                        //                                   Get.back(
+                        //                                       closeOverlays:
+                        //                                           true);
+                        //                                 },
+                        //                                 child: Text(
+                        //                                   "Take Photo ...",
+                        //                                   style: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color:
+                        //                                               kdarkBlue,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .w600,
+                        //                                           fontSize:
+                        //                                               16.0),
+                        //                                 ),
+                        //                               ),
+                        //                               Divider(),
+                        //                               GestureDetector(
+                        //                                 behavior:
+                        //                                     HitTestBehavior
+                        //                                         .opaque,
+                        //                                 onTap: () async {
+                        //                                   await controller
+                        //                                       .uploadFile1();
+                        //
+                        //                                   // var file =
+                        //                                   // await controller
+                        //                                   //     .uploadFile();
+                        //                                   // print(file);
+                        //                                   // controller
+                        //                                   //     .filled
+                        //                                   //     .value =
+                        //                                   //     basename(file);
+                        //                                   // controller
+                        //                                   //     .filled
+                        //                                   //     .value = file;
+                        //                                   //print(file);
+                        //                                   // controller.filled
+                        //                                   //         .value =
+                        //                                   //     basename(file);
+                        //                                   // controller.files = file;
+                        //                                   //
+                        //                                   // controller.signForm.addAll(
+                        //                                   //     {file});
+                        //                                   setState(() {});
+                        //                                   Get.back(
+                        //                                       closeOverlays:
+                        //                                           true);
+                        //                                   setState(() {});
+                        //                                 },
+                        //                                 child: Text(
+                        //                                   "Choose Files from Phone",
+                        //                                   style: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color:
+                        //                                               kdarkBlue,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .w600,
+                        //                                           fontSize:
+                        //                                               16.0),
+                        //                                 ),
+                        //                               ),
+                        //                               Divider(),
+                        //                             ],
+                        //                           ),
+                        //                           cancel: GestureDetector(
+                        //                             onTap: () {
+                        //                               log("**");
+                        //                               Get.back(
+                        //                                   closeOverlays: true);
+                        //                             },
+                        //                             behavior:
+                        //                                 HitTestBehavior.opaque,
+                        //                             child: Padding(
+                        //                               padding:
+                        //                                   const EdgeInsets.all(
+                        //                                       8.0),
+                        //                               child: Text(
+                        //                                 "Cancel",
+                        //                                 style: CustomFonts
+                        //                                     .kBlack15Black
+                        //                                     .copyWith(
+                        //                                         color:
+                        //                                             Colors.red,
+                        //                                         fontSize: 16),
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                           onCancel: () => Get.back());
+                        //                     }
+                        //                   },
+                        //                   shape: RoundedRectangleBorder(
+                        //                       side: const BorderSide(
+                        //                           color: kGrey),
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(5.0)),
+                        //                   color: Colors.white,
+                        //                   child: Text("Upload",
+                        //                       style: CustomFonts.kBlack15Black
+                        //                           .copyWith(
+                        //                               fontSize: 15.0,
+                        //                               fontWeight:
+                        //                                   FontWeight.w400)),
+                        //                 ),
+                        //                 const SizedBox(
+                        //                   width: 10,
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           const SizedBox(height: 10.0),
+                        //           controller.files1 != null
+                        //               ? ListView.builder(
+                        //                   shrinkWrap: true,
+                        //                   physics:
+                        //                       NeverScrollableScrollPhysics(),
+                        //                   itemCount: controller.files1!.length,
+                        //                   itemBuilder: (context, int index) {
+                        //                     return controller.files1!.isNotEmpty
+                        //                         ? Row(
+                        //                             children: [
+                        //                               Padding(
+                        //                                 padding:
+                        //                                     const EdgeInsets
+                        //                                         .all(8.0),
+                        //                                 child: GestureDetector(
+                        //                                     child: Text(
+                        //                                       "Preview",
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0,
+                        //                                               color:
+                        //                                                   kdarkBlue,
+                        //                                               fontWeight:
+                        //                                                   FontWeight
+                        //                                                       .w700),
+                        //                                     ),
+                        //                                     onTap: () {
+                        //                                       var filePathinPdf;
+                        //
+                        //                                       String s =
+                        //                                           "${controller.files1![index].toString()}";
+                        //                                       int idx = s
+                        //                                           .indexOf(":");
+                        //                                       List parts = [
+                        //                                         s
+                        //                                             .substring(
+                        //                                                 0, idx)
+                        //                                             .trim(),
+                        //                                         s
+                        //                                             .substring(
+                        //                                                 idx + 1)
+                        //                                             .trim()
+                        //                                       ];
+                        //                                       var str =
+                        //                                           parts[1];
+                        //                                       var find = "'";
+                        //                                       var replaceWith =
+                        //                                           '';
+                        //                                       var newString =
+                        //                                           str.replaceAll(
+                        //                                               find,
+                        //                                               replaceWith);
+                        //                                       var parts1 =
+                        //                                           str.split(
+                        //                                               '${str[0]}');
+                        //                                       filePathinPdf =
+                        //                                           newString;
+                        //                                       //controller.filled.value=controller.files1![index].toString();
+                        //                                       // print(controller.files1![index].toString());
+                        //                                       // print(controller.deathCertificatePath.value.toString());
+                        //                                       // print(filePathinPdf==controller.deathCertificatePath.value.toString());
+                        //                                       Get.to(() =>
+                        //                                           PreviewScreen(
+                        //                                             filePath:
+                        //                                                 filePathinPdf,
+                        //                                             // filePath:  controller
+                        //                                             //     .deathCertificatePath
+                        //                                             //     .value,
+                        //                                           ));
+                        //                                     }),
+                        //                               ),
+                        //                               const Spacer(),
+                        //                               GestureDetector(
+                        //                                 onTap: () {
+                        //                                   controller.files1!
+                        //                                       .removeAt(index);
+                        //
+                        //                                   setState(() {});
+                        //                                 },
+                        //                                 child: const Icon(
+                        //                                   Icons.delete,
+                        //                                   color: klightBlue,
+                        //                                   size: 20,
+                        //                                 ),
+                        //                               )
+                        //                             ],
+                        //                           )
+                        //                         : SizedBox();
+                        //                   })
+                        //               : SizedBox(),
+                        //
+                        //           Obx(() => controller
+                        //                   .filledPath.value.isNotEmpty
+                        //               ? Row(
+                        //                   children: [
+                        //                     GestureDetector(
+                        //                       child: Text(
+                        //                         "Preview",
+                        //                         style: CustomFonts.kBlack15Black
+                        //                             .copyWith(
+                        //                                 fontSize: 14.0,
+                        //                                 color: kdarkBlue,
+                        //                                 fontWeight:
+                        //                                     FontWeight.w700),
+                        //                       ),
+                        //                       onTap: () =>
+                        //                           Get.to(() => PreviewScreen(
+                        //                                 filePath: controller
+                        //                                     .filledPath.value,
+                        //                               )),
+                        //                     ),
+                        //                     const Spacer(),
+                        //                     GestureDetector(
+                        //                       onTap: () {
+                        //                         controller.filled.value = "";
+                        //                         controller.filledPath.value =
+                        //                             "";
+                        //                       },
+                        //                       child: const Icon(
+                        //                         Icons.delete,
+                        //                         color: klightBlue,
+                        //                         size: 20,
+                        //                       ),
+                        //                     )
+                        //                   ],
+                        //                 )
+                        //               : SizedBox()),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           Row(
+                        //             children: [
+                        //               smallText(text: "Death Certificate"),
+                        //               Text(
+                        //                 " * ",
+                        //                 style: TextStyle(color: Colors.red),
+                        //               )
+                        //             ],
+                        //           ),
+                        //           Text(
+                        //               "${controller.claimDetail.value["claimDocuments"][0]["deathCertificate"].toString() == "UPLOADED" ? controller.claimDetail.value["claimDocuments"][0]["deathCertificate"].toString() : ""}"),
+                        //           const SizedBox(
+                        //             height: 5.0,
+                        //           ),
+                        //           Container(
+                        //             height: 40.0.h,
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.grey.shade50,
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(5.0),
+                        //                 border: Border.all(
+                        //                   color: kGrey,
+                        //                 )),
+                        //             child: Row(
+                        //               children: [
+                        //                 Flexible(
+                        //                   fit: FlexFit.tight,
+                        //                   child: Padding(
+                        //                     padding: const EdgeInsets.all(8.0),
+                        //                     child: Obx(() => Text(
+                        //                           controller
+                        //                               .dealthCertificate.value,
+                        //                           style: CustomFonts
+                        //                               .kBlack15Black
+                        //                               .copyWith(
+                        //                                   fontWeight:
+                        //                                       FontWeight.w600,
+                        //                                   fontSize: 14.0),
+                        //                         )),
+                        //                   ),
+                        //                 ),
+                        //                 const Spacer(),
+                        //                 MaterialButton(
+                        //                   elevation: 1.0,
+                        //                   onPressed: () async {
+                        //                     if (controller
+                        //                             .claimDetail
+                        //                             .value["claimDocuments"][0]
+                        //                                 ["deathCertificate"]
+                        //                             .toString() ==
+                        //                         "UPLOADED") {
+                        //                       Fluttertoast.showToast(
+                        //                           msg:
+                        //                               "Already Under Verification",
+                        //                           toastLength:
+                        //                               Toast.LENGTH_SHORT,
+                        //                           gravity: ToastGravity.BOTTOM,
+                        //                           timeInSecForIosWeb: 1,
+                        //                           backgroundColor: Colors.red,
+                        //                           textColor: Colors.white,
+                        //                           fontSize: 16.0);
+                        //                     } else {
+                        //                       Get.defaultDialog(
+                        //                           title: "Upload",
+                        //                           titleStyle: CustomFonts
+                        //                               .kBlack15Black
+                        //                               .copyWith(
+                        //                                   color: Colors.black,
+                        //                                   fontSize: 20.0,
+                        //                                   fontWeight:
+                        //                                       FontWeight.bold),
+                        //                           content: Column(
+                        //                             mainAxisSize:
+                        //                                 MainAxisSize.min,
+                        //                             crossAxisAlignment:
+                        //                                 CrossAxisAlignment
+                        //                                     .center,
+                        //                             mainAxisAlignment:
+                        //                                 MainAxisAlignment
+                        //                                     .center,
+                        //                             children: [
+                        //                               const Divider(),
+                        //                               GestureDetector(
+                        //                                 onTap: () async {
+                        //                                   var file =
+                        //                                       await controller
+                        //                                           .imageFromCamera();
+                        //                                   controller
+                        //                                           .dealthCertificate
+                        //                                           .value =
+                        //                                       basename(file);
+                        //                                   controller
+                        //                                       .deathCertificatePath
+                        //                                       .value = file;
+                        //                                   print(
+                        //                                       "object ${controller.deathCertificatePath.value}");
+                        //                                   Get.back(
+                        //                                       closeOverlays:
+                        //                                           true);
+                        //                                 },
+                        //                                 child: Text(
+                        //                                   "Take Photo ...",
+                        //                                   style: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color:
+                        //                                               kdarkBlue,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .w600,
+                        //                                           fontSize:
+                        //                                               16.0),
+                        //                                 ),
+                        //                               ),
+                        //                               Divider(),
+                        //                               GestureDetector(
+                        //                                 behavior:
+                        //                                     HitTestBehavior
+                        //                                         .opaque,
+                        //                                 onTap: () async {
+                        //                                   await controller
+                        //                                       .uploadCertificate();
+                        //                                   setState(() {});
+                        //                                   Get.back(
+                        //                                       closeOverlays:
+                        //                                           true);
+                        //                                 },
+                        //                                 child: Text(
+                        //                                   "Choose Files from Phone",
+                        //                                   style: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color:
+                        //                                               kdarkBlue,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .w600,
+                        //                                           fontSize:
+                        //                                               16.0),
+                        //                                 ),
+                        //                               ),
+                        //                               Divider(),
+                        //                             ],
+                        //                           ),
+                        //                           cancel: GestureDetector(
+                        //                             onTap: () {
+                        //                               log("**");
+                        //                               Get.back(
+                        //                                   closeOverlays: true);
+                        //                             },
+                        //                             behavior:
+                        //                                 HitTestBehavior.opaque,
+                        //                             child: Padding(
+                        //                               padding:
+                        //                                   const EdgeInsets.all(
+                        //                                       8.0),
+                        //                               child: Text(
+                        //                                 "Cancel",
+                        //                                 style: CustomFonts
+                        //                                     .kBlack15Black
+                        //                                     .copyWith(
+                        //                                         color:
+                        //                                             Colors.red,
+                        //                                         fontSize: 16),
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                           onCancel: () => Get.back());
+                        //                     }
+                        //                   },
+                        //                   shape: RoundedRectangleBorder(
+                        //                       side: const BorderSide(
+                        //                           color: kGrey),
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(5.0)),
+                        //                   color: Colors.white,
+                        //                   child: Text("Upload",
+                        //                       style: CustomFonts.kBlack15Black
+                        //                           .copyWith(
+                        //                               fontSize: 15.0,
+                        //                               fontWeight:
+                        //                                   FontWeight.w400)),
+                        //                 ),
+                        //                 const SizedBox(
+                        //                   width: 10,
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           const SizedBox(height: 10.0),
+                        //           controller.deathCertificate != null
+                        //               ? ListView.builder(
+                        //                   shrinkWrap: true,
+                        //                   physics:
+                        //                       NeverScrollableScrollPhysics(),
+                        //                   itemCount: controller
+                        //                       .deathCertificate!.length,
+                        //                   itemBuilder: (context, int index) {
+                        //                     return controller.deathCertificate!
+                        //                             .isNotEmpty
+                        //                         ? Row(
+                        //                             children: [
+                        //                               Padding(
+                        //                                 padding:
+                        //                                     const EdgeInsets
+                        //                                         .all(8.0),
+                        //                                 child: GestureDetector(
+                        //                                     child: Text(
+                        //                                       "Preview",
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0,
+                        //                                               color:
+                        //                                                   kdarkBlue,
+                        //                                               fontWeight:
+                        //                                                   FontWeight
+                        //                                                       .w700),
+                        //                                     ),
+                        //                                     onTap: () {
+                        //                                       var filePathinPdf;
+                        //
+                        //                                       String s =
+                        //                                           "${controller.deathCertificate![index].toString()}";
+                        //                                       int idx = s
+                        //                                           .indexOf(":");
+                        //                                       List parts = [
+                        //                                         s
+                        //                                             .substring(
+                        //                                                 0, idx)
+                        //                                             .trim(),
+                        //                                         s
+                        //                                             .substring(
+                        //                                                 idx + 1)
+                        //                                             .trim()
+                        //                                       ];
+                        //                                       var str =
+                        //                                           parts[1];
+                        //                                       var find = "'";
+                        //                                       var replaceWith =
+                        //                                           '';
+                        //                                       var newString =
+                        //                                           str.replaceAll(
+                        //                                               find,
+                        //                                               replaceWith);
+                        //                                       var parts1 =
+                        //                                           str.split(
+                        //                                               '${str[0]}');
+                        //                                       filePathinPdf =
+                        //                                           newString;
+                        //                                       Get.to(() =>
+                        //                                           PreviewScreen(
+                        //                                             filePath:
+                        //                                                 filePathinPdf,
+                        //                                             // filePath:  controller
+                        //                                             //     .deathCertificatePath
+                        //                                             //     .value,
+                        //                                           ));
+                        //                                     }),
+                        //                               ),
+                        //                               const Spacer(),
+                        //                               GestureDetector(
+                        //                                 onTap: () {
+                        //                                   controller
+                        //                                       .deathCertificate!
+                        //                                       .removeAt(index);
+                        //
+                        //                                   setState(() {});
+                        //                                 },
+                        //                                 child: const Icon(
+                        //                                   Icons.delete,
+                        //                                   color: klightBlue,
+                        //                                   size: 20,
+                        //                                 ),
+                        //                               )
+                        //                             ],
+                        //                           )
+                        //                         : SizedBox();
+                        //                   })
+                        //               : SizedBox(),
+                        //           Obx(() => controller
+                        //                   .deathCertificatePath.value.isNotEmpty
+                        //               ? Row(
+                        //                   children: [
+                        //                     GestureDetector(
+                        //                       child: Text(
+                        //                         "Preview",
+                        //                         style: CustomFonts.kBlack15Black
+                        //                             .copyWith(
+                        //                                 fontSize: 14.0,
+                        //                                 color: kdarkBlue,
+                        //                                 fontWeight:
+                        //                                     FontWeight.w700),
+                        //                       ),
+                        //                       onTap: () =>
+                        //                           Get.to(() => PreviewScreen(
+                        //                                 filePath: controller
+                        //                                     .deathCertificatePath
+                        //                                     .value,
+                        //                               )),
+                        //                     ),
+                        //                     const Spacer(),
+                        //                     GestureDetector(
+                        //                       onTap: () {
+                        //                         controller.dealthCertificate
+                        //                             .value = "";
+                        //                         controller.deathCertificatePath
+                        //                             .value = "";
+                        //                       },
+                        //                       child: const Icon(
+                        //                         Icons.delete,
+                        //                         color: klightBlue,
+                        //                         size: 20,
+                        //                       ),
+                        //                     )
+                        //                   ],
+                        //                 )
+                        //               : SizedBox()),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           Text(
+                        //             "KYC - Proof Borrower",
+                        //             style: CustomFonts.kBlack15Black.copyWith(
+                        //                 fontSize: 15.0,
+                        //                 fontWeight: FontWeight.w900,
+                        //                 color: Colors.black),
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           Row(
+                        //             children: [
+                        //               smallText(text: "Id Proof"),
+                        //               Text(
+                        //                 " * ",
+                        //                 style: TextStyle(color: Colors.red),
+                        //               )
+                        //             ],
+                        //           ),
+                        //           smallText(
+                        //               text:
+                        //                   "(atleast one document is mandatory)"),
+                        //           Text(
+                        //               "${controller.claimDetail.value["claimDocuments"][0]["borrowerKycProof"].toString() == "UPLOADED" ? controller.claimDetail.value["claimDocuments"][0]["borrowerKycProof"].toString() : ""}"),
+                        //           Container(
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.grey.shade100,
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(1.0),
+                        //                 border: Border.all(color: kGrey)),
+                        //             child: Obx(() => DropdownButton<String>(
+                        //                   isExpanded: true,
+                        //                   hint: Padding(
+                        //                     padding: const EdgeInsets.all(8.0),
+                        //                     child: controller.borroweridProof
+                        //                             .value.isNotEmpty
+                        //                         ? Text(
+                        //                             controller
+                        //                                 .borroweridProof.value,
+                        //                             style: CustomFonts
+                        //                                 .kBlack15Black
+                        //                                 .copyWith(
+                        //                                     fontSize: 14.0),
+                        //                           )
+                        //                         : Text(
+                        //                             "Select Document Type",
+                        //                             style: CustomFonts
+                        //                                 .kBlack15Black
+                        //                                 .copyWith(
+                        //                                     fontSize: 14.0),
+                        //                           ),
+                        //                   ),
+                        //                   underline: const SizedBox(),
+                        //                   items: <String>[
+                        //                     'Aadhar Card',
+                        //                     'Passport',
+                        //                     'Voter card',
+                        //                     'Driving License',
+                        //                     "Ration Card ",
+                        //                     'Pan Card',
+                        //                     'Any other Govt Id card ',
+                        //                     'Other',
+                        //                   ].map((String value) {
+                        //                     return DropdownMenuItem<String>(
+                        //                       value: value,
+                        //                       child: Text(value),
+                        //                     );
+                        //                   }).toList(),
+                        //                   onChanged: (value) {
+                        //                     controller.borroweridProof.value =
+                        //                         value!;
+                        //                   },
+                        //                 )),
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //           Container(
+                        //             height: 40.0.h,
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.grey.shade50,
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(5.0),
+                        //                 border: Border.all(
+                        //                   color: kGrey,
+                        //                 )),
+                        //             child: Row(
+                        //               children: [
+                        //                 Flexible(
+                        //                   child: Padding(
+                        //                     padding: const EdgeInsets.all(8.0),
+                        //                     child: Obx(() => Text(
+                        //                           "${controller.borroweridProofDoc.value}",
+                        //                           style: CustomFonts
+                        //                               .kBlack15Black
+                        //                               .copyWith(
+                        //                                   fontWeight:
+                        //                                       FontWeight.w600,
+                        //                                   fontSize: 14.0),
+                        //                         )),
+                        //                   ),
+                        //                   fit: FlexFit.tight,
+                        //                 ),
+                        //                 const Spacer(),
+                        //                 MaterialButton(
+                        //                   elevation: 1.0,
+                        //                   onPressed: () async {
+                        //                     if (controller
+                        //                             .claimDetail
+                        //                             .value["claimDocuments"][0]
+                        //                                 ["borrowerKycProof"]
+                        //                             .toString() ==
+                        //                         "UPLOADED") {
+                        //                       Fluttertoast.showToast(
+                        //                           msg:
+                        //                               "Already Under Verification",
+                        //                           toastLength:
+                        //                               Toast.LENGTH_SHORT,
+                        //                           gravity: ToastGravity.BOTTOM,
+                        //                           timeInSecForIosWeb: 1,
+                        //                           backgroundColor: Colors.red,
+                        //                           textColor: Colors.white,
+                        //                           fontSize: 16.0);
+                        //                     } else {
+                        //                       Get.defaultDialog(
+                        //                           title: "Upload",
+                        //                           titleStyle: CustomFonts
+                        //                               .kBlack15Black
+                        //                               .copyWith(
+                        //                                   color: Colors.black,
+                        //                                   fontSize: 20.0,
+                        //                                   fontWeight:
+                        //                                       FontWeight.bold),
+                        //                           content: Column(
+                        //                             mainAxisSize:
+                        //                                 MainAxisSize.min,
+                        //                             crossAxisAlignment:
+                        //                                 CrossAxisAlignment
+                        //                                     .center,
+                        //                             mainAxisAlignment:
+                        //                                 MainAxisAlignment
+                        //                                     .center,
+                        //                             children: [
+                        //                               Divider(),
+                        //                               GestureDetector(
+                        //                                 onTap: () async {
+                        //                                   var file =
+                        //                                       await controller
+                        //                                           .imageFromCamera();
+                        //                                   print(file);
+                        //                                   controller
+                        //                                           .borroweridProofDoc
+                        //                                           .value =
+                        //                                       basename(file);
+                        //                                   controller
+                        //                                       .borrowerIdDocPath
+                        //                                       .value = file;
+                        //                                   Get.back(
+                        //                                       closeOverlays:
+                        //                                           true);
+                        //                                 },
+                        //                                 child: Text(
+                        //                                   "Take Photo ...",
+                        //                                   style: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color:
+                        //                                               kdarkBlue,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .w600,
+                        //                                           fontSize:
+                        //                                               16.0),
+                        //                                 ),
+                        //                               ),
+                        //                               Divider(),
+                        //                               GestureDetector(
+                        //                                 behavior:
+                        //                                     HitTestBehavior
+                        //                                         .opaque,
+                        //                                 onTap: () async {
+                        //                                   // var file =
+                        //                                   //     await controller
+                        //                                   //         .uploadFile();
+                        //                                   // controller
+                        //                                   //         .borroweridProofDoc
+                        //                                   //         .value =
+                        //                                   //     basename(file);
+                        //                                   // controller
+                        //                                   //     .borrowerIdDocPath
+                        //                                   //     .value = file;
+                        //
+                        //                                   await controller
+                        //                                       .uploadBorrowerProof();
+                        //                                   setState(() {});
+                        //                                   Get.back(
+                        //                                       closeOverlays:
+                        //                                           true);
+                        //                                 },
+                        //                                 child: Text(
+                        //                                   "Choose Files from Phone",
+                        //                                   style: CustomFonts
+                        //                                       .kBlack15Black
+                        //                                       .copyWith(
+                        //                                           color:
+                        //                                               kdarkBlue,
+                        //                                           fontWeight:
+                        //                                               FontWeight
+                        //                                                   .w600,
+                        //                                           fontSize:
+                        //                                               16.0),
+                        //                                 ),
+                        //                               ),
+                        //                               Divider(),
+                        //                             ],
+                        //                           ),
+                        //                           cancel: GestureDetector(
+                        //                             onTap: () {
+                        //                               Get.back(
+                        //                                   closeOverlays: true);
+                        //                             },
+                        //                             behavior:
+                        //                                 HitTestBehavior.opaque,
+                        //                             child: Padding(
+                        //                               padding:
+                        //                                   const EdgeInsets.all(
+                        //                                       8.0),
+                        //                               child: Text(
+                        //                                 "Cancel",
+                        //                                 style: CustomFonts
+                        //                                     .kBlack15Black
+                        //                                     .copyWith(
+                        //                                         color:
+                        //                                             Colors.red,
+                        //                                         fontSize: 16),
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                           onCancel: () => Get.back());
+                        //                     }
+                        //                   },
+                        //                   shape: RoundedRectangleBorder(
+                        //                       side: const BorderSide(
+                        //                           color: kGrey),
+                        //                       borderRadius:
+                        //                           BorderRadius.circular(5.0)),
+                        //                   color: Colors.white,
+                        //                   child: Text("Upload",
+                        //                       style: CustomFonts.kBlack15Black
+                        //                           .copyWith(
+                        //                               fontSize: 15.0,
+                        //                               fontWeight:
+                        //                                   FontWeight.w400)),
+                        //                 ),
+                        //                 const SizedBox(
+                        //                   width: 10,
+                        //                 )
+                        //               ],
+                        //             ),
+                        //           ),
+                        //           const SizedBox(height: 10.0),
+                        //           controller.borrowerProof != null
+                        //               ? ListView.builder(
+                        //                   shrinkWrap: true,
+                        //                   physics:
+                        //                       NeverScrollableScrollPhysics(),
+                        //                   itemCount:
+                        //                       controller.borrowerProof!.length,
+                        //                   itemBuilder: (context, int index) {
+                        //                     return controller
+                        //                             .borrowerProof!.isNotEmpty
+                        //                         ? Row(
+                        //                             children: [
+                        //                               Padding(
+                        //                                 padding:
+                        //                                     const EdgeInsets
+                        //                                         .all(8.0),
+                        //                                 child: GestureDetector(
+                        //                                     child: Text(
+                        //                                       "Preview",
+                        //                                       style: CustomFonts
+                        //                                           .kBlack15Black
+                        //                                           .copyWith(
+                        //                                               fontSize:
+                        //                                                   14.0,
+                        //                                               color:
+                        //                                                   kdarkBlue,
+                        //                                               fontWeight:
+                        //                                                   FontWeight
+                        //                                                       .w700),
+                        //                                     ),
+                        //                                     onTap: () {
+                        //                                       var filePathinPdf;
+                        //
+                        //                                       String s =
+                        //                                           "${controller.borrowerProof![index].toString()}";
+                        //                                       int idx = s
+                        //                                           .indexOf(":");
+                        //                                       List parts = [
+                        //                                         s
+                        //                                             .substring(
+                        //                                                 0, idx)
+                        //                                             .trim(),
+                        //                                         s
+                        //                                             .substring(
+                        //                                                 idx + 1)
+                        //                                             .trim()
+                        //                                       ];
+                        //                                       var str =
+                        //                                           parts[1];
+                        //                                       var find = "'";
+                        //                                       var replaceWith =
+                        //                                           '';
+                        //                                       var newString =
+                        //                                           str.replaceAll(
+                        //                                               find,
+                        //                                               replaceWith);
+                        //                                       var parts1 =
+                        //                                           str.split(
+                        //                                               '${str[0]}');
+                        //                                       filePathinPdf =
+                        //                                           newString;
+                        //                                       Get.to(() =>
+                        //                                           PreviewScreen(
+                        //                                             filePath:
+                        //                                                 filePathinPdf,
+                        //                                             // filePath:  controller
+                        //                                             //     .deathCertificatePath
+                        //                                             //     .value,
+                        //                                           ));
+                        //                                     }),
+                        //                               ),
+                        //                               const Spacer(),
+                        //                               GestureDetector(
+                        //                                 onTap: () {
+                        //                                   controller
+                        //                                       .borrowerProof!
+                        //                                       .removeAt(index);
+                        //
+                        //                                   setState(() {});
+                        //                                 },
+                        //                                 child: const Icon(
+                        //                                   Icons.delete,
+                        //                                   color: klightBlue,
+                        //                                   size: 20,
+                        //                                 ),
+                        //                               )
+                        //                             ],
+                        //                           )
+                        //                         : SizedBox();
+                        //                   })
+                        //               : SizedBox(),
+                        //           Obx(() => controller
+                        //                   .borrowerIdDocPath.value.isNotEmpty
+                        //               ? Row(
+                        //                   children: [
+                        //                     GestureDetector(
+                        //                       child: Text(
+                        //                         "Preview",
+                        //                         style: CustomFonts.kBlack15Black
+                        //                             .copyWith(
+                        //                                 fontSize: 14.0,
+                        //                                 color: kdarkBlue,
+                        //                                 fontWeight:
+                        //                                     FontWeight.w700),
+                        //                       ),
+                        //                       onTap: () =>
+                        //                           Get.to(() => PreviewScreen(
+                        //                                 filePath: controller
+                        //                                     .borrowerIdDocPath
+                        //                                     .value,
+                        //                               )),
+                        //                     ),
+                        //                     const Spacer(),
+                        //                     GestureDetector(
+                        //                       onTap: () {
+                        //                         controller.borroweridProofDoc
+                        //                             .value = "";
+                        //                         controller.borrowerIdDocPath
+                        //                             .value = "";
+                        //                       },
+                        //                       child: const Icon(
+                        //                         Icons.delete,
+                        //                         color: klightBlue,
+                        //                         size: 20,
+                        //                       ),
+                        //                     )
+                        //                   ],
+                        //                 )
+                        //               : SizedBox()),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //
+                        //           ///new changes by sangam
+                        //
+                        //           Text(
+                        //             "Agent - Remarks",
+                        //             style: CustomFonts.kBlack15Black.copyWith(
+                        //                 fontSize: 15.0,
+                        //                 fontWeight: FontWeight.w900,
+                        //                 color: Colors.black),
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //
+                        //           smallText(text: "Choose a valid reason"),
+                        //
+                        //           Container(
+                        //             decoration: BoxDecoration(
+                        //                 color: Colors.grey.shade100,
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(1.0),
+                        //                 border: Border.all(color: kGrey)),
+                        //             child: Obx(() => DropdownButton<String>(
+                        //                   isExpanded: true,
+                        //                   hint: Padding(
+                        //                     padding: const EdgeInsets.all(8.0),
+                        //                     child: controller
+                        //                             .agentRemarkDropDownValue
+                        //                             .value
+                        //                             .isNotEmpty
+                        //                         ? Text(
+                        //                             controller
+                        //                                 .agentRemarkDropDownValue
+                        //                                 .value,
+                        //                             style: CustomFonts
+                        //                                 .kBlack15Black
+                        //                                 .copyWith(
+                        //                                     fontSize: 14.0),
+                        //                           )
+                        //                         : Text(
+                        //                             "Select valid reason",
+                        //                             style: CustomFonts
+                        //                                 .kBlack15Black
+                        //                                 .copyWith(
+                        //                                     fontSize: 14.0),
+                        //                           ),
+                        //                   ),
+                        //                   underline: const SizedBox(),
+                        //                   items: <String>[
+                        //                     'Mobile number not reachable',
+                        //                     'Address is not correct',
+                        //                     'Client not available',
+                        //                     'Document not available',
+                        //                   ].map((String value) {
+                        //                     return DropdownMenuItem<String>(
+                        //                       value: value,
+                        //                       child: Text(value),
+                        //                     );
+                        //                   }).toList(),
+                        //                   onChanged: (value) {
+                        //                     controller.agentRemarkDropDownValue
+                        //                         .value = value!;
+                        //                   },
+                        //                 )),
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //
+                        //           Obx(()=>controller.agentRemarkDropDownValue.value!=null?MaterialButton(
+                        //             onPressed: () {
+                        //               controller.agentRemarkDropDownValue.value = "";
+                        //             },
+                        //             color: kdarkBlue,
+                        //             child: Text(
+                        //               "Remove agent remark",
+                        //               style: CustomFonts.kBlack15Black
+                        //                   .copyWith(color: Colors.white),
+                        //             ),
+                        //           ):SizedBox(),),
+                        //
+                        //
+                        //
+                        //           Center(
+                        //             child: MaterialButton(
+                        //               onPressed: () {
+                        //                 //if (controller.nominee.value ==
+                        //                 //     "Minor") {
+                        //                 //   if (controller.minor.length >= 3) {
+                        //                 //     if (controller.causeofDeath.value
+                        //                 //             .isNotEmpty &&
+                        //                 //         controller
+                        //                 //             .filledPath.value.isNotEmpty &&
+                        //                 //         controller.dealthCertificate
+                        //                 //             .value.isNotEmpty &&
+                        //                 //         controller.borroweridProofDoc
+                        //                 //             .value.isNotEmpty &&
+                        //                 //         controller.borrowerIdDocPath
+                        //                 //             .value.isNotEmpty) {
+                        //                 //       controller.uploadFormData();
+                        //                 //     } else {
+                        //                 //       log("${controller.borroweridProofDoc.value.isNotEmpty && controller.borrowerIdDocPath.value.isNotEmpty}");
+                        //                 //       Fluttertoast.showToast(
+                        //                 //           msg:
+                        //                 //               "Please update all mandatory fields",
+                        //                 //           toastLength:
+                        //                 //               Toast.LENGTH_SHORT,
+                        //                 //           gravity: ToastGravity.BOTTOM,
+                        //                 //           timeInSecForIosWeb: 1,
+                        //                 //           backgroundColor: Colors.red,
+                        //                 //           textColor: Colors.white,
+                        //                 //           fontSize: 16.0);
+                        //                 //     }
+                        //                 //   } else {
+                        //                 //     Fluttertoast.showToast(
+                        //                 //         msg:
+                        //                 //             "Please update atleast 3 documents for minor",
+                        //                 //         toastLength: Toast.LENGTH_SHORT,
+                        //                 //         gravity: ToastGravity.BOTTOM,
+                        //                 //         timeInSecForIosWeb: 1,
+                        //                 //         backgroundColor: Colors.red,
+                        //                 //         textColor: Colors.white,
+                        //                 //         fontSize: 16.0);
+                        //                 //   }
+                        //                 // } else if (controller.causeofDeath.value
+                        //                 //         .isNotEmpty ||
+                        //                 //     controller
+                        //                 //         .filledPath.value.isNotEmpty ||
+                        //                 //     controller.dealthCertificate.value
+                        //                 //         .isNotEmpty ||
+                        //                 //     controller.borroweridProof.value
+                        //                 //         .isNotEmpty ||
+                        //                 //     controller.borrowerIdDocPath.value
+                        //                 //         .isNotEmpty) {
+                        //                 if (controller.claimDetail
+                        //                             .value["claimData"]
+                        //                         ["causeOfDeath"] !=
+                        //                     null) {
+                        //                   controller.causeofDeath.value =
+                        //                       controller.claimDetail
+                        //                               .value["claimData"]
+                        //                           ["causeOfDeath"];
+                        //                   controller.uploadFormData();
+                        //                 }
+                        //                else if (controller.causeofDeath.value ==
+                        //                     null || controller.causeofDeath.value ==
+                        //                     "null" ||controller.causeofDeath.value =="") {
+                        //
+                        //                   Fluttertoast.showToast(
+                        //                       msg: "Cause of Death can't be Empty",
+                        //                       toastLength: Toast.LENGTH_SHORT,
+                        //                       gravity: ToastGravity.BOTTOM,
+                        //                       timeInSecForIosWeb: 1,
+                        //                       backgroundColor: Colors.red,
+                        //                       textColor: Colors.white,
+                        //                       fontSize: 16.0);
+                        //                 }
+                        //               else   if (controller.agentRemarkDropDownValue
+                        //                     .value.isNotEmpty) {
+                        //                   controller.uploadFormData();
+                        //                 }
+                        //                 else{
+                        //                   print("Object !");
+                        //                   controller.uploadFormData();
+                        //                 }
+                        //
+                        //
+                        //                 //  }
+                        //               },
+                        //               color: kdarkBlue,
+                        //               child: Text(
+                        //                 "Save ",
+                        //                 style: CustomFonts.kBlack15Black
+                        //                     .copyWith(color: Colors.white),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           const SizedBox(
+                        //             height: 10.0,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //       Divider(),
+                        //       const SizedBox(
+                        //         height: 10.0,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         SingleChildScrollView(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -2675,8 +5040,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   const Spacer(),
                                                   GestureDetector(
                                                     onTap: () {
-                                                      controller
-                                                          .nomineeProof!
+                                                      controller.nomineeProof!
                                                           .removeAt(index);
 
                                                       setState(() {});
@@ -3097,15 +5461,21 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              if (controller.claimDetail.value["claimData"]
-                                          ["causeOfDeath"] ==
-                                      "ACCIDENT" ||
-                                  controller.claimDetail.value["claimData"]
-                                          ["causeOfDeath"] ==
-                                      "NATURAL_DEATH" ||
-                                  controller.claimDetail.value["claimData"]
-                                          ["causeOfDeath"] ==
-                                      "SUICIDE")
+                              if ((controller.claimDetail.value["claimData"]
+                                              ["causeOfDeath"] ==
+                                          "ACCIDENT" ||
+                                      controller.claimDetail.value["claimData"]
+                                              ["causeOfDeath"] ==
+                                          "NATURAL_DEATH" ||
+                                      controller.claimDetail.value["claimData"]
+                                              ["causeOfDeath"] ==
+                                          "SUICIDE") &&
+                                  (controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "Life" ||
+                                      controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "life"))
                                 Container(
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
@@ -3144,12 +5514,18 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         },
                                       )),
                                 ),
-                              if (controller.claimDetail.value["claimData"]
-                                          ["causeOfDeath"] ==
-                                      "ILLNESS_MEDICAL_REASON" ||
-                                  controller.claimDetail.value["claimData"]
-                                          ["causeOfDeath"] ==
-                                      "DUE_TO_NATURAL_CALAMITY")
+                              if ((controller.claimDetail.value["claimData"]
+                                              ["causeOfDeath"] ==
+                                          "ILLNESS_MEDICAL_REASON" ||
+                                      controller.claimDetail.value["claimData"]
+                                              ["causeOfDeath"] ==
+                                          "DUE_TO_NATURAL_CALAMITY") &&
+                                  (controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "Life" ||
+                                      controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "life"))
                                 Container(
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
@@ -3188,6 +5564,154 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         },
                                       )),
                                 ),
+                              if (controller.claimDetail
+                                      .value["claimData"]["causeOfDeath"]
+                                      .toString()
+                                      .isNotEmpty &&
+                                  (controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "General" ||
+                                      controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "general" ||
+                                      controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "Health" ||
+                                      controller.claimDetail
+                                              .value["claimCategory"] ==
+                                          "health" ||
+                                      controller.claimDetail.value["claimData"]
+                                              ["causeOfDeath"] ==
+                                          "DUE_TO_NATURAL_CALAMITY"))
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(1.0),
+                                      border: Border.all(color: kGrey)),
+                                  child: Obx(() => DropdownButton<String>(
+                                        isExpanded: true,
+                                        hint: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: controller.additionalProof
+                                                  .value.isNotEmpty
+                                              ? Text(
+                                                  controller
+                                                      .additionalProof.value,
+                                                  style: CustomFonts
+                                                      .kBlack15Black
+                                                      .copyWith(fontSize: 14.0),
+                                                )
+                                              : Text(
+                                                  "Select Document Type",
+                                                  style: CustomFonts
+                                                      .kBlack15Black
+                                                      .copyWith(fontSize: 14.0),
+                                                ),
+                                        ),
+                                        underline: const SizedBox(),
+                                        items: other.map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          controller.additionalProof.value =
+                                              value!;
+                                        },
+                                      )),
+                                ),
+                              // if (controller.claimDetail.value["claimData"]
+                              //             ["causeOfDeath"] ==
+                              //         "ACCIDENT" ||
+                              //     controller.claimDetail.value["claimData"]
+                              //             ["causeOfDeath"] ==
+                              //         "NATURAL_DEATH" ||
+                              //     controller.claimDetail.value["claimData"]
+                              //             ["causeOfDeath"] ==
+                              //         "SUICIDE")
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.grey.shade100,
+                              //         borderRadius: BorderRadius.circular(1.0),
+                              //         border: Border.all(color: kGrey)),
+                              //     child: Obx(() => DropdownButton<String>(
+                              //           isExpanded: true,
+                              //           hint: Padding(
+                              //             padding: const EdgeInsets.all(8.0),
+                              //             child: controller.additionalProof
+                              //                     .value.isNotEmpty
+                              //                 ? Text(
+                              //                     controller
+                              //                         .additionalProof.value,
+                              //                     style: CustomFonts
+                              //                         .kBlack15Black
+                              //                         .copyWith(fontSize: 14.0),
+                              //                   )
+                              //                 : Text(
+                              //                     "Select Document Type",
+                              //                     style: CustomFonts
+                              //                         .kBlack15Black
+                              //                         .copyWith(fontSize: 14.0),
+                              //                   ),
+                              //           ),
+                              //           underline: const SizedBox(),
+                              //           items: accientList.map((String value) {
+                              //             return DropdownMenuItem<String>(
+                              //               value: value,
+                              //               child: Text(value),
+                              //             );
+                              //           }).toList(),
+                              //           onChanged: (value) {
+                              //             controller.additionalProof.value =
+                              //                 value!;
+                              //           },
+                              //         )),
+                              //   ),
+                              // if (controller.claimDetail.value["claimData"]
+                              //             ["causeOfDeath"] ==
+                              //         "ILLNESS_MEDICAL_REASON" ||
+                              //     controller.claimDetail.value["claimData"]
+                              //             ["causeOfDeath"] ==
+                              //         "DUE_TO_NATURAL_CALAMITY")
+                              //   Container(
+                              //     decoration: BoxDecoration(
+                              //         color: Colors.grey.shade100,
+                              //         borderRadius: BorderRadius.circular(1.0),
+                              //         border: Border.all(color: kGrey)),
+                              //     child: Obx(() => DropdownButton<String>(
+                              //           isExpanded: true,
+                              //           hint: Padding(
+                              //             padding: const EdgeInsets.all(8.0),
+                              //             child: controller.additionalProof
+                              //                     .value.isNotEmpty
+                              //                 ? Text(
+                              //                     controller
+                              //                         .additionalProof.value,
+                              //                     style: CustomFonts
+                              //                         .kBlack15Black
+                              //                         .copyWith(fontSize: 14.0),
+                              //                   )
+                              //                 : Text(
+                              //                     "Select Document Type",
+                              //                     style: CustomFonts
+                              //                         .kBlack15Black
+                              //                         .copyWith(fontSize: 14.0),
+                              //                   ),
+                              //           ),
+                              //           underline: const SizedBox(),
+                              //           items: sickList.map((String value) {
+                              //             return DropdownMenuItem<String>(
+                              //               value: value,
+                              //               child: Text(value),
+                              //             );
+                              //           }).toList(),
+                              //           onChanged: (value) {
+                              //             controller.additionalProof.value =
+                              //                 value!;
+                              //           },
+                              //         )),
+                              //   ),
                               const SizedBox(
                                 height: 10.0,
                               ),
@@ -3223,7 +5747,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         if (controller.claimDetail
                                                 .value["claimStatus"]
                                                 .toString() ==
-                                            "UNDER_VERIFICATION1") {
+                                            "UNDER_VERIFICATION") {
                                           Fluttertoast.showToast(
                                               msg: "Already Under Verification",
                                               toastLength: Toast.LENGTH_SHORT,
@@ -3469,10 +5993,26 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   width: Get.width,
                                   child: MaterialButton(
                                     onPressed: () {
-                                      controller.uploadFormData2();
-                                      setState(() {
+                                      if(controller
+                                          .claimDetail
+                                          .value["claimData"]
+                                      ["isForwardToVerifier"].toString()
+                                          == "true"){
 
-                                      });
+                                        Fluttertoast.showToast(
+                                            msg: "Already send to Verifier",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.BOTTOM,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.red,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
+                                      }else {
+                                        controller.uploadFormData2();
+                                        setState(() {});
+                                      }
+                                      //controller.uploadFormData2();
+                                      //setState(() {});
                                     },
                                     child: Text(
                                       "Upload Addition Document",
@@ -3486,10 +6026,24 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                               Center(
                                 child: MaterialButton(
                                   onPressed: () {
-                                    controller.uploadFormData2();
-                                    setState(() {
+                                    if(controller
+                                        .claimDetail
+                                        .value["claimData"]
+                                    ["isForwardToVerifier"].toString()
+                                        == "true"){
 
-                                    });
+                                      Fluttertoast.showToast(
+                                          msg: "Already send to Verifier",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    }else {
+                                      controller.uploadFormData2();
+                                      setState(() {});
+                                    }
                                   },
                                   child: Text(
                                     "Save",
@@ -3533,6 +6087,8 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                   // else{
                                   //
                                   // }
+                                  controller.causeofDeath.value = controller.claimDetail.value["claimData"]["causeOfDeath"] == null?"":controller.claimDetail.value["claimData"]["causeOfDeath"];
+
                                 }
                                 // else{
                                 //   Get.off(() => Details(
@@ -3568,39 +6124,42 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       curve: Curves.ease);
                                   controller.currentIndex.value =
                                       controller.currentIndex.value + 1;
+                                  controller.causeofDeath.value = controller.claimDetail.value["claimData"]["causeOfDeath"] == null?"":controller.claimDetail.value["claimData"]["causeOfDeath"];
+
                                 } else {
                                   log("--");
-                                  if (
-                                  controller
-                                      .claimDetail
-                                      .value["claimDocuments"][0]
-                                  ["singnedClaimDocument"]
-                                      .toString() !=
-                                      "UPLOADED" ||
-                                      controller
-                                          .claimDetail
-                                          .value["claimDocuments"][0]
-                                      ["deathCertificate"]
-                                          .toString() !=
+                                  controller.causeofDeath.value = controller.claimDetail.value["claimData"]["causeOfDeath"] == null?"":controller.claimDetail.value["claimData"]["causeOfDeath"];
+
+                                  if (controller
+                                              .claimDetail
+                                              .value["claimDocuments"][0]
+                                                  ["singnedClaimDocument"]
+                                              .toString() !=
                                           "UPLOADED" ||
                                       controller
-                                          .claimDetail
-                                          .value["claimDocuments"][0]
-                                      ["borrowerKycProof"]
-                                          .toString() !=
+                                              .claimDetail
+                                              .value["claimDocuments"][0]
+                                                  ["deathCertificate"]
+                                              .toString() !=
                                           "UPLOADED" ||
                                       controller
-                                          .claimDetail
-                                          .value["claimDocuments"][0]
-                                      ["nomineeKycProof"]
-                                          .toString() !=
-                                          "UPLOADED"||
+                                              .claimDetail
+                                              .value["claimDocuments"][0]
+                                                  ["borrowerKycProof"]
+                                              .toString() !=
+                                          "UPLOADED" ||
                                       controller
-                                          .claimDetail
-                                          .value["claimDocuments"][0]
-                                      ["bankAccountProof"]
-                                          .toString() !=
-                                          "UPLOADED"  ) {
+                                              .claimDetail
+                                              .value["claimDocuments"][0]
+                                                  ["nomineeKycProof"]
+                                              .toString() !=
+                                          "UPLOADED" ||
+                                      controller
+                                              .claimDetail
+                                              .value["claimDocuments"][0]
+                                                  ["bankAccountProof"]
+                                              .toString() !=
+                                          "UPLOADED") {
                                     Fluttertoast.showToast(
                                         msg: "Upload all required Document",
                                         toastLength: Toast.LENGTH_SHORT,
@@ -3609,10 +6168,21 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                         backgroundColor: Colors.red,
                                         textColor: Colors.white,
                                         fontSize: 16.0);
-
-                                  }
-
-                                  else {
+                                  } else if (controller
+                                          .claimDetail
+                                          .value["claimData"]
+                                              ["isForwardToVerifier"]
+                                          .toString() ==
+                                      "true") {
+                                    Fluttertoast.showToast(
+                                        msg: "Already send to Verifier",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  } else {
                                     log("rrr");
 
                                     controller.sendToVerifier();
@@ -3657,7 +6227,6 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                         ["deathCertificate"]
                                                     .toString() ==
                                                 "UPLOADED" &&
-
                                             controller
                                                     .claimDetail
                                                     .value["claimDocuments"][0]

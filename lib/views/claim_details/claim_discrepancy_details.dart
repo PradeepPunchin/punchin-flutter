@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
@@ -22,6 +21,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
   ClaimController controller = Get.put(ClaimController());
   var ArgData= Get.arguments;
   var dropdownName ;
+  var claimStatus;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,6 +165,8 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                 itemCount: controller.discrepancyData.value["claimDocuments"].length,
                                                 itemBuilder: (context, int index) {
                                                   var claimDiscrepancy= controller.discrepancyData.value["claimDocuments"][index];
+
+                                                  claimStatus= claimSubmitted.data!.claimStatus.toString();
 
                                                   return Container(
                                                     child: Row(
@@ -822,7 +824,8 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         color: kdarkBlue,
                                         onPressed: ()async {
 
-                                          controller.uploadDiscrepancyData(id: ArgData[1],docType: dropdownName);
+                                          controller.uploadDiscrepancyData(id: ArgData[1],docType: dropdownName ,claimStatus: claimStatus);
+
 
 
 
