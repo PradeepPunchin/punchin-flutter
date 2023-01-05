@@ -774,7 +774,6 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
 
     request.fields["isMinor"] = nominee.value == "Minor" ? "true" : "false";
-git
     request.fields["causeOfDeath"] =
         causeofDeathReturn(causeofDeath.value) == "" ||
                 causeofDeathReturn(causeofDeath.value) == null ||
