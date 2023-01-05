@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -69,6 +70,7 @@ class _DetailsState extends State<Details> {
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
+
         child: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
@@ -308,10 +310,28 @@ class _DetailsState extends State<Details> {
                                                           bottom: 12),
                                                   child: Row(
                                                     children: [
-                                                      Text(
-                                                          "PunchIn Ref. ID : ${singleData.punchinClaimId}",
-                                                          style:
-                                                              kBody14kWhite600),
+                                                      GestureDetector(
+
+                                                          onTap: () async {
+                                                            await Clipboard.setData(ClipboardData(text: "${singleData.punchinClaimId}")).then((_){
+                                                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("copied text ${singleData.punchinClaimId}")));
+                                                            });
+
+                                                            // copied successfully
+                                                            // Fluttertoast.showToast(
+                                                            //     msg: "Search Type cannot be Empty",
+                                                            //     toastLength: Toast.LENGTH_SHORT,
+                                                            //     gravity: ToastGravity.BOTTOM,
+                                                            //     timeInSecForIosWeb: 1,
+                                                            //     backgroundColor: Colors.red,
+                                                            //     textColor: Colors.white,
+                                                            //     fontSize: 16.0);
+
+                                                        },
+                                                        child: Text(
+                                                            "PunchIn Ref. ID : ${singleData.punchinClaimId}",
+                                                            style: kBody14kWhite600),
+                                                      ),
                                                       Spacer(),
                                                       GestureDetector(
                                                         onTap: () async {
@@ -1754,10 +1774,10 @@ class _DetailsState extends State<Details> {
                                               (() {
                                                 if ("${singleData.claimStatus}" ==
                                                     "VERIFIER_DISCREPENCY") {
-                                                  return "PunchIn Ref. ID : ${singleData.claimId}   Discrepancy";
+                                                  return "PunchIn Ref. ID : ${singleData.claimId}   (Discrepancy)";
                                                 } else if ("${singleData.claimStatus}" ==
                                                     "NEW_REQUIREMENT") {
-                                                  return "PunchIn Ref. ID : ${singleData.claimId}   New Doc Request";
+                                                  return "PunchIn Ref. ID : ${singleData.claimId}   (New Doc Req.)";
                                                 }
 
                                                 return "Packed";

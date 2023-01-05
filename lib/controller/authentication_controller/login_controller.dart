@@ -21,6 +21,7 @@ class LoginController extends GetxController {
         "userId": email.text.toString(),
         "password": password.text.toString(),
         "platform": "ANDROID",
+        "deviceInfo":GetStorage().read("deviceinfo").toString(),
       };
 
       var response = await http.post(

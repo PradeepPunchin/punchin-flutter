@@ -36,6 +36,8 @@ class ClaimController extends GetxController {
 
   RxString causeofDeath = "".obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
+  Rx<TextEditingController> commentController = TextEditingController().obs;
+
   RxString document = "".obs;
   RxString nominee = "Major".obs;
   RxString path = "".obs;
@@ -79,14 +81,14 @@ class ClaimController extends GetxController {
     log(dropDownValue.toString());
 
     if (minorNominee.value.contains(dropDownValue.toString())) {
-      Fluttertoast.showToast(
-          msg: "File Already Exists for $selectedValue",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      // Fluttertoast.showToast(
+      //     msg: "File Already Exists for $selectedValue",
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.BOTTOM,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0);
     } else {
       Map<String, dynamic> trendColorMap = {
         'image_path': imagePath,
@@ -772,7 +774,7 @@ class ClaimController extends GetxController {
     request.fields["id"] = Get.arguments[1].id.toString(); //compulsory
 
     request.fields["isMinor"] = nominee.value == "Minor" ? "true" : "false";
-
+git
     request.fields["causeOfDeath"] =
         causeofDeathReturn(causeofDeath.value) == "" ||
                 causeofDeathReturn(causeofDeath.value) == null ||
@@ -784,7 +786,7 @@ class ClaimController extends GetxController {
 
     if (agentRemarkDropDownValue.value.isNotEmpty) {
       request.fields["agentRemark"] = agentRemarkDropDownValue.value.toString();
-
+      request.fields["agentComment"] = commentController.value.text.toString();
 
     }
 
@@ -932,6 +934,8 @@ class ClaimController extends GetxController {
       deathCertificatePath.value='';
       GUARDIAN_ADD_PROOF.value='';
       borrowerIdDocPath.value='';
+      borroweridProofDoc.value='';
+      borroweridProof.value='';
       minor.value.clear();
       minorDropdown.value='';
       minorImage.value.clear();
@@ -1140,6 +1144,17 @@ class ClaimController extends GetxController {
     if (response.statusCode == 200) {
       loadUpload.value = false;
       getStepperFormData();
+      nomineeProof?.clear();
+      bankACProof?.clear();
+      nomineeProof?.clear();
+
+      nomineeIdProofDoc.value='';
+      nomineeIdProof.value='';
+      nomineeIdDocPath.value='';
+      bankAccountDocPath.value='';
+      bankProof.value='';
+      bankProofDoc.value='';
+      additionalDocpath.value='';
 
       Fluttertoast.showToast(
           msg: "Form Submitted Successfully",

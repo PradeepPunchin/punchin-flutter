@@ -344,49 +344,50 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                       height: 8.0,
                                     ),
 
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: kWhite,
-                                          borderRadius: BorderRadius.circular(1.0),
-
-                                          border: Border.all(color: kBorderColor)),
-                                      child: //Obx(() =>
-                                          DropdownButton<dynamic>(
-                                        isExpanded: true,
-                                        hint: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: dropdownName!= null
-                                              ? Text(
-                                            "$dropdownName",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(fontSize: 14.0),
-                                          )
-                                              : Text(
-                                            "Select Document Type",
-                                            style: CustomFonts.kBlack15Black
-                                                .copyWith(fontSize: 14.0),
-                                          ),
-                                        ),
-                                        underline: const SizedBox(),
-                                        items: claimSubmitted.data!.rejectedDocList!.map((value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
-                                        onChanged: (dynamic value) {
-
-                                          //controller.additionalProof.value = value!;
-                                          dropdownName=value;
-
-                                          setState(() {
-                                            dropdownName=value;
-                                          });
-
-                                        },
-                                      ),
-                                     // ),
-                                    ),
+                                    dropDown(reject: claimSubmitted.data!.rejectedDocList!),
+                                    // Container(
+                                    //   decoration: BoxDecoration(
+                                    //       color: kWhite,
+                                    //       borderRadius: BorderRadius.circular(1.0),
+                                    //
+                                    //       border: Border.all(color: kBorderColor)),
+                                    //   child: //Obx(() =>
+                                    //   DropdownButton<dynamic>(
+                                    //     isExpanded: true,
+                                    //     hint: Padding(
+                                    //       padding: const EdgeInsets.all(8.0),
+                                    //       child: dropdownName!= null
+                                    //           ? Text(
+                                    //         "$dropdownName",
+                                    //         style: CustomFonts.kBlack15Black
+                                    //             .copyWith(fontSize: 14.0),
+                                    //       )
+                                    //           : Text(
+                                    //         "Select Document Type",
+                                    //         style: CustomFonts.kBlack15Black
+                                    //             .copyWith(fontSize: 14.0),
+                                    //       ),
+                                    //     ),
+                                    //     underline: const SizedBox(),
+                                    //     items: claimSubmitted.data!.rejectedDocList!.map((value) {
+                                    //       return DropdownMenuItem<String>(
+                                    //         value: value,
+                                    //         child: Text(value),
+                                    //       );
+                                    //     }).toList(),
+                                    //     onChanged: (dynamic value) {
+                                    //
+                                    //       //controller.additionalProof.value = value!;
+                                    //       dropdownName=value;
+                                    //
+                                    //       setState(() {
+                                    //         dropdownName=value;
+                                    //       });
+                                    //
+                                    //     },
+                                    //   ),
+                                    //   // ),
+                                    // ),
                                     const SizedBox(
                                       height: 10.0,
                                     ),
@@ -862,4 +863,48 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
       ),
     );
   }
+
+  Widget dropDown({required List reject})=> Container(
+    decoration: BoxDecoration(
+        color: kWhite,
+        borderRadius: BorderRadius.circular(1.0),
+
+        border: Border.all(color: kBorderColor)),
+    child: //Obx(() =>
+    DropdownButton<dynamic>(
+      isExpanded: true,
+      hint: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: dropdownName!= null
+            ? Text(
+          "$dropdownName",
+          style: CustomFonts.kBlack15Black
+              .copyWith(fontSize: 14.0),
+        )
+            : Text(
+          "Select Document Type",
+          style: CustomFonts.kBlack15Black
+              .copyWith(fontSize: 14.0),
+        ),
+      ),
+      underline: const SizedBox(),
+      items: reject.map((value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (dynamic value) {
+
+        //controller.additionalProof.value = value!;
+        dropdownName=value;
+
+        setState(() {
+          dropdownName=value;
+        });
+
+      },
+    ),
+    // ),
+  );
 }

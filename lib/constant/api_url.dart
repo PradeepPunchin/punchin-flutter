@@ -1,11 +1,10 @@
 /// base Url api
 /// developement
-//var baseUrl = "https://086d-2401-4900-2eea-39f-36e8-b302-254b-5e7.in.ngrok.io/api/v1/"; //"http://13.235.28.49:7002/api/v1/";
-var baseUrl =  "http://3.110.250.144:7002/api/v1/" ; //"http://3.110.250.144:7002/api/v1/";///"https://52b0-223-190-89-130.in.ngrok.io/api/v1/";// "http://13.235.28.49:7002/api/v1/";
-   // "http://3.110.250.144:7002/api/v1/" ; //"http://13.235.28.49:7002/api/v1/";
-//"https://2146-223-190-94-162.in.ngrok.io/api/v1/";// "https://52b0-223-190-89-130.in.ngrok.io/api/v1/";//
+var baseUrl = "http://3.110.250.144:7002/api/v1/";
+// "http://3.110.250.144:7002/api/v1/" ;
+// "http://13.235.28.49:7002/api/v1/";
 
-/// authentication api
+// authentication api
 var loginApi = Uri.parse("${baseUrl}auth/login");
 var logoutApi = baseUrl + "auth/logout";
 
