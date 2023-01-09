@@ -152,6 +152,8 @@ class ClaimController extends GetxController {
           "X-Xsrf-Token": box.read("authToken"),
         },
       );
+      
+      log("message WIP"+response.body);
       if (response.statusCode == 200) {
         return WipInProgressModel.fromJson(jsonDecode(response.body));
       } else if (response.statusCode == 401) {
@@ -232,7 +234,7 @@ class ClaimController extends GetxController {
           (searchController.value.text == '' ||
               searchController.value.text == null ||
               searchController.value.text == "null")) {
-        var Url = getAgentClaimApi + "ALLOCATED&page=0&limit=200";
+        var Url = getAgentClaimApi + "$status&page=0&limit=200";
         var response = await http.get(
           Uri.parse(Url),
           headers: {

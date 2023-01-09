@@ -1,7 +1,7 @@
 /// base Url api
 /// developement
 var baseUrl = "http://3.110.250.144:7002/api/v1/";
-// "http://3.110.250.144:7002/api/v1/" ;
+// "http://3.110.250.144:7002/api/v1/" ; "https://4b25-2401-4900-5fc1-f02c-323a-c379-8978-ccd1.in.ngrok.io/api/v1/";//
 // "http://13.235.28.49:7002/api/v1/";
 
 // authentication api

@@ -1176,7 +1176,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                             .value)) {
                                                                           Fluttertoast.showToast(
                                                                               msg:
-                                                                              "Already Exit Record for Selected Dropdown",
+                                                                              "Record Already Exits for Selected Dropdown",
                                                                               toastLength:
                                                                               Toast
                                                                                   .LENGTH_SHORT,
@@ -1327,7 +1327,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                                             .value)) {
                                                                           Fluttertoast.showToast(
                                                                               msg:
-                                                                              "Already Exit Record for Selected Dropdown",
+                                                                              "Record Already Exits for Selected Dropdown",
                                                                               toastLength:
                                                                               Toast
                                                                                   .LENGTH_SHORT,
@@ -2747,7 +2747,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                   },
                                                   color: kdarkBlue,
                                                   child: Text(
-                                                    "Remove agent remark",
+                                                    "Remove Agent Remark",
                                                     style: CustomFonts.kBlack15Black
                                                         .copyWith(
                                                         color: Colors.white),
@@ -5887,7 +5887,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                                               .value)) {
                                                         Fluttertoast.showToast(
                                                             msg:
-                                                                "Already Exit Record for Selected Dropdown",
+                                                                "Record Already Exits for Selected Dropdown",
                                                             toastLength: Toast
                                                                 .LENGTH_SHORT,
                                                             gravity:
@@ -6054,7 +6054,7 @@ class _ClaimFormViewState extends State<ClaimFormView> {
                                       //setState(() {});
                                     },
                                     child: Text(
-                                      "Upload Addition Document",
+                                      "Upload Additional Document",
                                       style: CustomFonts.kBlack15Black
                                           .copyWith(color: Colors.white),
                                     ),

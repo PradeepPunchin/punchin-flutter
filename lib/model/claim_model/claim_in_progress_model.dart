@@ -75,6 +75,7 @@ class Content {
   String ?borrowerName;
   String? borrowerAddress;
   String? claimStatus;
+  List<ClaimsRemarksDTOs>? claimsRemarksDTOs;
 
   Content(
       {this.id,
@@ -85,7 +86,9 @@ class Content {
         this.allocationDate,
         this.borrowerName,
         this.borrowerAddress,
-        this.claimStatus});
+        this.claimStatus,
+        this.claimsRemarksDTOs,
+      });
 
   Content.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -97,6 +100,12 @@ class Content {
     borrowerName = json['borrowerName'];
     borrowerAddress = json['borrowerAddress'];
     claimStatus = json['claimStatus'];
+    if (json['claimsRemarksDTOs'] != null) {
+      claimsRemarksDTOs =  <ClaimsRemarksDTOs>[];
+      json['claimsRemarksDTOs'].forEach((v) {
+        claimsRemarksDTOs?.add(new ClaimsRemarksDTOs.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -110,6 +119,42 @@ class Content {
     data['borrowerName'] = this.borrowerName;
     data['borrowerAddress'] = this.borrowerAddress;
     data['claimStatus'] = this.claimStatus;
+    if (this.claimsRemarksDTOs != null) {
+      data['claimsRemarksDTOs'] =
+          this.claimsRemarksDTOs?.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+class ClaimsRemarksDTOs {
+  int? claimId;
+  int? remarkDoneBy;
+  String? remark;
+  String? role;
+  int? createdAt;
+
+  ClaimsRemarksDTOs(
+      {this.claimId,
+        this.remarkDoneBy,
+        this.remark,
+        this.role,
+        this.createdAt});
+
+  ClaimsRemarksDTOs.fromJson(Map<String, dynamic> json) {
+    claimId = json['claimId'];
+    remarkDoneBy = json['remarkDoneBy'];
+    remark = json['remark'];
+    role = json['role'];
+    createdAt = json['createdAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['claimId'] = this.claimId;
+    data['remarkDoneBy'] = this.remarkDoneBy;
+    data['remark'] = this.remark;
+    data['role'] = this.role;
+    data['createdAt'] = this.createdAt;
     return data;
   }
 }

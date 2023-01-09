@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:punchin/constant/const_color.dart';
@@ -364,28 +365,29 @@ class _TrackingHomeState extends State<TrackingHome> {
                                         leading: CircleAvatar(
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(100),
-                                            child: CachedNetworkImage(
-                                              // height: 150,
-                                              // width: Get.width,
-                                              imageUrl:
-                                              "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                                              imageBuilder: (context, imageProvider) =>
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                                    ),
-                                                  ),
-                                              placeholder: (context, url) =>
-                                              const CircularProgressIndicator(),
-                                              errorWidget: (context, url, error) =>
-                                              const Icon(
-                                                Icons.error,
-                                                color: kBlack,
-                                              ),
-                                            ),
+                                            child: singleData.claimStatus=="CLAIM_INTIMATED" ||singleData.claimStatus=="AGENT_ALLOCATED"?SvgPicture.asset("assets/icons/cards.svg"):SvgPicture.asset("assets/icons/Time Circle.svg"),
+                                            // CachedNetworkImage(
+                                            //   // height: 150,
+                                            //   // width: Get.width,
+                                            //   imageUrl:
+                                            //   "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                                            //   imageBuilder: (context, imageProvider) =>
+                                            //       Container(
+                                            //         decoration: BoxDecoration(
+                                            //           image: DecorationImage(
+                                            //             image: imageProvider,
+                                            //             fit: BoxFit.fill,
+                                            //           ),
+                                            //         ),
+                                            //       ),
+                                            //   placeholder: (context, url) =>
+                                            //   const CircularProgressIndicator(),
+                                            //   errorWidget: (context, url, error) =>
+                                            //   const Icon(
+                                            //     Icons.error,
+                                            //     color: kBlack,
+                                            //   ),
+                                            // ),
                                           ),
                                         ),
                                         title: Text(
