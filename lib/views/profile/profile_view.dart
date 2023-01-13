@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,7 @@ class ProfileView extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(
           "Agent Profile",
-          style: CustomFonts.kBlack15Black,
+          style: kBlack15Black,
         ),
         centerTitle: true,
         actions: <Widget>[
@@ -65,19 +65,20 @@ class ProfileView extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   child: Center(
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
-                      imageBuilder: (context, imageProvider) {
-                        return Container(
-                          height: 90.0.h,
-                          width: 90.0.w,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(image: imageProvider)),
-                        );
-                      },
-                    ),
+                    child: Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
+                    // CachedNetworkImage(
+                    //   imageUrl:
+                    //       "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
+                    //   imageBuilder: (context, imageProvider) {
+                    //     return Container(
+                    //       height: 90.0.h,
+                    //       width: 90.0.w,
+                    //       decoration: BoxDecoration(
+                    //           shape: BoxShape.circle,
+                    //           image: DecorationImage(image: imageProvider)),
+                    //     );
+                    //   },
+                    // ),
                   ),
                 ),
               ],
@@ -87,7 +88,7 @@ class ProfileView extends StatelessWidget {
             ),
             Text(
               "${GetStorage().read("firstName")} ${GetStorage().read("lastName")}",
-              style: CustomFonts.kBlack15Black,
+              style: kBlack15Black,
             ),
             SizedBox(
               height: 5.h,
@@ -98,7 +99,7 @@ class ProfileView extends StatelessWidget {
               children: [
                 Text(
                   "${GetStorage().read("userId")} (${GetStorage().read("role")})",
-                  style: CustomFonts.kBlack15Black.copyWith(
+                  style: kBlack15Black.copyWith(
                     fontSize: 12.0.sp,
                   ),
                 ),
@@ -107,7 +108,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 Text(
                   "4.1",
-                  style: CustomFonts.kBlack15Black.copyWith(
+                  style: kBlack15Black.copyWith(
                     fontSize: 12.0.sp,
                   ),
                 ),
@@ -124,7 +125,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 Text(
                   "Rating",
-                  style: CustomFonts.kBlack15Black.copyWith(
+                  style: kBlack15Black.copyWith(
                     fontSize: 12.0.sp,
                   ),
                 ),
@@ -228,7 +229,7 @@ class ProfileView extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 5.0.h),
         child: Text(
           text,
-          style: CustomFonts.kBlack15Black.copyWith(
+          style: kBlack15Black.copyWith(
               fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black),
         ),
       );
@@ -238,7 +239,7 @@ class ProfileView extends StatelessWidget {
         child: TextFormField(
           decoration: InputDecoration(
               hintText: text,
-              hintStyle: CustomFonts.kBlack15Black,
+              hintStyle: kBlack15Black,
               filled: true,
               fillColor: kFilledTextColor,
               border: OutlineInputBorder(
@@ -267,8 +268,10 @@ class ProfileView extends StatelessWidget {
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorColor: kdarkBlue,
-                unselectedLabelStyle: CustomFonts.getMultipleStyle(
-                    15.0, Colors.black, FontWeight.w500),
+                unselectedLabelStyle:kBlack15Black.copyWith(
+                  fontWeight: FontWeight.w500),
+                // getMultipleStyle(
+                //     15.0, Colors.black, FontWeight.w500),
                 isScrollable: false,
                 tabs: const [
                   Tab(

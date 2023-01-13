@@ -26,24 +26,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "cached_network_image",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/cached_network_image-3.2.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "cached_network_image_platform_interface",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/cached_network_image_platform_interface-2.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "cached_network_image_web",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/cached_network_image_web-1.0.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
       "name": "characters",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1",
       "packageUri": "lib/",
@@ -182,18 +164,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "flutter_blurhash",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_blurhash-0.7.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.15"
-    },
-    {
-      "name": "flutter_cache_manager",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-3.3.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "flutter_launcher_icons",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.11.0",
       "packageUri": "lib/",
@@ -250,12 +220,6 @@
     {
       "name": "get_storage",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/get_storage-2.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "google_fonts",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/google_fonts-3.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -364,12 +328,6 @@
     {
       "name": "nm",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/nm-0.5.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "octo_image",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/octo_image-1.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -506,12 +464,6 @@
       "languageVersion": "2.14"
     },
     {
-      "name": "rxdart",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "salomon_bottom_bar",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/salomon_bottom_bar-3.3.1",
       "packageUri": "lib/",
@@ -542,18 +494,6 @@
       "languageVersion": "2.14"
     },
     {
-      "name": "sqflite",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/sqflite-2.2.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
-      "name": "sqflite_common",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/sqflite_common-2.4.0+2",
-      "packageUri": "lib/",
-      "languageVersion": "2.18"
-    },
-    {
       "name": "stack_trace",
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0",
       "packageUri": "lib/",
@@ -576,12 +516,6 @@
       "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "synchronized",
-      "rootUri": "file:///Users/saurabhsingh/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0+3",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
     },
     {
       "name": "term_glyph",
@@ -668,7 +602,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-01-04T06:36:30.727212Z",
+  "generated": "2023-01-12T09:29:41.844571Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

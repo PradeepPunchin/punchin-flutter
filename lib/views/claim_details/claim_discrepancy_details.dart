@@ -6,6 +6,7 @@ import 'package:punchin/constant/const_text.dart';
 import 'package:punchin/controller/claim_controller/claim_controller.dart';
 import 'package:punchin/model/claim_model/claim_discrepancy_model.dart';
 import 'package:punchin/views/claim_details/details.dart';
+import 'package:punchin/views/claim_details/wip_discrepency.dart';
 import 'package:punchin/views/claim_form_view/preview_screen.dart';
 import 'package:path/path.dart';
 
@@ -42,8 +43,9 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              Get.off(() => Details(title: ArgData[0] ,));
-                            },
+                              Get.off(() => WIPDetails(title: ArgData[0] ,));
+
+                              },
                             child: Icon(Icons.arrow_back_ios_new,
                                 color: Colors.black)),
                       ],
@@ -117,7 +119,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         children: [
                                           Text(
                                             "Document Uploaded",
-                                            style: CustomFonts.kBlack15Black,
+                                            style: kBlack15Black,
                                           ),
                                           const SizedBox(
                                             height: 8.0,
@@ -133,7 +135,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                               children: [
                                                 Text(
                                                   "Application process:",
-                                                  style: CustomFonts.kBlack15Black
+                                                  style: kBlack15Black
                                                       .copyWith(
                                                       fontSize: 14.0,
                                                       color: Colors.black),
@@ -143,7 +145,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                 ),
                                                 Text(
                                                   "In-progress",
-                                                  style: CustomFonts.kBlack15Black
+                                                  style: kBlack15Black
                                                       .copyWith(
                                                       fontSize: 15.0,
                                                       color: klightBlue),
@@ -179,8 +181,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                                     color: kGrey)),
                                                             child: Text(
                                                               "${claimDiscrepancy["agentDocType"]}",
-                                                              style: CustomFonts
-                                                                  .kBlack15Black,
+                                                              style: kBlack15Black,
                                                             ),
                                                             height: 50,
                                                             alignment:
@@ -225,7 +226,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     ),
                                     Text(
                                       "Verifier Remark",
-                                      style: CustomFonts.kBlack15Black
+                                      style: kBlack15Black
                                           .copyWith(
                                           fontSize: 15.0,
                                           color: klightBlue),
@@ -263,13 +264,11 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                     children: [
                                                       Text(
                                                         "${index+1}. ${claimDiscrepancy["agentDocType"]}",
-                                                        style: CustomFonts
-                                                            .kBlack15Black,
+                                                        style: kBlack15Black,
                                                       ),
                                                       Text(
                                                         " reason :${claimDiscrepancy["reason"]}",
-                                                        style: CustomFonts
-                                                            .kBlack15Black,
+                                                        style: kBlack15Black,
                                                       ),
                                                     ],
                                                   ),
@@ -281,7 +280,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
 
                                     Text(
                                       "Discrepancy Remark",
-                                      style: CustomFonts.kBlack15Black,
+                                      style: kBlack15Black,
                                     ),
                                     const SizedBox(
                                       height: 8.0,
@@ -302,7 +301,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         children: [
                                           Text(
                                             "Document mismatch please upload again the following documents.",
-                                            style: CustomFonts.kBlack15Black,
+                                            style: kBlack15Black,
                                           ),
 
                                           ListView.builder(
@@ -320,7 +319,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                     ),
                                                     Text(
                                                       "${index+1}.${claimDiscrepancy}",
-                                                      style: CustomFonts.kBlack15Black,
+                                                      style: kBlack15Black,
                                                     ),
                                                     const SizedBox(
                                                       height: 8.0,
@@ -338,7 +337,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
 
                                     Text(
                                       "Upload Documents",
-                                      style: CustomFonts.kBlack15Black,
+                                      style: kBlack15Black,
                                     ),
                                     const SizedBox(
                                       height: 8.0,
@@ -359,12 +358,12 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     //       child: dropdownName!= null
                                     //           ? Text(
                                     //         "$dropdownName",
-                                    //         style: CustomFonts.kBlack15Black
+                                    //         style: kBlack15Black
                                     //             .copyWith(fontSize: 14.0),
                                     //       )
                                     //           : Text(
                                     //         "Select Document Type",
-                                    //         style: CustomFonts.kBlack15Black
+                                    //         style: kBlack15Black
                                     //             .copyWith(fontSize: 14.0),
                                     //       ),
                                     //     ),
@@ -407,7 +406,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     //           padding: const EdgeInsets.all(8.0),
                                     //           child: Obx(() => Text(
                                     //             controller.additionalProofDoc.value,
-                                    //             style: CustomFonts.kBlack15Black
+                                    //             style: kBlack15Black
                                     //                 .copyWith(
                                     //                 fontWeight: FontWeight.w600,
                                     //                 fontSize: 14.0),
@@ -420,7 +419,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     //         onPressed: () async {
                                     //           Get.defaultDialog(
                                     //               title: "Upload",
-                                    //               titleStyle: CustomFonts.kBlack15Black
+                                    //               titleStyle: kBlack15Black
                                     //                   .copyWith(
                                     //                   color: Colors.black,
                                     //                   fontSize: 20.0,
@@ -491,7 +490,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     //                   const EdgeInsets.all(8.0),
                                     //                   child: Text(
                                     //                     "Cancel",
-                                    //                     style: CustomFonts.kBlack15Black
+                                    //                     style: kBlack15Black
                                     //                         .copyWith(
                                     //                         color: Colors.red,
                                     //                         fontSize: 16),
@@ -506,7 +505,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                     //             BorderRadius.circular(5.0)),
                                     //         color: Colors.white,
                                     //         child: Text("Upload",
-                                    //             style: CustomFonts.kBlack15Black
+                                    //             style: kBlack15Black
                                     //                 .copyWith(
                                     //                 fontSize: 15.0,
                                     //                 fontWeight: FontWeight.w400)),
@@ -538,7 +537,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                               padding: const EdgeInsets.all(8.0),
                                               child: Obx(() => Text(
                                                 controller.additionalProofDoc.value,
-                                                style: CustomFonts.kBlack15Black
+                                                style: kBlack15Black
                                                     .copyWith(
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 14.0),
@@ -552,8 +551,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
 
                                                 Get.defaultDialog(
                                                     title: "Upload",
-                                                    titleStyle: CustomFonts
-                                                        .kBlack15Black
+                                                    titleStyle:kBlack15Black
                                                         .copyWith(
                                                         color: Colors.black,
                                                         fontSize: 20.0,
@@ -589,8 +587,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                           },
                                                           child: Text(
                                                             "Take Photo ...",
-                                                            style: CustomFonts
-                                                                .kBlack15Black
+                                                            style:kBlack15Black
                                                                 .copyWith(
                                                                 color:
                                                                 kdarkBlue,
@@ -627,8 +624,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                           },
                                                           child: Text(
                                                             "Choose Files from Phone",
-                                                            style: CustomFonts
-                                                                .kBlack15Black
+                                                            style: kBlack15Black
                                                                 .copyWith(
                                                                 color:
                                                                 kdarkBlue,
@@ -655,8 +651,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                             8.0),
                                                         child: Text(
                                                           "Cancel",
-                                                          style: CustomFonts
-                                                              .kBlack15Black
+                                                          style: kBlack15Black
                                                               .copyWith(
                                                               color:
                                                               Colors.red,
@@ -674,7 +669,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                 BorderRadius.circular(5.0)),
                                             color: Colors.white,
                                             child: Text("Upload",
-                                                style: CustomFonts.kBlack15Black
+                                                style: kBlack15Black
                                                     .copyWith(
                                                     fontSize: 15.0,
                                                     fontWeight:
@@ -707,8 +702,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                                 child: GestureDetector(
                                                     child: Text(
                                                       "Preview",
-                                                      style: CustomFonts
-                                                          .kBlack15Black
+                                                      style: kBlack15Black
                                                           .copyWith(
                                                           fontSize:
                                                           14.0,
@@ -786,7 +780,7 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         GestureDetector(
                                           child: Text(
                                             "Preview",
-                                            style: CustomFonts.kBlack15Black
+                                            style: kBlack15Black
                                                 .copyWith(
                                                 fontSize: 14.0,
                                                 color: kdarkBlue,
@@ -835,8 +829,11 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
                                         },
                                         child: Text(
                                           "Submit",
-                                          style: CustomFonts.getMultipleStyle(
-                                              15.0, Colors.white, FontWeight.w400),
+
+                                          style:kBlack15Black.copyWith(
+                                            fontSize:  15.0,color: Colors.white,fontWeight: FontWeight.w400),
+                                          // CustomFonts.getMultipleStyle(
+                                          //     15.0, Colors.white, FontWeight.w400),
                                         ),
                                       ),
                                     ),
@@ -878,12 +875,12 @@ class _ClaimDiscrepancyState extends State<ClaimDiscrepancy> {
         child: dropdownName!= null
             ? Text(
           "$dropdownName",
-          style: CustomFonts.kBlack15Black
+          style: kBlack15Black
               .copyWith(fontSize: 14.0),
         )
             : Text(
           "Select Document Type",
-          style: CustomFonts.kBlack15Black
+          style: kBlack15Black
               .copyWith(fontSize: 14.0),
         ),
       ),

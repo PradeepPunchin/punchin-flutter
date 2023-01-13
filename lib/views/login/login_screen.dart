@@ -296,8 +296,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Text(
                 "Please login to continue",
-                style:
-                CustomFonts.getMultipleStyle(15.0, kBlack, FontWeight.w400),
+                style:kBlack15Black.copyWith(
+                  fontWeight: FontWeight.w400),
               ),
               SizedBox(
                 height: 10.0.h,
@@ -330,8 +330,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text(
                     "Login",
-                    style: CustomFonts.getMultipleStyle(
-                        15.0, Colors.white, FontWeight.w400),
+                    style:kBlack15Black.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400),
                   ),
                 ),
               )
@@ -366,8 +367,8 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Text(
                 "User Id",
-                style: CustomFonts.getMultipleStyle(
-                    15.0, kBlack, FontWeight.w400),
+                style:  kBlack15Black.copyWith(
+                    fontWeight:FontWeight.w400),
               ),
               TextFormField(
                 controller: loginController.email,
@@ -380,8 +381,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                     hintText: "Enter your user id",
                     contentPadding: const EdgeInsets.symmetric(vertical: 5),
-                    hintStyle: CustomFonts.getMultipleStyle(
-                        14.0, kTextFieldGrey, FontWeight.w400),
+                    hintStyle: kBlack15Black.copyWith(
+                        fontSize:  14.0,color: kTextFieldGrey,fontWeight: FontWeight.w400),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none),
@@ -417,8 +418,8 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Text(
                 "Password",
-                style: CustomFonts.getMultipleStyle(
-                    15.0, kBlack, FontWeight.w400),
+                style:kBlack15Black.copyWith(
+                    fontWeight: FontWeight.w400),
               ),
               Obx(() => TextFormField(
                 controller: loginController.password,
@@ -451,8 +452,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: "Enter your Password",
                     contentPadding:
                     const EdgeInsets.symmetric(vertical: 5),
-                    hintStyle: CustomFonts.getMultipleStyle(
-                        14.0, kTextFieldGrey, FontWeight.w400),
+                    hintStyle:kBlack15Black.copyWith(
+                    fontSize:  14.0,color: kTextFieldGrey,fontWeight: FontWeight.w400),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none),

@@ -41,7 +41,7 @@ class DiscrepencyScreen extends StatelessWidget {
           centerTitle: true,
           title: Text(
             "Discrepancy/New Requirements",
-            style: CustomFonts.kBlack15Black.copyWith(
+            style: kBlack15Black.copyWith(
                 color: Colors.black,
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400),
@@ -75,7 +75,7 @@ class DiscrepencyScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Document Uploaded",
-                    style: CustomFonts.kBlack15Black,
+                    style: kBlack15Black,
                   ),
                   Container(
                     height: Get.height * 0.55,
@@ -97,7 +97,7 @@ class DiscrepencyScreen extends StatelessWidget {
                                       border: Border.all(color: kGrey)),
                                   child: Text(
                                     "${options[index]["name"]}",
-                                    style: CustomFonts.kBlack15Black,
+                                    style: kBlack15Black,
                                   ),
                                   height: 50,
                                   alignment: Alignment.center,
@@ -124,7 +124,7 @@ class DiscrepencyScreen extends StatelessWidget {
                   ),
                   Text(
                     "Discrepancy Remark",
-                    style: CustomFonts.kBlack15Black,
+                    style: kBlack15Black,
                   ),
                   SizedBox(
                     height: 5.0,
@@ -144,7 +144,7 @@ class DiscrepencyScreen extends StatelessWidget {
                         Text(
                           "Document mismatch please upload again"
                           "the following documents.",
-                          style: CustomFonts.kBlack15Black.copyWith(
+                          style: kBlack15Black.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.0,
                               color: Colors.black),
@@ -154,21 +154,21 @@ class DiscrepencyScreen extends StatelessWidget {
                         ),
                         Text(
                           " 1. Dealth Certificate",
-                          style: CustomFonts.kBlack15Black.copyWith(
+                          style: kBlack15Black.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.0,
                               color: Colors.black),
                         ),
                         Text(
                           " 2. Police Investigation Report",
-                          style: CustomFonts.kBlack15Black.copyWith(
+                          style: kBlack15Black.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.0,
                               color: Colors.black),
                         ),
                         Text(
                           " 3.Income Tax Return (Additional Doc)",
-                          style: CustomFonts.kBlack15Black.copyWith(
+                          style: kBlack15Black.copyWith(
                               fontWeight: FontWeight.w600,
                               fontSize: 14.0,
                               color: Colors.black),
@@ -181,7 +181,7 @@ class DiscrepencyScreen extends StatelessWidget {
                   ),
                   Text(
                     "Upload Required Documents",
-                    style: CustomFonts.kBlack15Black,
+                    style: kBlack15Black,
                   ),
                   SizedBox(
                     height: 5.0,
@@ -198,12 +198,12 @@ class DiscrepencyScreen extends StatelessWidget {
                             child: controller.document.value.isNotEmpty
                                 ? Text(
                                     controller.document.value,
-                                    style: CustomFonts.kBlack15Black
+                                    style: kBlack15Black
                                         .copyWith(fontSize: 14.0),
                                   )
                                 : Text(
                                     "Select Additional Document Type",
-                                    style: CustomFonts.kBlack15Black
+                                    style: kBlack15Black
                                         .copyWith(fontSize: 14.0),
                                   ),
                           ),
@@ -245,7 +245,7 @@ class DiscrepencyScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Obx(() => Text(
                                   "${controller.bankProof.value}",
-                                  style: CustomFonts.kBlack15Black.copyWith(
+                                  style: kBlack15Black.copyWith(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14.0),
                                 )),
@@ -264,7 +264,7 @@ class DiscrepencyScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5.0)),
                           color: Colors.white,
                           child: Text("Upload",
-                              style: CustomFonts.kBlack15Black.copyWith(
+                              style: kBlack15Black.copyWith(
                                   fontSize: 15.0, fontWeight: FontWeight.w400)),
                         ),
                         const SizedBox(
@@ -286,7 +286,7 @@ class DiscrepencyScreen extends StatelessWidget {
                     ),
                     child: Text(
                       "Submit",
-                      style: CustomFonts.kBlack15Black
+                      style: kBlack15Black
                           .copyWith(color: Colors.white, fontSize: 15.0),
                     ),
                   )

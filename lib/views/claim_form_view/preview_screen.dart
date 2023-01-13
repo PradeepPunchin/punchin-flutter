@@ -53,7 +53,7 @@ class _PreviewScreenState extends State<PreviewScreen> {
         centerTitle: true,
         title: Text(
           "Preview your uploaded file",
-          style: CustomFonts.kBlack15Black.copyWith(
+          style: kBlack15Black.copyWith(
               color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w400),
         ),
       ),
@@ -139,7 +139,7 @@ class _PreviewScreen1State extends State<PreviewScreen1> {
         centerTitle: true,
         title: Text(
           "Preview your uploaded file",
-          style: CustomFonts.kBlack15Black.copyWith(
+          style: kBlack15Black.copyWith(
               color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w400),
         ),
       ),

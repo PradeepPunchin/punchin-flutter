@@ -59,10 +59,10 @@ class _DetailsState extends State<Details> {
     super.dispose();
   }
 
-  String _phone = '';
+
 
   Future<void> share() async {
-    print(_phone);
+
   }
 
   @override
@@ -102,23 +102,6 @@ class _DetailsState extends State<Details> {
                       ],
                     ),
                     Spacer(),
-                    // CircleAvatar(
-                    //   backgroundColor: Colors.white10,
-                    //   radius: 17.0,
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //       borderRadius: BorderRadius.circular(100),
-                    //       border: Border.all(width: 2, color: Colors.black12),
-                    //     ),
-                    //     child: const Padding(
-                    //       padding: EdgeInsets.all(4.0),
-                    //       child: Icon(
-                    //         Icons.notifications_outlined,
-                    //         color: Colors.black,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
                 // search bar
@@ -133,6 +116,7 @@ class _DetailsState extends State<Details> {
                       child: Column(
                         children: [
                           Container(
+                            height: 44,
                             decoration: BoxDecoration(
                                 color: Colors.grey.shade100,
                                 borderRadius: BorderRadius.circular(1.0),
@@ -145,12 +129,12 @@ class _DetailsState extends State<Details> {
                                         controller.causeofDeath.value.isNotEmpty
                                             ? Text(
                                                 controller.causeofDeath.value,
-                                                style: CustomFonts.kBlack15Black
+                                                style: kBlack15Black
                                                     .copyWith(fontSize: 14.0),
                                               )
                                             : Text(
                                                 "Search Type",
-                                                style: CustomFonts.kBlack15Black
+                                                style: kBlack15Black
                                                     .copyWith(fontSize: 14.0),
                                               ),
                                   ),
@@ -187,39 +171,50 @@ class _DetailsState extends State<Details> {
                               ),
                             ),
                           ),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: kBlue,
-                              side: BorderSide(width: 2, color: Colors.white),
-                            ),
-                            onPressed: () {
-                              if (controller.causeofDeath.value == '' ||
-                                  controller.causeofDeath.value == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Search Type cannot be Empty",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              } else {
-                                print(controller.causeofDeath.value);
-                                print(controller.searchController.value.text);
-                                controller.getClaimSearch(
-                                    status: widget.title.toString(),
-                                    searchKey:
-                                        controller.searchController.value.text);
-                                setState(() {});
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Search",
-                                style: kBody20white700,
+                          SizedBox(height: 10,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(18.0),
+                                              side: BorderSide(color: kBlue)
+                                          )
+                                      )
+                                  ),
+
+                                onPressed: () {
+                                  if (controller.causeofDeath.value == '' ||
+                                      controller.causeofDeath.value == null) {
+                                    Fluttertoast.showToast(
+                                        msg: "Search Type cannot be Empty",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  } else {
+                                    print(controller.causeofDeath.value);
+                                    print(controller.searchController.value.text);
+                                    controller.getClaimSearch(
+                                        status: widget.title.toString(),
+                                        searchKey:
+                                            controller.searchController.value.text);
+                                    setState(() {});
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Search",
+                                    style: kBody20white700,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           )
                         ],
                       ),
@@ -256,11 +251,15 @@ class _DetailsState extends State<Details> {
                               ClaimSubmitted? claimSubmitted = snapshot.data
                                   as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
                               return claimSubmitted.statusCode == 404
-                                  ? Column(
-                                      children: [
-                                        Text(" No Data Found"),
-                                      ],
-                                    )
+                                  ?  Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                  Center(child: Image.asset("assets/nodata.png"))
+                                ],
+                              )
                                   : ListView.separated(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
@@ -560,11 +559,15 @@ class _DetailsState extends State<Details> {
                               ClaimSubmitted? claimSubmitted = snapshot.data
                                   as ClaimSubmitted; // paymentModelFromJson(snapshot.data);
                               return claimSubmitted.statusCode == 404
-                                  ? Column(
-                                      children: [
-                                        const Text(" No Data Found"),
-                                      ],
-                                    )
+                                  ?  Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                  Center(child: Image.asset("assets/nodata.png"))
+                                ],
+                              )
                                   : ListView.separated(
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
@@ -837,14 +840,15 @@ class _DetailsState extends State<Details> {
                         })
                     : Container(),
 
-                // WIP
-                widget.title.toString() == "WIP" ? tab() : Container(),
+                // // WIP
+                // widget.title.toString() == "WIP" ? tab() : Container(),
 
                 // under verification
                 widget.title.toString() == "UNDER VERIFICATION"
                     ? FutureBuilder(
                         future: controller.getClaimUnderVerification(
-                            status: "UNDER_VERIFICATION"),
+                            status: "UNDER_VERIFICATION", searchKey: controller.searchController.value
+                            .text),
                         builder: (context, AsyncSnapshot snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {
@@ -863,7 +867,16 @@ class _DetailsState extends State<Details> {
                               // Extracting data from snapshot object
                               WipInProgressModel? claimSubmitted = snapshot.data
                                   as WipInProgressModel; // paymentModelFromJson(snapshot.data);
-                              return ListView.separated(
+                              return claimSubmitted.statusCode == 404
+                                  ?  Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                  Center(child: Image.asset("assets/nodata.png"))
+                                ],
+                              ): ListView.separated(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 physics: BouncingScrollPhysics(),
@@ -909,8 +922,8 @@ class _DetailsState extends State<Details> {
                                                           "link to update document",
                                                       //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size
                                                     );
-                                                    _phone =
-                                                        "91${singleData.nomineeContactNumber.toString()}";
+                                                    // _phone =
+                                                    //     "91${singleData.nomineeContactNumber.toString()}";
 
                                                     // share( );
                                                   },
@@ -1312,6 +1325,7 @@ class _DetailsState extends State<Details> {
   }
 
   Widget tab() => DefaultTabController(
+      //initialIndex : 1,
       length: 2,
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -1329,7 +1343,7 @@ class _DetailsState extends State<Details> {
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorColor: kdarkBlue,
-                unselectedLabelStyle: CustomFonts.kBlack15Black
+                unselectedLabelStyle: kBlack15Black
                     .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
                 isScrollable: false,
                 indicator: ShapeDecoration(
@@ -1342,14 +1356,14 @@ class _DetailsState extends State<Details> {
                     child: Container(
                         //width:172,
                         //padding: const EdgeInsets.only(bottom: 14.0,top: 13,left: 51.0,right: 46),
-                        child: Text("In-Progress")),
+                        child:const Text("In-Progress")),
                   ),
                   Tab(
                     child: Container(
                       //width:Get.width,
                       padding: const EdgeInsets.only(
                           bottom: 14.0, top: 13, left: 0, right: 0),
-                      child: Center(
+                      child:const Center(
                         child: Text(
                           "Discrepancy",
                         ),
@@ -1365,7 +1379,10 @@ class _DetailsState extends State<Details> {
             height: Get.height,
             child: TabBarView(
               viewportFraction: 1.0,
-              children: [one(), two()],
+              children: [
+                one(),
+                two(),
+              ],
             ),
           )
         ],
@@ -1376,7 +1393,8 @@ class _DetailsState extends State<Details> {
           child: Column(
             children: [
               FutureBuilder(
-                  future: controller.getClaimInProgress(status: "WIP"),
+                  future: controller.getClaimInProgress(status: "WIP", searchKey: controller.searchController.value
+                      .text),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       // If we got an error
@@ -1414,580 +1432,304 @@ class _DetailsState extends State<Details> {
                                 itemBuilder: (context, index) {
                                   var singleData =
                                       claimSubmitted.data!.content![index];
-                                  return Container(
-                                    //width: Get.width,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        border: Border.all(
-                                            width: 1, color: kBorder)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // claim id
-                                        Container(
-                                          //width: Get.width,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(7),
-                                              topRight: Radius.circular(7),
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.off(() => ClaimFormView(),
+                                          arguments: [
+                                            widget.title,
+                                            claimSubmitted
+                                                .data!.content![index]
+                                          ]);
+                                    },
+                                    child: Container(
+                                      //width: Get.width,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(7),
+                                          border: Border.all(
+                                              width: 1, color: kBorder)),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // claim id
+                                          Container(
+                                            //width: Get.width,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(7),
+                                                topRight: Radius.circular(7),
+                                              ),
+                                              color: kBlue,
                                             ),
-                                            color: kBlue,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, top: 12, bottom: 12),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                      "PunchIn Ref. ID : ${singleData.claimId}",
+                                                      style: kBody14kWhite600)
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                          child: Padding(
+                                          // details like name contact and date
+                                          Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 20, top: 12, bottom: 12),
+                                                top: 14, left: 22, right: 22),
                                             child: Row(
                                               children: [
-                                                Text(
-                                                    "PunchIn Ref. ID : ${singleData.claimId}",
-                                                    style: kBody14kWhite600)
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // claim register date
+                                                    const Text(
+                                                      "Claim Registration Date",
+                                                      style: kBody13black400,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 4,
+                                                    ),
+                                                    Text(
+                                                      "${dateChange(singleData.claimDate)}",
+                                                      style: kBody14black600,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+
+                                                    // Nominee Name
+                                                    const Text(
+                                                      "Nominee Name",
+                                                      style: kBody13black400,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 4,
+                                                    ),
+                                                    Text(
+                                                      singleData.nomineeName
+                                                          .toString(),
+                                                      style: kBody14black600,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // claim register date
+                                                    const Text(
+                                                      "Borrower Name",
+                                                      style: kBody13black400,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 4,
+                                                    ),
+                                                    Text(
+                                                      singleData.borrowerName
+                                                          .toString(),
+                                                      style: kBody14black600,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+
+                                                    // Nominee Name
+                                                    const Text(
+                                                      "Nominee Contact No.",
+                                                      style: kBody13black400,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 4,
+                                                    ),
+                                                    Text(
+                                                      singleData
+                                                          .nomineeContactNumber
+                                                          .toString(),
+                                                      style: kBody14black600,
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 16,
+                                                    ),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ),
-                                        ),
-                                        // details like name contact and date
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 14, left: 22, right: 22),
-                                          child: Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // claim register date
-                                                  const Text(
-                                                    "Claim Registration Date",
-                                                    style: kBody13black400,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 4,
-                                                  ),
-                                                  Text(
-                                                    "${dateChange(singleData.claimDate)}",
-                                                    style: kBody14black600,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
 
-                                                  // Nominee Name
-                                                  const Text(
-                                                    "Nominee Name",
-                                                    style: kBody13black400,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 4,
-                                                  ),
-                                                  Text(
-                                                    singleData.nomineeName
-                                                        .toString(),
-                                                    style: kBody14black600,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                ],
-                                              ),
-                                              const Spacer(),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // claim register date
-                                                  const Text(
-                                                    "Borrower Name",
-                                                    style: kBody13black400,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 4,
-                                                  ),
-                                                  Text(
-                                                    singleData.borrowerName
-                                                        .toString(),
-                                                    style: kBody14black600,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-
-                                                  // Nominee Name
-                                                  const Text(
-                                                    "Nominee Contact No.",
-                                                    style: kBody13black400,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 4,
-                                                  ),
-                                                  Text(
-                                                    singleData
-                                                        .nomineeContactNumber
-                                                        .toString(),
-                                                    style: kBody14black600,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 16,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 14,
+                                                left: 22,
+                                                right: 22,
+                                                bottom: 16),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Address",
+                                                  style: kBody13black400,
+                                                ),
+                                                const SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Text(
+                                                  singleData.borrowerAddress
+                                                      .toString(),
+                                                  style: kBody14black600,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
 
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 14,
-                                              left: 22,
-                                              right: 22,
-                                              bottom: 16),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
-                                                "Address",
-                                                style: kBody13black400,
-                                              ),
-                                              const SizedBox(
-                                                height: 4,
-                                              ),
-                                              Text(
-                                                singleData.borrowerAddress
-                                                    .toString(),
-                                                style: kBody14black600,
-                                              ),
-                                            ],
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 16, left: 22, right: 22),
+                                            child: Divider(
+                                              thickness: 2,
+                                              height: 2,
+                                            ),
                                           ),
-                                        ),
 
-                                        const Padding(
-                                          padding: EdgeInsets.only(
-                                              top: 16, left: 22, right: 22),
-                                          child: Divider(
-                                            thickness: 2,
-                                            height: 2,
-                                          ),
-                                        ),
+                                          //Text( singleData.claimsRemarksDTOs![index].remark.toString()),
+                                          singleData.claimsRemarksDTOs.toString().length ==2
 
-                                        //Text( singleData.claimsRemarksDTOs![index].remark.toString()),
-                                        singleData.claimsRemarksDTOs!.toString().length ==2
-
-                                            ? GestureDetector(
-                                                onTap: () {
-                                                  controller
-                                                      .getClaimDiscrepeancy(
-                                                          id: singleData.id);
-                                                  Get.defaultDialog(
-                                                      title: "",
-                                                      content: controller
-                                                                  .discrepancyData
-                                                                  .value[
-                                                                      "claimDocuments"]
-                                                                  .length ==
-                                                              0
-                                                          ? Container(
-                                                              child: Column(
-                                                                children: const [
-                                                                  Icon(Icons
-                                                                      .hourglass_empty),
-                                                                  Text(
-                                                                      "No Data Found"),
-                                                                ],
-                                                              ),
-                                                            )
-                                                          : SingleChildScrollView(
-                                                              //padding: MediaQuery.of(context).size.height *1,
-                                                              physics:
-                                                                  NeverScrollableScrollPhysics(),
-
-                                                              child: Container(
-                                                                // height: MediaQuery.of(context).size.height ,
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(
-                                                                            10.0),
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    controller
+                                                        .getClaimDiscrepeancy(
+                                                            id: singleData.id);
+                                                    Get.defaultDialog(
+                                                        title: "",
+                                                        content: controller
+                                                                    .discrepancyData
+                                                                    .value[
+                                                                        "claimDocuments"]
+                                                                    .length ==
+                                                                0
+                                                            ? Container(
                                                                 child: Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
+                                                                  children: const [
+                                                                    Icon(Icons
+                                                                        .hourglass_empty),
                                                                     Text(
-                                                                      "Document Uploaded",
-                                                                      style: CustomFonts
-                                                                          .kBlack15Black,
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          8.0,
-                                                                    ),
-                                                                    Container(
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              5.0),
-                                                                          border:
-                                                                              Border.all(color: kGrey)),
-                                                                      padding: const EdgeInsets
-                                                                              .symmetric(
-                                                                          horizontal:
-                                                                              15,
-                                                                          vertical:
-                                                                              10.0),
-                                                                      child:
-                                                                          Row(
-                                                                        children: [
-                                                                          Text(
-                                                                            "Application process:",
-                                                                            style:
-                                                                                CustomFonts.kBlack15Black.copyWith(fontSize: 14.0, color: Colors.black),
-                                                                          ),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                                10,
-                                                                          ),
-                                                                          Text(
-                                                                            "In-progress",
-                                                                            style:
-                                                                                CustomFonts.kBlack15Black.copyWith(fontSize: 15.0, color: klightBlue),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      height:
-                                                                          Get.height *
-                                                                              0.6,
-                                                                      //height: Get.height,
-                                                                      width: Get
-                                                                          .width,
-                                                                      margin: const EdgeInsets
-                                                                              .symmetric(
-                                                                          horizontal:
-                                                                              3.0,
-                                                                          vertical:
-                                                                              10),
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(10.0)),
-                                                                      child: ListView.builder(
-                                                                          shrinkWrap: true,
-                                                                          physics: NeverScrollableScrollPhysics(),
-                                                                          itemCount: controller.discrepancyData.value["claimDocuments"].length,
-                                                                          itemBuilder: (context, int index) {
-                                                                            var claimDiscrepancy =
-                                                                                controller.discrepancyData.value["claimDocuments"][index];
-
-                                                                            return Container(
-                                                                              child: Row(
-                                                                                children: [
-                                                                                  Expanded(
-                                                                                    flex: 3,
-                                                                                    child: Container(
-                                                                                      decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                      height: 50,
-                                                                                      alignment: Alignment.center,
-                                                                                      child: Text(
-                                                                                        "${claimDiscrepancy["agentDocType"]}",
-                                                                                        style: CustomFonts.kBlack15Black,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Expanded(
-                                                                                    flex: 1,
-                                                                                    child: Container(
-                                                                                        decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                        height: 50,
-                                                                                        child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
-                                                                                            ? Icon(Icons.check_circle, color: Colors.blue)
-                                                                                            : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
-                                                                                                ? Icon(Icons.check_circle, color: Colors.green)
-                                                                                                : Icon(Icons.cancel, color: Colors.red)),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            );
-                                                                          }),
-                                                                    )
+                                                                        "No Data Found"),
                                                                   ],
                                                                 ),
-                                                              ),
-                                                            ));
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Center(
-                                                      child: Text(
-                                                    "View More ",
-                                                    style: CustomFonts
-                                                        .kBlack15Black
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                            color: kdarkBlue,
-                                                            fontSize: 15.0),
-                                                  )),
-                                                ))
-                                            : Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 22.0),
-                                                child: Row(
-                                                  children: [
-                                                    GestureDetector(
-                                                        onTap: () {
-                                                          controller
-                                                              .getClaimDiscrepeancy(
-                                                                  id: singleData
-                                                                      .id);
-                                                          Get.defaultDialog(
-                                                              title: "",
-                                                              content: controller
-                                                                          .discrepancyData
-                                                                          .value[
-                                                                              "claimDocuments"]
-                                                                          .length ==
-                                                                      0
-                                                                  ? Container(
-                                                                      child:
-                                                                          Column(
-                                                                        children: const [
-                                                                          Icon(Icons
-                                                                              .hourglass_empty),
-                                                                          Text(
-                                                                              "No Data Found"),
-                                                                        ],
-                                                                      ),
-                                                                    )
-                                                                  : SingleChildScrollView(
-                                                                      //padding: MediaQuery.of(context).size.height *1,
-                                                                      physics:
-                                                                          NeverScrollableScrollPhysics(),
-
-                                                                      child:
-                                                                          Container(
-                                                                        // height: MediaQuery.of(context).size.height ,
-                                                                        padding:
-                                                                            EdgeInsets.all(10.0),
-                                                                        child:
-                                                                            Column(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.start,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Text(
-                                                                              "Document Uploaded",
-                                                                              style: CustomFonts.kBlack15Black,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 8.0,
-                                                                            ),
-                                                                            Container(
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), border: Border.all(color: kGrey)),
-                                                                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10.0),
-                                                                              child: Row(
-                                                                                children: [
-                                                                                  Text(
-                                                                                    "Application process:",
-                                                                                    style: CustomFonts.kBlack15Black.copyWith(fontSize: 14.0, color: Colors.black),
-                                                                                  ),
-                                                                                  const SizedBox(
-                                                                                    width: 10,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    "In-progress",
-                                                                                    style: CustomFonts.kBlack15Black.copyWith(fontSize: 15.0, color: klightBlue),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                            Container(
-                                                                              height: Get.height * 0.6,
-                                                                              //height: Get.height,
-                                                                              width: Get.width,
-                                                                              margin: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 10),
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
-                                                                              child: ListView.builder(
-                                                                                  shrinkWrap: true,
-                                                                                  physics: NeverScrollableScrollPhysics(),
-                                                                                  itemCount: controller.discrepancyData.value["claimDocuments"].length,
-                                                                                  itemBuilder: (context, int index) {
-                                                                                    var claimDiscrepancy = controller.discrepancyData.value["claimDocuments"][index];
-
-                                                                                    return Container(
-                                                                                      child: Row(
-                                                                                        children: [
-                                                                                          Expanded(
-                                                                                            flex: 3,
-                                                                                            child: Container(
-                                                                                              decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                              height: 50,
-                                                                                              alignment: Alignment.center,
-                                                                                              child: Text(
-                                                                                                "${claimDiscrepancy["agentDocType"]}",
-                                                                                                style: CustomFonts.kBlack15Black,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                          Expanded(
-                                                                                            flex: 1,
-                                                                                            child: Container(
-                                                                                                decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                                height: 50,
-                                                                                                child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
-                                                                                                    ? Icon(Icons.check_circle, color: Colors.blue)
-                                                                                                    : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
-                                                                                                        ? Icon(Icons.check_circle, color: Colors.green)
-                                                                                                        : Icon(Icons.cancel, color: Colors.red)),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
-                                                                                    );
-                                                                                  }),
-                                                                            )
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    ));
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Center(
-                                                              child: Text(
-                                                            "View More ",
-                                                            style: CustomFonts
-                                                                .kBlack15Black
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color:
-                                                                        kdarkBlue,
-                                                                    fontSize:
-                                                                        15.0),
-                                                          )),
-                                                        )),
-                                                    Spacer(),
-                                                    GestureDetector(
-                                                        onTap: () {
-
-                                                          Get.defaultDialog(
-                                                              title: "",
-                                                              content: SingleChildScrollView(
+                                                              )
+                                                            : SingleChildScrollView(
                                                                 //padding: MediaQuery.of(context).size.height *1,
-                                                                // physics:
-                                                                // NeverScrollableScrollPhysics(),
+                                                                physics:
+                                                                    NeverScrollableScrollPhysics(),
 
                                                                 child: Container(
                                                                   // height: MediaQuery.of(context).size.height ,
                                                                   padding:
-                                                                  EdgeInsets
-                                                                      .all(
-                                                                      10.0),
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              10.0),
                                                                   child: Column(
                                                                     mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
+                                                                        MainAxisAlignment
+                                                                            .start,
                                                                     crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                                        CrossAxisAlignment
+                                                                            .start,
                                                                     children: [
+                                                                      Text(
+                                                                        "Document Uploaded",
+                                                                        style: kBlack15Black,
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height:
+                                                                            8.0,
+                                                                      ),
                                                                       Container(
-                                                                        //width: Get.width,
                                                                         decoration: BoxDecoration(
-                                                                          borderRadius: BorderRadius.only(
-                                                                            topLeft: Radius.circular(7),
-                                                                            topRight: Radius.circular(7),
-                                                                          ),
-                                                                          color: kBlue,
-                                                                        ),
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.only(
-                                                                              left: 20, top: 12, bottom: 12),
-                                                                          child: Row(
-                                                                            children: [
-                                                                              Text(
-                                                                                  "PunchIn Ref. ID : ${singleData.claimId}",
-                                                                                  style: kBody14kWhite600)
-                                                                            ],
-                                                                          ),
+                                                                            borderRadius: BorderRadius.circular(
+                                                                                5.0),
+                                                                            border:
+                                                                                Border.all(color: kGrey)),
+                                                                        padding: const EdgeInsets
+                                                                                .symmetric(
+                                                                            horizontal:
+                                                                                15,
+                                                                            vertical:
+                                                                                10.0),
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              "Application process:",
+                                                                              style:
+                                                                                  kBlack15Black.copyWith(fontSize: 14.0, color: Colors.black),
+                                                                            ),
+                                                                            const SizedBox(
+                                                                              width:
+                                                                                  10,
+                                                                            ),
+                                                                            Text(
+                                                                              "In-progress",
+                                                                              style:
+                                                                                  kBlack15Black.copyWith(fontSize: 15.0, color: klightBlue),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ),
-                                                                      SizedBox(height: 10,),
-                                                                      // Text("Agent Remark"),
-                                                                      // SizedBox(height: 4,),
                                                                       Container(
                                                                         height:
-                                                                        Get.height *
-                                                                            0.6,
+                                                                            Get.height *
+                                                                                0.6,
                                                                         //height: Get.height,
                                                                         width: Get
                                                                             .width,
                                                                         margin: const EdgeInsets
-                                                                            .symmetric(
+                                                                                .symmetric(
                                                                             horizontal:
-                                                                            3.0,
+                                                                                3.0,
                                                                             vertical:
-                                                                            10),
+                                                                                10),
                                                                         decoration:
-                                                                        BoxDecoration(
-                                                                            borderRadius: BorderRadius.circular(10.0)),
+                                                                            BoxDecoration(
+                                                                                borderRadius: BorderRadius.circular(10.0)),
                                                                         child: ListView.builder(
                                                                             shrinkWrap: true,
-                                                                            //physics: NeverScrollableScrollPhysics(),
-                                                                            itemCount: singleData.claimsRemarksDTOs!.length,
-                                                                            itemBuilder: (context, int ind) {
-                                                                              var claimDiscrepancy =singleData.claimsRemarksDTOs!;
+                                                                            physics: NeverScrollableScrollPhysics(),
+                                                                            itemCount: controller.discrepancyData.value["agentDocumentStatusList"].length,
+                                                                            itemBuilder: (context, int index) {
+                                                                              var claimDiscrepancy = controller.discrepancyData.value["agentDocumentStatusList"][index];
 
-                                                                              return SingleChildScrollView(
-                                                                                child: Container(
-                                                                                  child: Column(
-                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                    children: [
-
-
-
-                                                                                      SizedBox(height: 4,),
-
-                                                                                      Text("${dateChange1(claimDiscrepancy[ind].createdAt)} (${claimDiscrepancy[ind].role.toString().toLowerCase().capitalizeFirst})",
-                                                                                      style: k12Body323232Black500.copyWith(color: kLightBlack),
+                                                                              return Container(
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Expanded(
+                                                                                      flex: 3,
+                                                                                      child: Container(
+                                                                                        decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                        height: 50,
+                                                                                        alignment: Alignment.center,
+                                                                                        child: Text(
+                                                                                          "${claimDiscrepancy["agentDocName"]}",
+                                                                                          style: kBlack15Black,
+                                                                                        ),
                                                                                       ),
-                                                                                      SizedBox(height: 4,),
-                                                                                      Row(
-                                                                                        children: [
-                                                                                          Expanded(
-                                                                                            flex: 3,
-                                                                                            child: Container(
-                                                                                              //decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                              height: 50,
-                                                                                              alignment: Alignment.centerLeft,
-                                                                                              child: Text(
-                                                                                                "${claimDiscrepancy[ind].remark.toString()},",
-                                                                                                style: CustomFonts.kBlack15Black,
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                          // Expanded(
-                                                                                          //   flex: 1,
-                                                                                          //   child: Container(
-                                                                                          //       decoration: BoxDecoration(border: Border.all(color: kGrey)),
-                                                                                          //       height: 50,
-                                                                                          //       child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
-                                                                                          //           ? Icon(Icons.check_circle, color: Colors.blue)
-                                                                                          //           : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
-                                                                                          //           ? Icon(Icons.check_circle, color: Colors.green)
-                                                                                          //           : Icon(Icons.cancel, color: Colors.red)),
-                                                                                          // ),
-                                                                                        ],
-                                                                                      ),
-                                                                                    ],
-                                                                                  ),
+                                                                                    ),
+                                                                                    Expanded(
+                                                                                      flex: 1,
+                                                                                      child: Container(
+                                                                                          decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                          height: 50,
+                                                                                          child: claimDiscrepancy["agentDocName"] == null||claimDiscrepancy["status"] == "UPLOADED"
+                                                                                              ? Icon(Icons.check_circle, color: Colors.blue)
+                                                                                              : Icon(Icons.cancel, color: Colors.black12)),
+                                                                                    ),
+                                                                                  ],
                                                                                 ),
                                                                               );
                                                                             }),
@@ -1996,32 +1738,325 @@ class _DetailsState extends State<Details> {
                                                                   ),
                                                                 ),
                                                               ));
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(8.0),
+                                                    child: Center(
+                                                        child: Text(
+                                                      "View More ",
+                                                      style: kBlack15Black
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight.w800,
+                                                              color: kdarkBlue,
+                                                              fontSize: 15.0),
+                                                    )),
+                                                  ))
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                          horizontal: 22.0),
+                                                  child: Row(
+                                                    children: [
+                                                      GestureDetector(
+                                                          onTap: () {
+                                                            controller.getClaimDiscrepeancy(id: singleData.id);
+                                                            Get.defaultDialog(
+                                                                title: "",
+                                                                content: controller
+                                                                            .discrepancyData
+                                                                            .value[
+                                                                                "claimDocuments"]
+                                                                            .length ==
+                                                                        0
+                                                                    ? Container(
+                                                                        child:
+                                                                            Column(
+                                                                          children: const [
+                                                                            Icon(Icons
+                                                                                .hourglass_empty),
+                                                                            Text(
+                                                                                "No Data Found"),
+                                                                          ],
+                                                                        ),
+                                                                      )
+                                                                    : SingleChildScrollView(
+                                                                        //padding: MediaQuery.of(context).size.height *1,
+                                                                        physics:
+                                                                            NeverScrollableScrollPhysics(),
 
+                                                                        child:
+                                                                            Container(
+                                                                          // height: MediaQuery.of(context).size.height ,
+                                                                          padding:
+                                                                              EdgeInsets.all(10.0),
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.start,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Text(
+                                                                                "Document Uploaded",
+                                                                                style: kBlack15Black,
+                                                                              ),
+                                                                              const SizedBox(
+                                                                                height: 8.0,
+                                                                              ),
+                                                                              Container(
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), border: Border.all(color: kGrey)),
+                                                                                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10.0),
+                                                                                child: Row(
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      "Application process:",
+                                                                                      style: kBlack15Black.copyWith(fontSize: 14.0, color: Colors.black),
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      width: 10,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "In-progress",
+                                                                                      style: kBlack15Black.copyWith(fontSize: 15.0, color: klightBlue),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
 
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Center(
-                                                              child: Text(
-                                                            "View Comment",
-                                                            style: CustomFonts
-                                                                .kBlack15Black
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color:
-                                                                        kdarkBlue,
-                                                                    fontSize:
-                                                                        15.0),
+                                                                              Container(
+                                                                                height: Get.height * 0.6,
+                                                                                //height: Get.height,
+                                                                                width: Get.width,
+                                                                                margin: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 10),
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0)),
+                                                                                child: ListView.builder(
+                                                                                    shrinkWrap: true,
+                                                                                    physics: NeverScrollableScrollPhysics(),
+                                                                                    itemCount: controller.discrepancyData.value["claimDocuments"].length,
+                                                                                    itemBuilder: (context, int index) {
+                                                                                      var claimDiscrepancy = controller.discrepancyData.value["claimDocuments"][index];
+
+                                                                                      return Container(
+                                                                                        child: Row(
+                                                                                          children: [
+                                                                                            Expanded(
+                                                                                              flex: 3,
+                                                                                              child: Container(
+                                                                                                decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                                height: 50,
+                                                                                                alignment: Alignment.center,
+                                                                                                child: Text(
+                                                                                                  "${claimDiscrepancy["agentDocType"]}",
+                                                                                                  style: kBlack15Black,
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+                                                                                            Expanded(
+                                                                                              flex: 1,
+                                                                                              child: Container(
+                                                                                                  decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                                  height: 50,
+                                                                                                  child: claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
+                                                                                                      ? Icon(Icons.check_circle, color: Colors.blue)
+                                                                                                      : claimDiscrepancy["isApproved"] == true && claimDiscrepancy["isVerified"] == true
+                                                                                                          ? Icon(Icons.check_circle, color: Colors.green)
+                                                                                                          : claimDiscrepancy["isApproved"] == false && claimDiscrepancy["isVerified"] == false
+                                                                                                      ? Icon(Icons.check_circle, color: Colors.black12)
+                                                                                                      : Icon(Icons.cancel, color: Colors.red)),
+                                                                                            ),
+                                                                                            Expanded(
+                                                                                              flex: 1,
+                                                                                              child: Container(
+                                                                                                  decoration: BoxDecoration(
+                                                                                                      border: Border.all(
+                                                                                                          color: kGrey)),
+                                                                                                  height: 50,
+                                                                                                  child: claimDiscrepancy["isApproved"]==false && claimDiscrepancy["isVerified"] ==false
+                                                                                                      ? Icon(
+                                                                                                      Icons
+                                                                                                          .check_circle,
+                                                                                                      color: Colors
+                                                                                                          .blue)
+                                                                                                      : claimDiscrepancy["isApproved"]==true && claimDiscrepancy["isVerified"] ==true
+                                                                                                      ? Icon(
+                                                                                                      Icons
+                                                                                                          .check_circle,
+                                                                                                      color: Colors
+                                                                                                          .green)
+                                                                                                      : Icon(Icons.cancel,
+                                                                                                      color: Colors.red)
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      );
+                                                                                    }),
+                                                                              )
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ));
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Center(
+                                                                child: Text(
+                                                              "View More ",
+                                                              style: kBlack15Black
+
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800,
+                                                                      color:
+                                                                          kdarkBlue,
+                                                                      fontSize:
+                                                                          15.0),
+                                                            )),
                                                           )),
-                                                        )),
-                                                  ],
+                                                      Spacer(),
+                                                      GestureDetector(
+                                                          onTap: () {
+
+                                                            Get.defaultDialog(
+                                                                title: "",
+                                                                content: SingleChildScrollView(
+                                                                  //padding: MediaQuery.of(context).size.height *1,
+                                                                  // physics:
+                                                                  // NeverScrollableScrollPhysics(),
+
+                                                                  child: Container(
+                                                                    // height: MediaQuery.of(context).size.height ,
+                                                                    padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                        10.0),
+                                                                    child: Column(
+                                                                      mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                      crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                      children: [
+                                                                        Container(
+                                                                          //width: Get.width,
+                                                                          decoration: BoxDecoration(
+                                                                            borderRadius: BorderRadius.only(
+                                                                              topLeft: Radius.circular(7),
+                                                                              topRight: Radius.circular(7),
+                                                                            ),
+                                                                            color: kBlue,
+                                                                          ),
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsets.only(
+                                                                                left: 20, top: 12, bottom: 12),
+                                                                            child: Row(
+                                                                              children: [
+                                                                                Text(
+                                                                                    "PunchIn Ref. ID : ${singleData.claimId}",
+                                                                                    style: kBody14kWhite600)
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(height: 10,),
+                                                                        // Text("Agent Remark"),
+                                                                        // SizedBox(height: 4,),
+                                                                        Container(
+                                                                          height:
+                                                                          Get.height *
+                                                                              0.6,
+                                                                          //height: Get.height,
+                                                                          width: Get
+                                                                              .width,
+                                                                          margin: const EdgeInsets
+                                                                              .symmetric(
+                                                                              horizontal:
+                                                                              3.0,
+                                                                              vertical:
+                                                                              10),
+                                                                          decoration:
+                                                                          BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(10.0)),
+                                                                          child: ListView.builder(
+                                                                              shrinkWrap: true,
+                                                                              //physics: NeverScrollableScrollPhysics(),
+                                                                              itemCount: singleData.claimsRemarksDTOs?.length,
+                                                                              itemBuilder: (context, int ind) {
+                                                                                var claimDiscrepancy =singleData.claimsRemarksDTOs;
+
+                                                                                return SingleChildScrollView(
+                                                                                  child: Container(
+                                                                                    child: Column(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+
+
+
+                                                                                        SizedBox(height: 4,),
+
+                                                                                        Text("${dateChange1(claimDiscrepancy?[ind].createdAt)} (${claimDiscrepancy?[ind].role.toString().toLowerCase().capitalizeFirst})",
+                                                                                        style: k12Body323232Black500.copyWith(color: kLightBlack),
+                                                                                        ),
+                                                                                        SizedBox(height: 4,),
+                                                                                        Row(
+                                                                                          children: [
+                                                                                            Expanded(
+                                                                                              flex: 3,
+                                                                                              child: Container(
+                                                                                                //decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                                                                                                height: 50,
+                                                                                                alignment: Alignment.centerLeft,
+                                                                                                child: Text(
+                                                                                                  "${claimDiscrepancy?[ind].remark.toString()},",
+                                                                                                  style: kBlack15Black,
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+
+                                                                                          ],
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              }),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ));
+
+
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Center(
+                                                                child: Text(
+                                                              "View Comment",
+                                                              style: kBlack15Black
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w800,
+                                                                      color:
+                                                                          kdarkBlue,
+                                                                      fontSize:
+                                                                          15.0),
+                                                            )),
+                                                          )),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },
@@ -2055,7 +2090,7 @@ class _DetailsState extends State<Details> {
           child: Column(
             children: [
               FutureBuilder(
-                  future: controller.getClaimInProgress(status: "DISCREPENCY"),
+                  future: controller.getClaimInProgress1(status: "DISCREPENCY"),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       // If we got an error
@@ -2286,7 +2321,7 @@ class _DetailsState extends State<Details> {
                                               child: Center(
                                                   child: Text(
                                                 "View More ",
-                                                style: CustomFonts.kBlack15Black
+                                                style: kBlack15Black
                                                     .copyWith(
                                                         fontWeight:
                                                             FontWeight.w800,
