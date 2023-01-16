@@ -1354,7 +1354,139 @@ class _WipInProgressState extends State<WipInProgress> {
                                                 )),
                                           )),
                                       Spacer(),
-                                      GestureDetector(
+                                      singleData.agentRemarkRead ==false? GestureDetector(
+                                        onTap: () {
+
+                                        Get.defaultDialog(
+                          title: "",
+                          content: SingleChildScrollView(
+                          //padding: MediaQuery.of(context).size.height *1,
+                          // physics:
+                          // NeverScrollableScrollPhysics(),
+
+                          child: Container(
+                          // height: MediaQuery.of(context).size.height ,
+                          padding:
+                          EdgeInsets
+                              .all(
+                          10.0),
+                          child: Column(
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .start,
+                          crossAxisAlignment:
+                          CrossAxisAlignment
+                              .start,
+                          children: [
+                          Container(
+                          //width: Get.width,
+                          decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(7),
+                          topRight: Radius.circular(7),
+                          ),
+                          color: kBlue,
+                          ),
+                          child: Padding(
+                          padding: const EdgeInsets.only(
+                          left: 20, top: 12, bottom: 12),
+                          child: Row(
+                          children: [
+                          Text(
+                          "PunchIn Ref. ID : ${singleData.claimId}",
+                          style: kBody14kWhite600)
+                          ],
+                          ),
+                          ),
+                          ),
+                          SizedBox(height: 10,),
+                          // Text("Agent Remark"),
+                          // SizedBox(height: 4,),
+                          Container(
+                          height:
+                          Get.height *
+                          0.6,
+                          //height: Get.height,
+                          width: Get
+                              .width,
+                          margin: const EdgeInsets
+                              .symmetric(
+                          horizontal:
+                          3.0,
+                          vertical:
+                          10),
+                          decoration:
+                          BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0)),
+                          child: ListView.builder(
+                          shrinkWrap: true,
+                          //physics: NeverScrollableScrollPhysics(),
+                          itemCount: singleData.claimsRemarksDTOs?.length,
+                          itemBuilder: (context, int ind) {
+                          var claimDiscrepancy =singleData.claimsRemarksDTOs;
+
+                          return SingleChildScrollView(
+                          child: Container(
+                          child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+
+
+                          SizedBox(height: 4,),
+
+                          Text("${dateChange1(claimDiscrepancy?[ind].createdAt)} (${claimDiscrepancy?[ind].role.toString().toLowerCase().capitalizeFirst})",
+                          style: k12Body323232Black500.copyWith(color: kLightBlack),
+                          ),
+                          SizedBox(height: 4,),
+                          Row(
+                          children: [
+                          Expanded(
+                          flex: 3,
+                          child: Container(
+                          //decoration: BoxDecoration(border: Border.all(color: kGrey)),
+                          height: 50,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                          "${claimDiscrepancy?[ind].remark.toString()},",
+                          style: kBlack15Black,
+                          ),
+                          ),
+                          ),
+
+                          ],
+                          ),
+                          ],
+                          ),
+                          ),
+                          );
+                          }),
+                          )
+                          ],
+                          ),
+                          ),
+                          ));
+
+
+                          },
+                          child: Padding(
+                          padding:
+                          const EdgeInsets
+                              .all(8.0),
+                          child: Center(
+                          child: Text(
+                          "View Comment",
+                          style: kBlack15Black
+                              .copyWith(
+                          fontWeight:
+                          FontWeight
+                              .w800,
+                          color:
+                          Colors.green,
+                          fontSize:
+                          12.0),
+                          )),
+                          )):GestureDetector(
                                           onTap: () {
 
                                             Get.defaultDialog(

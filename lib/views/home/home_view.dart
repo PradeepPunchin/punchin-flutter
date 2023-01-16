@@ -88,35 +88,36 @@ class _HomeViewState extends State<HomeView> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
-                              // CachedNetworkImage(
-                              //   // height: 150,
-                              //   // width: Get.width,
-                              //   imageUrl:
-                              //       "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
-                              //   imageBuilder: (context, imageProvider) =>
-                              //       Container(
-                              //     decoration: BoxDecoration(
-                              //       image: DecorationImage(
-                              //         image: imageProvider,
-                              //         fit: BoxFit.fill,
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   placeholder: (context, url) =>
-                              //       const CircularProgressIndicator(),
-                              //   errorWidget: (context, url, error) => const Icon(
-                              //     Icons.error,
-                              //     color: kBlack,
-                              //   ),
-                              // ),
-                            ),
-
-                            //SvgPicture.asset("assets/icons/search.svg"),
-                          ),
+                          Image.asset("assets/With No BG.png",height: 35,width: 35,),
+                          // CircleAvatar(
+                          //   child: ClipRRect(
+                          //     borderRadius: BorderRadius.circular(100),
+                          //     child: Image.asset("assets/With No BG.png",height: 30,width: 30,),
+                          //     // CachedNetworkImage(
+                          //     //   // height: 150,
+                          //     //   // width: Get.width,
+                          //     //   imageUrl:
+                          //     //       "https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg",
+                          //     //   imageBuilder: (context, imageProvider) =>
+                          //     //       Container(
+                          //     //     decoration: BoxDecoration(
+                          //     //       image: DecorationImage(
+                          //     //         image: imageProvider,
+                          //     //         fit: BoxFit.fill,
+                          //     //       ),
+                          //     //     ),
+                          //     //   ),
+                          //     //   placeholder: (context, url) =>
+                          //     //       const CircularProgressIndicator(),
+                          //     //   errorWidget: (context, url, error) => const Icon(
+                          //     //     Icons.error,
+                          //     //     color: kBlack,
+                          //     //   ),
+                          //     // ),
+                          //   ),
+                          //
+                          //   //SvgPicture.asset("assets/icons/search.svg"),
+                          // ),
                         ],
                       ),
                       const SizedBox(

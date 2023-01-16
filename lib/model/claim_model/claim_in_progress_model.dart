@@ -76,6 +76,7 @@ class Content {
   String? borrowerAddress;
   String? claimStatus;
   List<ClaimsRemarksDTOs>? claimsRemarksDTOs;
+  dynamic agentRemarkRead;
 
   Content(
       {this.id,
@@ -88,6 +89,7 @@ class Content {
         this.borrowerAddress,
         this.claimStatus,
         this.claimsRemarksDTOs,
+        this.agentRemarkRead,
       });
 
   Content.fromJson(Map<String, dynamic> json) {
@@ -106,6 +108,8 @@ class Content {
         claimsRemarksDTOs?.add(new ClaimsRemarksDTOs.fromJson(v));
       });
     }
+
+    agentRemarkRead = json['agentRemarkRead'];
   }
 
   Map<String, dynamic> toJson() {
@@ -123,6 +127,8 @@ class Content {
       data['claimsRemarksDTOs'] =
           this.claimsRemarksDTOs?.map((v) => v.toJson()).toList();
     }
+
+    data['agentRemarkRead'] = this.agentRemarkRead;
     return data;
   }
 }

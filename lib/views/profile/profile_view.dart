@@ -64,27 +64,32 @@ class ProfileView extends StatelessWidget {
                 )),
                 Container(
                   margin: EdgeInsets.only(top: 20),
-                  child: Center(
-                    child: Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
-                    // CachedNetworkImage(
-                    //   imageUrl:
-                    //       "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
-                    //   imageBuilder: (context, imageProvider) {
-                    //     return Container(
-                    //       height: 90.0.h,
-                    //       width: 90.0.w,
-                    //       decoration: BoxDecoration(
-                    //           shape: BoxShape.circle,
-                    //           image: DecorationImage(image: imageProvider)),
-                    //     );
-                    //   },
-                    // ),
-                  ),
+                  child:Center(child: Image.asset("assets/img.png")),
                 ),
+
+                // Container(
+                //   margin: EdgeInsets.only(top: 20),
+                //   child: Center(
+                //     child: Image.network("https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",height: 90,width: 90,),// Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
+                //     // CachedNetworkImage(
+                //     //   imageUrl:
+                //     //       "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
+                //     //   imageBuilder: (context, imageProvider) {
+                //     //     return Container(
+                //     //       height: 90.0.h,
+                //     //       width: 90.0.w,
+                //     //       decoration: BoxDecoration(
+                //     //           shape: BoxShape.circle,
+                //     //           image: DecorationImage(image: imageProvider)),
+                //     //     );
+                //     //   },
+                //     // ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
-              height: 5.h,
+              height: 10.h,
             ),
             Text(
               "${GetStorage().read("firstName")} ${GetStorage().read("lastName")}",
@@ -106,29 +111,29 @@ class ProfileView extends StatelessWidget {
                 SizedBox(
                   width: 10.w,
                 ),
-                Text(
-                  "4.1",
-                  style: kBlack15Black.copyWith(
-                    fontSize: 12.0.sp,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 20,
-                ),
-                SizedBox(
-                  width: 3.w,
-                ),
-                Text(
-                  "Rating",
-                  style: kBlack15Black.copyWith(
-                    fontSize: 12.0.sp,
-                  ),
-                ),
+                // Text(
+                //   "4.1",
+                //   style: kBlack15Black.copyWith(
+                //     fontSize: 12.0.sp,
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: 10.w,
+                // ),
+                // const Icon(
+                //   Icons.star,
+                //   color: Colors.amber,
+                //   size: 20,
+                // ),
+                // SizedBox(
+                //   width: 3.w,
+                // ),
+                // Text(
+                //   "Rating",
+                //   style: kBlack15Black.copyWith(
+                //     fontSize: 12.0.sp,
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
@@ -147,11 +152,12 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 10.0.h),
-            smallText(text: "Email"),
-            field(text: "Enter your email address"),
+            smallText(text: "Identity number (Aadhaar / DL)"),
+            field(text: "${GetStorage().read("aadharCardNumber")}"),
             SizedBox(
               height: 3.0.h,
             ),
+
             smallText(text: "Mobile Number"),
             field(text: "Enter your mobile number"),
             SizedBox(
@@ -184,7 +190,12 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 10.0.h),
-            smallText(text: "Supervisor Name"),
+            smallText(text: "Company Name"),
+            field(text: "Punchin"),
+            SizedBox(
+              height: 3.0.h,
+            ),
+            smallText(text: "Service Provider Name"),
             field(text: "Enter your email address"),
             SizedBox(
               height: 3.0.h,
@@ -199,11 +210,7 @@ class ProfileView extends StatelessWidget {
             SizedBox(
               height: 3.0.h,
             ),
-            smallText(text: "Company Name"),
-            field(text: "Punchin"),
-            SizedBox(
-              height: 3.0.h,
-            ),
+
             smallText(text: "Street Address"),
             field(text: "Enter your Street Address"),
             SizedBox(

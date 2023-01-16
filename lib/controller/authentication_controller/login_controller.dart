@@ -32,6 +32,7 @@ class LoginController extends GetxController {
         body: jsonEncode(data),
       );
 
+      log(response.body);
       if (response.statusCode == 200) {
         var details = jsonDecode(response.body);
         log("login details "+details.toString());
@@ -43,6 +44,7 @@ class LoginController extends GetxController {
           GetStorage().write("userId", data['user']["userId"]);
           GetStorage().write("firstName", data['user']["firstName"]);
           GetStorage().write("lastName", data['user']["lastName"]);
+          GetStorage().write("aadharCardNumber", data['user']["aadharCardNumber"]);
           GetStorage().write("role", data['user']["role"]);
           Get.offAll(() => CustomNavigation());
         } else {

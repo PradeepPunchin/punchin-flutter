@@ -44,7 +44,6 @@ class _TrackingHomeState extends State<TrackingHome> {
 
 
               // search bar
-
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -52,12 +51,13 @@ class _TrackingHomeState extends State<TrackingHome> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
-                        ),
-                      ),
+                      Image.asset("assets/With No BG.png",height: 35,width: 35,),
+                      // CircleAvatar(
+                      //   child: ClipRRect(
+                      //     borderRadius: BorderRadius.circular(100),
+                      //     child:SvgPicture.asset("assets/circle.svg",height: 30,width: 30,), // Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
+                      //   ),
+                      // ),
                     ],
                   ),
                   Spacer(),
