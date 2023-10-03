@@ -1,15 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:punchin/constant/const_color.dart';
 import 'package:punchin/constant/const_text.dart';
-
-import '../notification/notification_view.dart';
+import 'package:punchin/controller/authentication_controller/login_controller.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({Key? key}) : super(key: key);
+   ProfileView({Key? key}) : super(key: key);
 
+   final loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,12 +20,16 @@ class ProfileView extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(
           "Agent Profile",
-          style: CustomFonts.kBlack15Black,
+          style: kBlack15Black,
         ),
         centerTitle: true,
         actions: <Widget>[
           GestureDetector(
-            onTap: () => Get.to(() => NotificationView()),
+             onTap: () {
+               loginController.postLogout();
+                 },//=> Get.to(() => NotificationView()
+
+             //),
             behavior: HitTestBehavior.opaque,
             child: CircleAvatar(
               backgroundColor: Colors.white10,
@@ -32,13 +37,13 @@ class ProfileView extends StatelessWidget {
               child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
-                    color: klightBlue,
+                    color: Colors.red,
                     border: Border.all(width: 2, color: Colors.black12),
                   ),
                   child: const Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Icon(
-                      Icons.notifications_none,
+                      Icons.logout,
                       color: Colors.white,
                     ),
                   )),
@@ -59,30 +64,36 @@ class ProfileView extends StatelessWidget {
                 )),
                 Container(
                   margin: EdgeInsets.only(top: 20),
-                  child: Center(
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
-                      imageBuilder: (context, imageProvider) {
-                        return Container(
-                          height: 90.0.h,
-                          width: 90.0.w,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(image: imageProvider)),
-                        );
-                      },
-                    ),
-                  ),
+                  child:Center(child: Image.asset("assets/img.png")),
                 ),
+
+                // Container(
+                //   margin: EdgeInsets.only(top: 20),
+                //   child: Center(
+                //     child: Image.network("https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",height: 90,width: 90,),// Image.network("https://images.freeimages.com/images/large-previews/e56/run-away-1555225.jpg"),
+                //     // CachedNetworkImage(
+                //     //   imageUrl:
+                //     //       "https://cvbay.com/wp-content/uploads/2017/03/dummy-image.jpg",
+                //     //   imageBuilder: (context, imageProvider) {
+                //     //     return Container(
+                //     //       height: 90.0.h,
+                //     //       width: 90.0.w,
+                //     //       decoration: BoxDecoration(
+                //     //           shape: BoxShape.circle,
+                //     //           image: DecorationImage(image: imageProvider)),
+                //     //     );
+                //     //   },
+                //     // ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
-              height: 5.h,
+              height: 10.h,
             ),
             Text(
-              "Anil Kumar",
-              style: CustomFonts.kBlack15Black,
+              "${GetStorage().read("firstName")} ${GetStorage().read("lastName")}",
+              style: kBlack15Black,
             ),
             SizedBox(
               height: 5.h,
@@ -92,37 +103,37 @@ class ProfileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "ID:983821",
-                  style: CustomFonts.kBlack15Black.copyWith(
+                  "${GetStorage().read("userId")} (${GetStorage().read("role")})",
+                  style: kBlack15Black.copyWith(
                     fontSize: 12.0.sp,
                   ),
                 ),
                 SizedBox(
                   width: 10.w,
                 ),
-                Text(
-                  "4.1",
-                  style: CustomFonts.kBlack15Black.copyWith(
-                    fontSize: 12.0.sp,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 20,
-                ),
-                SizedBox(
-                  width: 3.w,
-                ),
-                Text(
-                  "Rating",
-                  style: CustomFonts.kBlack15Black.copyWith(
-                    fontSize: 12.0.sp,
-                  ),
-                ),
+                // Text(
+                //   "4.1",
+                //   style: kBlack15Black.copyWith(
+                //     fontSize: 12.0.sp,
+                //   ),
+                // ),
+                // SizedBox(
+                //   width: 10.w,
+                // ),
+                // const Icon(
+                //   Icons.star,
+                //   color: Colors.amber,
+                //   size: 20,
+                // ),
+                // SizedBox(
+                //   width: 3.w,
+                // ),
+                // Text(
+                //   "Rating",
+                //   style: kBlack15Black.copyWith(
+                //     fontSize: 12.0.sp,
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
@@ -141,11 +152,12 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 10.0.h),
-            smallText(text: "Email"),
-            field(text: "Enter your email address"),
+            smallText(text: "Identity number (Aadhaar / DL)"),
+            field(text: "${GetStorage().read("aadharCardNumber")}"),
             SizedBox(
               height: 3.0.h,
             ),
+
             smallText(text: "Mobile Number"),
             field(text: "Enter your mobile number"),
             SizedBox(
@@ -178,7 +190,12 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 10.0.h),
-            smallText(text: "Supervisor Name"),
+            smallText(text: "Company Name"),
+            field(text: "Punchin"),
+            SizedBox(
+              height: 3.0.h,
+            ),
+            smallText(text: "Service Provider Name"),
             field(text: "Enter your email address"),
             SizedBox(
               height: 3.0.h,
@@ -193,11 +210,7 @@ class ProfileView extends StatelessWidget {
             SizedBox(
               height: 3.0.h,
             ),
-            smallText(text: "Company Name"),
-            field(text: "Punchin"),
-            SizedBox(
-              height: 3.0.h,
-            ),
+
             smallText(text: "Street Address"),
             field(text: "Enter your Street Address"),
             SizedBox(
@@ -223,7 +236,7 @@ class ProfileView extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 5.0.h),
         child: Text(
           text,
-          style: CustomFonts.kBlack15Black.copyWith(
+          style: kBlack15Black.copyWith(
               fontSize: 15.0, fontWeight: FontWeight.w400, color: Colors.black),
         ),
       );
@@ -233,7 +246,7 @@ class ProfileView extends StatelessWidget {
         child: TextFormField(
           decoration: InputDecoration(
               hintText: text,
-              hintStyle: CustomFonts.kBlack15Black,
+              hintStyle: kBlack15Black,
               filled: true,
               fillColor: kFilledTextColor,
               border: OutlineInputBorder(
@@ -262,8 +275,10 @@ class ProfileView extends StatelessWidget {
                 unselectedLabelColor: Colors.grey,
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorColor: kdarkBlue,
-                unselectedLabelStyle: CustomFonts.getMultipleStyle(
-                    15.0, Colors.black, FontWeight.w500),
+                unselectedLabelStyle:kBlack15Black.copyWith(
+                  fontWeight: FontWeight.w500),
+                // getMultipleStyle(
+                //     15.0, Colors.black, FontWeight.w500),
                 isScrollable: false,
                 tabs: const [
                   Tab(

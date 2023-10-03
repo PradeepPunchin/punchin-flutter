@@ -24,6 +24,7 @@ class CustomSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 44,
       padding: const EdgeInsets.all(2),
       decoration:BoxDecoration(
         borderRadius: BorderRadius.circular(7),
@@ -32,7 +33,7 @@ class CustomSearch extends StatelessWidget {
       child: Container(
 
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.only(left: 21,top: 16,bottom: 14.51),
+        padding: const EdgeInsets.only(left: 21,),//top: 16,bottom: 14.51),
         decoration:BoxDecoration(
           color: kWhite,
           borderRadius: BorderRadius.circular(7),

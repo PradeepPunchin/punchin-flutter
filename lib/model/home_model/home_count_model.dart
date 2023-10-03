@@ -35,22 +35,29 @@ class HomeCount {
 
 class Data {
   int? iNPROGRESS;
-  int? aLL;
-  int? sETTLED;
+  int? uNDERVERIFICATION;
+  int? aCTIONPENDING;
+  int? aGENTALLOCATED;
 
-  Data({this.iNPROGRESS, this.aLL, this.sETTLED});
+  Data(
+      {this.iNPROGRESS,
+        this.uNDERVERIFICATION,
+        this.aCTIONPENDING,
+        this.aGENTALLOCATED});
 
   Data.fromJson(Map<String, dynamic> json) {
     iNPROGRESS = json['IN_PROGRESS'];
-    aLL = json['ALL'];
-    sETTLED = json['SETTLED'];
+    uNDERVERIFICATION = json['UNDER_VERIFICATION'];
+    aCTIONPENDING = json['ACTION_PENDING'];
+    aGENTALLOCATED = json['AGENT_ALLOCATED'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['IN_PROGRESS'] = this.iNPROGRESS;
-    data['ALL'] = this.aLL;
-    data['SETTLED'] = this.sETTLED;
+    data['UNDER_VERIFICATION'] = this.uNDERVERIFICATION;
+    data['ACTION_PENDING'] = this.aCTIONPENDING;
+    data['AGENT_ALLOCATED'] = this.aGENTALLOCATED;
     return data;
   }
 }
